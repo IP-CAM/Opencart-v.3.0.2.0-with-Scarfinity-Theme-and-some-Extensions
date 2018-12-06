@@ -1,0 +1,24 @@
+{% macro ratingBox(rating) %}
+    {% set sFill = rating|round(0, 'floor') %}
+    {% set sUnfill = 5 - rating|round(0, 'ceil') %}
+    {% set sHalf = 5 - sFill - sUnfill %}
+
+    <div class="rating-box">
+        {% if sFill > 0 %}
+            {% for star in 1..sFill %}
+                <i class="fa fa-star"></i>
+            {% endfor %}
+        {% endif %}
+        {% if sHalf > 0 %}
+            {% for star in 1..sHalf %}
+                <i class="fa fa-star-half-o"></i>
+            {% endfor %}
+        {% endif %}
+        {% if sUnfill > 0 %}
+            {% for star in 1..sUnfill %}
+                <i class="fa fa-star-o"></i>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+{% endmacro %}

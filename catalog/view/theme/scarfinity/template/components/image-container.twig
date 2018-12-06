@@ -1,0 +1,9 @@
+{% macro imageContainer(image) %}
+    <div class="image-container">
+        <div class="image-container__container">
+            {% if image %}
+                <img src="{{image}}"/>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
