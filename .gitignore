@@ -200,6 +200,28 @@ orleans.codegen.cs
 stats.json
 __trash
 
+# Opencart
+.htaccess
+/config.php
+admin/config.php
+
+!index.html
+
+download/
+image/data/
+image/cache/
+system/cache/
+system/logs/
+
+system/storage/
+
+# vQmod log files
+vqmod/logs/*
+# vQmod cache files
+vqmod/vqcache/*
+vqmod/checked.cache
+vqmod/mods.cache
+
 # Secrets
 appsettings.json
 
