@@ -1,0 +1,41 @@
+{% macro test(props) %}
+    
+{% endmacro %}
+
+{% macro RadioBoxGroup(props) %}
+    {% set name = props.name|default(random()) %}
+    {% import 'scarfinity/template/components/currency.twig' as currency %}
+    {% import 'scarfinity/template/components/utility/select-box.twig' as _selectBox %}
+
+    <div
+        class="radio-box-group{{
+            props.valid == true ? "radio-box-group--success" : 
+            props.valid == false ? " radio-box-group--error" : ""
+        }}">
+        <span class="radio-box-group__title">{{props.title}}</span>
+        {% if props.items %}
+            {% if props.items|length > 0 %}
+                {% for item in props.items %}
+                    <div class="radio-box-group__item">
+                        {{
+                            _selectBox.Radio({ name: name, label: item.title, secondary: item.subTitle })
+                        }}
+                        <span class="radio-box-group__item__price">
+                            {{
+                                currency.currency({
+                                    'price': item.price, 
+                                    'special': 0, 
+                                    'subTitle': '' }, 
+                                    { 'fontSize': 15, 'fontWeight': 600 }
+                                )
+                            }}
+                        </span>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+{#         <div class="radio-box-group__splash-screen">
+            <div class="radio-box-group__splash-screen__nothing">нет данных</div> 
+        </div> #}
+    </div>
+{% endmacro %}

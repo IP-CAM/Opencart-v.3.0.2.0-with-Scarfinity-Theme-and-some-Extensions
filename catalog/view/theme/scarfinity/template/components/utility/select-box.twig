@@ -1,0 +1,47 @@
+{% macro CheckBox(props) %}
+	{% set id = props.id|default(random()) %}
+
+	<label class="select-box">
+		<input
+			type="checkbox"
+			id="{{id}}"
+			name="{{props.name}}"
+			{{ props.checked ? 'checked': '' }}
+			{{ props.disabled ? 'disabled': '' }} />
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 200 200">
+			        <rect width="200" height="200" rx="20" ry="20"/>
+			        <rect width="170" height="170" rx="10" ry="10" x="15" y="15"/>
+			        <path 
+			        	fill-rule="evenodd"
+			            d="M152.614,82.234l-53.8,53.791-5.715,5.7a8.074,8.074,0,0,1-11.429,0l-5.715-5.7L47.387,107.444a8.088,8.088,0,0,1,0-11.433l5.715-5.7a8.083,8.083,0,0,1,11.429,0l22.857,22.861,48.083-48.084a8.066,8.066,0,0,1,11.428,0l5.715,5.707A8.1,8.1,0,0,1,152.614,82.234Z"/>
+			    </svg>
+			    <span class="select-box__label">{{props.label}}</span>
+    </label>
+
+{% endmacro %}
+
+{% macro Radio(props) %}
+	{% set id = props.id|default(random()) %}
+
+	<label class="select-box">
+		<input
+			type="radio"
+			id="{{id}}"
+			name="{{props.name}}"
+			value="{{props.value|default(id)}}"
+			{{ props.checked ? 'checked': '' }}
+			{{ props.disabled ? 'disabled': '' }} />
+			    <svg
+			        xmlns="http://www.w3.org/2000/svg"
+			        width="16px"
+			        height="16px"
+			        viewBox="0 0 300 300"
+			        style="marginRight: 10px">
+			            <circle cx="150" cy="150" r="144"/>
+			            <circle cx="150" cy="150" r="130"/>
+			            <circle cx="150" cy="150" r="65"/>
+    </svg>
+			    <span class="select-box__label">{{props.label}}</span>
+    </label>
+
+{% endmacro %}

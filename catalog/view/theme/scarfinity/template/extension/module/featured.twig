@@ -3,8 +3,8 @@
 <h3>{{ heading_title }}</h3>
 <div class="row">
  {% for product in products %}
-  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 product-card-catalog-col">
-    {{ categoryProductCard.categoryProductCard(product) }}
+  <div class="product-card-catalog-col col-lg-5ths col-md-3 col-sm-6 col-xs-12">
+    {{ categoryProductCard.categoryProductCard(product, { 'buttonLabel': button_cart }) }}
     {#<div class="product-thumb transition">
       <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
       <div class="caption">

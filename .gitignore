@@ -201,6 +201,19 @@ stats.json
 __trash
 
 # Opencart
+# Ignore bundler config
+/.bundle
+# no zipped folders in root should be included in repo
+#*.zip
+/*.tgz
+
+# Ignore the default SQLite database.
+/db/*.sqlite3
+
+# Ignore all logfiles and tempfiles.
+/log/*.log
+/tmp
+
 .htaccess
 /config.php
 admin/config.php
@@ -214,13 +227,6 @@ system/cache/
 system/logs/
 
 system/storage/
-
-# vQmod log files
-vqmod/logs/*
-# vQmod cache files
-vqmod/vqcache/*
-vqmod/checked.cache
-vqmod/mods.cache
 
 # Secrets
 appsettings.json

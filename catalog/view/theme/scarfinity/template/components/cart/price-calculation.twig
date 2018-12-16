@@ -1,0 +1,47 @@
+{% macro PriceCalculation(props) %}
+    {% import 'scarfinity/template/components/currency.twig' as currency %}
+
+    <div class="price-calculation">
+        <div class="price-calculation__row">
+            <span class="price-calculation__row__text">Товары</span>
+            <span class="price-calculation__row__sign"></span>
+            <span class="price-calculation__row__text">Доставка</span>
+            <span class="price-calculation__row__sign"></span>
+            <span class="price-calculation__row__text accent">Сумма</span>
+        </div>
+        <div class="price-calculation__row">
+            <span class="price-calculation__row__text">
+                {{
+                    currency.currency({
+                        'price': props.productsTotal|default(0), 
+                        'special': 0, 
+                        'subTitle': '' }, 
+                        { 'fontSize': 16, 'fontWeight': 400 }
+                    )
+                }}
+            </span>
+            <span class="price-calculation__row__sign plus"></span>
+            <span class="price-calculation__row__text">
+                {{
+                    currency.currency({
+                        'price': props.deliveryTotal|default(0), 
+                        'special': 0, 
+                        'subTitle': '' }, 
+                        { 'fontSize': 16, 'fontWeight': 400 }
+                    )
+                }}
+            </span>
+            <span class="price-calculation__row__sign equals"></span>
+            <span class="price-calculation__row__text accent">
+                {{
+                    currency.currency({
+                        'price': props.productsTotal|default(0) + props.deliveryTotal|default(0), 
+                        'special': 0, 
+                        'subTitle': '' }, 
+                        { 'fontSize': 16, 'fontWeight': 500 }
+                    )
+                }}
+            </span>
+        </div>
+    </div>    
+{% endmacro %}

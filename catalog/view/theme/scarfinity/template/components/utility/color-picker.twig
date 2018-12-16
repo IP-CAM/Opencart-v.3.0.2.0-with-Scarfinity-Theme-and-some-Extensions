@@ -1,0 +1,33 @@
+{% macro ColorPickerItem(props) %}
+	{% set id = props.id|default(random()) %}
+	{% set status = (props.checked ? ' checked' : '') ~ (props.disabled ? ' disabled' : '') %}
+	<label 
+		class="color-picker-item" 
+		for="{{id}}" 
+		style="
+			width: {{props.style.size|default(36)}}px; 
+			height: {{props.style.size|default(36)}}px;
+			margin: {{props.style.margin|default(0)}}px;
+			padding: {{props.style.padding|default(0)}}px;">
+				{% if props.type == 'radio' %}
+					<input type="radio" name="{{props.name}}" value="{{props.value}}" id="{{id}}"{{status}}>
+				{% else %}
+					<input type="checkbox" value="{{props.value}}" id="{{id}}"{{status}}>
+				{% endif %}
+				<svg class="cp-{{props.color|default(00)}}" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 300 300">
+		            <circle class="cp-o" cx="150" cy="150" r="140"/>
+		            <circle class="cp-i" cx="150" cy="150" r="126"/>
+		            <path class="cp-p" d="M206.243,132.531l-57.184,56.931-6.075,6.037a8.618,8.618,0,0,1-12.148,0l-6.075-6.037L94.389,159.209a8.538,8.538,0,0,1,0-12.1l6.075-6.037a8.62,8.62,0,0,1,12.149,0l24.3,24.193,51.111-50.885a8.591,8.591,0,0,1,12.148,0l6.075,6.041A8.549,8.549,0,0,1,206.243,132.531Z"/>
+		        </svg>
+	</label>
+{% endmacro %}
+
+{% macro ColorPicker(props) %}
+	{% import _self as _ %}
+	{% set name = props.name|default(random()) %}
+	<div class="color-picker" style="padding: {{props.style.padding|default(0)}}px">
+		{% for color in props.colors %}
+			{{ _.ColorPickerItem({ type: props.type, color: color, name: name, style: props.iconStyle }) }}
+		{% endfor %}
+	</div>
+{% endmacro %}

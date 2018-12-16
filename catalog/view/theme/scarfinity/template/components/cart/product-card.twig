@@ -1,0 +1,115 @@
+{% macro ProductCard(props) %}
+	{% import 'scarfinity/template/components/currency.twig' as currency %}
+	{% import 'scarfinity/template/components/image-container.twig' as imageContainer %}
+
+{# import FlatButton           from 'material-ui/FlatButton';
+import IconButton           from 'material-ui/IconButton';
+import NavigationCancel     from 'material-ui/svg-icons/navigation/cancel';
+import ColorPicker          from '../../utility/color-picker'; #}
+
+
+
+{# import Currency             from '../../utility/currency';
+import Quantity             from '../../utility/quantity';
+import ImageContainer       from '../../utility/image-container'; #}
+
+{# const styles = {
+    mediumIcon: {
+        width: 22,
+        height: 22,
+        color: "#ccc",
+        hoverColor: "#e46a5a",
+    },
+
+    medium: {
+        width: 36,
+        height: 36,
+        padding: 2,
+        hoverColor: "#e46a5a",
+    },
+} #}
+
+<div class="cart__product-card">
+    <div class="cart__product-card__back-remove-block">
+    </div>
+    <div class="cart__product-card__container">
+        <div class="cart__product-card__remove-block">
+            {# <IconButton
+                iconStyle={ styles.mediumIcon }
+                style={ styles.medium }
+                onClick={() => {this.props.onQuantityChange(this.props.line.product.productId, 0)}} >
+                    <NavigationCancel hoverColor="#e46a5a" />
+            </IconButton> #}
+        </div>
+        <div class="cart__product-card__image-block">
+            <div class="cart__product-card__image-block__image">
+            	{{ 
+                    imageContainer.imageContainer({
+                        src: props.poduct.thumb,
+                        alt: props.product.title,
+                        name: props.product.name
+                    }) 
+                }}
+            </div>
+        </div>
+        <div class="cart__product-card__content-block">
+            <a
+                href="{{props.product.href}}"
+                class="cart__product-card__content-block__title">
+                    {{props.product.name}}
+            </a>
+            {% if not product.stock %} <span class="text-danger">***</span> {% endif %}
+            {% for option in product.option %} <br />
+                <small>{{ option.name }}: {{ option.value }}</small>
+            {% endfor %}
+            <div class="cart__product-card__content-block__content">
+                <div class="title">Цвет:</div>
+                <div class="color-container">
+                    {# <ColorPicker
+                        colors={[this.props.line.product.colorCode]}
+                        itemWidth={18}
+                        unselectable/> #}
+                </div>
+            </div>
+        </div>
+        <div class="cart__product-card__price-block">
+        	{{ 
+                currency.currency({ 
+                    'price': props.product.price, 
+                    'special': data.special, 
+                    'subTitle': '' }, 
+                    { 'fontSize': 18, 'fontWeight': 400 
+                })
+            }}
+
+{#             <Currency
+                original={this.props.line.product.listPrice}
+                size="small"
+                unmutable={true} /> #}
+        </div>
+        <div class="cart__product-card__delim-block">&#215;</div>
+        <div class="cart__product-card__quantity-block">
+            <input type="text" name="quantity[{{ props.product.cart_id }}]" value="{{ props.product.quantity }}" size="1" class="form-control" />
+{#             <Quantity
+                quantity={this.props.line.quantity || 0}
+                onChange={quantity => this.props.onQuantityChange(this.props.line.product.productId, quantity)}/> #}
+        </div>
+        <div class="cart__product-card__delim-block">&#61;</div>
+        <div class="cart__product-card__total-block">
+            {{ currency.currency({ 
+                'price': props.product.total, 
+                'special': data.special, 
+                'subTitle': '' }, 
+                { 'fontSize': 18, 'fontWeight': 400 })
+            }}
+        </div>
+    </div>
+    <div class="cart__product-card__process-block">
+        <span class="cart__product-card__process-block__spinner"></span>
+        <div class="cart__product-card__process-block__content">
+            Some processed...
+        </div>
+    </div>
+</div>
+
+{% endmacro %}

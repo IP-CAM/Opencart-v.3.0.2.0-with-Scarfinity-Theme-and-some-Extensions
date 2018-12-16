@@ -43,6 +43,20 @@ class ControllerInformationInformation extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
+			if (isset($this->request->get['page'])) {
+				$page = $this->request->get['page'];
+			} else {
+				$page = 1;
+			}
+
+			$pagination = new Pagination();
+			$pagination->total = 100;
+			$pagination->page = $page;
+			$pagination->limit = 3;
+			$pagination->url = $this->url->link('information/information', 'product_id=0' . '&page={page}');
+
+			$data['pagination'] = $pagination->render();
+
 			$this->response->setOutput($this->load->view('information/information', $data));
 		} else {
 			$data['breadcrumbs'][] = array(

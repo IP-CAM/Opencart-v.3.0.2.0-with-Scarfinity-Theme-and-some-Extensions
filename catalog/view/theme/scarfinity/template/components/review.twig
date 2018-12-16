@@ -1,0 +1,137 @@
+{% macro Review(props) %}
+	{% import 'scarfinity/template/components/rating-box.twig' as _ratingBox %}
+
+    <div class="review">
+        <div class="review__left-side">
+            <div class="review__left-side__rating">
+            	{{ _ratingBax.RatingBox(props.review.rating) }}   	
+            </div>
+            <div class="review__left-side__avatar">
+                {# {
+                    props.userInfo &&
+                    <img src={props.userInfo.avatar} />
+                } #}
+            </div>
+        </div>
+        <div class="review__right-side">
+            <div class="review__right-side__top-row">
+                <span class="review__right-side__top-row__user-name">
+                	<i class="fa fa-user"></i>
+                	{{ props.review.author }}
+                </span>
+                <div class="review__right-side__top-row__rating">
+                    {{ _ratingBox.RatingBox(props.review.rating) }}
+                </div>
+                <span class="review__right-side__top-row__date">{{ review.date_added }}</span>
+            </div>
+            <div class="review__right-side__content">
+                <p class="review__right-side__content__text">
+                    {{ props.review.text }}
+                </p>
+            </div>
+            <div class="review__right-side__bottom-row">
+                <span class="review__right-side__bottom-row__question" 
+                      data-normal="Был ли этот отзыв полезен Вам?"
+                      data-small="Полезный отзыв?"></span>
+                {# <div
+                    onClick={() => {props.onClick(true)}}
+                    class="review__right-side__bottom-row__answer review__right-side__bottom-row__answer--yes"
+                    data-value={`(${0})`}>да</div>
+                <div
+                    onClick={() => {props.onClick(false)}}
+                    class="review__right-side__bottom-row__answer review__right-side__bottom-row__answer--no"
+                    data-value={`(${0})`}>нет</div> #}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro LeaveReview(props) %}
+	{% import 'scarfinity/template/components/rating-box.twig' as _ratingBox %}
+
+   	<form id="form-review" class="review-container-leave">
+   		<div id="leave-conatiner-leave-message"></div>
+        <div class="review-container-leave__top-row">
+            <div class="review-container-leave__top-row__avatar"></div>
+            <div class="review-container-leave__top-row__user-name">Михаил Силантьев</div>
+            <div class="review-container-leave__top-row__rating">
+                <span class="review-container-leave__top-row__rating__label">Оценка:</span>
+                {{ _ratingBox.RatingBox(props.review.rating) }}
+            </div>
+            <div>
+            	<label class="control-label" for="input-name">{{ entry_name }}</label>
+                <input type="text" name="name" value="{{ customer_name }}" id="input-name" class="form-control" />
+            </div>
+            <hr>
+            <input type="radio" name="rating" value="5" checked />
+        </div>
+        <div class="review-container-leave__text-box">
+            <textarea
+            	class="review-container-leave__text-box__text-area"
+            	name="text"
+            	id="input-review"
+            	rows="10"
+            	placeholder="Напишите отзыв о товаре..."
+                value="{{this.state.value}}"
+                onChange={this.onTextChange}></textarea>
+
+
+        </div>
+        <div class="review-container-leave__bottom-row">
+            <div class="review-container-leave__bottom-row__button">
+            	<button type="button" id="button-review">Оставить отзыв</button>
+            </div>
+            <div class="review-container-leave__bottom-row__notice">Минимальная длина: 20 символов</div>
+        </div>
+    </form>
+{% endmacro %}
+
+{% macro ReviewsContainerHeader(props) %}
+	<div class="review-container-header">
+        <span class="review-container-header__title">{{props.title}}</span>
+        <div class="review-container-header__count">{{props.reviewsCount|default(0)}}</div>
+        <div class="review-container-header__button">
+        	<a
+        		class="review-container-toggle-button"
+        		href="#{{props.button.href}}"
+        		data-toggle="tab">
+        			{{props.button.label}}
+        	</a>
+        </div>
+    </div>	
+{% endmacro %}
+
+{% macro ReviewsContainer(props) %}
+	{% import _self as _ %}
+
+    <div class="review-container">
+    	<div class="tab-content">
+        	<div class="tab-pane active" id="reviews-container-reviews">
+        		{{ 
+        			_.ReviewsContainerHeader({ 
+        				title: 'Reviews', 
+        				button: { 
+        					label: 'Leave Review', 
+        					href: 'reviews-container-leave-review' 
+        				} 
+        			}) 
+        		}}
+        		<div id="review">
+        			<p>Loding......</p>
+        		</div>
+        	</div>
+        	<div class="tab-pane" id="reviews-container-leave-review">
+        		{{ 
+        			_.ReviewsContainerHeader({ 
+        				title: 'Leave Review', 
+        				button: { 
+        					label: 'Back to Reviews', 
+        					href: 'reviews-container-reviews' 
+        				} 
+        			}) 
+        		}}
+        		{{ _.LeaveReview() }}
+        	</div>
+        </div>
+    </div>
+{% endmacro %}

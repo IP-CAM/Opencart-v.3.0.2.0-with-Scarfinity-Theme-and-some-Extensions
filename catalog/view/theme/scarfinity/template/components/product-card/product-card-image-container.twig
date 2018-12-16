@@ -1,0 +1,73 @@
+{% macro imageContainer(props) %}
+
+    {% import 'scarfinity/template/components/image-container.twig' as imageContainer %}
+
+    <div class="product-card-image-container">
+        <div id="product-card-main-thumb" class="product-card-image-container__main">
+            {{ imageContainer.imageContainer(props.thumb) }}
+        </div>
+        <div class="product-card-image-container__galery">
+            <div class="product-card-swiper">
+                <div class="swiper-viewport" style="max-width: 600px">
+                  <div id="carousel-product-card" class="swiper-container">
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-wrapper">
+                        {% for image in props.images %}
+                            <label class="swiper-slide">
+                                <input type="radio" name="product-card-swiper" value="{{image.popup}}">
+                                <a href="{{ image.popup }}" title="{{ heading_title }}">
+                                    {# <img src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" /> #}
+                                    {{ imageContainer.imageContainer(image.thumb) }}
+                                </a>
+                            </label>
+                        {% endfor %}
+                    </div>
+                    <div class="swiper-button-next"></div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var productCardSwiper = new Swiper('#carousel-product-card', {
+            mode: 'horizontal',
+            slidesPerView: 6,
+            pagination: false,
+            paginationClickable: false,
+            spaceBetween: 15,
+            autoplay: false,
+            autoplayDisableOnInteraction: true,
+            loop: false,
+            autoHeight: true,
+            breakpoints: {
+                1024: {
+                  slidesPerView: 6,
+                },
+                768: {
+                  slidesPerView: 5,
+                },
+                640: {
+                  slidesPerView: 4,
+                },
+                350: {
+                  slidesPerView: 4,
+                },
+                280: {
+                  slidesPerView: 4,
+                }
+            }
+        });
+
+        var mainImage = $('#product-card-main-thumb img');
+
+        $('#carousel-product-card .swiper-slide').on('mouseover', function(e) {
+            var input = $(this).find('input[type="radio"]');
+            if(input != null) {
+                input.prop("checked", true);
+                mainImage.attr('src', input.val());
+            }
+        });
+    </script>
+
+{% endmacro %}

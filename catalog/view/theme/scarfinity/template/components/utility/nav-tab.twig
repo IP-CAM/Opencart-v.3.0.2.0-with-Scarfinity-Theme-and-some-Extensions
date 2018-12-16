@@ -1,0 +1,43 @@
+{% macro NavTab(props) %}
+
+	{% set navTabId = props.id|default(random()) %}
+	{% set selectedIndex = props.selectedIndex|default(1) %}
+
+	{% if props.tabs and props.tabs|length > 0 %}
+		<div class="tab-view">
+			<ul id="{{navTabId}}" class="nav nav-tabs">
+				{% for tab in props.tabs %}
+					{% set id = navTabId ~ '-' ~ tab.id %}
+					<li {{loop.index == selectedIndex ? 'class="active"' : ''}}>
+						<a
+							href="#{{id}}"
+							id="a-{{id}}"
+							data-toggle="tab">
+								{{ tab.title }}
+						</a>
+					</li>
+				{% endfor %}
+			</ul>
+			<div class="tab-content">
+				{% for tab in props.tabs %}
+					{% set id = navTabId ~ '-' ~ tab.id %}
+					<div 
+						id="{{id}}"
+						class="tab-pane{{loop.index == selectedIndex ? ' active' : ''}}">
+						{% if tab.content %}
+							{{ tab.content }}
+						{% else %}
+							{{loop.index}}Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+							quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+							consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+							cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+							proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+						{% endif %}
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	{% endif %}
+
+{% endmacro %}

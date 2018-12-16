@@ -1,0 +1,45 @@
+{% macro ribbon(props) %}
+    {% set styleList = {
+        'hot': {
+            'base': "#ef8742",
+            'shadow': "#d76f31",
+            'text': 'горячее!',
+        },
+        'new': {
+            'base': "#8869ca",
+            'shadow': "#7557b4",
+            'text': 'новинка!',
+        },
+        'sale': {
+            'base': "#9cbf3e",
+            'shadow': "#86a72e",
+            'text': 'скидка!',
+        }
+    }%} 
+    {% set style = styleList[props.type|default('new')] %}
+    <div class="ribbon">
+        <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            width="{{ style.size|default(100) }}%"
+            height="{{ style.size|default(100) }}%"
+            viewBox="0 0 180 180">
+    	        <path
+    	        	fill-rule = ''
+                    fill =  {{ style.base }}
+    	            d = "M10,0H90l90,90v80Z"/>
+            <path
+                style="fill-rule: ''; fill: {{ style.base }}"
+                d="M0,10L10,0,20,10H0ZM170,180l10-10-10-10v20Z"/>
+            <text       
+                font-size = '1.8em'
+                fill = '#fff'
+                text-anchor = 'middle'
+                font-family = 'Roboto'
+                font-weight = 500
+            	transform="translate(106 72) rotate(45)"
+            	style="text-transform: uppercase">
+            		{{style.text}}
+            </text>
+        </svg>
+    </div>
+{% endmacro %}

@@ -1,0 +1,124 @@
+{% macro productCard(props) %}		
+
+	{% import 'scarfinity/template/components/currency.twig' as currency %}
+	{% import 'scarfinity/template/components/button.twig' as button %}
+	{% import 'scarfinity/template/components/product-card/product-card-image-container.twig' as productCardImageContainer %}
+	{% import 'scarfinity/template/components/product-card/product-card-quantity.twig' as productCardQuantity %}
+	{% import 'scarfinity/template/components/rating-box.twig' as _ratingBox %}
+	{% import 'scarfinity/template/components/utility/color-picker.twig' as _colorPicker %}
+	{% import 'scarfinity/template/components/utility/ribbon.twig' as _ribbon %}
+
+	<div class="product-card__container">
+		<div class="product-card__container__header">
+			<h1 class="product-card-title">{{ props.headingTitle }}</h1>
+		</div>
+
+		<div class="product-card__container__body">	
+
+					{{ productCardImageContainer.imageContainer({ 'thumb': props.thumb, images: props.images }) }}	
+
+					<div class="product-card__product-info-container">
+						<div class="product-card__product-title">
+							<div class="product-card__product-title__title-block">
+								<h1 class="product-card-title">{{ props.headingTitle }}</h1>
+							</div>
+							<div class="product-card__product-title__review-block">
+								{{ _ratingBox.RatingBox(props.rating) }}
+								<span class="product-card__product-title__review-block__review">
+									<a 
+										href="{{props.reviewsLink}}"
+										onclick="$('a[href=\'#{{props.reviewsHref}}\']').trigger('click');">
+											<i class="fa fa-caret-down" aria-hidden="true"></i>
+											{{props.reviews}}
+									</a>
+								</span>
+
+								<div class="product-card-favorite">
+									<a
+										href
+										class="product-card-favorite__label"
+										onclick="wishlist.add('{{ props.productId }}'); return false;">
+											{{props.wishList}}
+											<i class="fa fa-heart"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+
+						<span class="product-card__product-info-container__delim"></span>
+
+						<div class="product-card__product-info">
+							{# Product description #}
+							<div class="product-card__product-info__short-description-block">
+								<p class="product-card__product-info__short-description-block__content">
+									{{ props.shortDescription ~ '...' }}
+									<a
+										href="{{props.descriptionLink}}"
+										onclick="$('a[href=\'#{{props.descriptionHref}}\']').trigger('click');">
+											Подробнее
+									</a>
+								</p>
+							</div>
+
+							{# Product options segment #}
+							{% for option in props.options %}
+								{% if option.type == 'radio' %}
+									{% if option.name|lower == 'color' %}
+										{# ColorPiker section #}
+										<div class="product-card__product-info__color-select-block">
+											<div class="product-card-color">
+												<span class="product-card-color__title">Цвет: </span>
+												<div class="color-picker" id="input-option{{option.product_option_id}}">
+													{% for option_value in option.product_option_value %}
+														{{
+															_colorPicker.ColorPickerItem({
+																type: 'radio',
+																name: 'option[' ~ option.product_option_id ~ ']',
+																value: option_value.product_option_value_id,
+																color: option_value.name
+															})
+														}}
+													{% endfor %}
+												</div>
+											</div>
+										</div>
+									{% endif %}
+								{% endif %}
+							{% endfor %}
+
+							<div class="product-card__product-info__pricing-block">
+								{{ currency.currency(
+			                        { 'price': props.price, 'special': props.special, 'subTitle': 'Цена за шт.' }, 
+			                        { 'fontSize': 30, 'fontWeight': 600 }) 
+			                    }}
+							</div>
+
+							<div class="product-card__product-info__cart-block">
+								{{ productCardQuantity.quantity({
+									'productId': props.productId,
+									'minQuantity': props.productMinQuantity
+								}) }}
+								{{ button.productCardButton({ 
+									'productId': props.productId,
+									'minQuantity': props.productMinQuantity,
+									'label': props.addCartLabel 
+								}) }}
+							</div>
+
+							{# AddThis region #}
+							<hr>
+				            <div style="display: none" class="addthis_toolbox addthis_default_style" data-url="{{ props.share }}">
+				            	<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+				            	<a class="addthis_button_tweet"></a>
+				            	<a class="addthis_button_pinterest_pinit"></a>
+				            	<a class="addthis_counter addthis_pill_style"></a></div>
+				            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-515eeaf54693130e"></script> 
+						</div>
+					</div>
+
+
+		</div>
+	</div>
+	{{ _ribbon.Ribbon({ type: 'new' }) }}
+
+{% endmacro %}

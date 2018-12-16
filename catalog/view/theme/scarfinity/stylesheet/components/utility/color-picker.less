@@ -1,0 +1,73 @@
+.color-picker {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0px;
+}
+
+.color-picker-item {
+    width: 36px;
+    height: 36px;
+    font-size: 0px;
+
+    transition: opacity 0.2s ease;
+
+    cursor: pointer;
+    
+    &--disabled {
+        opacity: 0.2;
+        cursor: default;
+    }
+
+    & > input {
+        display: none;
+
+        &:hover + svg {
+            .cp-p { opacity: 0.3; }
+        }
+
+        &:checked + svg {
+            .cp-p { opacity: 1; }
+        }
+
+        &:disabled + svg {
+            opacity: 0.3;
+            cursor: not-allowed;
+
+            .cp-p { opacity: 0 }
+        }
+
+        &:checked:disabled + svg {
+            .cp-p { opacity: 1; }
+
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+    }
+
+    & > svg {
+        circle, path {
+            transition: all 0.3s ease;
+        }
+
+        .cp-p { opacity: 0 }
+    }
+}
+
+.cp-0 { .cp-i { fill: #ffffff; } .cp-o { fill: #aaaaaa; } .cp-p { fill: #aaaaaa; }  }
+.cp-1 { .cp-i { fill: #1bb869; } .cp-o { fill: #1bb869; } .cp-p { fill: #ffffff; }  }
+.cp-2 { .cp-i { fill: #9cbf3e; } .cp-o { fill: #9cbf3e; } .cp-p { fill: #ffffff; }  }
+.cp-3 { .cp-i { fill: #f6b63a; } .cp-o { fill: #f6b63a; } .cp-p { fill: #ffffff; }  }
+.cp-4 { .cp-i { fill: #ef8742; } .cp-o { fill: #ef8742; } .cp-p { fill: #ffffff; }  }
+.cp-5 { .cp-i { fill: #e05543; } .cp-o { fill: #e05543; } .cp-p { fill: #ffffff; }  }
+.cp-6 { .cp-i { fill: #bf4f79; } .cp-o { fill: #bf4f79; } .cp-p { fill: #ffffff; }  }
+.cp-7 { .cp-i { fill: #8869ca; } .cp-o { fill: #8869ca; } .cp-p { fill: #ffffff; }  }
+.cp-8 { .cp-i { fill: #2799c9; } .cp-o { fill: #2799c9; } .cp-p { fill: #ffffff; }  }
+.cp-9 { .cp-i { fill: #303030; } .cp-o { fill: #303030; } .cp-p { fill: #ffffff; }  }
+
+
+
+
+

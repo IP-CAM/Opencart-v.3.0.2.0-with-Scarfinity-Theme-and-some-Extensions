@@ -1,0 +1,59 @@
+{% macro CartHeaderDelimIcon(props) %}
+    <svg class="cart-header-delim-icon" data-value="{{ props.value }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 170">
+        <path
+            fill-rule = "evenodd"
+            d = "M12,0h4L48,85,16,170H12L44,85Z"/>
+        <path
+            fill-rule = "evenodd"
+            d = "M12,0L44,85,12,170H0V0H12Z"/>
+        <path
+            fill-rule = "evenodd"
+            d="M16,170L48,85,16,0H60V170H16Z"/>
+    </svg>
+{% endmacro %}
+
+{% macro CartHeaderPaginationIcon(props) %}
+    <svg  class="cart-header-pagination-icon" data-value="{{ props.value }}" xmlns="http://www.w3.org/2000/svg" width={{ props.size|default(40) }} height={{ props.size|default(40) }} viewBox="0 0 300 300" >
+        <path
+        	fill-rule='evenodd'
+            d="M265.232,120.641L300,150l-34.848,29.428S270,171.053,270,150C270,128.689,265.232,120.641,265.232,120.641Z"/>
+        <path
+			fill-rule = 'evenodd'
+            d="M150,30A120,120,0,1,1,30,150,120,120,0,0,1,150,30Zm0,15A105,105,0,1,1,45,150,105,105,0,0,1,150,45Z"/>
+        <text
+        	text-anchor = 'middle',
+        	fill-rule = 'evenodd',
+        	transform = "translate(152 187) scale(6.45 5.8)"
+            style="
+                font-size: 18px;
+                font-family: 'Roboto';
+                font-weight: 500;
+                transition: all 0.3s ease;">
+                	{{ props.value }}
+        </text>
+        <path
+        	fill-rule = 'evenodd'
+            d="M195.943,137.3L148.97,182.236l-4.99,4.779a7.3,7.3,0,0,1-9.979,0l-4.989-4.779L104.064,158.37a6.554,6.554,0,0,1,0-9.554l4.989-4.766a7.275,7.275,0,0,1,9.979,0l19.958,19.1,41.985-40.171a7.275,7.275,0,0,1,9.979,0l4.989,4.769A6.556,6.556,0,0,1,195.943,137.3Z"/>
+    </svg>
+{% endmacro %}
+
+{% macro HeaderNavigation(props) %}
+	{% import _self as _ %}
+    
+    <div class="cart__header-navigation" data-step="{{props.step}}">
+        <div class="cart-header-navigation-item{{props.step==1?" active":""}}" data-value="1">
+            {{ _.CartHeaderPaginationIcon({ value: 1 }) }}
+            <span class="cart-header-navigation-item__text">Корзина заказов</span>
+        </div>
+        {{ _.CartHeaderDelimIcon({ value: 1 }) }}
+        <div class="cart-header-navigation-item{{props.step==2?" active":""}}" data-value="2">
+            {{ _.CartHeaderPaginationIcon({ value: 2 }) }}
+            <span class="cart-header-navigation-item__text">Доставка</span>
+        </div>
+        {{ _.CartHeaderDelimIcon({ value: 2 }) }}
+        <div class="cart-header-navigation-item{{props.step==3?" active":""}}" data-value="3">
+            {{ _.CartHeaderPaginationIcon({ value: 3 }) }}
+            <span class="cart-header-navigation-item__text">Способ оплаты</span>
+        </div>
+    </div>
+{% endmacro %}
