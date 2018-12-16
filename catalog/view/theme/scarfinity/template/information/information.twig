@@ -34,10 +34,30 @@
 
 {% import 'scarfinity/template/components/utility/select-box.twig' as _selectBox %}
 {% import 'scarfinity/template/components/utility/color-picker.twig' as _colorPicker %}
+{% import 'scarfinity/template/components/utility/input-search.twig' as _inputSearch %}
+{% import 'scarfinity/template/components/utility/_icons.twig' as _icons  %}
 
 {{ header }}
+
 {{ _breadcrumbs.Breadcrumbs({ breadcrumbs: breadcrumbs, topOffset: 0 }) }}
+
 <hr>
+{{ _inputSearch.InputSearch({ placeholder: 'Search.....' }) }}
+
+<hr>
+
+{{ footer }}
+
+
+
+
+
+
+
+{% if false %}
+
+
+
 <div>
   {{ pagination }}
 </div>
@@ -106,3 +126,5 @@
   });
 
 </script>
+
+{% endif %}

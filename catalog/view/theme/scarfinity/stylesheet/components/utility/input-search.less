@@ -1,0 +1,62 @@
+@import './input.less';
+
+.sSearch {
+    display: flex;
+    position: relative;
+
+    & input {
+        width: 100%;
+        padding: 9px 15px;
+        margin: 0;
+        box-sizing: border-box;
+    
+        border: 1px solid @input__basic__border;
+        border-top-left-radius: 2px;
+        border-bottom-left-radius: 2px;
+        border-right: none;
+        outline: none;
+    
+        font-family: "Roboto";
+        font-weight: 400;
+        font-size: 12px;
+    
+        background: #fff;
+    
+        &:focus {
+            border-color: @input__active;
+            background-color: #fff;
+        }
+    
+        &:disabled {
+            background-color: @input__basic-disabled-background;
+            border-color: @input__basic-disabled-border;
+        }
+    }
+    
+    & button {
+        flex: 0 0 34px;
+        display: block;
+        float: right;
+        width: 34px;
+        height: 37px;
+        text-align: center;
+        border: none;
+        outline: none;
+        line-height: 50px;
+    
+        background-color: #9cbf3e;
+        transition: background-color 0.4s ease;
+    
+        cursor: pointer;
+    
+        user-select: none;
+        fill: #ffffff;
+
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+        
+        &:hover {
+            background-color: #1bb869;
+        }
+    }
+}

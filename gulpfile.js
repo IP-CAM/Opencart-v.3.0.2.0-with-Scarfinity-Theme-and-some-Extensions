@@ -11,7 +11,7 @@ var
 
 gulp.task('browser-sync', function() {
     browserSync({
-        proxy: 'scarfinity.loc',
+        proxy: 'scarfinity.loc:170',
         notify: false
     });
 });

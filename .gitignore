@@ -217,6 +217,7 @@ __trash
 .htaccess
 /config.php
 admin/config.php
+/image
 
 !index.html
 
