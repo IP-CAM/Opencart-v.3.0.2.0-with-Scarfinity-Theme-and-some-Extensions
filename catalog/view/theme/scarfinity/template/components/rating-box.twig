@@ -1,5 +1,5 @@
 {% macro ratingBox(rating) %}
-    {% set sFill = rating|round(0, 'floor') %}
+    {% set sFill = rating|default(0)|round(0, 'floor') %}
     {% set sUnfill = 5 - rating|round(0, 'ceil') %}
     {% set sHalf = 5 - sFill - sUnfill %}
 

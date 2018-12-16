@@ -1,18 +1,18 @@
 <?php
 // HTTP
-define('HTTP_SERVER', 'http://scarfinity.loc:170/admin/');
-define('HTTP_CATALOG', 'http://scarfinity.loc:170/');
+define('HTTP_SERVER', 'http://127.0.0.1/admin/');
+define('HTTP_CATALOG', 'http://127.0.0.1/');
 
 // HTTPS
-define('HTTPS_SERVER', 'http://scarfinity.loc:170/admin/');
-define('HTTPS_CATALOG', 'http://scarfinity.loc:170/');
+define('HTTPS_SERVER', 'http://127.0.0.1/admin/');
+define('HTTPS_CATALOG', 'http://127.0.0.1/');
 
 // DIR
-define('DIR_APPLICATION', 'C:/Users/Mikhail/OSPanel/domains/scarfinity.loc/admin/');
-define('DIR_SYSTEM', 'C:/Users/Mikhail/OSPanel/domains/scarfinity.loc/system/');
-define('DIR_IMAGE', 'C:/Users/Mikhail/OSPanel/domains/scarfinity.loc/image/');
-define('DIR_STORAGE', 'C:/Users/Mikhail/OSPanel/domains/storage/');
-define('DIR_CATALOG', 'C:/Users/Mikhail/OSPanel/domains/scarfinity.loc/catalog/');
+define('DIR_APPLICATION', '/Applications/XAMPP/xamppfiles/docs/scarfinity.loc/admin/');
+define('DIR_SYSTEM', '/Applications/XAMPP/xamppfiles/docs/scarfinity.loc/system/');
+define('DIR_IMAGE', '/Applications/XAMPP/xamppfiles/docs/scarfinity.loc/image/');
+define('DIR_STORAGE', '/Applications/XAMPP/xamppfiles/docs/storage/');
+define('DIR_CATALOG', '/Applications/XAMPP/xamppfiles/docs/scarfinity.loc/catalog/');
 define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
 define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');
 define('DIR_CONFIG', DIR_SYSTEM . 'config/');

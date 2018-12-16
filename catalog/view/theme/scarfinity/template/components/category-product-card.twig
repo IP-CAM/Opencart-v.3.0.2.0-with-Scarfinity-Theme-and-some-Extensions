@@ -1,7 +1,10 @@
-{% macro categoryProductCard(product) %}
+{% macro categoryProductCard(product, data) %}
 
     {% import 'scarfinity/template/components/image-container.twig' as imageContainer %}
     {% import 'scarfinity/template/components/rating-box.twig' as ratingBox %}
+    {% import 'scarfinity/template/components/currency.twig' as currency %}
+    {% import 'scarfinity/template/components/utility/ribbon.twig' as ribbon %}
+    {% import 'scarfinity/template/components/button.twig' as button %}
 
     <div class="product-card-catalog">
         <div class="product-card-catalog__image">
@@ -23,13 +26,18 @@
             <span class="product-card-catalog__title">{{ product.name }}</span>
             <div class="product-card-catalog-footer">
                 <div class="product-card-catalog-footer__price">
-                    currency: 1000
+                    {{ currency.currency(
+                        { 'price': product.price, 'special': product.special }, 
+                        { 'fontSize': 18, 'fontWeight': 500 }) 
+                    }}
                 </div>
                 <div class="product-card-catalog-footer__button">
-                    button
+                    {{ button.catalogProductCardButton({ 'label': data.buttonLabel, 'productId': product.product_id }) }}
                 </div>
             </div>
         </div>
-        <div class="product-card-catalog__ribbon">{ribbon}</div>
+        {% if product.special %}
+            <div class="product-card-catalog__ribbon">{{ ribbon.ribbon('sale') }}</div>
+        {% endif %}
     </div>
 {% endmacro %}

@@ -224,6 +224,9 @@ class ControllerProductProduct extends Controller {
 			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
 			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
 			$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
+			$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/swiper.min.css');
+     		$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/opencart.css');
+    		$this->document->addScript('catalog/view/javascript/jquery/swiper/js/swiper.jquery.js');
 
 			$data['heading_title'] = $product_info['name'];
 
