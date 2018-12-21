@@ -1,0 +1,50 @@
+{% macro Pagination(props) %}
+    {% import 'scarfinity/template/components/utility/_icons.twig' as _icons  %}
+
+    {% set c = props.page %}
+    {% set max = (props.product_total / props.limit|default(1))|round(1, 'ceil') %}
+    {% if max > 1 %}
+        {% set sideCount = 2 %}
+        {% set start = max(c - sideCount, 1) %}
+        {% set end = min(c + sideCount, max) %}
+        {% set hasFirst = start != 1 %}
+        {% set hasLast = end < max %}
+        {% set indices = [] %}
+        {% for index in start..end %}
+            {% set indices = indices|merge([index]) %}
+        {% endfor %}
+
+        {% set pages %}
+            <div class="s-pagination">
+                {% if start != 1 %}
+                    <a href="{{props.url|replace({'{page}': 1})}}" class="def">1</a>
+                    <span class="dtt">...</span>
+                {% endif %}
+                {% for index in indices %}
+                    <a href="{{props.url|replace({'{page}': index})}}" class="{{index == c ? 'crr' : 'def'}}">{{index}}</a>
+                {% endfor %}
+                {% if end < max %}
+                    <span class="dtt">...</span>
+                    <a href="{{props.url|replace({'{page}': max})}}" class="def">{{max}}</a>
+                {% endif %}
+            </div>
+        {% endset %}
+
+        <div class="s-pagination-container">
+            <a
+                href="{{props.url|replace({'{page}': c - 1})}}"
+                class="s-pagination-container__button{{c <= 1 ? ' ds' : ''}}">
+                    {{_icons.ChevronLeft({size: 13})}}
+                    <span>Предыдущая</span>
+            </a>
+            {{pages}}
+            <a
+                href="{{props.url|replace({'{page}': c + 1})}}"
+                class="s-pagination-container__button r{{c >= max ? ' ds' : ''}}">
+                    <span>Следующая</span>
+                    {{_icons.ChevronRight({size: 13})}}
+            </a>
+        </div>
+    {% endif %}
+
+{% endmacro %}

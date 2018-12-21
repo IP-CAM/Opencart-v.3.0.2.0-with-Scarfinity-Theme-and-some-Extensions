@@ -1,0 +1,15 @@
+{% macro ValueSwitch(props) %}
+    {% set name = props.name|default("vs_" ~ random()) %}
+    <div class="value-switch">
+        <span class="value-switch__title">{{props.title}}</span>
+        <div class="value-switch__items">
+            {% for value in props.values %}
+                {% set status = value.value == props.selectedValue ? 'checked' : '' %}
+                <label>
+                    <input type="radio" name="{{name}}" value="{{value.href}}" {{status}} />
+                    <span class="value-switch__item">{{value.text}}</span>
+                </label>
+            {% endfor %}
+        </div>
+    </div>
+{% endmacro %}

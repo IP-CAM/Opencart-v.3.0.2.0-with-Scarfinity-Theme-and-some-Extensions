@@ -1,3 +1,6 @@
+{% import 'scarfinity/template/components/utility/icon-button.twig' as _iconButton %}
+{% import 'scarfinity/template/components/utility/_icons.twig' as _icons %}
+
 <!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <!--[if IE 8 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie8"><![endif]-->
@@ -20,6 +23,7 @@
 <script src="catalog/view/javascript/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
 <link href="catalog/view/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
 <script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="catalog/view/javascript/lodash/lodash.js" type="text/javascript"></script>
 <link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 <link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet" type="text/css" />
 <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Roboto:400,300,500,700' type='text/css'>
@@ -31,6 +35,9 @@
 <script src="{{ script }}" type="text/javascript"></script>
 {% endfor %}
 <script src="catalog/view/javascript/common.js" type="text/javascript"></script>
+<script src="catalog/view/theme/scarfinity/js/components/cart.js" type="text/javascript"></script>
+<script src="catalog/view/theme/scarfinity/js/lib/currying.js" type="text/javascript"></script>
+
 {% for link in links %}
 <link href="{{ link.href }}" rel="{{ link.rel }}" />
 {% endfor %}
@@ -71,7 +78,7 @@
     <div class="top-menu">
       <div class="container">
         <div class="row">
-          <div class="col-sm-1">
+          <div class="col-sm-2">
             <a href="/">scarfinity</a>
           </div>
           <div class="col-sm-3">
@@ -81,35 +88,30 @@
               <div class="contact-us__phone">Часы работы: с 08:00 до 18:00</div>
             </div>
           </div>
-          <div class="col-sm-4">{{ search }}</div>
-          <div class="col-sm-4 top-menu__right">
-            <a href="#" class="top-menu-favorite">
-                <div class="top-menu-favorite__icon">
-                    <span class="top-menu-favorite__icon__bage">0</span>
-                </div>
-                <p>
-                    Список<br />желаний
-                </p>
-              </a>
-              <div class="top-menu-account">
-                  <div class="top-menu-account__icon">
-
-                  </div>
-                  <div class="top-menu-account__content">
-                      <div>
-                          <a href="#">Вход</a>
-                          <span class="top-menu-account__content__delim">|</span>
-                          <a href="#">Регистрация</a>
-                      </div>
-                      <a href="#">Мой аккаунт</a>
-                  </div>
-              </div>
+          <div class="col-sm-3">{{ search }}</div>
+          <div class="col-sm-1 top-menu__wish-and-compare">
+              {% set icon %}{{_icons.Heart({size: 32})}}{% endset %}
+              {{_iconButton.iconButton({href: wishlist, icon: icon, bage: {value: wishlist_count}})}}
+              {% set icon %}{{_icons.BarChart({size: 32})}}{% endset %}
+              {{_iconButton.iconButton({href: compare, icon: icon, bage: {value: compare_count}})}}
           </div>
+          <div class="col-sm-3" style="text-align: right;">{{ cart }}</div>
         </div>
       </div>
     </div>
   </header>
-  {# {{ menu }} #}
+{#   <div class="main-menu">
+    <div class="main-menu-container container">
+      <span class="main-menu-catalog-button">
+        {{_icons.Tiles({size: 24})}}
+        <span class="main-menu-catalog-button__text">Каталог товаров</span>
+      </span>
+      <div class="main-menu-ul">
+        
+      </div>
+    </div>
+  </div> #}
+  {{ menu }}
 
 
 

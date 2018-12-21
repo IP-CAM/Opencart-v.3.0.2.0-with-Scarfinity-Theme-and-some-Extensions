@@ -1,10 +1,11 @@
 {% macro _(props) %}
-    <span>
+    <span style="display: inline-block; font-size: 0; width: {{ props.style.size|default(24) }}px; height: {{ props.style.size|default(24) }}px;">
         <svg
             xmlns="http://www.w3.org/2000/svg" 
             width="{{ props.style.size|default(24) }}px"
             height="{{ props.style.size|default(24) }}px"
-            viewBox="{{ props.viewBox }}">
+            viewBox="{{ props.viewBox }}"
+            style="display: block; transition: all 0.3s ease;">
                 {{ props.svg }}
         </svg>
     </span>
@@ -21,4 +22,133 @@
                 svg: svg
             })
         }}
+{% endmacro %}
+
+{% macro Arrows(props) %}
+    {% import _self as _ %}
+        {% set svg %}
+            <path d="M60,190.054H240l-90,100.01Zm0-79.995H240l-90-100Z" transform="translate(-60 -10.063)"/> 
+        {% endset %}
+        {{
+            _._({
+                viewBox: '0 0 180 280',
+                svg: svg,
+                style: { size: props.size }
+            })
+        }}
+{% endmacro %}
+
+{% macro BaselineArrowForward(props) %}
+    {% import _self as _ %}
+    {% set svg %}
+        <path d="M0 0h24v24H0z" fill="none"/>
+        <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+    {% endset %}
+    {{
+        _._({
+            viewBox: '0 0 24 24',
+            svg: svg,
+            style: { size: props.size }
+        })
+    }}    
+{% endmacro %}
+
+{% macro BarChart(props) %}
+    {% import _self as _ %}
+    {% set svg %}
+        <path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"/><path fill="none" d="M0 0h24v24H0z"/>
+    {% endset %}
+    {{
+        _._({
+            viewBox: '0 0 24 24',
+            svg: svg,
+            style: { size: props.size }
+        })
+    }}  
+{% endmacro %}
+
+{% macro ChevronLeft(props) %}
+    {% import _self as _ %}
+        {% set svg %}
+            <path d="M23.9,54.7L67.116,97.98A7.123,7.123,0,0,0,77.167,87.912L39.226,49.928l37.94-37.995a6.951,6.951,0,0,0-.251-9.811,6.927,6.927,0,0,0-9.8-.249L23.9,45.144a6.545,6.545,0,0,0-1.879,4.508c0,0.087-.018.181-0.019,0.276s0.014,0.182.019,0.276A6.535,6.535,0,0,0,23.9,54.7Z"/> 
+        {% endset %}
+        {{
+            _._({
+                viewBox: "0 0 100 100",
+                svg: svg,
+                style: { size: props.size }
+            })
+        }}
+{% endmacro %}
+
+{% macro ChevronRight(props) %}
+    {% import _self as _ %}
+        {% set svg %}
+            <path d="M77.1,45.213L33.934,1.9a6.917,6.917,0,0,0-9.789.257,6.968,6.968,0,0,0-.251,9.821l37.9,38.02-37.9,38.03a7.119,7.119,0,0,0,10.04,10.07L77.1,54.783a6.557,6.557,0,0,0,1.877-4.512c0-.087.018-0.181,0.019-0.277s-0.014-.182-0.019-0.277A6.547,6.547,0,0,0,77.1,45.213Z"/> 
+        {% endset %}
+        {{
+            _._({
+                viewBox: "0 0 100 100",
+                svg: svg,
+                style: { size: props.size }
+            })
+        }}
+{% endmacro %}
+
+{% macro CartBasket(props) %}
+    {% import _self as _ %}
+        {% set svg %}
+            <path d="M281.251,150.085h-1.726l-31.718,130C245.4,291.082,234.789,300,224.1,300H75.9c-10.689,0-21.3-8.922-23.707-19.914l-31.718-130H18.75C8.4,150.085,0,140.931,0,129.641S8.4,109.2,18.75,109.2h262.5c10.355,0,18.749,9.15,18.749,20.443S291.606,150.085,281.251,150.085ZM162.5,272.755h50c6.9,0,12.5-6.1,12.5-13.635s-5.6-13.631-12.5-13.631h-50v27.266Zm0-54.525H225c6.9,0,12.5-6.1,12.5-13.624s-5.6-13.635-12.5-13.635H162.5V218.23Zm-25-81.773h-75c-6.9,0-12.5,6.107-12.5,13.628s5.6,13.631,12.5,13.631h75V136.457Zm0,54.514H75c-6.9,0-12.5,6.107-12.5,13.635S68.1,218.23,75,218.23h62.5V190.971Zm0,54.518h-50c-6.9,0-12.5,6.107-12.5,13.631s5.6,13.635,12.5,13.635h50V245.489Zm100-109.032h-75v27.259h75c6.9,0,12.5-6.1,12.5-13.631S244.4,136.457,237.5,136.457Zm-13.223-45.9L167.1,28.211a17.608,17.608,0,0,1,0-23.383,14.3,14.3,0,0,1,21.443,0l57.18,62.346a17.612,17.612,0,0,1,0,23.386A14.3,14.3,0,0,1,224.277,90.56Zm-148.553,0a14.3,14.3,0,0,1-21.444,0,17.614,17.614,0,0,1,0-23.386L111.462,4.829a14.3,14.3,0,0,1,21.442,0,17.61,17.61,0,0,1,0,23.383Z"/>
+        {% endset %}
+        {{
+            _._({
+                viewBox: "0 0 300 300",
+                svg: svg,
+                style: { size: props.size }
+            })
+        }}
+{% endmacro %}
+
+{% macro Cancel(props) %}
+    {% import _self as _ %}
+        {% set svg %}
+            <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/>
+            <path d="M0 0h24v24H0z" fill="none"/>
+        {% endset %}
+        {{
+            _._({
+                viewBox: "0 0 24 24",
+                svg: svg,
+                style: { size: props.size }
+            })
+        }}
+{% endmacro %}
+
+{% macro Heart(props) %}
+    {% import _self as _ %}
+        {% set svg %}
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"/>
+        {% endset %}
+        {{
+            _._({
+                viewBox: "-1 -1 26 26",
+                svg: svg,
+                style: { size: props.size }
+            })
+        }}    
+{% endmacro %}
+
+{% macro Tiles(props) %}
+    {% import _self as _ %}
+    {% set svg %}
+        <path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/>
+    {% endset %}
+    {{
+        _._({
+            viewBox: "0 0 24 24",
+            svg: svg,
+            style: { size: props.size }
+        })
+    }}        
 {% endmacro %}

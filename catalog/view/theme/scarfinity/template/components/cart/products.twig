@@ -2,8 +2,9 @@
 	{% import 'scarfinity/template/components/currency.twig' as currency %}
 	{% import 'scarfinity/template/components/cart/product-card.twig' as productCard %}
 
+    {% set productsCount = props.products|length %}
     <div class="cart__products-container">
-        <div class="cart__header-row">{"У вас "}{countString}{" в коризине"}</div>
+        <div class="cart__header-row" id="cart-header-products-count"></div>
         <div class="cart__product-card cart__product-card--header">
             <div class="cart__product-card__container">
                 <div class="cart__product-card__remove-block">
@@ -29,22 +30,24 @@
         {% for product in props.products %}
         	{{ productCard.productCard({ product: product }) }}
         {% endfor %}
-        <div class="cart__bottom-row">
-            <span class="cart__bottom-row__label">{{props.total.title}}:</span>
-                {{ 
-                    currency.currency({ 
-                        'price': props.total.text, 
-                        'special': data.special, 
-                        'subTitle': '' }, 
-                        { 'fontSize': 18, 'fontWeight': 400 
-                    })
-                }}
-            <Currency 
-                original={this.props.shoppingCart.subTotal}
-                size="medium" 
-                accent={true} 
-                test={true} />
-        </div>
+        <ul class="cart__bottom-row">
+            {% for total in props.totals %}
+                <li>
+                    <span class="cart__bottom-row__label">{{total.title}}:</span>
+                    {{ 
+                        currency.currency({ 
+                            'price': total.text,
+                            'subTitle': '' }, 
+                            { 'fontSize': 24, 'fontWeight': 500 
+                        })
+                    }}
+                </li>
+            {% endfor %}
+        </ul>
     </div>
+
+    <script type="text/javascript">
+        $('#cart-header-products-count').text('У вас ' + "{{productsCount}}" + ' ' + crr_products("{{productsCount}}") + ' в коризине');
+    </script>
 
 {% endmacro %}

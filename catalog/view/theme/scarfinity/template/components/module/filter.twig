@@ -1,0 +1,72 @@
+{% macro FilterBlock(props) %}
+    <div class="filter-block">
+        <div class="filter-block__header">
+            <span class="filter-block__header__title">{{props.title}}</span>
+            <div class="filter-block__header__reset-block">{{props.buttonTitle}}</div>
+        </div>
+        <div class="filter-block__delim"></div>
+        <div class="filter-block__content">
+            {{props.children}}
+        </div>
+    </div>    
+{% endmacro %}
+
+{% macro ColorFilter(props) %}
+    {% import _self as _ %}
+    {% import 'scarfinity/template/components/utility/color-picker.twig' as _colorPicker %}
+
+    {% set content %}
+        <div>
+            {% for filter in props.filters %}
+                {% set checked = filter.filter_id in props.filterCategory %}
+                {{
+                    _colorPicker.ColorPickerItem({
+                        type: 'checkbox',
+                        name: 'filter[]',
+                        value: filter.filter_id,
+                        color: filter.name,
+                        checked: checked
+                    })
+                }}
+            {% endfor %}
+        </div>
+    {% endset %}
+
+    {{
+        _.FilterBlock({
+            title: 'Цвет',
+            buttonTitle: 'сброс',
+            children: content
+        })
+    }}
+{% endmacro %}
+
+{% macro SeasonFilter(props) %}
+    {% import _self as _ %}
+    {% import 'scarfinity/template/components/utility/select-box.twig' as _selectBox %}
+
+    {% set content %}
+        <div>
+            {% for filter in props.filters %}
+                {% set checked = filter.filter_id in props.filterCategory %}
+                {{
+                    _selectBox.CheckBox({
+                        label: filter.name ~ " ("~ filter.count ~")",
+                        name: 'filter[]',
+                        value: filter.filter_id,
+                        checked: checked,
+                        disabled: filter.count == 0
+                    })
+                }}
+            {% endfor %}
+        </div>
+    {% endset %}
+
+    {{
+        _.FilterBlock({
+            title: props.name|capitalize,
+            buttonTitle: 'сброс',
+            children: content
+        })
+    }}
+{% endmacro %}

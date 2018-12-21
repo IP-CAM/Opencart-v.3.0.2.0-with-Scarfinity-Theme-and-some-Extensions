@@ -1,0 +1,59 @@
+.sort-by {
+    display: block;
+    font-size: 13px;
+    color: #999;
+    font-weight: 400;
+    padding-right: 20px;
+
+    &:after {
+        content: '\2191';
+        font-size: 12px;
+        margin-left: 5px;
+    }
+
+    &--selected {
+        color: #303030;
+    }
+
+    &--straight {
+        &:after {
+            content: '\2193';
+        }
+    }
+
+    &:hover {
+        cursor: pointer;
+        color: #303030;
+    }
+}
+
+.sort-by-line {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.sort-by-label {
+    border: 1px solid red;
+    padding: 20px;
+    user-select: none;
+
+    & input[type="radio"], input[type="checkbox"] {
+        // display: none;
+    }
+
+    & input[type="checkbox"] {
+        & + span + span {
+            display: none;
+        }
+
+        &:checked {
+            & + span {
+                display: none;
+            }
+
+            & + span + span {
+                display: inline-block;
+            }
+        }
+    }
+}

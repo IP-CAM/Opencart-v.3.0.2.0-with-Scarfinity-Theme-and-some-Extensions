@@ -9,7 +9,7 @@
     <div class="product-card-catalog">
         <div class="product-card-catalog__image">
             <div class="product-card-catalog__image__image">
-                {{ imageContainer.imageContainer(product.thumb) }}
+                {{ imageContainer.imageContainer({src: product.thumb, alt: product.name, name: product.name}) }}
             </div>
             <a 
                 href="#"
@@ -23,7 +23,7 @@
         </div>
 
         <div class="product-card-catalog__description">
-            <span class="product-card-catalog__title">{{ product.name }}</span>
+            <a href="{{product.href}}" class="product-card-catalog__title">{{ product.name }}</a>
             <div class="product-card-catalog-footer">
                 <div class="product-card-catalog-footer__price">
                     {{ currency.currency(
@@ -37,7 +37,7 @@
             </div>
         </div>
         {% if product.special %}
-            <div class="product-card-catalog__ribbon">{{ ribbon.ribbon('sale') }}</div>
+            {{ ribbon.ribbon('sale') }}
         {% endif %}
     </div>
 {% endmacro %}

@@ -14,21 +14,17 @@
 {% macro BottomNavigation(props) %}
     {% import _self as _ %}
 
-    <div class="cart__bottom-navigation{{props.orderTotal ? ' check' : ''}}"}>
+    <div class="cart__bottom-navigation{{props.orderTotal ? ' check' : ''}}">
         <div class="cart__bottom-navigation__left">
-            <a href="#"}>
-                <div class="cart__button-prev">Вернуться к покупкам</div>
-            </a>
+            <a id="cart-button-prev" class="cart__button-prev" href="{{props.prevHref}}"}>{{props.prevTitle}}</a>
         </div>
-        <div class="cart__bottom-navigation__check">
-            {% if props.orderTotal > 0 %}
+        {% if props.orderTotal %}
+            <div class="cart__bottom-navigation__check">
                 {{ _.PaymentCheck({total: props.orderTotal}) }}
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
         <div class="cart__bottom-navigation__right">
-            <a href="#">
-                <div class="cart__button-next">Доставка</div>
-            </a>
+            <a id="cart-button-next" class="cart__button-next" href="{{props.nextHref}}"}>{{props.nextTitle}}</a>
         </div>
     </div>    
 {% endmacro %}

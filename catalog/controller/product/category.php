@@ -1,6 +1,7 @@
 <?php
 class ControllerProductCategory extends Controller {
 	public function index() {
+
 		$this->load->language('product/category');
 
 		$this->load->model('catalog/category');
@@ -328,6 +329,12 @@ class ControllerProductCategory extends Controller {
 			$pagination->url = $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&page={page}');
 
 			$data['pagination'] = $pagination->render();
+			$data['pagination_data'] = array(
+				'product_total' => $product_total,
+				'page' => $page,
+				'limit' => $limit,
+				'url' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&page={page}')
+			);
 
 			$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
 

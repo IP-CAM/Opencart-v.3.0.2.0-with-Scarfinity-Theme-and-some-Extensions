@@ -125,15 +125,12 @@
 {# import #}
 {% import 'scarfinity/template/components/cart/header-navigation.twig' as headerNavigation %}
 {% import 'scarfinity/template/components/cart/products.twig' as _products %}
-{% import 'scarfinity/template/components/cart/requisites.twig' as requisites %}
-{% import 'scarfinity/template/components/cart/payments.twig' as _payments %}
-{% import 'scarfinity/template/components/cart/bottom-navigation.twig' as bottomNavigation %}
+{% import 'scarfinity/template/components/cart/bottom-navigation.twig' as _bottomNavigation %}
 
 {% import 'scarfinity/template/components/utility/select-box.twig' as _selectBox %}
 
 {{ header }}
 {{ _breadcrumbs.Breadcrumbs({ breadcrumbs: breadcrumbs, topOffset: 0 }) }}
-<hr>
 
 {% if attention %}
   <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ attention }}
@@ -141,41 +138,26 @@
   </div>
 {% endif %}
 
-<hr>
 <div id="cart" class="container">
   <div class="row">
     <h1>{{ heading_title }}</h1>
-    <div>
-      <button data-step="1">1</button>
-      <button data-step="2">2</button>
-      <button data-step="3">3</button>
-    </div>
     <div class="cart">
-      {{ headerNavigation.HeaderNavigation({step:'1'})}}
-      {{ _products.products({ products: products, total: total }) }}
-      {{ requisites.requisites() }}
-      {{ _payments.Payments() }}
-      {{ bottomNavigation.BottomNavigation({ orderTotal: 1500 }) }}
-      <div id="id1">{{ Data }}</div>
-      <div class="ttt" data-step="10"></div>
+      {{ headerNavigation.HeaderNavigation({ step:'1' }) }}
+      {{ _products.products({ products: products, totals: totals }) }}
+      {{
+        _bottomNavigation.BottomNavigation({
+          prevHref: continue,
+          prevTitle: button_shopping,
+          nextHref: checkout,
+          nextTitle: button_checkout
+        })
+      }}
     </div>
   </div>
 </div>
 
-<script type="text/javascript">
+{{ footer }}
 
-  var state = {
-    step: 0
-  };
-
-  $('#cart button').click(function(e) {
-    var step = $(e.currentTarget).data('step');
-    $('.cart__header-navigation').attr('data-step', step);
-    $('.cart-header-navigation-item').removeClass('active');
-    $('.cart-header-navigation-item[data-value=' + step + ']').addClass('active');
-  });
-
-</script>
 
 
 

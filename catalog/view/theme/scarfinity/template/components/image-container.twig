@@ -1,8 +1,8 @@
-{% macro imageContainer(image) %}
+{% macro imageContainer(props) %}
     <div class="image-container">
         <div class="image-container__container">
-            {% if image %}
-                <img src="{{image}}"/>
+            {% if props.src %}
+                <img src="{{props.src}}" alt="{{props.alt}}" name="{{props.name}}"/>
             {% endif %}
         </div>
     </div>

@@ -1,0 +1,25 @@
+{% macro CatalogHeader(props) %}
+    {% import 'scarfinity/template/components/utility/value-switch.twig' as _valueSwitch  %}
+    {% import 'scarfinity/template/components/utility/drop-down.twig' as _dropdown  %}
+    
+    <div class="catalog-header-line">
+        {{_dropdown.Dropdown({
+            id: props.sort.id,
+            title: props.sort.title,
+            options: props.sort.options,
+            selectedValue: props.sort.selectedValue
+        })}}
+        {{_valueSwitch.ValueSwitch({ 
+            name: props.valueSwitch.name, 
+            title: props.valueSwitch.title, 
+            values: props.valueSwitch.values, 
+            selectedValue: props.valueSwitch.selectedValue 
+        })}}
+    </div>
+
+    <script type="text/javascript">
+        $('input[type="radio"][name="{{props.valueSwitch.name}}"], #{{props.sort.id}}').on('change', function(e) {
+            location = e.target.value;
+        });
+    </script>
+{% endmacro %}

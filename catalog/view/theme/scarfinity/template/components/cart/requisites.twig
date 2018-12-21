@@ -3,126 +3,20 @@
     {% import 'scarfinity/template/components/cart/radio-box-group.twig' as radioBoxGroup %}
     {% import 'scarfinity/template/components/utility/basic-input.twig' as basicInput %}
 
-    <div class="requisites">
+    <form class="requisites">
         <div class="requisites-row">
             <div class="requisites-row__left">
                 <span class="requisites-title"><b>Адрес </b>доставки</span>
-                <div class="row">
-                    <div class="col-md-12 requisites-postal-line">
-                        <div class="col-md-12">
-                            {{ 
-                                basicInput.basicInput({
-                                    value: '',
-                                    valid: true,
-                                    name: 'address1',
-                                    type: 'text',
-                                    placeholder: "Введите адрес"
-                                })
-                            }}
-                        </div>
-                        <div class="col-md-12">
-                            <p class="requisites-annotaion">
-                                Вводите адрес <span class="accent">одной</span> строкой. Не обязательно указывать страну, достаточно просто ввести улицу и номер дома. Например: 
-                                <i><b>Дягтерева 19/1</b></i>
-                            </p>
-                        </div>
-                        <div class="col-md-4">
-                            {{ 
-                                basicInput.basicInput({
-                                    value: '',
-                                    valid: true,
-                                    name: 'postalCode',
-                                    type: 'text',
-                                    placeholder: 'Индекс'
-                                })
-                            }}
-                        </div>
-                        <div class="col-md-8">
-                            <p class="requisites-annotaion">
-                                Обязательно проверте, правельно ли определен
-                                <span class="accent">индекс</span>
-                                . Если индекс не определился, введите его сами.
-                            </p>
-                        </div>
-                        <div class="col-md-3">
-                            {{ 
-                                basicInput.basicInput({
-                                    value: '',
-                                    valid: true,
-                                    name: 'side',
-                                    type: 'text',
-                                    placeholder: 'Корпус'
-                                })
-                            }}
-                        </div>
-                        <div class="col-md-3">
-                            {{ 
-                                basicInput.basicInput({
-                                    value: '',
-                                    valid: true,
-                                    name: 'apartments',
-                                    type: 'text',
-                                    placeholder: 'Квартира'
-                                })
-                            }}
-                        </div>
-                        <div class="col-md-6">
-                            <p class="requisites-annotaion">
-                                Укажите корпус и номер квартиры. Поля не обязательны к заполнению.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                    {% set items = [{}, {}, {}] %}
-                    {{
-                        radioBoxGroup.RadioBoxGroup({
-                            title: "Способы доставки",
-                            items: items
-                        })
-                    }}
+                <div id="cart-checkout-requisites-shipping" class="row"></div>
+                <div id="cart-checkout-requisites-shipping-method"></div>
             </div>
             <div class="requisites-row__middle requisites-row__middle--delim"></div>
             <div class="requisites-row__right">
                 <span class="requisites-title"><b>Контактная </b>информация</span>
-                {{ 
-                    basicInput.basicInput({
-                        value: '',
-                        valid: true,
-                        name: 'lastname',
-                        type: 'text',
-                        placeholder: 'Фамилия'
-                    })
-                }}
-                {{ 
-                    basicInput.basicInput({
-                        value: '',
-                        valid: true,
-                        name: 'firstname',
-                        type: 'text',
-                        placeholder: 'Имя'
-                    })
-                }}
-                {{ 
-                    basicInput.basicInput({
-                        value: '',
-                        valid: true,
-                        name: 'email',
-                        type: 'text',
-                        placeholder: 'E-mail'
-                    })
-                }}
-                {{ 
-                    basicInput.basicInput({
-                        value: '',
-                        valid: true,
-                        name: 'phone',
-                        type: 'text',
-                        placeholder: 'Телефон'
-                    })
-                }}
+                <div id="cart-checkout-requisites-login"></div>
                 {{ priceCalculation.priceCalculation({ productsTotal: 0, deliveryTotal: 0 }) }}
             </div>
         </div>
-    </div>
+    </form>
     
 {% endmacro %}

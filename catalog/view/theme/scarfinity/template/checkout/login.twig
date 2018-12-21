@@ -1,4 +1,133 @@
-<div class="row">
+{% import 'scarfinity/template/components/utility/nav-tab.twig' as _navTab %}
+{% import 'scarfinity/template/components/utility/basic-input.twig' as basicInput %}
+
+{% set tabAnonymousContent %}
+      {{ 
+          basicInput.basicInput({
+              value: '',
+              valid: true,
+              name: 'lastname',
+              type: 'text',
+              placeholder: 'Фамилия'
+          })
+      }}
+      {{ 
+          basicInput.basicInput({
+              value: '',
+              valid: true,
+              name: 'firstname',
+              type: 'text',
+              placeholder: 'Имя'
+          })
+      }}
+      {{ 
+          basicInput.basicInput({
+              value: '',
+              valid: true,
+              name: 'email',
+              type: 'text',
+              placeholder: 'E-mail'
+          })
+      }}
+      {{ 
+          basicInput.basicInput({
+              value: '',
+              valid: true,
+              name: 'phone',
+              type: 'text',
+              placeholder: 'Телефон'
+          })
+      }} 
+
+{#  
+  <h4>{{ text_new_customer }}</h4>
+<p>{{ text_checkout }}</p>   
+    <div class="radio">
+      <label> {% if account == 'register' %}
+        <input type="radio" name="account" value="register" checked="checked" />
+        {% else %}
+        <input type="radio" name="account" value="register" />
+        {% endif %}
+        {{ text_register }}</label>
+    </div>
+    {% if checkout_guest %}
+    <div class="radio">
+      <label> {% if account == 'guest' %}
+        <input type="radio" name="account" value="guest" checked="checked" />
+        {% else %}
+        <input type="radio" name="account" value="guest" />
+        {% endif %}
+        {{ text_guest }}</label>
+    </div>
+    {% endif %}
+    <p>{{ text_register_account }}</p>
+    <input type="button" value="{{ button_continue }}" id="button-account" data-loading-text="{{ text_loading }}" class="btn btn-primary" /> #}
+{% endset %}
+
+{% set tabRegisteredContent %}
+    <h2>{{ text_returning_customer }}</h2>
+    <p>{{ text_i_am_returning_customer }}</p>
+    <div class="form-group">
+      <label class="control-label" for="input-email">{{ entry_email }}</label>
+      <input type="text" name="email" value="" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label class="control-label" for="input-password">{{ entry_password }}</label>
+      <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
+      <a href="{{ forgotten }}">{{ text_forgotten }}</a></div>
+    <input type="button" value="{{ button_login }}" id="button-login" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
+{% endset %}
+
+{% if account == 'register' %}
+  {{ 
+      basicInput.basicInput({
+          value: customer.lastname,
+          valid: true,
+          name: 'lastname',
+          type: 'text',
+          placeholder: 'Фамилия'
+      })
+  }}
+  {{ 
+      basicInput.basicInput({
+          value: customer.firstname,
+          valid: true,
+          name: 'firstname',
+          type: 'text',
+          placeholder: 'Имя'
+      })
+  }}
+  {{ 
+      basicInput.basicInput({
+          value: customer.email,
+          valid: true,
+          name: 'email',
+          type: 'text',
+          placeholder: 'E-mail'
+      })
+  }}
+  {{ 
+      basicInput.basicInput({
+          value: customer.phone,
+          valid: true,
+          name: 'phone',
+          type: 'text',
+          placeholder: 'Телефон'
+      })
+  }} 
+{% elseif account == 'guest' %}
+  {{ 
+    _navTab.NavTab({tabs: [
+      { id: 0, title: text_new_customer, content: tabAnonymousContent }, 
+      { id: 1, title: 'У меня есть аккаунт', content: tabRegisteredContent }
+    ]})
+  }} 
+{% endif %}
+
+
+
+
+{# <div class="row">
   <div class="col-sm-6">
     <h2>{{ text_new_customer }}</h2>
     <p>{{ text_checkout }}</p>
@@ -36,4 +165,4 @@
       <a href="{{ forgotten }}">{{ text_forgotten }}</a></div>
     <input type="button" value="{{ button_login }}" id="button-login" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
   </div>
-</div>
+</div> #}

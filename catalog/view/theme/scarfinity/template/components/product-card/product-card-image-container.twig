@@ -4,7 +4,7 @@
 
     <div class="product-card-image-container">
         <div id="product-card-main-thumb" class="product-card-image-container__main">
-            {{ imageContainer.imageContainer(props.thumb) }}
+            {{ imageContainer.imageContainer({src: props.thumb }) }}
         </div>
         <div class="product-card-image-container__galery">
             <div class="product-card-swiper">
@@ -17,7 +17,7 @@
                                 <input type="radio" name="product-card-swiper" value="{{image.popup}}">
                                 <a href="{{ image.popup }}" title="{{ heading_title }}">
                                     {# <img src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" /> #}
-                                    {{ imageContainer.imageContainer(image.thumb) }}
+                                    {{ imageContainer.imageContainer({ src: image.thumb }) }}
                                 </a>
                             </label>
                         {% endfor %}

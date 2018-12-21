@@ -1,4 +1,145 @@
-<form class="form-horizontal">
+{% import 'scarfinity/template/components/utility/basic-input.twig' as basicInput %}
+
+<div class="col-md-12 requisites-postal-line">
+    <div class="col-md-12">
+        {{ 
+            basicInput.basicInput({
+                value: '176',
+                valid: true,
+                name: 'country_id',
+                type: 'hidden',
+                placeholder: ''
+            })
+        }}
+        {{ 
+            basicInput.basicInput({
+                value: 'Россия, Новосибирск',
+                valid: true,
+                name: 'city',
+                type: 'text',
+                placeholder: "Введите адрес"
+            })
+        }}
+        {{ 
+            basicInput.basicInput({
+                value: 'Дегтярева 19/1',
+                valid: true,
+                name: 'address_1',
+                type: 'text',
+                placeholder: "Введите адрес"
+            })
+        }}
+        {{ 
+            basicInput.basicInput({
+                value: '120',
+                valid: true,
+                name: 'address_2',
+                type: 'hidden',
+                placeholder: ''
+            })
+        }}
+        {{ 
+            basicInput.basicInput({
+                value: '120',
+                valid: true,
+                name: 'zone_id',
+                type: 'hidden',
+                placeholder: ''
+            })
+        }}
+    </div>
+    <div class="col-md-12">
+        <p class="requisites-annotaion">
+            Вводите адрес <span class="accent">одной</span> строкой. Не обязательно указывать страну, достаточно просто ввести улицу и номер дома. Например: 
+            <i><b>Дягтерева 19/1</b></i>
+        </p>
+    </div>
+    <div class="col-md-4">
+        {{ 
+            basicInput.basicInput({
+                value: '888888',
+                valid: true,
+                name: 'postcode',
+                type: 'text',
+                placeholder: 'Индекс'
+            })
+        }}
+    </div>
+    <div class="col-md-8">
+        <p class="requisites-annotaion">
+            Обязательно проверте, правельно ли определен
+            <span class="accent">индекс</span>
+            . Если индекс не определился, введите его сами.
+        </p>
+    </div>
+    <div class="col-md-3">
+        {{ 
+            basicInput.basicInput({
+                value: '',
+                valid: true,
+                name: 'side',
+                type: 'text',
+                placeholder: 'Корпус'
+            })
+        }}
+    </div>
+    <div class="col-md-3">
+        {{ 
+            basicInput.basicInput({
+                value: '',
+                valid: true,
+                name: 'apartments',
+                type: 'text',
+                placeholder: 'Квартира'
+            })
+        }}
+    </div>
+    <div class="col-md-6">
+        <p class="requisites-annotaion">
+            Укажите корпус и номер квартиры. Поля не обязательны к заполнению.
+        </p>
+    </div>
+    <div>
+      {{ 
+          basicInput.basicInput({
+              value: 'scarfinity-firstname',
+              valid: true,
+              name: 'firstname',
+              type: 'hidden',
+              placeholder: ''
+          })
+      }}
+      {{ 
+          basicInput.basicInput({
+              value: 'scarfinity-lastname',
+              valid: true,
+              name: 'lastname',
+              type: 'hidden',
+              placeholder: ''
+          })
+      }}
+      {{ 
+          basicInput.basicInput({
+              value: 'scarfinity-lastname',
+              valid: true,
+              name: 'company',
+              type: 'hidden',
+              placeholder: ''
+          })
+      }}
+    </div>
+</div>
+{# <div class="buttons clearfix">
+  <div class="pull-right">
+    <input type="button" value="{{ button_continue }}" id="button-shipping-address" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
+  </div>
+</div> #}
+
+
+
+
+
+{# <form class="form-horizontal">
   {% if addresses %}
   <div class="radio">
     <label>
@@ -202,7 +343,7 @@
       <input type="button" value="{{ button_continue }}" id="button-shipping-address" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
     </div>
   </div>
-</form>
+</form> #}
 <script type="text/javascript"><!--
 $('input[name=\'shipping_address\']').on('change', function() {
 	if (this.value == 'new') {

@@ -1,0 +1,91 @@
+.s-pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 2px;
+    filter: drop-shadow(rgba(0, 0, 0, 0.2) 0px 1px 1px);
+
+
+    &__button {
+        display: flex;
+        height: 47px;
+        align-items: center;
+        color: #808080;
+        fill: #808080;
+        font-family: 'Roboto';
+        text-transform: uppercase;
+        font-size: 12px;
+        padding: 0px 8px;
+        transition: color 0.2s ease, fill 0.2s ease;
+        cursor: pointer;
+
+        &:hover {
+            color: #ef8742;
+            fill: #ef8742;
+            text-decoration: none;
+        }
+
+        &.r {
+            text-align: right;
+        }
+
+        & span {
+            margin: 0px 5px;
+            line-height: 18px;
+        }
+
+        &.ds {
+            pointer-events: none;
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+    }
+}
+
+.s-pagination {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+    flex: 1;
+
+    font-size: 0px;
+
+    & a, & span {
+        font-size: 15px;
+        color: #808080;
+        padding: 10px 6px;
+
+        cursor: default;
+
+        border-bottom: 2px solid transparent;
+
+        user-select: none;
+
+        transition: border 0.45s ease, color 0.45s ease;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    & .def {
+        cursor: pointer;
+        
+        &:hover {
+            color: #ef8742;
+            // border-color: #ef8742;
+        }
+    }
+
+    & .crr {
+        color: #ef8742;
+        font-size: 18px;
+        border-color: #ef8742;
+    }
+
+    & .dtt {
+        color: #aaa;
+    }
+}

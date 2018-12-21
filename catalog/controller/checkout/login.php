@@ -13,6 +13,15 @@ class ControllerCheckoutLogin extends Controller {
 
 		$data['forgotten'] = $this->url->link('account/forgotten', '', true);
 
+		if($this->customer->isLogged()) {
+			$data['customer'] = array(
+				'firstname' => $this->customer->getFirstname(),
+				'lastname' => $this->customer->getLastname(),
+				'email' => $this->customer->getEmail(),
+				'phone' => $this->customer->getTelephone(),
+			);
+		}
+
 		$this->response->setOutput($this->load->view('checkout/login', $data));
 	}
 
@@ -88,5 +97,23 @@ class ControllerCheckoutLogin extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	// Modifications
+	public function get() {
+		$this->load->language('checkout/checkout');
+
+		$data['checkout_guest'] = ($this->config->get('config_checkout_guest') && !$this->config->get('config_customer_price') && !$this->cart->hasDownload());
+
+		if (isset($this->session->data['account'])) {
+			$data['account'] = $this->session->data['account'];
+		} else {
+			$data['account'] = 'register';
+		}
+
+		$data['forgotten'] = $this->url->link('account/forgotten', '', true);
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($data));
 	}
 }

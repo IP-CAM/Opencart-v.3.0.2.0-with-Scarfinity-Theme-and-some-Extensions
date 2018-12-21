@@ -404,6 +404,12 @@ class ControllerProductSearch extends Controller {
 			$pagination->url = $this->url->link('product/search', $url . '&page={page}');
 
 			$data['pagination'] = $pagination->render();
+			$data['pagination_data'] = array(
+				'product_total' => $product_total,
+				'page' => $page,
+				'limit' => $limit,
+				'url' => $this->url->link('product/search', $url . '&page={page}')
+			);
 
 			$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
 

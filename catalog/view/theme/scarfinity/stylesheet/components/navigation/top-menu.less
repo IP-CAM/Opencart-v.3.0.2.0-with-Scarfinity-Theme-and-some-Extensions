@@ -15,6 +15,44 @@
         align-items: center;
         // margin: 5px 0px;
     }
+
+    &__wish-and-compare {
+        display: flex;
+        box-sizing: border-box;
+        align-items: center;
+        text-decoration: none;
+        justify-content: space-around;
+        height: 38px;
+
+        & .sIcon-button {
+            fill: #808080;
+            margin: 0px 5px;
+
+            & .sSVGBadge-svg {
+                & circle {
+                    fill: #d7d7d7;
+                }
+
+                & text {
+                    fill: #808080;;
+                }
+            }
+
+            &:hover {
+                fill: #ef8742;
+
+                & .sSVGBadge-svg {
+                    & circle {
+                        fill: #d7d7d7;
+                    }
+
+                    & text {
+                        fill: #ef8742;;
+                    }
+                }
+            }
+        }
+    }
 }
 
 .top-menu-favorite {

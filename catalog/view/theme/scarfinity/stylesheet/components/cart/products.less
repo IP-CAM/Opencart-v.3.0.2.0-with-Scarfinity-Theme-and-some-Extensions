@@ -322,11 +322,17 @@
       }
   
       &__bottom-row {
-          display: flex;
-          flex-direction: row;
-          justify-content: flex-end;
-          align-items: baseline;
           padding: 14px;
+          list-style: none;
+          margin: 0px;
+
+          & > li {
+            flex: 1;
+            width: 100%;
+            border-bottom: 1px dashed #eee;
+            text-align: right;
+            padding: 8px 0px;
+          }
           
           .price {
               font-size: 28px;

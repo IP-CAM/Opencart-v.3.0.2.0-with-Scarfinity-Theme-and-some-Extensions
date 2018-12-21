@@ -45,14 +45,35 @@ class ControllerCommonHeader extends Controller {
 
 		$this->load->language('common/header');
 
+		// Compare
+		if (!isset($this->session->data['compare'])) {
+			$this->session->data['compare'] = array();
+		}
+
+		if (isset($this->request->get['remove'])) {
+			$key = array_search($this->request->get['remove'], $this->session->data['compare']);
+
+			if ($key !== false) {
+				unset($this->session->data['compare'][$key]);
+
+				$this->session->data['success'] = $this->language->get('text_remove');
+			}
+
+			$this->response->redirect($this->url->link('product/compare'));
+		}
+
+		$data['compare_count'] = count($this->session->data['compare']);
+
 		// Wishlist
 		if ($this->customer->isLogged()) {
 			$this->load->model('account/wishlist');
 
-			$data['text_wishlist'] = sprintf($this->language->get('text_wishlist'), $this->model_account_wishlist->getTotalWishlist());
+			$data['wishlist_count'] = $this->model_account_wishlist->getTotalWishlist();
 		} else {
-			$data['text_wishlist'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
+			$data['wishlist_count'] = isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0;
 		}
+
+		$data['text_wishlist'] = sprintf($this->language->get('text_wishlist'), $data['wishlist_count']);
 
 		$data['text_logged'] = sprintf($this->language->get('text_logged'), $this->url->link('account/account', '', true), $this->customer->getFirstName(), $this->url->link('account/logout', '', true));
 		
@@ -76,6 +97,7 @@ class ControllerCommonHeader extends Controller {
 		$data['search'] = $this->load->controller('common/search');
 		$data['cart'] = $this->load->controller('common/cart');
 		$data['menu'] = $this->load->controller('common/menu');
+		$data['compare'] = $this->url->link('product/compare');
 
 		return $this->load->view('common/header', $data);
 	}

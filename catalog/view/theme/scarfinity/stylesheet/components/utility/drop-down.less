@@ -1,0 +1,50 @@
+.sDropdown {
+    display: inline-block;
+    box-sizing: border-box;
+
+    user-select: none;
+
+    & > div {
+        display: inline-block;
+        position: relative;
+        filter: drop-shadow(rgba(0, 0, 0, 0.1) 0px 1px 1px);
+    }
+
+    & select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        text-indent: 1px;
+        text-overflow: '';
+
+        border-radius: 2px;
+        padding: 11px 15px;
+        // border: 1px solid #d7d7d7;
+        padding-right: 22px;
+        border: none;
+        outline: none;
+        line-height: 16px;
+        font-size: 14px;
+
+        transition: all 0.3s ease;
+
+        &:active, &:focus {
+            border-color: #2799c9;
+        }
+    }
+
+    & span {
+        position: absolute;
+        user-select: none;
+        pointer-events: none;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 24px;
+        text-align: center;
+        line-height: 40px;
+        
+        & svg {
+            fill: gray;
+        }
+    }
+}

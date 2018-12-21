@@ -1,8 +1,12 @@
-<div class="panel panel-default">
+{% import 'scarfinity/template/components/module/filter.twig' as _filter %}
+
+{# <div class="panel panel-default">
   <div class="panel-heading">{{ heading_title }}</div>
-  <div class="list-group"> {% for filter_group in filter_groups %} <a class="list-group-item">{{ filter_group.name }}</a>
+  <div class="list-group">
+    {% for filter_group in filter_groups %} <a class="list-group-item">{{ filter_group.name }}</a>
     <div class="list-group-item">
-      <div id="filter-group{{ filter_group.filter_group_id }}">{% for filter in filter_group.filter %}
+      <div id="filter-group{{ filter_group.filter_group_id }}">
+      {% for filter in filter_group.filter %}
         <div class="checkbox">
           <label>{% if filter.filter_id in filter_category %}
             <input type="checkbox" name="filter[]" value="{{ filter.filter_id }}" checked="checked" />
@@ -18,7 +22,28 @@
   <div class="panel-footer text-right">
     <button type="button" id="button-filter" class="btn btn-primary">{{ button_filter }}</button>
   </div>
+</div> #}
+
+<div class="panel panel-default">
+  <div class="panel-heading">{{ heading_title }}</div>
+    <div class="list-group">
+      {% for filter_group in filter_groups %}
+        {% set filterName = filter_group.name|lower %}
+        {% if filterName == "colors" %}
+          {{ _filter.ColorFilter({ filters: filter_group.filter, filterCategory: filter_category }) }}
+        {% else %}
+          {{ _filter.SeasonFilter({ name: filter_group.name, filters: filter_group.filter, filterCategory: filter_category }) }}
+        {% endif %}
+      {% endfor %}
+    </div>
+  <div class="panel-footer text-right">
+    <button type="button" id="button-filter" class="btn btn-primary">{{ button_filter }}</button>
+  </div>
 </div>
+
+
+
+
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
 	filter = [];

@@ -36,13 +36,26 @@
 {% import 'scarfinity/template/components/utility/color-picker.twig' as _colorPicker %}
 {% import 'scarfinity/template/components/utility/input-search.twig' as _inputSearch %}
 {% import 'scarfinity/template/components/utility/_icons.twig' as _icons  %}
+{% import 'scarfinity/template/components/utility/value-switch.twig' as _valueSwitch  %}
+{% import 'scarfinity/template/components/utility/drop-down.twig' as _dropDown  %}
+
+{% import 'scarfinity/template/components/lib/currying.twig' as _currying %}
 
 {{ header }}
 
 {{ _breadcrumbs.Breadcrumbs({ breadcrumbs: breadcrumbs, topOffset: 0 }) }}
 
 <hr>
-{{ _inputSearch.InputSearch({ placeholder: 'Search.....' }) }}
+
+<div id='cart_2_0'></div>
+
+
+<hr>
+
+{{_dropDown.DropDown({ title: 'Drop-down', options: [ { value: '1', text: '13123123' }, { value: '2', text: '123123' } ], selectedValue: '2' })}}
+
+<hr>
+{{ _valueSwitch.ValueSwitch({ title: 'Value switch', values: [20, 50, 100] }) }}
 
 <hr>
 

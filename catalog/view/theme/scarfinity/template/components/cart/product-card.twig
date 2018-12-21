@@ -34,12 +34,7 @@ import ImageContainer       from '../../utility/image-container'; #}
     </div>
     <div class="cart__product-card__container">
         <div class="cart__product-card__remove-block">
-            {# <IconButton
-                iconStyle={ styles.mediumIcon }
-                style={ styles.medium }
-                onClick={() => {this.props.onQuantityChange(this.props.line.product.productId, 0)}} >
-                    <NavigationCancel hoverColor="#e46a5a" />
-            </IconButton> #}
+            <button onclick="cart.remove('{{ props.product.cart_id }}');">D</button>  
         </div>
         <div class="cart__product-card__image-block">
             <div class="cart__product-card__image-block__image">

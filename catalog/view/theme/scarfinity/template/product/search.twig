@@ -1,3 +1,5 @@
+{% import 'scarfinity/template/components/navigation/pagination.twig' as _pagination %}
+
 {{ header }}
 <div id="product-search" class="container">
   <ul class="breadcrumb">
@@ -152,6 +154,8 @@
         </div>
         {% endfor %}
       </div>
+      <h2></h2>
+      <div>{{_pagination.Pagination(pagination_data)}}</div>
       <div class="row">
         <div class="col-sm-6 text-left">{{ pagination }}</div>
         <div class="col-sm-6 text-right">{{ results }}</div>

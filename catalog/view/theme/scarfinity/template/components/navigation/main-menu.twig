@@ -1,61 +1,75 @@
+aaaa
+
 {% if categories %}
-<div class="container">
-  <div class="row" style="position: relative">
-    <div class="col-md-3">
-      <div style="background-color: red">
-        1
-        <div class="container main-nav-test">
-          <div class="row">
-            <div class="col-md-3">
-              <div class="float-container">
-                <div class="main-menu-left">
-                  {% for category in categories %}
-                    {% if category.children %}
-                    <div class="main-menu-left__item">
-                      <a class="main-menu-left__item__container">
-                        <span class="main-menu-left__item__container__icon">@</span>
-                        <span class="main-menu-left__item__container__text">{{ category.name }}</span>
-                        <span class="main-menu-left__item__container__chevron">!</span>
-                        <div class="main-nav-test-2">
-                          <div class="container">
-                            <div class="row" style="position: relative">
-                              <div class="col-md-9 col-md-offset-3" style="pointer-events: all; padding-left: 0; padding-right: 0">
-                                <div style="background-color: yellow">
-                                  {% for children in category.children|batch(category.children|length / category.column|round(1, 'ceil')) %}
-                                    {% for child in children %}
-                                      <div>
-                                        <a href="{{ child.href }}">{{ loop.index }}: {{ child.name }}</a>
-                                        {% if child.children %}
-                                          <div style="padding-left: 60px">
-                                            {% for child_3 in child.children %}
-                                              <a href="{{ child_3.href }}">{{ child_3.name }}</a>
-                                            {% endfor %}
-                                          </div>
-                                        {% endif %}
-                                      </div>
+<div class="main-menu">
+  <div class="main-menu-container container">
+
+      <div class="main-menu-ul">
+        {% for category in categories %}
+          <div class="main-menu-button">
+            <span>{{category.name}}</span>
+          </div>
+        {% endfor %}
+      </div>
+
+  </div>
+</div>
+      <div class="col-md-3">
+        <div style="background-color: red">
+          1
+          <div class="container main-nav-test">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="float-container">
+                  <div class="main-menu-left">
+                    {% for category in categories %}
+                      {% if category.children %}
+                      <div class="main-menu-left__item">
+                        <a class="main-menu-left__item__container">
+                          <span class="main-menu-left__item__container__icon">@</span>
+                          <span class="main-menu-left__item__container__text">{{ category.name }}</span>
+                          <span class="main-menu-left__item__container__chevron">!</span>
+                          <div class="main-nav-test-2">
+                            <div class="container">
+                              <div class="row" style="position: relative">
+                                <div class="col-md-9 col-md-offset-3" style="pointer-events: all; padding-left: 0; padding-right: 0">
+                                  <div style="background-color: yellow">
+                                    {% for children in category.children|batch(category.children|length / category.column|round(1, 'ceil')) %}
+                                      {% for child in children %}
+                                        <div>
+                                          <a href="{{ child.href }}">{{ loop.index }}: {{ child.name }}</a>
+                                          {% if child.children %}
+                                            <div style="padding-left: 60px">
+                                              {% for child_3 in child.children %}
+                                                <a href="{{ child_3.href }}">{{ child_3.name }}</a>
+                                              {% endfor %}
+                                            </div>
+                                          {% endif %}
+                                        </div>
+                                      {% endfor %}
                                     {% endfor %}
-                                  {% endfor %}
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </a>
-                    </div>
-                    {% else %}
-                    {% endif %}
-                  {% endfor %}
+                        </a>
+                      </div>
+                      {% else %}
+                      {% endif %}
+                    {% endfor %}
 
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-    </div>
       </div>
+        </div>
+      </div>
+      <div class="col-md-3">2</div>
+      <div class="col-md-3">3</div>
+      <div class="col-md-3">4</div>
     </div>
-    <div class="col-md-3">2</div>
-    <div class="col-md-3">3</div>
-    <div class="col-md-3">4</div>
   </div>
 </div>
 {% endif %} 

@@ -1,0 +1,12 @@
+{# Currying (каррирование) #}
+{% macro decOfNum(titles, number) %}
+    {% set cases = [2, 0, 1, 1, 1, 2] %}
+    {{ titles[ (number % 100 > 4 and number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]] }}
+{% endmacro %}
+
+{% macro __(type, count) %}
+    {% import _self as _ %}
+    
+    {% if type == 'product' %}{{_.decOfNum(['Товар','Товара','Товаров'], count)}}
+    {% endif %}
+{% endmacro %}

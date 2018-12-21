@@ -1,4 +1,88 @@
-<div id="cart" class="btn-group btn-block">
+{% import 'scarfinity/template/components/image-container.twig' as _imageContainer %}
+{% import 'scarfinity/template/components/currency.twig' as _currency %}
+{% import 'scarfinity/template/components/lib/currying.twig' as _currying %}
+{% import 'scarfinity/template/components/utility/_icons.twig' as _icons %}
+
+<div id="cart" class="navigation-cart-block">
+
+  {% set lines %}
+    {% for product in products %}
+      <div class="cart-popup__item">
+        <div class="cart-popup-product-card">
+          <div class="cart-popup-product-card__image">
+            {{ _imageContainer.ImageContainer({src: product.thumb, alt: product.name, title: product.name}) }}
+          </div>
+          <div class="cart-popup-product-card__content">
+              <a href="{{product.href}}" class="cart-popup-product-card__content__title">
+                {{product.name}}
+              </a>
+              <div class="cart-popup-product-card__content__info">
+                  <span class="cart-popup-product-card__content__info__quantity">
+                      {{product.quantity}}
+                  </span>
+                  <div class="cart-popup-product-card__content__info__delim">&#215;</div>
+                  {{product.price}}
+                  {# {{_currency.Currency({ price: { price: product.total } })}} #}
+              </div>
+          </div>
+          <button
+            class="cart-popup-product-card__button"
+            type="button"
+            onclick="cart.remove('{{ product.cart_id }}');">
+            {{_icons.Cancel({size: 18})}}
+          </button>
+        </div>
+      </div>
+    {% endfor %}
+  {% endset %}
+
+    <button class="cart-button">
+      {{_icons.CartBasket({size: 15})}}
+      <div class="cart-button__content">
+        <span id="cart_title">{{cart_info.items_count}} {{_currying.__('product', cart_info.items_count)}}</span> в корзине
+      </div>
+      <div class="cart-button__icon">{{_icons.BaselineArrowForward({size: 18})}}</div>
+    </button>
+    <div class="cart-popup__container">
+      <div class="cart-popup">
+          {{lines}}
+          <div class="cart-popup__footer">
+            {% for total in totals %}
+              <div class="cart-popup__footer__total">
+                <span class="cart-popup__footer__total__title">{{total.title}}:</span>
+                {{_currency.Currency({ price: total.text }, { fontWeight: 500, fontSize: 15 })}}
+              </div>
+            {% endfor %}
+            <div class="cart-popup__footer__buttons">
+              <a
+                href="{{ cart }}"
+                class="cart-popup__footer__buttons__cart">
+                  {{_icons.CartBasket({size: 15})}}
+              </a>
+              <a
+                href="{{ checkout }}"
+                class="cart-popup__footer__buttons__checkout">
+                  <span>{{ text_checkout }}</span>
+                  {{_icons.ChevronRight({size: 12})}}
+              </a>
+            </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+{% import _self as _ %}
+
+<script type="text/javascript">
+  cart_2_0.addEventListener('afterAdd', function(data) {
+    $('#cart_title').text(data.productsCount);
+    $('#cart')
+  });
+</script>
+
+{# 
+
+<div>
   <button type="button" data-toggle="dropdown" data-loading-text="{{ text_loading }}" class="btn btn-inverse btn-block btn-lg dropdown-toggle"><i class="fa fa-shopping-cart"></i> <span id="cart-total">{{ text_items }}</span></button>
   <ul class="dropdown-menu pull-right">
     {% if products or vouchers %}
@@ -44,8 +128,9 @@
     </li>
     {% else %}
     <li>
+      <p>Cart is empty</p>
       <p class="text-center">{{ text_empty }}</p>
     </li>
     {% endif %}
   </ul>
-</div>
+</div> #}

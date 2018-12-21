@@ -1,0 +1,19 @@
+{% macro DropDown(props) %}
+    {% import 'scarfinity/template/components/utility/_icons.twig' as _icons  %}
+    {% set id = props.id|default(random()) %}
+    <div class="sDropdown">
+        <label class="value-switch__title" for="{{id}}">{{props.title}}</label>
+        <div>
+            <select id="{{id}}">
+                {% for option in props.options %}
+                    {% if option.value == props.selectedValue %}
+                        <option value="{{ option.href }}" selected="selected">{{ option.text }}</option>
+                    {% else %}
+                        <option value="{{ option.href }}">{{ option.text }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            {{_icons.Arrows({size: 12})}}
+        </div>
+    </div>
+{% endmacro %}
