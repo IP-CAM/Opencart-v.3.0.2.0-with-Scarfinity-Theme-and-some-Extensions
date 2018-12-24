@@ -105,6 +105,8 @@ class ControllerCheckoutShippingMethod extends Controller {
 			}
 		}
 
+		// echo $this->request->post['shipping_method'];
+
 		if (!isset($this->request->post['shipping_method'])) {
 			$json['error']['warning'] = $this->language->get('error_shipping');
 		} else {

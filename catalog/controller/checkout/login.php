@@ -13,15 +13,6 @@ class ControllerCheckoutLogin extends Controller {
 
 		$data['forgotten'] = $this->url->link('account/forgotten', '', true);
 
-		if($this->customer->isLogged()) {
-			$data['customer'] = array(
-				'firstname' => $this->customer->getFirstname(),
-				'lastname' => $this->customer->getLastname(),
-				'email' => $this->customer->getEmail(),
-				'phone' => $this->customer->getTelephone(),
-			);
-		}
-
 		$this->response->setOutput($this->load->view('checkout/login', $data));
 	}
 

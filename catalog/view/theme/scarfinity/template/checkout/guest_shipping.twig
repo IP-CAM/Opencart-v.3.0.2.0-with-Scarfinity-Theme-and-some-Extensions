@@ -1,4 +1,141 @@
-<form class="form-horizontal">
+{% import 'scarfinity/template/components/utility/basic-input.twig' as basicInput %}
+
+<div class="col-md-12 requisites-postal-line">
+    <div class="col-md-12">
+        {{ 
+            basicInput.basicInput({
+                value: country_id,
+                valid: true,
+                name: 'country_id',
+                type: 'hidden',
+                placeholder: ''
+            })
+        }}
+        {{ 
+            basicInput.basicInput({
+                value: city,
+                valid: true,
+                name: 'city',
+                type: 'text',
+                placeholder: entry_city
+            })
+        }}
+        {{ 
+            basicInput.basicInput({
+                value: address_1,
+                valid: true,
+                name: 'address_1',
+                type: 'text',
+                placeholder: entry_address_1
+            })
+        }}
+        {{ 
+            basicInput.basicInput({
+                value: '120',
+                valid: true,
+                name: 'address_2',
+                type: 'hidden',
+                placeholder: ''
+            })
+        }}
+        {{ 
+            basicInput.basicInput({
+                value: '120',
+                valid: true,
+                name: 'zone_id',
+                type: 'hidden',
+                placeholder: ''
+            })
+        }}
+    </div>
+    <div class="col-md-12">
+        <p class="requisites-annotaion">
+            Вводите адрес <span class="accent">одной</span> строкой. Не обязательно указывать страну, достаточно просто ввести улицу и номер дома. Например: 
+            <i><b>Дягтерева 19/1</b></i>
+        </p>
+    </div>
+    <div class="col-md-4">
+        {{ 
+            basicInput.basicInput({
+                value: postcode,
+                valid: true,
+                name: 'postcode',
+                type: 'text',
+                placeholder: 'Индекс'
+            })
+        }}
+    </div>
+    <div class="col-md-8">
+        <p class="requisites-annotaion">
+            Обязательно проверте, правельно ли определен
+            <span class="accent">индекс</span>
+            . Если индекс не определился, введите его сами.
+        </p>
+    </div>
+    <div class="col-md-3">
+        {{ 
+            basicInput.basicInput({
+                value: '',
+                valid: true,
+                name: 'side',
+                type: 'text',
+                placeholder: 'Корпус'
+            })
+        }}
+    </div>
+    <div class="col-md-3">
+        {{ 
+            basicInput.basicInput({
+                value: '',
+                valid: true,
+                name: 'apartments',
+                type: 'text',
+                placeholder: 'Квартира'
+            })
+        }}
+    </div>
+    <div class="col-md-6">
+        <p class="requisites-annotaion">
+            Укажите корпус и номер квартиры. Поля не обязательны к заполнению.
+        </p>
+    </div>
+    <div>
+      {{ 
+          basicInput.basicInput({
+              value: firstname,
+              valid: true,
+              name: 'firstname',
+              type: 'hidden',
+              placeholder: entry_firstname
+          })
+      }}
+      {{ 
+          basicInput.basicInput({
+              value: lastname,
+              valid: true,
+              name: 'lastname',
+              type: 'hidden',
+              placeholder: entry_lastname
+          })
+      }}
+      {{ 
+          basicInput.basicInput({
+              value: company,
+              valid: true,
+              name: 'company',
+              type: 'hidden',
+              placeholder: entry_company
+          })
+      }}
+    </div>
+
+    <button id="save-guest">kkkkk</button>
+</div>
+
+
+
+
+{# <form class="form-horizontal">
   <div class="form-group required">
     <label class="col-sm-2 control-label" for="input-shipping-firstname">{{ entry_firstname }}</label>
     <div class="col-sm-10">
@@ -332,4 +469,4 @@ $('#collapse-shipping-address select[name=\'country_id\']').on('change', functio
 });
 
 $('#collapse-shipping-address select[name=\'country_id\']').trigger('change');
-//--></script>
+//--></script> #}

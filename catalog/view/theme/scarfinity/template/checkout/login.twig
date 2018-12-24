@@ -25,7 +25,7 @@
               value: '',
               valid: true,
               name: 'email',
-              type: 'text',
+              type: 'email',
               placeholder: 'E-mail'
           })
       }}
@@ -33,8 +33,8 @@
           basicInput.basicInput({
               value: '',
               valid: true,
-              name: 'phone',
-              type: 'text',
+              name: 'telephone',
+              type: 'phone',
               placeholder: 'Телефон'
           })
       }} 
@@ -78,51 +78,12 @@
     <input type="button" value="{{ button_login }}" id="button-login" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
 {% endset %}
 
-{% if account == 'register' %}
-  {{ 
-      basicInput.basicInput({
-          value: customer.lastname,
-          valid: true,
-          name: 'lastname',
-          type: 'text',
-          placeholder: 'Фамилия'
-      })
-  }}
-  {{ 
-      basicInput.basicInput({
-          value: customer.firstname,
-          valid: true,
-          name: 'firstname',
-          type: 'text',
-          placeholder: 'Имя'
-      })
-  }}
-  {{ 
-      basicInput.basicInput({
-          value: customer.email,
-          valid: true,
-          name: 'email',
-          type: 'text',
-          placeholder: 'E-mail'
-      })
-  }}
-  {{ 
-      basicInput.basicInput({
-          value: customer.phone,
-          valid: true,
-          name: 'phone',
-          type: 'text',
-          placeholder: 'Телефон'
-      })
-  }} 
-{% elseif account == 'guest' %}
-  {{ 
-    _navTab.NavTab({tabs: [
-      { id: 0, title: text_new_customer, content: tabAnonymousContent }, 
-      { id: 1, title: 'У меня есть аккаунт', content: tabRegisteredContent }
+{{ 
+    _navTab.NavTab({id: 'cart-checkout-login', tabs: [
+        { id: 'guest', title: text_new_customer, content: tabAnonymousContent }, 
+        { id: 'login', title: 'У меня есть аккаунт', content: tabRegisteredContent }
     ]})
-  }} 
-{% endif %}
+}} 
 
 
 

@@ -1,0 +1,38 @@
+{% import 'scarfinity/template/components/utility/basic-input.twig' as basicInput %}
+
+{{ 
+    basicInput.basicInput({
+        value: '{{customer.lastname}}',
+        valid: true,
+        name: 'lastname',
+        type: 'text',
+        placeholder: 'Фамилия'
+    })
+}}
+{{ 
+    basicInput.basicInput({
+        value: '{{customer.firstname}}',
+        valid: true,
+        name: 'firstname',
+        type: 'text',
+        placeholder: 'Имя'
+    })
+}}
+{{ 
+    basicInput.basicInput({
+        value: '{{customer.email}}',
+        valid: true,
+        name: 'email',
+        type: 'text',
+        placeholder: 'E-mail'
+    })
+}}
+{{ 
+    basicInput.basicInput({
+        value: '{{customer.phone}}',
+        valid: true,
+        name: 'phone',
+        type: 'text',
+        placeholder: 'Телефон'
+    })
+}} 

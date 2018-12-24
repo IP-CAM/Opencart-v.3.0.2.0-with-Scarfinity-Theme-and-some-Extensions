@@ -1,4 +1,89 @@
-<div class="row">
+{% import 'scarfinity/template/components/utility/basic-input.twig' as basicInput %}
+
+{{ 
+    basicInput.basicInput({
+        value: firstname,
+        valid: true,
+        name: 'firstname',
+        type: 'text',
+        placeholder: entry_firstname
+    })
+}}
+{{ 
+    basicInput.basicInput({
+        value: lastname,
+        valid: true,
+        name: 'lastname',
+        type: 'text',
+        placeholder: entry_lastname
+    })
+}}
+{{ 
+    basicInput.basicInput({
+        value: telephone,
+        valid: true,
+        name: 'telephone',
+        type: 'phone',
+        placeholder: entry_telephone
+    })
+}}
+{{ 
+    basicInput.basicInput({
+        value: email,
+        valid: true,
+        name: 'email',
+        type: 'email',
+        placeholder: entry_email
+    })
+}}
+{{ 
+    basicInput.basicInput({
+        value: address_1,
+        valid: true,
+        name: 'address_1',
+        type: 'hidden',
+        placeholder: entry_address_1
+    })
+}}
+{{ 
+    basicInput.basicInput({
+        value: city,
+        valid: true,
+        name: 'city',
+        type: 'hidden',
+        placeholder: entry_city
+    })
+}}
+{{ 
+    basicInput.basicInput({
+        value: postcode,
+        valid: true,
+        name: 'postcode',
+        type: 'hidden',
+        placeholder: entry_postcode
+    })
+}}
+{{ 
+    basicInput.basicInput({
+        value: country_id,
+        valid: true,
+        name: 'country_id',
+        type: 'hidden',
+        placeholder: entry_country
+    })
+}}
+{{ 
+    basicInput.basicInput({
+        value: zone_id,
+        valid: true,
+        name: 'zone_id',
+        type: 'hidden',
+        placeholder: ''
+    })
+}}
+
+
+{# <div class="row">
   <div class="col-sm-6">
     <fieldset id="account">
       <legend>{{ text_your_details }}</legend>
@@ -509,4 +594,4 @@ $('#collapse-payment-address select[name=\'country_id\']').on('change', function
 });
 
 $('#collapse-payment-address select[name=\'country_id\']').trigger('change');
-//--></script> 
+//--></script>  #}
