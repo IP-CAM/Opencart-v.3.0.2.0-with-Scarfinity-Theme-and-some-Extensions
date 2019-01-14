@@ -1,0 +1,14 @@
+{% macro UniqueOffer(props) %}
+	{% import 'scarfinity/template/components/utility/_icons.twig' as _icons  %}
+	<div class="unique-offer {{props.type}}">
+		<div class="unique-offer__left">
+			{{ _icons.Medal() }}
+			{{ _icons.GiftRound() }}
+		</div>
+		<div class="unique-offer__content">
+			<span class="unique-offer__content__title">{{props.title}}</span>
+			<p class="unique-offer__content__text">{{props.text}}</p>
+			<a href="{{props.href}}">{{props.link}}</a>
+		</div>
+	</div>
+{% endmacro %}

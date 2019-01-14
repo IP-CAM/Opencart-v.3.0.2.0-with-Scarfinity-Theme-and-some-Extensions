@@ -21,7 +21,7 @@ var Cart = function (_React$Component) {
 			return React.createElement(
 				'h1',
 				null,
-				'Cart here!'
+				'Cart here!!!!'
 			);
 		}
 	}]);

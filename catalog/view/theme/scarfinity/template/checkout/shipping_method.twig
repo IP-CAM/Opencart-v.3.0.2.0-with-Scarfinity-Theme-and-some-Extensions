@@ -1,36 +1,47 @@
-{# {% set items = [{}, {}, {}] %}
-{{
-    radioBoxGroup.RadioBoxGroup({
-        title: "Способы доставки",
-        items: items
-    })
-}} #}
+{% import 'scarfinity/template/components/utility/select-box.twig' as _selectBox %}
+{% import 'scarfinity/template/components/currency.twig' as _currency %}
 
 {% if error_warning %}
-<div class="alert alert-warning alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+    <div class="alert alert-warning alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
 {% endif %}
 {% if shipping_methods %}
-<p>{{ text_shipping_method }}</p>
-{% for shipping_method in shipping_methods %}
-<p><strong>{{ shipping_method.title }}</strong></p>
-{% if not shipping_method.error %}
-{% for quote in shipping_method.quote %}
-<div class="radio">
-  <label> {% if quote.code == code or not code %}
-    {% set code = quote.code %}
-    <input type="radio" name="shipping_method" value="{{ quote.code }}" checked="checked" />
-    {% else %}
-    <input type="radio" name="shipping_method" value="{{ quote.code }}" />
-    {% endif %}
-    {{ quote.title }} - {{ quote.text }}</label>
-</div>
-{% endfor %}
-{% else %}
-<div class="alert alert-danger alert-dismissible">{{ shipping_method.error }}</div>
+    <div class="radio-box-group">
+        <span class="radio-box-group__title">{{ text_shipping_method }}</span>
+        {% for shipping_method in shipping_methods %}
+            <strong class="radio-box-group__sub-title">{{ shipping_method.title }}</strong>
+            {% set code = 'flat.flat' %}
+                {% if not shipping_method.error %}
+                    {% for quote in shipping_method.quote %}
+                        <div class="radio-box-group__item">
+                            {{
+                                _selectBox.Radio({
+                                    group: 'shipping_method',
+                                    name: 'shipping_method',
+                                    value: quote.code,
+                                    label: quote.title
+                                }) 
+                            }}
+                            {{
+                                _currency.Currency(
+                                    { 'price': quote.text, 'subTitle': '' }, 
+					                { 'fontSize': 15, 'fontWeight': 600 }
+                                )
+                            }}
+                        </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-danger alert-dismissible">{{ shipping_method.error }}</div>
+            {% endif %}
+        {% endfor %}
+    </div>
 {% endif %}
-{% endfor %}
-{% endif %}
-{# <p><strong>{{ text_comments }}</strong></p>
-<p>
-  <textarea name="comment" rows="8" class="form-control">{{ comment }}</textarea>
-</p> #}
+
+
+<script type="text/javascript">
+    var code = '{{code}}';
+    $('.select-box input[type="radio"][name$="shipping_method"]').each(function(t) {
+        if($(this).val() == code) {
+            $(this).attr('checked', 'checked').prop("checked", true).change();
+        }
+    });
+</script>

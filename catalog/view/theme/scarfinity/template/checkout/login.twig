@@ -4,11 +4,14 @@
 {% set tabAnonymousContent %}
       {{ 
           basicInput.basicInput({
+              label: entry_firstname,
               value: '',
               valid: true,
               name: 'lastname',
+              group: 'customer',
               type: 'text',
-              placeholder: 'Фамилия'
+              placeholder: 'Фамилия',
+              required: true
           })
       }}
       {{ 
@@ -16,8 +19,10 @@
               value: '',
               valid: true,
               name: 'firstname',
+              group: 'customer',
               type: 'text',
-              placeholder: 'Имя'
+              placeholder: 'Имя',
+              required: true
           })
       }}
       {{ 
@@ -25,6 +30,7 @@
               value: '',
               valid: true,
               name: 'email',
+              group: 'customer',
               type: 'email',
               placeholder: 'E-mail'
           })
@@ -34,34 +40,12 @@
               value: '',
               valid: true,
               name: 'telephone',
+              group: 'customer',
               type: 'phone',
-              placeholder: 'Телефон'
+              placeholder: 'Телефон',
+              required: true
           })
       }} 
-
-{#  
-  <h4>{{ text_new_customer }}</h4>
-<p>{{ text_checkout }}</p>   
-    <div class="radio">
-      <label> {% if account == 'register' %}
-        <input type="radio" name="account" value="register" checked="checked" />
-        {% else %}
-        <input type="radio" name="account" value="register" />
-        {% endif %}
-        {{ text_register }}</label>
-    </div>
-    {% if checkout_guest %}
-    <div class="radio">
-      <label> {% if account == 'guest' %}
-        <input type="radio" name="account" value="guest" checked="checked" />
-        {% else %}
-        <input type="radio" name="account" value="guest" />
-        {% endif %}
-        {{ text_guest }}</label>
-    </div>
-    {% endif %}
-    <p>{{ text_register_account }}</p>
-    <input type="button" value="{{ button_continue }}" id="button-account" data-loading-text="{{ text_loading }}" class="btn btn-primary" /> #}
 {% endset %}
 
 {% set tabRegisteredContent %}

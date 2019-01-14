@@ -38,6 +38,7 @@
 {% import 'scarfinity/template/components/utility/_icons.twig' as _icons  %}
 {% import 'scarfinity/template/components/utility/value-switch.twig' as _valueSwitch  %}
 {% import 'scarfinity/template/components/utility/drop-down.twig' as _dropDown  %}
+{% import 'scarfinity/template/components/utility/slider.twig' as _slider  %}
 
 {% import 'scarfinity/template/components/lib/currying.twig' as _currying %}
 
@@ -47,8 +48,18 @@
 
 <hr>
 
-<div id='cart_2_0'></div>
+{# {{ 
+  _slider.Slider({
+    banners: [
+      { title: 'Hello', image: 'https://colourmebeautifuldirect.co.uk/image?w=1400&h=800&fit=crop-50-50&src=production%2Fcms%2Fprocessed%2Fc75f3ff7be52252ef55427d3cd688838.jpg&s=f2040266134056a69b884ace3441956a' },
+      { title: 'Hello 2', image: 'https://www.boothbayregister.com/sites/default/files/2013/04/image/scarves_1.jpg' }
+    ]
+  }) 
+}} #}
 
+<hr>
+
+{{ _icons.DeliveryRound({ size: 200 }) }}
 
 <hr>
 

@@ -40,7 +40,7 @@ import ImageContainer       from '../../utility/image-container'; #}
             <div class="cart__product-card__image-block__image">
             	{{ 
                     imageContainer.imageContainer({
-                        src: props.poduct.thumb,
+                        src: props.product.thumb,
                         alt: props.product.title,
                         name: props.product.name
                     }) 
@@ -53,18 +53,15 @@ import ImageContainer       from '../../utility/image-container'; #}
                 class="cart__product-card__content-block__title">
                     {{props.product.name}}
             </a>
-            {% if not product.stock %} <span class="text-danger">***</span> {% endif %}
-            {% for option in product.option %} <br />
-                <small>{{ option.name }}: {{ option.value }}</small>
-            {% endfor %}
+            {% if not props.product.stock %} <span class="text-danger">***</span> {% endif %}
             <div class="cart__product-card__content-block__content">
-                <div class="title">Цвет:</div>
-                <div class="color-container">
-                    {# <ColorPicker
-                        colors={[this.props.line.product.colorCode]}
-                        itemWidth={18}
-                        unselectable/> #}
-                </div>
+                {% for option in props.product.option %} 
+                    {% if option.name|lower|split('*')[1] == 'colors' %}
+                        <div class="title">Цвет:</div>
+                        <small>{{ option.value }}</small>
+                        <img style="width: 50px; height: 50px;" src={{option.image}} />
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
         <div class="cart__product-card__price-block">

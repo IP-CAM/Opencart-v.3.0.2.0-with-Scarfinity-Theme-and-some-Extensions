@@ -1,0 +1,43 @@
+.info-list {
+    display: block;
+    list-style: circle;
+    margin: 0;
+    padding: 20px 20px;
+
+    & > li {
+        display: flex;
+        align-items: baseline;
+        margin: 5px -15px;
+        position: relative;
+        justify-content: space-between;
+
+        & > span {
+            color: #303030;
+            font-size: 14px;
+            background-color: #ffffff;
+            padding: 0px 15px;
+            z-index: 2;
+
+            &:nth-child(1) {
+                &:before {
+                    content: "\2022";
+                    margin-right: 5px;
+                    color: #8869ca;
+                    font-size: 14px;
+                }
+            }
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 0px;
+            margin: 0px 20px;
+            margin-top: 10px;
+            border-bottom: 1px dotted #aaa;
+            z-index: 1;
+        }
+    }
+}

@@ -40,6 +40,18 @@ class ControllerProductCategory extends Controller {
 			$limit = $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit');
 		}
 
+		if(isset($this->request->get['pmin']) && is_numeric($this->request->get['pmin'])) {
+			$pmin = (int)$this->request->get['pmin'];
+		} else {
+			$pmin = null;
+		}
+
+		if(isset($this->request->get['pmax']) && is_numeric($this->request->get['pmax'])) {
+			$pmax = (int)$this->request->get['pmax'];
+		} else {
+			$pmax = null;
+		}
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -60,6 +72,14 @@ class ControllerProductCategory extends Controller {
 
 			if (isset($this->request->get['limit'])) {
 				$url .= '&limit=' . $this->request->get['limit'];
+			}
+
+			if(isset($this->request->get['pmin'])) {
+				$url .= '&pmin=' . $this->request->get['pmin'];
+			}
+
+			if(isset($this->request->get['pmax'])) {
+				$url .= '&pmax=' . $this->request->get['pmax'];
 			}
 
 			$path = '';
@@ -132,6 +152,14 @@ class ControllerProductCategory extends Controller {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
 
+			if(isset($this->request->get['pmin'])) {
+				$url .= '&pmin=' . $this->request->get['pmin'];
+			}
+
+			if(isset($this->request->get['pmax'])) {
+				$url .= '&pmax=' . $this->request->get['pmax'];
+			}
+
 			$data['categories'] = array();
 
 			$results = $this->model_catalog_category->getCategories($category_id);
@@ -156,7 +184,9 @@ class ControllerProductCategory extends Controller {
 				'sort'               => $sort,
 				'order'              => $order,
 				'start'              => ($page - 1) * $limit,
-				'limit'              => $limit
+				'limit'              => $limit,
+				'pmin'				 => $pmin,
+				'pmax'				 => $pmax
 			);
 
 			$product_total = $this->model_catalog_product->getTotalProducts($filter_data);

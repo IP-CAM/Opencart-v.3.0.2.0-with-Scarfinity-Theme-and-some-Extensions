@@ -20,11 +20,44 @@
     @input__dropdown-br-disabled:       #eeeeee;
 //- ---------------------------
 
+.sInput-container {
+    display: flex;
+    align-items: center;
+    padding: 5px 0px;
+    box-sizing: border-box;
+
+    & > label {
+        font-size: 14px;
+        font-weight: 400;
+        margin-right: 10px;
+        color: #555;
+        width: 80px;
+    }
+
+    & > .sInput, & > .sDropdown {
+        flex: 1;
+    }
+
+    &.required {
+        & > label {
+            &:before {
+                content: '*';
+                color: @input__error;
+                font-size: 14px;
+                margin-right: 5px;
+            }
+        }
+    }
+
+    &.hidden {
+        display: none;
+    }
+}
+
 .sInput {
     display: inline-block;
     width: 100%;
     padding: 11px 15px;
-    margin: 5px 0;
     box-sizing: border-box;
 
     border-radius: 2px;
@@ -64,5 +97,41 @@
     &:disabled {
         background-color: @input__basic-disabled-background;
         border-color: @input__basic-disabled-border;
+    }
+}
+
+.sInputTextArea {
+    margin: 5px 0px;
+    padding: 14px;
+    background: #fefefe;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+        
+    & textarea {
+        max-width: 100%;
+        min-width: 100%;
+        padding: 0;
+        margin: 0;
+        border: none;
+        resize: none;
+        background: #fefefe;
+        outline: none;
+        
+        font-family: "Roboto";
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 18px;
+
+        &::placeholder {
+            color: #999;
+        }
+        
+        overflow: hidden;
+        
+        color: #111;
+        
+        &:focus, &:active, &:target {
+            outline: none;
+        }
     }
 }

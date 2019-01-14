@@ -1,0 +1,21 @@
+{% macro ProductCardOption(props) %}
+    <div>{{option_value.name}}</div>
+    <div style="display: flex;">
+        <img src="{{option_value.image_f}}" style="width: 52px; height: 52px" />
+        <div class="product-card-quantity ctr-utt">
+            <input
+                type="number"
+                name="quantity"
+                value="{{ data.minQuantity|default(0) }}"
+                data-tmp-value="{{ data.minQuantity|default(0) }}"
+                size="2"
+                id="input-quantity"
+                class="product-card-quantity__value" />
+            <div class="product-card-quantity__control">
+                <button name="inc"><span><i class="fa fa-plus"></i></span></button>
+                <button name="dec"><span><i class="fa fa-minus"></i></span></button>
+            </div>
+            <input type="hidden" name="{{ option.product_option_id }}" value="{{ option_value.product_option_value_id }}" />
+        </div>
+    </div>
+{% endmacro %}

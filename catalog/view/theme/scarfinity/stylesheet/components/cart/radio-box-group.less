@@ -6,7 +6,7 @@
 //- -----------------------------
 
 .radio-box-group {
-    margin: 5px 0px;
+    margin: 0px 0px;
     border: 1px solid #d7d7d7;
     border-radius: 2px;
     overflow: hidden;
@@ -25,12 +25,21 @@
         font-size: 14px;
         font-weight: 500;
         
-        color: #808080;
+        color: #505050;
 
-        border-bottom: 1px solid #d7d7d7;
+		transition: all 0.4s ease;
+	}
+	
+	&__sub-title {
+		display: block;
+		color: #303030;
+		padding: 6px 15px;
+		font-weight: 400;
+        font-size: 13px;
+        background-color: #fafafa;
 
-        transform: all 0.4s ease;
-    }
+		border-top: 1px solid #d7d7d7;
+	}
 
     &__item {
         display: flex;
@@ -40,9 +49,10 @@
 
         padding: 12px 15px;
 
-        border-bottom: 1px solid #d7d7d7;
+        border-top: 1px solid #d7d7d7;
 
         &:hover {
+            cursor: pointer;
             background: #fefefe;
         }
 

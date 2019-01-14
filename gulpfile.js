@@ -27,7 +27,7 @@ gulp.task('less', function() {
         .pipe(browserSync.reload({stream: true}));
 });
 
-gulp.task('watch', ['less', 'browser-sync'], function() {
+gulp.task('watch', ['less'], function() {
     gulp.watch('catalog/view/theme/scarfinity/stylesheet/**/*.less', ['less']);
     gulp.watch('catalog/view/theme/scarfinity/template/**/*.twig', browserSync.reload);
     gulp.watch('catalog/view/theme/scarfinity/js/**/*.js', browserSync.reload);

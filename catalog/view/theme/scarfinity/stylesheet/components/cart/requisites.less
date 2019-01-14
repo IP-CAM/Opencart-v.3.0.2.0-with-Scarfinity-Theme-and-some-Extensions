@@ -31,48 +31,20 @@
 }
 
 .requisites-row {
-    display: inline-flex;
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-start;
-    box-sizing: border-box;
+    position: relative;
 
-    &__left {
-        flex: 1 1;
-        margin: -5px 0px;
-    }
+    &__delim {
+        position: absolute;
 
-    &__right {
-        flex: 1 1;
-        margin: -5px 0px;
-    }
-
-    &__middle {
-        flex: 0 1 1px;
-        margin: 0px 15px;
-        margin-top: 40px;
-        align-self: stretch;
-
-        &--delim {
-            background: #d7d7d7;
-        }
-    }
-
-    @media screen and (max-width: 700px) {
-        &__left, &__right {
-            flex: 1 0 320px;
-            margin: 0;
-        }
-
-        &__left {
-            margin-bottom: 20px;
-        }
-
-        &__middle {
-            display: none;
-        }
+        top: 40px;
+        bottom: 0;
+        left: 50%;
+        right: 50%;
+        width: 1px;
+        background: #d7d7d7;
+        z-index: 0;
+        user-select: none;
+        pointer-events: none;
     }
 }
 

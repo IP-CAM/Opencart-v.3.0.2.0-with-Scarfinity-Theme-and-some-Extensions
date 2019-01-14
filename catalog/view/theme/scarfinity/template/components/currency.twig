@@ -9,7 +9,7 @@
                     	<span class="utility__currency__value">{{ price.special }}</span>
                         <span class="utility__currency__unsale-value">{{ price.price }}</span>
                     {% else %}
-                        <span class="utility__currency__value">{{ price.price }}</span>
+                        <span class="utility__currency__value" data-base="{{price.price}}">{{ price.price }}</span>
                     {% endif %}
 				</div>
 				<span class="utility__currency__subtitle">{{ price.subTitle }}</span>

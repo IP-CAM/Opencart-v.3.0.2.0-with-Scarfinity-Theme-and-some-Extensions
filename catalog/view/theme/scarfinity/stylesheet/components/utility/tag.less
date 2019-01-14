@@ -1,0 +1,23 @@
+.product-tag {
+	display: inline-block;
+	cursor: pointer;
+	text-decoration: none;
+	text-transform: lowercase;
+	border: 1px solid #ccc;
+	border-radius: 2px;
+	padding: 5px 9px;
+
+	& span {
+		color: #888;
+		font-size: 13px;
+		transition: color 0.2s ease;
+	}
+
+	&:hover {
+		text-decoration: none;
+
+		& span {
+			color: #303030;
+		}
+	}
+}

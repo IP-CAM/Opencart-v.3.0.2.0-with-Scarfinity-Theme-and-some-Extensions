@@ -48,6 +48,7 @@
 						<span class="product-card__product-info-container__delim"></span>
 
 						<div class="product-card__product-info">
+
 							{# Product description #}
 							<div class="product-card__product-info__short-description-block">
 								<p class="product-card__product-info__short-description-block__content">
@@ -60,53 +61,81 @@
 								</p>
 							</div>
 
-							{# Product options segment #}
-							{% for option in props.options %}
-								{% if option.type == 'radio' %}
-									{% if option.name|lower == 'color' %}
-										{# ColorPiker section #}
-										<div class="product-card__product-info__color-select-block">
-											<div class="product-card-color">
-												<span class="product-card-color__title">Цвет: </span>
-												<div class="color-picker" id="input-option{{option.product_option_id}}">
-													{% for option_value in option.product_option_value %}
-														{{
-															_colorPicker.ColorPickerItem({
-																type: 'radio',
-																name: 'option[' ~ option.product_option_id ~ ']',
-																value: option_value.product_option_value_id,
-																color: option_value.name
-															})
-														}}
-													{% endfor %}
-												</div>
-											</div>
+							<div class="row product-card-core process">
+								<div class="col-md-4">
+
+									<div class="product-card__product-info__pricing-block">
+										{{ currency.currency(
+					                        { 'price': props.price, 'special': props.special, 'subTitle': 'Цена за шт.' }, 
+					                        { 'fontSize': 30, 'fontWeight': 600 }) 
+					                    }}
+									</div>
+
+									<div class="product-card-discounts">
+										<div class="product-card-discounts__title">Типы цен</div>
+										<hr>
+										<div class="product-card-discounts__line title">
+											<span>В корзине</span>
+											<span>Цена за шт</span>
 										</div>
-									{% endif %}
-								{% endif %}
-							{% endfor %}
+										{% for discount in props.discounts %}
+											{# {{ discount.quantity }}{{ text_discount }}{{ discount.price }} #}
+											<div class="product-card-discounts__line">
+												<span>{{discount.quantity}} шт. и более</span>
+												<span>{{discount.price}}</span>
+											</div>
+										{% endfor %}
+									</div>
+								</div>
+								<div class="col-md-8 product-card-colors">
+									<h3>Выберите цвета</h3>
+									<p>Минимальное количество в корзине: <span class="accent">{{props.productMinQuantity}} шт.</span></p>
 
-							<div class="product-card__product-info__pricing-block">
-								{{ currency.currency(
-			                        { 'price': props.price, 'special': props.special, 'subTitle': 'Цена за шт.' }, 
-			                        { 'fontSize': 30, 'fontWeight': 600 }) 
-			                    }}
+									{# Product options segment #}
+									{% for option in props.options %}
+										{% if option.type == 'radio' and option.name|lower|split('*')[1] == 'colors' %}
+											<div class="row">
+												{% for option_value in option.product_option_value %}
+													<div class="col-md-4">
+														<div class="product-card-quantity ctr-utt">
+															<div class="product-card-quantity__title">{{option_value.name}}</div>
+															<img src="{{option_value.image_f}}" />
+															<div class="product-card-quantity__control">
+																<button name="dec"><span><i class="fa fa-minus"></i></span></button>
+																<input
+																	type="number"
+																	name="quantity"
+																	value="{{ data.minQuantity|default(0) }}"
+																	data-tmp-value="{{ data.minQuantity|default(0) }}"
+																	size="2"
+																	id="input-quantity"
+																	class="product-card-quantity__value" />
+																<button name="inc"><span><i class="fa fa-plus"></i></span></button>
+															</div>
+															<input type="hidden" name="{{ option.product_option_id }}" value="{{ option_value.product_option_value_id }}" />
+														</div>
+													</div>
+												{% endfor %}
+											</div>
+										{% endif %}
+									{% endfor %}
+
+									<input type="hidden" name="product_id" value="{{ props.product_id }}" />
+								</div>
+								<div class="product-card-core__process"></div>
 							</div>
 
-							<div class="product-card__product-info__cart-block">
-								{{ productCardQuantity.quantity({
-									'productId': props.productId,
-									'minQuantity': props.productMinQuantity
-								}) }}
-								{{ button.productCardButton({ 
-									'productId': props.productId,
-									'minQuantity': props.productMinQuantity,
-									'label': props.addCartLabel 
-								}) }}
-							</div>
+							<hr>
+							{# Tags #}
+							{% if props.tags %}
+								{% for tag in props.tags %}
+									<a href="{{tag.href}}" class="product-tag"><span>{{tag.tag}}</span></a>
+								{% endfor %}
+							{% endif %}
 
 							{# AddThis region #}
-							<hr>
+
+
 				            <div style="display: none" class="addthis_toolbox addthis_default_style" data-url="{{ props.share }}">
 				            	<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
 				            	<a class="addthis_button_tweet"></a>

@@ -1,10 +1,31 @@
 {% macro BasicInput(props) %}
-    <input
-        class="sInput{{props.valid == true ? " sInput--success" : props.valid == false ? " sInput--error": ""}}"
-        type="{{props.type}}"
-        name="{{props.name}}"
-        value="{{props.value}}"
-        placeholder="{{props.placeholder}}"
-        {{props.disabled ? disabled: ''}}
-        {{props.readonly ? readonly : ''}} />
+    <div class="sInput-container{{props.required ? ' required': ''}}{{props.type == 'hidden' ? ' hidden': ''}}">
+        {% set id = props.id|default(random()) %}
+        {% if props.label %}
+            <label for="{{id}}">{{props.label}}:</label>
+        {% endif %}
+        <input
+            class="sInput{{props.valid == true ? " sInput--success" : props.valid == false ? " sInput--error": ""}}"
+            id="{{id}}",
+            type="{{props.type}}"
+            name="{{props.name}}"
+            value="{{props.value}}"
+            placeholder="{{props.placeholder}}"
+            data-group="{{props.group|default('s')}}"
+            {{props.disabled ? disabled: ''}}
+            {{props.readonly ? readonly : ''}} />
+    </div>
+{% endmacro %}
+
+{% macro TextArea(props) %}
+    <div class="sInput sInputTextArea">
+        <textarea
+            name="{{props.name}}"
+            id="{{props.id}}"
+            rows="{{props.rows|default(10)}}"
+            data-group="{{props.group|default('s')}}"
+            placeholder="{{props.placeholder}}">
+                {{props.value}}
+        </textarea>
+    </div>
 {% endmacro %}

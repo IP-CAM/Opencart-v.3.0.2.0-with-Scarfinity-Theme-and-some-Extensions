@@ -1,19 +1,21 @@
 {% macro Breadcrumbs(props) %}
     <div class="container">
         <div class="row">
-            <div
-                class="bread-crumbs{{props.hide == true ? ' bread-crumbs--hide': ''}}"
-                style="margin-top: {{props.topOffset}}">
-                {% for crumb in props.breadcrumbs[:props.breadcrumbs|length - 1] %}
-                    <div
-                        class="bread-crumbs__item">
-                            <a href="{{crumb.href}}">
-                                {{crumb.text}}
-                            </a>
+            <div class="col-md-12">
+                <div
+                    class="bread-crumbs{{props.hide == true ? ' bread-crumbs--hide': ''}}"
+                    style="margin-top: {{props.topOffset}}">
+                    {% for crumb in props.breadcrumbs[:props.breadcrumbs|length - 1] %}
+                        <div
+                            class="bread-crumbs__item">
+                                <a href="{{crumb.href}}">
+                                    {{crumb.text}}
+                                </a>
+                        </div>
+                    {% endfor %}
+                    <div class="bread-crumbs__item bread-crumbs__item--end">
+                        <span>{{props.breadcrumbs|last.text}}</span>
                     </div>
-                {% endfor %}
-                <div class="bread-crumbs__item bread-crumbs__item--end">
-                    <span>{{props.breadcrumbs|last.text}}</span>
                 </div>
             </div>
         </div>

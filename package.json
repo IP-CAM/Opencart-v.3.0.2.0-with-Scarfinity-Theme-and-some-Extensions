@@ -1,14 +1,18 @@
 {
   "name": "scarfinity.loc",
   "version": "0.0.1",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "babel": "npx babel --watch catalog/view/theme/scarfinity/src --out-dir catalog/view/theme/scarfinity/js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "babel-preset-react-app": "^3.1.2",
     "browser-sync": "^2.26.3",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^6.0.0",
@@ -20,7 +24,24 @@
     "vinyl-ftp": "^0.6.1"
   },
   "dependencies": {
+    "babel-cli": "^6.26.0",
     "lodash": "^4.17.11",
-    "minimatch": "^3.0.4"
-  }
+    "minimatch": "^3.0.4",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-redux": "^6.0.0",
+    "react-router-redux": "^4.0.8",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VitAm1nKa/opencart.scarfinity.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/VitAm1nKa/opencart.scarfinity/issues"
+  },
+  "homepage": "https://github.com/VitAm1nKa/opencart.scarfinity#readme",
+  "description": ""
 }

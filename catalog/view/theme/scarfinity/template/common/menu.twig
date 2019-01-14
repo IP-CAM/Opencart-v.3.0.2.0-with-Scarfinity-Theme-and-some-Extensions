@@ -20,54 +20,53 @@
 <div class="main-menu">
   <div class="container">
     <div class="row">
+      <div class="col-md-12">
+        <div class="main-menu-ul">
 
-      <div class="main-menu-ul">
+          {% for category in categories %}
+            <span class="main-menu-button">
 
-        {% for category in categories %}
-          <span class="main-menu-button">
+              {% if category.children %}
+                <a href="{{category.href}}">{{category.name}}<i class="fa fa-caret-down"></i></a>
+                <div class="main-menu-button__container">
 
-            {% if category.children %}
-              <a href="{{category.href}}">{{category.name}}<i class="fa fa-caret-down"></i></a>
-              <div class="main-menu-button__container">
+                  <div class="container">
+                    <div class="row">
 
-                <div class="container">
-                  <div class="row">
+                      <ul class="main-menu-button__container__content">
+                        {% for category_2 in category.children|slice(1, 10) %}
+                          <li class="main-menu-button__container__item">
 
-                    <ul class="main-menu-button__container__content">
-                      {% for category_2 in category.children|slice(1, 10) %}
-                        <li class="main-menu-button__container__item">
+                            {% if category_2.children %}
+                              <a href="{{category_2.href}}">
+                                {{category_2.name}}
+                                <i class="fa fa-caret-down"></i>
+                                <div class="main-menu-3__container__triangle"></div>
+                              </a>
+                              {{
+                                _.Level3(category_2)
+                              }}
+                            {% else %}
+                              <a href="{{category_2.href}}">{{category_2.name}}</a>
+                            {% endif %}
 
-                          {% if category_2.children %}
-                            <a href="{{category_2.href}}">
-                              {{category_2.name}}
-                              <i class="fa fa-caret-down"></i>
-                              <div class="main-menu-3__container__triangle"></div>
-                            </a>
-                            {{
-                              _.Level3(category_2)
-                            }}
-                          {% else %}
-                            <a href="{{category_2.href}}">{{category_2.name}}</a>
-                          {% endif %}
+                          </li>
+                        {% endfor %}
 
-                        </li>
-                      {% endfor %}
+                      </ul>
 
-                    </ul>
-
+                    </div>
                   </div>
+
                 </div>
+              {% else %}
+                <a href="{{category.href}}">{{category.name}}</a>
+              {% endif %}
 
-              </div>
-            {% else %}
-              <a href="{{category.href}}">{{category.name}}</a>
-            {% endif %}
-
-          </span>
-        {% endfor %}
-
+            </span>
+          {% endfor %}
+        </div>
       </div>
-
     </div>
   </div>
 </div>

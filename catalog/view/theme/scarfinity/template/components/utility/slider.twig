@@ -1,0 +1,78 @@
+{% macro ScaleBar(props) %}
+    
+{% endmacro %}
+
+{% macro ScaleBarContainer(props) %}
+    <div class="banner-scale-container">
+        {% for item in 0..(props.count|default(0)) %}
+            
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{% macro BannerSlideBar(props) %}
+    <div class="banner-slide">
+        {% for slide in props.slides %}
+            <div class="banner-slide-item">
+                <div class="banner-slide-item__white"></div>
+            </div>
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{% macro Slider(props) %}
+    {% import _self as _ %}
+    {% set id = props.id|default(random()) %}
+    <div class="banner">
+        <div class="banner__container">
+            <div class="swiper-viewport">
+                <div id="carousel{{ id }}" class="swiper-container">
+                    <div class="swiper-wrapper">
+                        {% for banner in props.banners %}
+                            <div class="swiper-slide text-center">
+                                {% if banner.link %}
+                                    <a href="{{ banner.link }}">
+                                        <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" />
+                                    </a>
+                                {% else %}
+                                    <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" />
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="swiper-pagination carousel{{ module }}"></div>
+                <div class="swiper-pager">
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+        </div>
+        <div class="banner__menu">
+            {{ _.BannerSlideBar({ slides: props.banners }) }}
+            <div class="banner-menu">
+                {% for banner in props.banners %}
+                    <div class="banner-menu-item">
+                        <div class="banner-menu-item__title">
+                            <span class="banner-menu-item__title__text">{{banner.title}}</span>
+                        </div>
+                        <span class="banner-menu-item__subtitle">ipsdsfg dsfg sdfg sdf sdfg sf</span>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript"><!--
+        $('#carousel{{ id }}').swiper({
+            mode: 'horizontal',
+            slidesPerView: 1,
+            pagination: '.carousel{{ id }}',
+            paginationClickable: true,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            autoplay: 2500,
+            loop: true
+        });
+    --></script>
+{% endmacro %}

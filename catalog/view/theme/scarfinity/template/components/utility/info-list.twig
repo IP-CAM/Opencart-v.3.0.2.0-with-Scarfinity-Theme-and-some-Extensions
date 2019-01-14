@@ -1,0 +1,11 @@
+{% macro InfoList(props) %}
+    <ul class="info-list">
+    	{% for item in props.items %}
+	        <li>
+	            <span>{{item.title}}</span>
+	            <div class="info-list__dots"></div>
+	            <span>{item.value}</span>
+	        </li>
+    	{% endfor %}
+    </ul>
+{% endmacro %}

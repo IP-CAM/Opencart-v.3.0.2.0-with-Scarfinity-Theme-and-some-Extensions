@@ -1,0 +1,88 @@
+.unique-offer {
+	display: flex;
+	align-items: flex-start;
+	background-color: white;
+	margin: 10px 0px;
+	border-radius: 2px;
+	padding: 15px;
+
+	filter: drop-shadow(rgba(0, 0, 0, 0.1) 0px 1px 1px);
+
+	&__left {
+		position: relative;
+		float: left;
+		padding: 0px 0px;
+		margin-right: 20px;
+		fill: #888;
+		width: 48px;
+		height: 48px;
+
+		& > span {
+			position: absolute;
+			width: auto !important;
+			height: auto !important;
+
+			& svg {
+				width: 100% !important;
+				height: 100% !important;
+			}
+
+			&:nth-child(1) {
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+			}
+
+			&:nth-child(2) {
+				top: 10%;
+				bottom: 10%;
+				left: 10%;
+				right: 10%;
+
+				fill: #ffffff;
+			}
+		}
+	}
+
+	&__content {
+		flex: 1;
+		padding: 0px 0px;
+
+		&__title {
+			font-weight: 500;
+			color: #303030;
+			font-size: 15px;
+		}
+
+		&__text {
+			padding: 0px;
+			margin: 10px 0px;
+			font-size: 13px;
+			line-height: 17px;
+			color: #808080;
+		}
+
+		& > a {
+			display: block;
+			font-weight: 500;
+			font-size: 11px;
+			color: lightcoral;
+			text-transform: capitalize;
+
+			&:hover {
+				text-decoration: none;
+			}
+		}
+	}
+
+	&.green & {
+		&__left {
+			& > span {
+				& > svg {
+					fill: green;
+				}
+			}
+		}
+	}
+}

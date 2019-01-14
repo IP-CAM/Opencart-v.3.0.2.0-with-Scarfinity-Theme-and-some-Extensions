@@ -23,8 +23,8 @@
                 {{ _.PaymentCheck({total: props.orderTotal}) }}
             </div>
         {% endif %}
-        <div class="cart__bottom-navigation__right">
-            <a id="cart-button-next" class="cart__button-next" href="{{props.nextHref}}"}>{{props.nextTitle}}</a>
+        <div id="cart-button-next" class="cart__bottom-navigation__right">
+            <a class="cart__button-next" href="{{props.nextHref}}">{{props.nextTitle}}</a>
         </div>
     </div>    
 {% endmacro %}

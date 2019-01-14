@@ -1,3 +1,10 @@
+//- Colors ----------------------
+	@success:                   #1bb869;
+	@warning:                   #ef8742;   
+	@error:                     #e05543;
+	@active:                    #2799c9;
+//- -----------------------------
+
 .cart_m {
 	&__bottom-section {
 		display: flex;
@@ -33,15 +40,24 @@
 	}
 }
 
+.cart-strong {
+    display: block;
+    margin: 20px 0px 5px 0px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #303030;
+}
+
 
 .cart-checkout-navigation {
-	//display: none;
+    display: none;
+    
 	& a {
-		display: block;
-		width: 30px;
-		height: 30px;
-		line-height: 31px;
-		text-align: center;
-		background-color: coral;
+		display: none;
+		width: 0px;
+        height: 0px;
+        opacity: 0;
+        user-select: none;
+        pointer-events: none;
 	}
 }

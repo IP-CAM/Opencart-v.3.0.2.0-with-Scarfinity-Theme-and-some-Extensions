@@ -4,6 +4,7 @@
 		<input
 			type="checkbox"
 			name="{{props.name}}"
+			data-group="{{props.group|default('s')}}"
 			value="{{props.value}}"
 			{{ props.checked ? 'checked': '' }}
 			{{ props.disabled ? 'disabled': '' }} />
@@ -25,6 +26,7 @@
 		<input
 			type="radio"
 			name="{{props.name}}"
+			data-group="{{props.group|default('s')}}"
 			value="{{props.value|default(id)}}"
 			{{ props.checked ? 'checked': '' }}
 			{{ props.disabled ? 'disabled': '' }} />
