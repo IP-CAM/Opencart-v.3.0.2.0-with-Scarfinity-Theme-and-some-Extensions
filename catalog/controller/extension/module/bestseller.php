@@ -7,6 +7,8 @@ class ControllerExtensionModuleBestSeller extends Controller {
 
 		$this->load->model('tool/image');
 
+		$data['name'] = explode('-', $setting['name'])[0];
+
 		$data['products'] = array();
 
 		$results = $this->model_catalog_product->getBestSellerProducts($setting['limit']);

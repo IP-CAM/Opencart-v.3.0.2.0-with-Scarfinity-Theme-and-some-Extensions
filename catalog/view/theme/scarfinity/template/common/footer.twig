@@ -1,12 +1,26 @@
+{% import 'scarfinity/template/components/utility/social-button.twig' as _socialButton  %}
+{% import 'scarfinity/template/components/utility/mail-line.twig' as _mainLine  %}
+
+<div style="margin-top: 26px;"></div>
+{{ _mainLine.MainLine() }}
 <footer>
   <div class="container">
-    <div class="row footer-body">
-      <div class="col-md-3">
-        socials
-      </div>
-      <div class="col-md-9">
+    <div class="row footer-greed">
+
+        <div class="footer-menu footer-menu--social">
+          <div>LOGO</div>
+          <div class="footer-social">
+            <span class="footer-social__title">Мы в соц.сетях</span>
+            {{ _socialButton.SocialButton({ icon: 'VK', href: 'https://www.vk.com/scarfinity' }) }}
+            {{ _socialButton.SocialButton({ icon: 'FB', href: 'https://www.facebook.com/groups/scarfinity' }) }}
+            {{ _socialButton.SocialButton({ icon: 'OK', href: 'https://www.vk.com/scarfinity' }) }}
+            {{ _socialButton.SocialButton({ icon: 'IG', href: 'https://www.instagram.com/scarfinity.ru' }) }}
+            {{ _socialButton.SocialButton({ icon: 'PT', href: '/' }) }}
+          </div>
+        </div>
+
         {% if informations %}
-          <div class="col-sm-3 footer-menu">
+          <div class="footer-menu">
             <h5 class="footer-menu__title">{{ text_information }}</h5>
             <ul class="list-unstyled">
              {% for information in informations %}
@@ -15,7 +29,7 @@
             </ul>
           </div>
         {% endif %}
-        <div class="col-sm-3 footer-menu">
+        <div class="footer-menu">
           <h5 class="footer-menu__title">{{ text_service }}</h5>
           <ul class="list-unstyled">
             <li><a class="footer-menu__item" href="{{ contact }}">{{ text_contact }}</a></li>
@@ -23,7 +37,7 @@
             <li><a class="footer-menu__item" href="{{ sitemap }}">{{ text_sitemap }}</a></li>
           </ul>
         </div>
-        <div class="col-sm-3 footer-menu">
+        <div class="footer-menu">
           <h5 class="footer-menu__title">{{ text_extra }}</h5>
           <ul class="list-unstyled">
             <li><a class="footer-menu__item" href="{{ manufacturer }}">{{ text_manufacturer }}</a></li>
@@ -32,7 +46,7 @@
             <li><a class="footer-menu__item" href="{{ special }}">{{ text_special }}</a></li>
           </ul>
         </div>
-        <div class="col-sm-3 footer-menu">
+        <div class="footer-menu">
           <h5 class="footer-menu__title">{{ text_account }}</h5>
           <ul class="list-unstyled">
             <li><a class="footer-menu__item" href="{{ account }}">{{ text_account }}</a></li>
@@ -41,12 +55,16 @@
             <li><a class="footer-menu__item" href="{{ newsletter }}">{{ text_newsletter }}</a></li>
           </ul>
         </div>
-      </div>
+
     </div>
   </div>
   <div class="bottom-logo"></div>
   <div class="bottom-copyright">{{ powered }}</div>
 </footer>
+
+</main>
+
+
 {% for script in scripts %}
 <script src="{{ script }}" type="text/javascript"></script>
 {% endfor %}

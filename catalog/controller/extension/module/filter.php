@@ -12,6 +12,7 @@ class ControllerExtensionModuleFilter extends Controller {
 		$this->load->model('catalog/category');
 
 		$category_info = $this->model_catalog_category->getCategory($category_id);
+		//$data['product_prices'] = $this->model_catalog_product->getProductsPrices($filter_data);
 
 		if ($category_info) {
 			$this->load->language('extension/module/filter');
@@ -36,6 +37,18 @@ class ControllerExtensionModuleFilter extends Controller {
 				$data['filter_category'] = explode(',', $this->request->get['filter']);
 			} else {
 				$data['filter_category'] = array();
+			}
+
+			if (isset($this->request->get['pmin'])) {
+				$data['pmin'] = $this->request->get['pmin'];
+			} else {
+				$data['pmin'] = '';
+			}
+
+			if (isset($this->request->get['pmax'])) {
+				$data['pmax'] = $this->request->get['pmax'];
+			} else {
+				$data['pmax'] = '';
 			}
 
 			$this->load->model('catalog/product');

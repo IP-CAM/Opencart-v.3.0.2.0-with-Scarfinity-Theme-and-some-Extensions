@@ -5,6 +5,7 @@
 @delim-left:    rgba(0, 0, 0, 0.1);
 @delim-right:   rgba(255, 255, 255, 0.17);
 
+
 .main-nav-test {
     position: absolute;
     top: 100%;
@@ -40,6 +41,14 @@
     background: @background;
     height: 42px;
     position: relative;
+    
+    @media screen and (max-width: 768px) {
+        display: none;
+        visibility: hidden;
+        opacity: 0;
+        user-select: none;
+        pointer-events: none;
+    }
 }
 
 .main-menu-container {
@@ -72,22 +81,46 @@
 }
 
 .main-menu-ul {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
     position: relative;
+    height: 42px;
+    z-index: 410;
+    transition-delay: 1.2s;
 
-    & > div {
-        flex: 1;
+    &__container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+
+        &__nav-ul {
+            display: flex;
+            flex-direction: row;
+            justify-content: stretch;
+            align-items: stretch;
+
+            &__item {
+                flex: 1;
+
+                &:nth-child(1) .main-menu-button__container {
+                    border-left: none;
+                }
+            }
+        }
     }
 
-    //margin-left: -14px;
-    //margin-right: -14px;
+    &.active {
+        & .main-menu-button__container {
+            display: block;;
+        }
+    }
 }
 
 .main-menu-button { 
     flex: 1;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: 100%;
     
     font-size: 15px;
     font-weight: 500;
@@ -97,7 +130,7 @@
 
     color: @nav-text;
 
-    text-transform: capitalize;
+    // text-transform: capitalize;
 
     transition: background 0.2s ease;
 
@@ -109,6 +142,7 @@
     & > a {
         display: block;
         color: #ffffff;
+        // background: #2799c9;
 
         & i {
             margin-left: 6px;
@@ -141,33 +175,32 @@
 
     &:hover & {
         &__container {
-            display: block;
+            &__content {
+                opacity: 1;
+            }
         }
     }
 
     &__container {
-        display: none;
-        position: absolute;
-        //position: relative;
-        left: 0;
-        right: 0;
-        top: 100%;
-        height: 42px;
         background-color: #ffffff;
         z-index: 400;
+        height: 100%;
+        border-left: 1px solid #eee;
+        display: none;
+        border-bottom: 2px solid #ccc;
 
         &__content {
-            display: flex;
-            justify-content: flex-start;
-            margin: 0px -10px;
-            padding: 0;
+            // display: flex;
+            // justify-content: flex-start;
+            // margin: 0px -10px;
+            padding: 12px 0px;
+            margin: 0;
             list-style: none;
+            opacity: 0.5;
         }
 
         &__item {
-            display: inline-block;
-            color: #303030;
-            line-height: 42px;
+            display: block;
             // position: relative;
             // filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.36));
 
@@ -175,19 +208,27 @@
                 display: block;
                 padding: 0px 12px;
                 font-size: 13px;
-                color: #555;
+                line-height: 28px;
+                color: #303030;
                 font-weight: 400;
                 position: relative;
+                text-align: left;
+                transition: color 0.2s ease;
+                text-decoration: none;
 
-                &:after {
-                    content: "";
-                    position: absolute;
-                    top: 30%;
-                    bottom: 30%;
-                    width: 0;
-                    right: 0;
-                    border-right: 1px solid #ccc;
+                &:hover {
+                    color: #bf4f79;
                 }
+
+                // &:after {
+                //     content: "";
+                //     position: absolute;
+                //     top: 30%;
+                //     bottom: 30%;
+                //     width: 0;
+                //     right: 0;
+                //     border-right: 1px solid #ccc;
+                // }
             }
 
             &:last-child {
@@ -465,7 +506,7 @@
         font-weight: 500;
         text-decoration: none;
     
-        z-index: 400;
+        z-index: 700;
         
         color: @nav-text;
         fill: @nav-text;
@@ -583,7 +624,7 @@
         top: 100%;
         right: 0;
 
-        z-index: 400;
+        z-index: 700;
     }
 
     position: relative;
@@ -620,6 +661,7 @@
 
     &__footer {
         padding: 8px 12px;
+        background: #fff;
 
         &__total {
             display: flex;

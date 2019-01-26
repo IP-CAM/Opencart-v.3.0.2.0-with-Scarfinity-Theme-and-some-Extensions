@@ -1,0 +1,109 @@
+{% macro PriceRange(props) %}
+    {% import 'scarfinity/template/components/utility/basic-input.twig' as _basicInput  %}
+
+    {% set id = props.id|default(random()) %}
+
+    <div class="price-range-widget" id="price-range-widget[{{id}}]">
+        <div class="price-range-widget__titles">
+            <span class="price-range-widget__titles__value">10</span>
+            <span class="price-range-widget__titles__value">3000</span>
+        </div>
+        <div id="price-range[{{id}}]"></div>
+        <div class="price-range-widget__body">
+            {{ 
+                _basicInput.basicInput({
+                    value: '0',
+                    valid: true,
+                    name: 'pmin',
+                    group: 'price_original',
+                    type: 'number',
+                    placeholder: ''
+                })
+            }}
+            <i class="fa fa-exchange" aria-hidden="true"></i>
+            {{ 
+                _basicInput.basicInput({
+                    value: '0',
+                    valid: true,
+                    name: 'pmax',
+                    group: 'price_original',
+                    type: 'number',
+                    placeholder: ''
+                })
+            }}
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        if(!range) {
+            var range = {};
+        }
+
+        var id = '{{id}}';
+
+        console.log('{{props.pmin}}');
+        
+        range[id] = {
+            base: null,
+            nouislider: null,
+            min: null,
+            max: null,
+            pmin: parseInt('{{props.pmin}}') || 10,
+            pmax: parseInt('{{props.pmax}}') || 3000,
+            minValue: 10,
+            maxValue: 3000,
+            init: function() {
+                var _ = this;
+
+                _.base = document.getElementById('price-range-widget[' +  id + ']');
+                _.nouislider = document.getElementById('price-range[' +  id + ']');
+                _.min = $(_.base).find('input[name$="min"]')[0];
+                _.max = $(_.base).find('input[name$="max"]')[0];
+
+                _.min.addEventListener('change', function() {
+                    if(_.nouislider) {
+                        _.nouislider.noUiSlider.set([$(this).val(), null]);
+                    }
+                });
+
+                _.max.addEventListener('change', function() {
+                    if(_.nouislider) {
+                        _.nouislider.noUiSlider.set([null, $(this).val()]);
+                    }
+                });
+
+
+                _.nouisliderInit();
+            },
+            nouisliderInit: function() {
+                var _ = this;
+
+                if(typeof noUiSlider != 'undefined') {
+                    noUiSlider.create(_.nouislider, {
+                        range: {
+                            'min': _.minValue,
+                            'max': _.maxValue
+                        },
+                        step: 50,
+                        start: [_.pmin, _.pmax],
+                        margin: 0,
+                        limit: _.maxValue,
+                        connect: true,
+                        direction: 'ltr',
+                        orientation: 'horizontal',
+                        behaviour: 'tap-drag',
+                        tooltips: false
+                    });
+
+                    _.nouislider.noUiSlider.on('update', function(values, handle) {
+                        if(handle == 0) _.min.value = values[0] != _.minValue ? values[0] : '';
+                        if(handle == 1) _.max.value = values[1] != _.maxValue ? values[1] : '';
+                    });
+                }
+            }
+        };
+
+        range[id].init();
+
+    </script>
+{% endmacro %}

@@ -1,4 +1,4 @@
-{% macro Level3(props) %}
+{# {% macro Level3(props) %}
   <div class="main-menu-3__container">
     <div class="container">
       <div class="row">
@@ -20,7 +20,7 @@
 <div class="main-menu">
   <div class="container">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12" style="position: unset;">
         <div class="main-menu-ul">
 
           {% for category in categories %}
@@ -32,7 +32,94 @@
 
                   <div class="container">
                     <div class="row">
+                      <div class="col-md-12">
 
+                        <ul class="main-menu-button__container__content">
+                          {% for category_2 in category.children|slice(1, 10) %}
+                            <li class="main-menu-button__container__item">
+
+                              {% if category_2.children %}
+                                <a href="{{category_2.href}}">
+                                  {{category_2.name}}
+                                  <i class="fa fa-caret-down"></i>
+                                  <div class="main-menu-3__container__triangle"></div>
+                                </a>
+                                {{
+                                  _.Level3(category_2)
+                                }}
+                              {% else %}
+                                <a href="{{category_2.href}}">{{category_2.name}}</a>
+                              {% endif %}
+
+                            </li>
+                          {% endfor %}
+
+                        </ul>
+                        
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              {% else %}
+                <a href="{{category.href}}">{{category.name}}</a>
+              {% endif %}
+
+            </span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %} #}
+
+{% import 'scarfinity/template/components/utility/_icons.twig' as _icons %}
+
+{# Mobile #}
+<div class="mobile-nav" id="mobile-main-menu">
+  <div class="mobile-nav__container">
+    {# Middle menu #}
+    <div class="mobile-nav-middle-menu">
+      <ul class="mobile-nav-ul">
+        {% for category in categories %}
+          <li>
+            {% if category.children %}
+              <span><a href="{{ category.href }}">{{ category.name }}</a><span class="sIcon"><i class="fa fa-angle-down"></i></span></span>
+              <ul class="mobile-nav-ul">
+                {% for child in category.children %}
+                  <li><span><a href="{{ child.href }}">{{ child.name }}</a></span></li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <span><a href="{{ category.href }}">{{category.name}}</a></span>
+            {% endif %}
+          </li>
+          
+        {% endfor %}
+      </ul>
+    </div>
+    {# Middle menu end #}
+  </div>
+</div>  
+{# Mobile end #}
+
+<div class="main-menu" id="main-menu">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12" style="position: unset;">
+        <div class="main-menu-ul">
+          <div class="main-menu-ul__container">
+            <div class="main-menu-ul__container__nav-ul">
+              {% for category in categories %}
+                <div class="main-menu-ul__container__nav-ul__item">
+                  <span class="main-menu-button">
+                    {% if category.children %}
+                      <a href="{{category.href}}">{{category.name}}<i class="fa fa-caret-down"></i></a>
+                    {% else %}
+                      <a href="{{category.href}}">{{category.name}}</a>
+                    {% endif %}
+                    <div class="main-menu-button__container">
                       <ul class="main-menu-button__container__content">
                         {% for category_2 in category.children|slice(1, 10) %}
                           <li class="main-menu-button__container__item">
@@ -54,7 +141,47 @@
                         {% endfor %}
 
                       </ul>
+                    </div>
+                  </span>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
 
+          {# {% for category in categories %}
+            <span class="main-menu-button">
+
+              {% if category.children %}
+                <a href="{{category.href}}">{{category.name}}<i class="fa fa-caret-down"></i></a>
+                <div class="main-menu-button__container">
+
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-12">
+
+                        <ul class="main-menu-button__container__content">
+                          {% for category_2 in category.children|slice(1, 10) %}
+                            <li class="main-menu-button__container__item">
+
+                              {% if category_2.children %}
+                                <a href="{{category_2.href}}">
+                                  {{category_2.name}}
+                                  <i class="fa fa-caret-down"></i>
+                                  <div class="main-menu-3__container__triangle"></div>
+                                </a>
+                                {{
+                                  _.Level3(category_2)
+                                }}
+                              {% else %}
+                                <a href="{{category_2.href}}">{{category_2.name}}</a>
+                              {% endif %}
+
+                            </li>
+                          {% endfor %}
+
+                        </ul>
+                        
+                      </div>
                     </div>
                   </div>
 
@@ -64,10 +191,52 @@
               {% endif %}
 
             </span>
-          {% endfor %}
+          {% endfor %} #}
+
         </div>
       </div>
     </div>
   </div>
 </div>
-{% endif %}
+
+<script type="text/javascript">
+  $('.main-menu-ul').mouseenter(function() {
+    $(this).addClass('enter');
+    $(this).delay(200).queue(function(next) {
+      if($(this).hasClass('enter')) {
+        $(this).addClass('active');
+      }
+      next();
+    })
+  }).mouseleave(function() {
+    $(this).removeClass('enter').removeClass('active');
+  });
+</script>
+
+<script type="text/javascript">
+  var mobileMenu = {
+    isOpen: false,
+    menu: document.getElementById('mobile-main-menu'),
+    open: function() {
+      this.isOpen = true;
+
+      $('html').addClass('mobile-nav-open');
+      $(this.menu).addClass('open');
+    },
+    close: function() {
+      this.isOpen = false;
+
+      $('html').removeClass('mobile-nav-open');
+      $(this.menu).removeClass('open');
+    },
+    toggle: function() {
+      this.isOpen ? this.close() : this.open();
+    }
+  }
+</script>
+
+
+
+
+
+

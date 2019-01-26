@@ -8,5 +8,6 @@
     {% import _self as _ %}
     
     {% if type == 'product' %}{{_.decOfNum(['Товар','Товара','Товаров'], count)}}
+    {% elseif type == 'products' %}{{_.decOfNum(['Товара','Товаров','Товаров'], count)}}
     {% endif %}
 {% endmacro %}

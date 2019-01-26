@@ -63,12 +63,16 @@ class ControllerCommonColumnRight extends Controller {
 					$output = $this->load->controller('extension/module/' . $part[0], $setting_info);
 
 					if ($output) {
-						$data['modules'][] = $output;
+						$data['modules'][$setting_info['name']] = $output;
 					}
 				}
 			}
 		}
 
-		return $this->load->view('common/column_right', $data);
+		if(count($data['modules']) > 0) {
+			return $data;
+		} else {
+			return null;
+		}
 	}
 }

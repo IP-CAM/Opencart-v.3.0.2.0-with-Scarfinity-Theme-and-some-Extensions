@@ -34,6 +34,30 @@
     {% endfor %}
   {% endset %}
 
+  {% set footer %}
+    <div class="cart-popup__footer">
+      {% for total in totals %}
+        <div class="cart-popup__footer__total">
+          <span class="cart-popup__footer__total__title">{{total.title}}:</span>
+          {{_currency.Currency({ price: total.text }, { fontWeight: 500, fontSize: 15 })}}
+        </div>
+      {% endfor %}
+      <div class="cart-popup__footer__buttons">
+        <a
+          href="{{ cart }}"
+          class="cart-popup__footer__buttons__cart">
+            {{_icons.CartBasket({size: 15})}}
+        </a>
+        <a
+          href="{{ checkout }}"
+          class="cart-popup__footer__buttons__checkout">
+            <span>{{ text_checkout }}</span>
+            {{_icons.ChevronRight({size: 12})}}
+        </a>
+      </div>
+    </div>
+  {% endset %}
+
   <button class="cart-button">
     {{_icons.CartBasket({size: 15})}}
     <div class="cart-button__content">
@@ -44,28 +68,100 @@
   <div class="cart-popup__container">
     <div class="cart-popup">
         {{lines}}
-        <div class="cart-popup__footer">
-          {% for total in totals %}
-            <div class="cart-popup__footer__total">
-              <span class="cart-popup__footer__total__title">{{total.title}}:</span>
-              {{_currency.Currency({ price: total.text }, { fontWeight: 500, fontSize: 15 })}}
-            </div>
-          {% endfor %}
-          <div class="cart-popup__footer__buttons">
-            <a
-              href="{{ cart }}"
-              class="cart-popup__footer__buttons__cart">
-                {{_icons.CartBasket({size: 15})}}
-            </a>
-            <a
-              href="{{ checkout }}"
-              class="cart-popup__footer__buttons__checkout">
-                <span>{{ text_checkout }}</span>
-                {{_icons.ChevronRight({size: 12})}}
-            </a>
-          </div>
-        </div>
+        {{footer}}
     </div>
   </div>
+
+
+  {#  #}
+  {# Mobile cart section #}
+  <div style="display: none; visible: hidden; opacity: 0;">
+    {% set id = date().timestamp %}
+
+    {# Mobile cart content #}
+    <div id="mobile-cart-content-{{id}}" class="mobile-cart">
+      <div class="mobile-cart__header"></div>
+      <div class="mobile-cart__content">
+        <ul class="mobile-cart-item-grid">
+          {% for product in products %}
+            <li>
+              <div class="mobile-cart-product-card">
+                <div class="mobile-cart-product-card">
+                  <div class="mobile-cart-product-card__image">
+                    <a href="{{ props.product.href }}">
+                      {{ _imageContainer.ImageContainer({src: product.thumb, alt: product.name, title: product.name}) }}
+                    </a>
+                  </div>
+                  <div class="mobile-cart-product-card__middle">
+                    <div class="mobile-cart-product-card-description">
+                      <span>{{product.name}}</span>
+                      <div class="mobile-cart-product-card-description__quantity-price">
+                        <span>{{product.quantity}}</span>
+                        <span style="color: #ccc, margin: 0px 5px">&#215;</span>
+                        <span>{{product.price}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mobile-cart-product-card__price">
+                  </div>
+                </div>
+              </div>
+            </li>
+            {# <div class="mobile-cart-item-grid__item">
+              <div class="mobile-cart-item">
+                <div class="mobile-cart-item__container">
+                  <div class="mobile-cart-item__container__card">
+                    <div class="mobile-cart-product-card">
+                      <div class="mobile-cart-product-card">
+                        <div class="mobile-cart-product-card__image">
+                          <a href="{{ props.product.href }}">
+                            {{ _imageContainer.ImageContainer({src: product.thumb, alt: product.name, title: product.name}) }}
+                          </a>
+                        </div>
+                        <div class="mobile-cart-product-card__middle">
+                          <div class="mobile-cart-product-card-description">
+                            <span>{{product.name}}</span>
+                            <div class="mobile-cart-product-card-description__quantity-price">
+                              <span>{{product.quantity}}</span>
+                              <span style="color: #ccc, margin: 0px 5px">&#215;</span>
+                              <span>{{product.price}}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="mobile-cart-product-card__price">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mobile-cart-item__container__delete">
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> #}
+          {% endfor %}
+        </ul>
+        {{footer}}
+      </div>
+    </div>
+    {# Mobile cart content end #}
+
+    {# Mobile cart button #}
+    <div class="mobile-nav-cart-button" id="mobile-nav-cart-button-{{id}}">
+      <div class="mobile-nav-cart-button__icon"></div>
+      <span class="mobile-nav-cart-button__bage">{{cart_info.items_count}}</span>
+    </div>
+    {# Mobile cart button #}
+
+    {# Script #}
+    <script type="text/javascript">
+      $('#mobile-nav-header__cart').html($('#mobile-nav-cart-button-{{id}}'));
+      $('#mobile-cart').html($('#mobile-cart-content-{{id}}'));
+    </script>
+    {# Script end #}
+
+  </div>
+  {# Mobile cart section end #}
+  {#  #}
 
 {% import _self as _ %}

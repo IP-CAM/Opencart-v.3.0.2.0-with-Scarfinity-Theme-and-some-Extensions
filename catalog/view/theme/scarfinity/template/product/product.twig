@@ -19,7 +19,7 @@
 {{ _breadcrumbs.Breadcrumbs({ breadcrumbs: breadcrumbs }) }}
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 col-sm-no-padding">
       <div class="product-card" id="product">
         {{ 
           productCard.productCard({
@@ -48,20 +48,11 @@
       </div>
     </div>
   </div>
-  <br>
-  <div class="row">
-    <div class="col-md-4 product-card-unique-offer-container">
-      {% for offer in 0..0 %}
-        {{ _uniqueOffer.UniqueOffer({ 
-          svg: _icons.CartBasket({ size: 64 }),
-          title: "Offer {{offer}}", 
-          text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
-          link: 'читать больше',
-          href: '/about-us'
-        }) }}
-      {% endfor %}
+  <div class="row product-card__review">
+    <div class="col-md-4 col-sm-no-padding">
+      {{ column_right['modules']['product-card-unique'] }}
     </div>
-    <div class="col-md-8">
+    <div class="col-md-8 col-sm-no-padding product-card__review__review">
       {% set tabAttributeContent %}
         <ul class="info-list">
           {% for attribute_group in attribute_groups %}
@@ -86,10 +77,11 @@
       }}
     </div>
   </div>  
-  <div class="row">
-    <h3>{{ text_related }}</h3>
+  <br />
+  <h3>{{ text_related }}</h3>
+  <div class="row product-card-catalog-row">
     {% for product in products %}
-      <div class="col-xs-6 col-sm-3 col-md-5ths">
+      <div class="product-card-catalog-container col-xs-6 col-sm-3 col-md-5ths">
         {{ _categoryProductCard.CategoryProductCard(product) }}
       </div>
     {% endfor %}
@@ -98,6 +90,15 @@
 
 
 <script type="text/javascript">
+  var product = {
+    product_id: "{{product_id}}",
+    price: {
+      origin: '{{ price_origin }}',
+      base: '{{ price }}',
+      special: '{{ special }}'
+    }
+  }
+
   var product_id = "{{product_id}}";
 
   function fillProductOptions() {
@@ -120,10 +121,15 @@
     var currency = $('#product .utility__currency');
     var price = sCart.getProductPrice(product_id);
     var value = currency.find('.utility__currency__value');
+
     if(price != '') {
       value.text(price);
     } else {
-      value.text(value.data('base'));
+      if(sCart.getSubTotalOrigin() >= 5000) {
+        value.text(product.price['origin']);  
+      } else {
+        value.text(product.price['base']);
+      }
     }
   }
 
@@ -236,7 +242,7 @@ $('#button-review').on('click', function() {
 });
 
 $(document).ready(function() {
-	$('.product-card-image-container__galery').magnificPopup({
+	$('#p_card-i_gallery-swiper').magnificPopup({
 		type:'image',
 		delegate: 'a',
 		gallery: {

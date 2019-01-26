@@ -30,125 +30,65 @@
 {% import 'scarfinity/template/components/cart/payments.twig' as _payments %}
 {% import 'scarfinity/template/components/cart/bottom-navigation.twig' as bottomNavigation %}
 {% import 'scarfinity/template/components/review.twig' as _review %}
+{% import 'scarfinity/template/components/image-container.twig' as imageContainer %}
 
 
 {% import 'scarfinity/template/components/utility/select-box.twig' as _selectBox %}
 {% import 'scarfinity/template/components/utility/color-picker.twig' as _colorPicker %}
 {% import 'scarfinity/template/components/utility/input-search.twig' as _inputSearch %}
 {% import 'scarfinity/template/components/utility/_icons.twig' as _icons  %}
+{% import 'scarfinity/template/components/utility/social-button.twig' as _socialButton  %}
 {% import 'scarfinity/template/components/utility/value-switch.twig' as _valueSwitch  %}
 {% import 'scarfinity/template/components/utility/drop-down.twig' as _dropDown  %}
-{% import 'scarfinity/template/components/utility/slider.twig' as _slider  %}
+{% import 'scarfinity/template/components/utility/price-range.twig' as _priceRange  %}
 
 {% import 'scarfinity/template/components/lib/currying.twig' as _currying %}
 
 {{ header }}
 
 {{ _breadcrumbs.Breadcrumbs({ breadcrumbs: breadcrumbs, topOffset: 0 }) }}
+<div id="information-information" class="container">
+  <div class="row">
 
-<hr>
+    {{ column_left }}
 
-{# {{ 
-  _slider.Slider({
-    banners: [
-      { title: 'Hello', image: 'https://colourmebeautifuldirect.co.uk/image?w=1400&h=800&fit=crop-50-50&src=production%2Fcms%2Fprocessed%2Fc75f3ff7be52252ef55427d3cd688838.jpg&s=f2040266134056a69b884ace3441956a' },
-      { title: 'Hello 2', image: 'https://www.boothbayregister.com/sites/default/files/2013/04/image/scarves_1.jpg' }
-    ]
-  }) 
-}} #}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
 
-<hr>
+    <div id="content" class="{{ class }}">
+      {# {{ content_top }} #}
 
-{{ _icons.DeliveryRound({ size: 200 }) }}
+      <h1>{{ heading_title }}</h1>
 
-<hr>
+      <div class="row">
+        <div class="col-xs-12 col-sm-9 col-md-6 col-lg-10">
+          {{ _priceRange.PriceRange({ id: 0 }) }}
+        </div>
+      </div>
 
-{{_dropDown.DropDown({ title: 'Drop-down', options: [ { value: '1', text: '13123123' }, { value: '2', text: '123123' } ], selectedValue: '2' })}}
 
-<hr>
-{{ _valueSwitch.ValueSwitch({ title: 'Value switch', values: [20, 50, 100] }) }}
+      {{ description }}
 
-<hr>
+      {% if column_right %}
+        {% for key, module in column_right['modules'] %}
+          <h1>{{key}}</h1>
+          {{module}}
+        {% endfor %}
+      {% endif %}
+
+      {{ content_bottom }}
+    </div>
+    
+  </div>
+</div>
 
 {{ footer }}
 
 
 
 
-
-
-
-{% if false %}
-
-
-
-<div>
-  {{ pagination }}
-</div>
-
-{{ _review.ReviewsContainer() }}
-<hr>
-<div>
-  {% for item in 0..15 %}
-    <label class="tr-34">
-      <input type="radio" name="aa" value="{{item}}">
-      <span></span>
-    </label>
-  {% endfor %}
-</div>
-<script type="text/javascript">
-  $('.tr-34').on('mouseover', function(e) {
-    var r = $(this).find('input[type="radio"]');
-    if(r != null) {
-      r.prop( "checked", true );
-    }
-  });
-</script>
-<hr>
-<div style="padding: 40px; border: 1px solid #ccc;">
-  {{_colorPicker.ColorPickerItem({})}}
-  {{_colorPicker.ColorPickerItem({checked: true})}}
-  {{_colorPicker.ColorPickerItem({checked: false, disabled: true})}}
-  {{_colorPicker.ColorPickerItem({checked: true, disabled: true})}}
-</div>
-{{_colorPicker.ColorPicker({ type: 'radio', colors: 0..9 })}}
-<hr>
-{{ _selectBox.Radio({ name: '00', label: '00' }) }}
-{{ _selectBox.Radio({ name: '00', label: '01' }) }}
-{{ _selectBox.Radio({ name: '00', label: '02' }) }}
-<hr>
-<div id="cart" class="container">
-  <div class="row">
-    <div>
-      <button data-step="1">1</button>
-      <button data-step="2">2</button>
-      <button data-step="3">3</button>
-    </div>
-    <div class="cart">
-      {{ headerNavigation.HeaderNavigation({step:'1'})}}
-      {{ products.products() }}
-      {{ requisites.requisites() }}
-      {{ _payments.Payments() }}
-      {{ bottomNavigation.BottomNavigation({ orderTotal: 1500 }) }}
-      <div id="id1">{{ Data }}</div>
-      <div class="ttt" data-step="10"></div>
-    </div>
-  </div>
-</div>
-
-<script type="text/javascript">
-
-  var state = {
-    step: 0
-  };
-
-  $('#cart button').click(function(e) {
-    var step = $(e.currentTarget).data('step');
-    $('.cart__header-navigation').attr('data-step', step);
-    $('.cart-header-navigation-item').removeClass('active');
-    $('.cart-header-navigation-item[data-value=' + step + ']').addClass('active');
-  });
-
-</script>
-
-{% endif %}

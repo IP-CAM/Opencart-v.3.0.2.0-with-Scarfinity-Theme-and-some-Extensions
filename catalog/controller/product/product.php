@@ -225,8 +225,8 @@ class ControllerProductProduct extends Controller {
 			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
 			$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 			$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/swiper.min.css');
-     		$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/opencart.css');
-    		$this->document->addScript('catalog/view/javascript/jquery/swiper/js/swiper.jquery.js');
+			$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/opencart.css');
+			$this->document->addScript('catalog/view/javascript/jquery/swiper/js/swiper.jquery.js');
 
 			$data['heading_title'] = $product_info['name'];
 
@@ -280,8 +280,10 @@ class ControllerProductProduct extends Controller {
 
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 				$data['price'] = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				$data['price_origin'] = $this->currency->format($this->tax->calculate($product_info['price_origin'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 			} else {
 				$data['price'] = false;
+				$data['price_origin'] = false;
 			}
 
 			if ((float)$product_info['special']) {

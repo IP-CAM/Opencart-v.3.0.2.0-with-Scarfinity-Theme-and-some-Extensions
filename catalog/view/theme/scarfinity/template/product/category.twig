@@ -1,6 +1,5 @@
 {# core import #}
 {% import 'scarfinity/template/components/navigation/breadcrumbs.twig' as _breadcrumbs %}
-{% import 'scarfinity/template/components/navigation/pagination.twig' as _pagination %}
 
 {# components import #}
 {% import 'scarfinity/template/components/category-product-card.twig' as _categoryProductCard %}
@@ -85,25 +84,13 @@
         </div>
 
       </div>
-      <div class="row">
-        {% for product in products %}
-          <div class="product-layout product-list col-xs-12" style="margin-bottom: 28px; padding: 0px 8px;">
-            {{ _categoryProductCard.categoryProductCard(product, { buttonLabel: button_cart }) }}
-          </div>
-        {% endfor %}
+
+      <div class="row product-card-catalog-row">
+        {% include 'scarfinity/template/product/products.twig' ignore missing %}
       </div>
 
-      {{_pagination.Pagination(pagination_data)}}
-      <div class="catalog-footer">
-        <div class="row">
-          <div class="catalog-footer">
-            <div class="catalog-footer__results">
-              {{ results }}
-            </div>
-          </div>
-        </div>
-      </div>
       {% endif %}
+
       {% if not categories and not products %}
       <p>{{ text_empty }}</p>
       <div class="buttons">
@@ -113,4 +100,27 @@
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
+
+<script type="text/javascript">
+  function fetch(nextHref) {
+    if(nextHref) {
+      $.ajax({
+        url: nextHref,
+        dataType: 'html',
+        beforeSend: function() {
+          $('#fetch').attr("disabled", "disabled");
+        },
+        success: function(html) {
+          $('#competitor').before(html).remove();
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+      });
+    }
+
+    return false;
+  }
+</script>
+
 {{ footer }} 

@@ -1,0 +1,40 @@
+{% macro MainLine(props) %}
+    {% import 'scarfinity/template/components/utility/basic-input.twig' as _basicInput %}
+    {% import 'scarfinity/template/components/button.twig' as _button %}
+
+    <div class="mail-line">
+        <div class="mail-line__line"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                    <div class="mail-line__banner-container">
+                        <div class="mail-line__banner">
+                            <div class="mail-line__banner__top">
+                                <span class="mail-line__blue">Новости</span>
+                                <span>&</span>
+                                <span class="mail-line__green">Скидка 10%</span>
+                            </div>
+                            <div class="mail-line__banner__bottom">
+                                подпишитесь на рассылку
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    {{
+                        _basicInput.BasicInput({
+                            type: 'text',
+                            placeholder: 'Подпишитесь на рассылку',
+                            valid: true
+                        })
+                    }}
+                </div>
+                <div class="col-md-3">
+                    {{ _button.BasicButton({ title: 'Подписаться', color: 'orange' }) }}
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

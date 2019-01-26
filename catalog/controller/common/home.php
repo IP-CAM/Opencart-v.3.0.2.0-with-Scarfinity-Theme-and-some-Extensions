@@ -15,6 +15,7 @@ class ControllerCommonHome extends Controller {
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
+		$data['heading_title'] = $this->config->get('config_meta_title');
 
 		$this->response->setOutput($this->load->view('common/home', $data));
 	}

@@ -9,12 +9,14 @@ class ControllerCommonCart extends Controller {
 		$totals = array();
 		$taxes = $this->cart->getTaxes();
 		$total = 0;
+		$total_origin = 0;
 
 		// Because __call can not keep var references so we put them into an array.
 		$total_data = array(
-			'totals' => &$totals,
-			'taxes'  => &$taxes,
-			'total'  => &$total
+			'totals' 		=> &$totals,
+			'taxes'  		=> &$taxes,
+			'total'  		=> &$total,
+			'total_origin' 	=> &$total_origin 
 		);
 			
 		// Display prices
@@ -289,7 +291,9 @@ class ControllerCommonCart extends Controller {
 
 		foreach ($totals as $total) {
 			$data['totals'][] = array(
+				'code'	=> $total['code'],
 				'title' => $total['title'],
+				'value' => $total['value'],
 				'text'  => $this->currency->format($total['value'], $this->session->data['currency']),
 			);
 		}

@@ -12,10 +12,6 @@ class ControllerInformationInformation extends Controller {
 			'href' => $this->url->link('common/home')
 		);
 
-		$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/swiper.min.css');
-		$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/opencart.css');
-	   	$this->document->addScript('catalog/view/javascript/jquery/swiper/js/swiper.jquery.js');
-
 		if (isset($this->request->get['information_id'])) {
 			$information_id = (int)$this->request->get['information_id'];
 		} else {
@@ -28,6 +24,9 @@ class ControllerInformationInformation extends Controller {
 			$this->document->setTitle($information_info['meta_title']);
 			$this->document->setDescription($information_info['meta_description']);
 			$this->document->setKeywords($information_info['meta_keyword']);
+
+			$this->document->addStyle('catalog/view/javascript/nouislider/nouislider.min.css');
+			$this->document->addScript('catalog/view/javascript/nouislider/nouislider.min.js');
 
 			$data['breadcrumbs'][] = array(
 				'text' => $information_info['title'],

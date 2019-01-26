@@ -2,8 +2,8 @@
 {% import 'scarfinity/template/components/navigation/breadcrumbs.twig' as _breadcrumbs %}
 
 {{ header }}
+{{ _breadcrumbs.Breadcrumbs({breadcrumbs: breadcrumbs}) }}
 <div id="error-not-found" class="container">
-  {{ _breadcrumbs.Breadcrumbs({breadcrumbs: breadcrumbs}) }}
   <div class="row">{{ column_left }}
     {% if column_left and column_right %}
     {% set class = 'col-sm-6' %}

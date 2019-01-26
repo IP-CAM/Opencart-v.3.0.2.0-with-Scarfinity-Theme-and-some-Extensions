@@ -9,17 +9,22 @@ class ControllerExtensionModuleCarousel extends Controller {
 		$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/swiper.min.css');
 		$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/opencart.css');
 		$this->document->addScript('catalog/view/javascript/jquery/swiper/js/swiper.jquery.js');
-
+		
+		$data['name'] = $setting['name'];
+		
 		$data['banners'] = array();
 
 		$results = $this->model_design_banner->getBanner($setting['banner_id']);
 
 		foreach ($results as $result) {
 			if (is_file(DIR_IMAGE . $result['image'])) {
+				$content = explode('|', $result['title']);
+
 				$data['banners'][] = array(
-					'title' => $result['title'],
-					'link'  => $result['link'],
-					'image' => $this->model_tool_image->resize($result['image'], $setting['width'], $setting['height'])
+					'title' 		=> isset($content[0]) ? $content[0] : $content,
+					'description' 	=> isset($content[1]) ? $content[1] : '',
+					'link'  		=> $result['link'],
+					'image' 		=> $this->model_tool_image->resize($result['image'], $setting['width'], $setting['height'])
 				);
 			}
 		}

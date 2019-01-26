@@ -1,27 +1,48 @@
 .left-menu {
     filter: drop-shadow(rgba(0, 0, 0, 0.1) 0px 1px 1px);
-    background: white;
+    background: #fafafa;
     border-radius: 2px;
     margin-bottom: 15px;
 
     &__item {
         display: block;
-        padding: 12px 15px;
+        padding: 9px 15px;
         color: #808080;
         font-family: 'Roboto';
-        background-color: #ffffff;
+        font-size: 14px;
+        font-weight: 400;
+        background-color: #f7f7f7;
         border-bottom: 1px solid #d7d7d7;
         transition: color 0.2s ease, backgound-color 0.2s ease;
+        position: relative;
+
+        & > .sIcon {
+            position: absolute;
+            display: block;
+            width: 10px;
+            height: 10px;
+            text-align: center;
+            line-height: 10px;
+            font-size: 11px;
+            right: 8px;
+            top: 15px;
+            color: #aaa;
+            transition: transform 0.3s ease;
+        }
+
+        &.active {
+            color: #303030;
+            font-weight: 400;
+
+            & > .sIcon {
+                transform: rotate(180deg);
+            }
+        }
 
         &:hover {
             background-color: #f9f9f9;
             color: #8869ca;
             text-decoration: none;
-        }
-
-        &.active {
-            color: #303030;
-            font-weight: 500;
         }
 
         &__sub-item {
@@ -31,12 +52,12 @@
 
             & a {
                 display: block;
-                padding: 8px 15px;
+                padding: 6px 15px;
                 padding-left: 0px;
                 font-size: 12px;
                 color: #303030;
                 font-family: 'Roboto';
-                background-color: #ffffff;
+                background-color: transparent;
                 border-bottom: 1px solid #eeeeee;
                 transition: color 0.2s ease;
 
@@ -58,4 +79,78 @@
             }
         }
     }
+}
+
+.left-menu-1 {
+    // filter: drop-shadow(rgba(0, 0, 0, 0.1) 0px 1px 1px);
+    background: transparent;
+    // border-radius: 2px;
+    margin-bottom: 15px;
+
+    &__item {
+        display: block;
+        padding: 10px 15px;
+        padding-left: 0px;
+        color: #bf4f79;
+        font-family: 'Roboto';
+        font-size: 14px;
+        font-weight: 500;
+        background-color: transparent;
+        border-bottom: 1px solid #ccc;
+        transition: color 0.2s ease, backgound-color 0.2s ease;
+        text-transform: uppercase;
+
+        &:hover {
+            background-color: #f9f9f9;
+            color: #8869ca;
+            text-decoration: none;
+        }
+
+        &.active {
+            color: #bf4f79;
+            font-weight: 500;
+        }
+
+        &__sub-item {
+            border-left: 2px solid transparent;
+            padding-left: 20px;
+            transition: border-color 0.2s ease;
+
+            & a {
+                display: block;
+                padding: 8px 15px;
+                padding-left: 0px;
+                font-size: 12px;
+                color: #303030;
+                font-family: 'Roboto';
+                background-color: #ffffff;
+                background-color: transparent;
+                border-bottom: 1px solid #eeeeee;
+                transition: color 0.2s ease;
+
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+
+            &:hover {
+                border-left-color: #8869ca;
+            }
+
+            &.active {
+                border-left-color: #8869ca;
+
+                a {
+                    color: #8869ca;
+                }
+            }
+        }
+    }
+}
+
+.left-menu-title {
+    margin: 12px;
+    padding: 0px;
+    color: #303030;
+    font-size: 16px;
 }

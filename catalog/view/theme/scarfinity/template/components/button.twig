@@ -16,3 +16,14 @@
             <span>{{ data.label }}</span>
     </button>
 {% endmacro %}
+
+{% macro BasicButton(props) %}
+    {% set color %}
+        {% if props.color == 'orange' %}
+            {{'button-basic--orange'}}
+        {% endif %}
+    {% endset %}
+    <button class="button-basic {{color}}" id="{{props.id}}">
+        {{ props.title }}
+    </button>
+{% endmacro %}

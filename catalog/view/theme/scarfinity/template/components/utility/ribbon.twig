@@ -43,3 +43,14 @@
         </svg>
     </div>
 {% endmacro %}
+
+{% macro HorisontalRibbon(props) %}
+    {% set title %}
+        {% if props.type == 'hot' %}        {{ 'Горячее' }}
+        {% elseif props.type == 'new' %}    {{ 'Новинка' }}
+        {% elseif props.type == 'sale' %}   {{ 'Скидка' }}
+        {% endif %}
+    {% endset %}
+
+    <span class="horisontal-ribbon{{props.type ? ' horisontal-ribbon--' ~ props.type : ''}}">{{ title }}</span>
+{% endmacro %}

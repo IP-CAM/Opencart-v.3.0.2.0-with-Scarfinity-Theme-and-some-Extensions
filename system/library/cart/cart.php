@@ -165,6 +165,7 @@ class Cart {
 				}
 
 				$price = $product_query->row['price'];
+				$price_origin = $product_query->row['price'];
 
 				// Product Discounts
 				$discount_quantity = 0;
@@ -250,7 +251,9 @@ class Cart {
 					'subtract'        => $product_query->row['subtract'],
 					'stock'           => $stock,
 					'price'           => ($price + $option_price),
+					'price_origin'	  => ($price_origin + $option_price),
 					'total'           => ($price + $option_price) * $cart['quantity'],
+					'total_origin'	  => ($price_origin + $option_price) * $cart['quantity'],
 					'reward'          => $reward * $cart['quantity'],
 					'points'          => ($product_query->row['points'] ? ($product_query->row['points'] + $option_points) * $cart['quantity'] : 0),
 					'tax_class_id'    => $product_query->row['tax_class_id'],
@@ -264,6 +267,18 @@ class Cart {
 				);
 			} else {
 				$this->remove($cart['cart_id']);
+			}
+		}
+
+		$total = 0;
+		foreach ($product_data as $product) {
+			$total += $product['total_origin'];
+		}
+
+		if($total >= 5000) {
+			foreach ($product_data as $key => $product) {
+				$product_data[$key]['price'] = $product['price_origin'];
+				$product_data[$key]['total'] = $product['total_origin'];
 			}
 		}
 
@@ -321,6 +336,16 @@ class Cart {
 
 		foreach ($this->getProducts() as $product) {
 			$total += $product['total'];
+		}
+
+		return $total;
+	}
+
+	public function getSubTotalOrigin() {
+		$total = 0;
+
+		foreach ($this->getProducts() as $product) {
+			$total += $product['total_origin'];
 		}
 
 		return $total;

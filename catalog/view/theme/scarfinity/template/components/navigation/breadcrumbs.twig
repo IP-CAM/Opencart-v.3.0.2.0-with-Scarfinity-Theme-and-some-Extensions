@@ -1,23 +1,28 @@
 {% macro Breadcrumbs(props) %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div
-                    class="bread-crumbs{{props.hide == true ? ' bread-crumbs--hide': ''}}"
-                    style="margin-top: {{props.topOffset}}">
-                    {% for crumb in props.breadcrumbs[:props.breadcrumbs|length - 1] %}
-                        <div
-                            class="bread-crumbs__item">
-                                <a href="{{crumb.href}}">
-                                    {{crumb.text}}
-                                </a>
+    {% import 'scarfinity/template/components/utility/_icons.twig' as _icons %}
+
+    {% if props.breadcrumbs %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="bread-crumbs">
+                        {% for crumb in props.breadcrumbs[:props.breadcrumbs|length - 1] %}
+                            <div
+                                class="bread-crumbs__item">
+                                    <a href="{{crumb.href}}">
+                                        {{crumb.text}}
+                                    </a>
+                            </div>
+                            {{ _icons.ChevronRight({ size: 8 }) }}
+                        {% endfor %}
+                        <div class="bread-crumbs__item bread-crumbs__item--end">
+                            <span>{{props.breadcrumbs|last.text}}</span>
                         </div>
-                    {% endfor %}
-                    <div class="bread-crumbs__item bread-crumbs__item--end">
-                        <span>{{props.breadcrumbs|last.text}}</span>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% else %}
+        <div style="margin-top: {{props.topOffset|default(44)}}px"></div>
+    {% endif %}
 {% endmacro %}

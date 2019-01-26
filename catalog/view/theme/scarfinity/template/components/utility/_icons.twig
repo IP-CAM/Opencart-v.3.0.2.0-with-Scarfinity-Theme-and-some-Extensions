@@ -1,5 +1,5 @@
 {% macro _(props) %}
-    <span style="display: inline-block; font-size: 0; width: {{ props.style.size|default(24) }}px; height: {{ props.style.size|default(24) }}px;">
+    <span class="sIcon" style="display: inline-block; font-size: 0; width: {{ props.style.size|default(24) }}px; height: {{ props.style.size|default(24) }}px;">
         <svg
             xmlns="http://www.w3.org/2000/svg" 
             width="{{ props.style.size|default(24) }}px"
@@ -128,6 +128,48 @@
         {% set svg %}
             <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/>
             <path d="M0 0h24v24H0z" fill="none"/>
+        {% endset %}
+        {{
+            _._({
+                viewBox: "0 0 24 24",
+                svg: svg,
+                style: { size: props.size }
+            })
+        }}
+{% endmacro %}
+
+{% macro DotLarge(props) %}
+    {% import _self as _ %}
+        {% set svg %}
+            <circle cx="12" cy="12" r="10" />
+        {% endset %}
+        {{
+            _._({
+                viewBox: "0 0 24 24",
+                svg: svg,
+                style: { size: props.size }
+            })
+        }}
+{% endmacro %}
+
+{% macro DotMedium(props) %}
+    {% import _self as _ %}
+        {% set svg %}
+            <circle cx="12" cy="12" r="7" />
+        {% endset %}
+        {{
+            _._({
+                viewBox: "0 0 24 24",
+                svg: svg,
+                style: { size: props.size }
+            })
+        }}
+{% endmacro %}
+
+{% macro DotSmall(props) %}
+    {% import _self as _ %}
+        {% set svg %}
+            <circle cx="12" cy="12" r="5" />
         {% endset %}
         {{
             _._({

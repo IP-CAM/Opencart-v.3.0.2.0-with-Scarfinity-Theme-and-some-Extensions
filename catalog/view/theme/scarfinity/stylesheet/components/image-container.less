@@ -3,6 +3,8 @@
     display: inline-block;
     width: 100%;
 
+    // transition: opacity 0.3s ease-in;
+
     &__dummy {
         margin-top: 100%;
     }
@@ -24,5 +26,11 @@
             user-select: none;
             -webkit-user-drag: none;
         }
+    }
+
+    &.init {
+        // opacity: 0;
+        visibility: hidden;
+        max-width: 0px;
     }
 }

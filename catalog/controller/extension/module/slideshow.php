@@ -16,10 +16,13 @@ class ControllerExtensionModuleSlideshow extends Controller {
 
 		foreach ($results as $result) {
 			if (is_file(DIR_IMAGE . $result['image'])) {
+				$content = explode("|", $result['title']);
+
 				$data['banners'][] = array(
-					'title' => $result['title'],
-					'link'  => $result['link'],
-					'image' => $this->model_tool_image->resize($result['image'], $setting['width'], $setting['height'])
+					'title' 		=> $content[0],
+					'description' 	=> isset($content[1]) ? $content[1] : '',
+					'link'  		=> $result['link'],
+					'image' 		=> $this->model_tool_image->resize($result['image'], $setting['width'], $setting['height'])
 				);
 			}
 		}

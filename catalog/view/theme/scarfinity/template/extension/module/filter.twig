@@ -27,6 +27,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">{{ heading_title }}</div>
     <div class="list-group">
+      {{ _filter.PriceRange({ name: 'Цена за 1 еденицу (опт)', pmin: pmin, pmax: pmax }) }}
       {% for filter_group in filter_groups %}
         {% set filterName = filter_group.name|lower %}
         {% if filterName == "colors" %}
@@ -52,6 +53,13 @@ $('#button-filter').on('click', function() {
 		filter.push(this.value);
 	});
 
-	location = '{{ action }}&filter=' + filter.join(',');
+  var prices = '';
+  $('input[name^=\'pmin\'], input[name^=\'pmax\']').each(function() {
+    if(this.value != '') {
+      prices += '&' + this.name + '=' + this.value;
+    }
+  });
+
+	location = '{{ action }}&filter=' + filter.join(',') + prices;
 });
 //--></script> 

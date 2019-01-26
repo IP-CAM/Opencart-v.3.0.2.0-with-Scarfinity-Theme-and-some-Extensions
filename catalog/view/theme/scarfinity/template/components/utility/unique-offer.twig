@@ -12,3 +12,11 @@
 		</div>
 	</div>
 {% endmacro %}
+
+{% macro UniqueOfferSmall(props) %}
+	{% import 'scarfinity/template/components/utility/_icons.twig' as _icons  %}
+	<div class="unique-offer-small">
+		{{ _icons.GiftRound({ size: 30 }) }}
+		<strong>All the best!</strong>
+	</div>
+{% endmacro %}

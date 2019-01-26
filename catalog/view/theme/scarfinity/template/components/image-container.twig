@@ -1,5 +1,5 @@
 {% macro imageContainer(props) %}
-    <div class="image-container">
+    <div class="image-container init">
     	<div class="image-container__dummy"></div>
         <div class="image-container__container">
             {% if props.src %}
@@ -7,4 +7,10 @@
             {% endif %}
         </div>
     </div>
+{% endmacro %}
+
+{% macro Init(props) %}
+    <script type="text/javascript">
+        $('.image-container').removeClass('init');
+    </script>
 {% endmacro %}

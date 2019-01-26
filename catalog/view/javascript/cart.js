@@ -74,6 +74,16 @@ var sCart = {
         cart.remove(product.product_id, product.option);
     }
   },
+  getSubTotalOrigin: function() {
+    var cart = this;
+    var sub_total_origin = _.find(cart.totals, { 'code': 'handling' });
+
+    if(sub_total_origin) {
+      return sub_total_origin['value'] || 0;
+    } else {
+      return 0;
+    }
+  },
   getProduct: function(product_id, option = []) {
       var cart = this;
       return _.find(cart.products, function(product) {

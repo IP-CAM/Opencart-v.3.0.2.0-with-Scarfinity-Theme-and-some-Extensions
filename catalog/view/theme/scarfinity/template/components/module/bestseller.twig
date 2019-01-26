@@ -1,0 +1,42 @@
+{% macro SideBestseller(props) %}
+    {% import 'scarfinity/template/components/module/filter.twig' as _filter %}
+    {% import 'scarfinity/template/components/utility/mini-product-card.twig' as _miniProductCard %}
+
+    {% set children %}
+        {% for product in props.products %}
+            {{
+                _miniProductCard.MiniProductCard({
+                    product: product
+                })
+            }}
+        {% endfor %}
+    {% endset %}
+
+    {{ 
+        _filter.FilterBlock({
+            title: props.heading_title,
+            buttonTitle: props.allTitle,
+            children: children
+        }) 
+    }}
+{% endmacro %}
+
+{% macro ListBestseller(props) %}
+    {% import 'scarfinity/template/components/category-product-card.twig' as _categoryProductCard %}
+
+    <h3>{{ props.heading_title }}</h3>
+    <div class="row display-flex">
+        {% for product in props.products %}
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6" style="margin-bottom: 28px; padding: 0px 8px;">
+                {{ _categoryProductCard.categoryProductCard(product, { buttonLabel: props.button_cart }) }}
+            </div>
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{% macro Bestseller(props) %}
+    {% import _self as _ %}
+    {% if props.name        == 'side' %}    {{ _.SideBestseller(props.data) }}
+    {% elseif props.name    == 'list' %}    {{ _.ListBestseller(props.data) }}
+    {% endif %}
+{% endmacro %}

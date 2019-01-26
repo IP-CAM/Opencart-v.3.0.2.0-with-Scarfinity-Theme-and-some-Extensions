@@ -130,7 +130,7 @@
 {% import 'scarfinity/template/components/utility/select-box.twig' as _selectBox %}
 
 {{ header }}
-{{ _breadcrumbs.Breadcrumbs({ breadcrumbs: breadcrumbs, topOffset: 0 }) }}
+{{ _breadcrumbs.Breadcrumbs({ breadcrumbs: breadcrumbs }) }}
 
 {% if attention %}
   <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ attention }}

@@ -1,6 +1,35 @@
 .top-menu {
     background: rgba(255, 255, 255, 0.0);
-    padding: 16px 0px;
+    padding: 20px 0px;
+
+    &__container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &__logo {
+            flex: 0 1 200px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        &__contacts {
+            flex: 0 1 200px;
+            margin: 0px 20px;
+        }
+
+        &__search {
+            flex: 1 1 200px;
+        }
+
+        &__cart {
+            flex: 0 1 330px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+    }
 
     @media screen and (max-width: 768px) {
         display: none !important;
@@ -12,9 +41,12 @@
 
     &__right {
         display: flex;
+        justify-content: space-between;
         align-items: center;
         // margin: 5px 0px;
     }
+
+
 
     &__wish-and-compare {
         display: flex;
@@ -23,6 +55,7 @@
         text-decoration: none;
         justify-content: space-around;
         height: 38px;
+        margin: 0px 10px;
 
         & .sIcon-button {
             fill: #808080;

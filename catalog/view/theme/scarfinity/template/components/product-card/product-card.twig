@@ -2,152 +2,239 @@
 
 	{% import 'scarfinity/template/components/currency.twig' as currency %}
 	{% import 'scarfinity/template/components/button.twig' as button %}
-	{% import 'scarfinity/template/components/product-card/product-card-image-container.twig' as productCardImageContainer %}
+	{% import 'scarfinity/template/components/image-container.twig' as _imageContainer %}
+    {% import 'scarfinity/template/components/utility/_icons.twig' as _icons  %}
 	{% import 'scarfinity/template/components/product-card/product-card-quantity.twig' as productCardQuantity %}
 	{% import 'scarfinity/template/components/rating-box.twig' as _ratingBox %}
 	{% import 'scarfinity/template/components/utility/color-picker.twig' as _colorPicker %}
 	{% import 'scarfinity/template/components/utility/ribbon.twig' as _ribbon %}
 
 	<div class="product-card__container">
-		<div class="product-card__container__header">
-			<h1 class="product-card-title">{{ props.headingTitle }}</h1>
-		</div>
-
-		<div class="product-card__container__body">	
-
-					{{ productCardImageContainer.imageContainer({ 'thumb': props.thumb, images: props.images }) }}	
-
-					<div class="product-card__product-info-container">
-						<div class="product-card__product-title">
-							<div class="product-card__product-title__title-block">
-								<h1 class="product-card-title">{{ props.headingTitle }}</h1>
-							</div>
-							<div class="product-card__product-title__review-block">
-								{{ _ratingBox.RatingBox(props.rating) }}
-								<span class="product-card__product-title__review-block__review">
-									<a 
-										href="{{props.reviewsLink}}"
-										onclick="$('a[href=\'#{{props.reviewsHref}}\']').trigger('click');">
-											<i class="fa fa-caret-down" aria-hidden="true"></i>
-											{{props.reviews}}
-									</a>
-								</span>
-
-								<div class="product-card-favorite">
-									<a
-										href
-										class="product-card-favorite__label"
-										onclick="wishlist.add('{{ props.productId }}'); return false;">
-											{{props.wishList}}
-											<i class="fa fa-heart"></i>
-									</a>
+		<h1 class="product-card-title">{{ props.headingTitle }}</h1>
+		<div class="row">
+			<div class="col-sm-12 col-md-6">
+				<div class="product-card-image-container">
+					<div id="product-card-main-thumb" class="product-card-image-container__main">
+						{{ _imageContainer.imageContainer({ src: props.thumb }) }}
+					</div>
+					<div class="p_card-i_gallery-swiper" data-slideout-ignore>
+						<div class="p_card-i_gallery-swiper__button p_card-i_gallery-swiper__button--prev">
+						{{ _icons.ChevronLeft({ size: 12 }) }}
+						</div>
+						<div class="p_card-i_gallery-swiper__container">
+						<div>
+							<div class="swiper-container" id="p_card-i_gallery-swiper">
+								<div class="swiper-wrapper">
+									{% for image in props.images %}
+									<div class="swiper-slide p_card-i_gallery-s_slide init">
+										<label>
+										<input type="radio" name="product-card-swiper" value="{{image.popup}}">
+										<a href="{{ image.popup }}" title="{{ heading_title }}">
+											{{ _imageContainer.imageContainer({ src: image.thumb }) }}
+										</a>
+										</label>
+									</div>
+									{% endfor %}
 								</div>
 							</div>
 						</div>
+						</div>
+						<div class="p_card-i_gallery-swiper__button p_card-i_gallery-swiper__button--next">
+						{{ _icons.ChevronRight({ size: 12 }) }}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-12 col-md-6">
+				<div class="product-card__product-info-container">
+					<div class="product-card__product-title">
+						<div class="product-card__product-title__review-block">
+							{{ _ratingBox.RatingBox(props.rating) }}
+							<span class="product-card__product-title__review-block__review">
+								<a 
+									href="{{props.reviewsLink}}"
+									onclick="$('a[href=\'#{{props.reviewsHref}}\']').trigger('click');">
+										<i class="fa fa-caret-down" aria-hidden="true"></i>
+										{{props.reviews}}
+								</a>
+							</span>
 
-						<span class="product-card__product-info-container__delim"></span>
-
-						<div class="product-card__product-info">
-
-							{# Product description #}
-							<div class="product-card__product-info__short-description-block">
-								<p class="product-card__product-info__short-description-block__content">
-									{{ props.shortDescription ~ '...' }}
-									<a
-										href="{{props.descriptionLink}}"
-										onclick="$('a[href=\'#{{props.descriptionHref}}\']').trigger('click');">
-											Подробнее
-									</a>
-								</p>
+							<div class="product-card-favorite">
+								<a
+									href
+									class="product-card-favorite__label"
+									onclick="wishlist.add('{{ props.productId }}'); return false;">
+										{{props.wishList}}
+										<i class="fa fa-heart"></i>
+								</a>
 							</div>
-
-							<div class="row product-card-core process">
-								<div class="col-md-4">
-
-									<div class="product-card__product-info__pricing-block">
-										{{ currency.currency(
-					                        { 'price': props.price, 'special': props.special, 'subTitle': 'Цена за шт.' }, 
-					                        { 'fontSize': 30, 'fontWeight': 600 }) 
-					                    }}
-									</div>
-
-									<div class="product-card-discounts">
-										<div class="product-card-discounts__title">Типы цен</div>
-										<hr>
-										<div class="product-card-discounts__line title">
-											<span>В корзине</span>
-											<span>Цена за шт</span>
-										</div>
-										{% for discount in props.discounts %}
-											{# {{ discount.quantity }}{{ text_discount }}{{ discount.price }} #}
-											<div class="product-card-discounts__line">
-												<span>{{discount.quantity}} шт. и более</span>
-												<span>{{discount.price}}</span>
-											</div>
-										{% endfor %}
-									</div>
-								</div>
-								<div class="col-md-8 product-card-colors">
-									<h3>Выберите цвета</h3>
-									<p>Минимальное количество в корзине: <span class="accent">{{props.productMinQuantity}} шт.</span></p>
-
-									{# Product options segment #}
-									{% for option in props.options %}
-										{% if option.type == 'radio' and option.name|lower|split('*')[1] == 'colors' %}
-											<div class="row">
-												{% for option_value in option.product_option_value %}
-													<div class="col-md-4">
-														<div class="product-card-quantity ctr-utt">
-															<div class="product-card-quantity__title">{{option_value.name}}</div>
-															<img src="{{option_value.image_f}}" />
-															<div class="product-card-quantity__control">
-																<button name="dec"><span><i class="fa fa-minus"></i></span></button>
-																<input
-																	type="number"
-																	name="quantity"
-																	value="{{ data.minQuantity|default(0) }}"
-																	data-tmp-value="{{ data.minQuantity|default(0) }}"
-																	size="2"
-																	id="input-quantity"
-																	class="product-card-quantity__value" />
-																<button name="inc"><span><i class="fa fa-plus"></i></span></button>
-															</div>
-															<input type="hidden" name="{{ option.product_option_id }}" value="{{ option_value.product_option_value_id }}" />
-														</div>
-													</div>
-												{% endfor %}
-											</div>
-										{% endif %}
-									{% endfor %}
-
-									<input type="hidden" name="product_id" value="{{ props.product_id }}" />
-								</div>
-								<div class="product-card-core__process"></div>
-							</div>
-
-							<hr>
-							{# Tags #}
-							{% if props.tags %}
-								{% for tag in props.tags %}
-									<a href="{{tag.href}}" class="product-tag"><span>{{tag.tag}}</span></a>
-								{% endfor %}
-							{% endif %}
-
-							{# AddThis region #}
-
-
-				            <div style="display: none" class="addthis_toolbox addthis_default_style" data-url="{{ props.share }}">
-				            	<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-				            	<a class="addthis_button_tweet"></a>
-				            	<a class="addthis_button_pinterest_pinit"></a>
-				            	<a class="addthis_counter addthis_pill_style"></a></div>
-				            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-515eeaf54693130e"></script> 
 						</div>
 					</div>
 
+					<span class="product-card__product-info-container__delim"></span>
 
+					<div class="product-card__product-info">
+
+						{# Product description #}
+						<div class="product-card__product-info__short-description-block">
+							<p class="product-card__product-info__short-description-block__content">
+								{{ props.shortDescription ~ '...' }}
+								<a
+									href="{{props.descriptionLink}}"
+									onclick="$('a[href=\'#{{props.descriptionHref}}\']').trigger('click');">
+										Подробнее
+								</a>
+							</p>
+						</div>
+
+						<div class="row product-card-core process">
+							<div class="col-md-12">
+								<div class="product-card-discounts">
+									<hr>
+									<div class="product-card-discounts__container">
+										<div class="product-card__product-info__pricing-block">
+											<span>Ваша цена: </span>
+											{{ currency.currency(
+												{ 'price': props.price, 'special': props.special, 'subTitle': 'Цена за шт.' }, 
+												{ 'fontSize': 30, 'fontWeight': 600 }) 
+											}}
+										</div>
+										<div class="product-card-discounts__container__lines">
+											<div>
+												<div class="product-card-discounts__line title">
+													<span>Эта модель</span>
+													<span>Цена за шт</span>
+												</div>
+												<div class="product-card-discounts__line">
+													<span>1-2 шт.</span>
+													<span>{{props.price}}</span>
+												</div>
+												{% for discount in props.discounts %}
+													<div class="product-card-discounts__line">
+														<span>{{discount.quantity}} шт. и более</span>
+														<span>{{discount.price}}</span>
+													</div>
+												{% endfor %}
+											</div>
+											<div>
+												<div class="product-card-discounts__line title">
+													<span>Сумма в корзине: </span>
+													<span>Цена за шт</span>
+												</div>
+												<div class="product-card-discounts__line">
+													<span>от 5000 руб.</span>
+													<span>{{(props.discounts|last).price}}</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 product-card-colors">
+								<h3>Выберите цвета</h3>
+								<p>Минимальное количество в корзине: <span class="accent">{{props.productMinQuantity}} шт.</span></p>
+
+								{# Product options segment #}
+								{% for option in props.options %}
+									{% if option.type == 'radio' and option.name|lower|split('*')[1] == 'colors' %}
+										<div class="row">
+											{% for option_value in option.product_option_value %}
+												<div class="col-md-3 col-sm-4 col-xs-4 col-sm-no-padding" style="text-align: center;">
+													<div class="product-card-quantity ctr-utt">
+														<div class="product-card-quantity__title">{{option_value.name}}</div>
+														<img src="{{option_value.image_f}}" />
+														<div class="product-card-quantity__control">
+															<button name="dec"><span><i class="fa fa-minus"></i></span></button>
+															<input
+																type="number"
+																name="quantity"
+																value="{{ data.minQuantity|default(0) }}"
+																data-tmp-value="{{ data.minQuantity|default(0) }}"
+																size="2"
+																id="input-quantity"
+																class="product-card-quantity__value" />
+															<button name="inc"><span><i class="fa fa-plus"></i></span></button>
+														</div>
+														<input type="hidden" name="{{ option.product_option_id }}" value="{{ option_value.product_option_value_id }}" />
+													</div>
+												</div>
+											{% endfor %}
+										</div>
+									{% endif %}
+								{% endfor %}
+
+								<input type="hidden" name="product_id" value="{{ props.product_id }}" />
+							</div>
+							<div class="product-card-core__process"></div>
+						</div>
+
+						<hr>
+						{# Tags #}
+						{% if props.tags %}
+							{% for tag in props.tags %}
+								<a href="{{tag.href}}" class="product-tag"><span>{{tag.tag}}</span></a>
+							{% endfor %}
+						{% endif %}
+
+						{# AddThis region #}
+
+
+						<div style="display: none" class="addthis_toolbox addthis_default_style" data-url="{{ props.share }}">
+							<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+							<a class="addthis_button_tweet"></a>
+							<a class="addthis_button_pinterest_pinit"></a>
+							<a class="addthis_counter addthis_pill_style"></a></div>
+						<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-515eeaf54693130e"></script> 
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	{{ _ribbon.Ribbon({ type: 'new' }) }}
+
+	<script type="text/javascript">
+        var productCardImageContainerSwiper = new Swiper('#p_card-i_gallery-swiper', {
+            mode: 'horizontal',
+            slidesPerView: 6,
+            pagination: false,
+            paginationClickable: false,
+            spaceBetween: 0,
+            slidesOffsetBefore: 0,
+            slidesOffsetAfter: 0,
+            autoplay: false,
+            autoplayDisableOnInteraction: true,
+            loop: false,
+            autoHeight: false,
+            breakpoints: {
+                1024: {
+                    slidesPerView: 6,
+                },
+                768: {
+                    slidesPerView: 5,
+                },
+                640: {
+                    slidesPerView: 4,
+                },
+                350: {
+                    slidesPerView: 4,
+                },
+                280: {
+                    slidesPerView: 4,
+                }
+            }
+        });
+
+        var mainImage = $('#product-card-main-thumb img');
+
+        $('#p_card-i_gallery-swiper .swiper-slide').on('mouseover', function(e) {
+            var input = $(this).find('input[type="radio"]');
+            if(input != null) {
+                input.prop("checked", true);
+                mainImage.attr('src', input.val());
+            }
+        });
+    </script>
+
+	{{ _imageContainer.Init() }}
 
 {% endmacro %}

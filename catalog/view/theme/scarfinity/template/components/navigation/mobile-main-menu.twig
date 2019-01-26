@@ -1,0 +1,33 @@
+{% macro Header(props) %}
+    <div class="mobile-nav-header">
+        <div class="mobile-nav-header__hamburger">
+            {# <HamburgerIconButton 
+                toggle={props.leftToggle} 
+                onButtonClick={props.onLeftToggle} /> #}
+        </div>
+        <div class="mobile-nav-header__middle">
+            {# <ShiftTitle index={props.shiftIndex}>
+                {
+                    props.shiftItems.map((value, index) => 
+                        <span key={index}>{value}</span>
+                    )
+                }
+            </ShiftTitle> #}
+        </div>
+        <div class="mobile-nav-header__cart">
+{#             <CartIconButton 
+                bageValue={props.cartBageValue} 
+                toggle={props.cartToggle} 
+                onClick={props.onCartToggle} /> #}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro MobileNav(props) %}
+    {% import self as _ %}
+    <div class="mobile-nav">
+        <div class="mobile-nav__content">
+            {{ _.Header({  }) }}
+        </div>
+    </div>    
+{% endmacro %}

@@ -70,3 +70,20 @@
         })
     }}
 {% endmacro %}
+
+{% macro PriceRange(props) %}
+    {% import _self as _ %}
+    {% import 'scarfinity/template/components/utility/price-range.twig' as _priceRange %}
+
+    {% set content %}
+        {{ _priceRange.PriceRange({ pmin: props.pmin, pmax: props.pmax }) }}
+    {% endset %}
+
+    {{
+        _.FilterBlock({
+            title: props.name|capitalize,
+            buttonTitle: 'сброс',
+            children: content
+        })
+    }}
+{% endmacro %}

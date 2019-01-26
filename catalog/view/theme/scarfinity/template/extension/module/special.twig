@@ -1,6 +1,9 @@
 {% import 'scarfinity/template/components/category-product-card.twig' as categoryProductCard %}
 
-<h3>{{ heading_title }}</h3>
+
+<h1>aaa</h1>
+
+<h3>{{ heading_title }} - {{ name|split('-')[0] }}</h3>
 <div class="row"> {% for product in products %}
   <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12">
     {{ categoryProductCard.categoryProductCard(product) }}

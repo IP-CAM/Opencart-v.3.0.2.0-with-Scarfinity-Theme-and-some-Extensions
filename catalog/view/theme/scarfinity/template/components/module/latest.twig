@@ -1,0 +1,18 @@
+{% macro LatestHome(props) %}
+    {% import 'scarfinity/template/components/category-product-card.twig' as _categoryProductCard %}
+
+    <h3>{{ props.heading_title }}</h3>
+    <div class="row display-flex">
+        {% for product in props.products %}
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6" style="margin-bottom: 28px; padding: 0px 8px;">
+                {{ _categoryProductCard.categoryProductCard(product, { buttonLabel: props.button_cart }) }}
+            </div>
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{% macro Latest(props) %}
+    {% import _self as _ %}
+    {% if props.name|lower == 'list' %} {{ _.LatestHome(props.data) }}
+    {% endif %}
+{% endmacro %}

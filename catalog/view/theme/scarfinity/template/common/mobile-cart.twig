@@ -1,0 +1,46 @@
+{% import 'scarfinity/template/components/image-container.twig' as _imageContainer %}
+{% import 'scarfinity/template/components/currency.twig' as _currency %}
+
+<div class="mobile-cart-item-grid">
+  {% for product in products %}
+    <div class="mobile-cart-item-grid__item">
+      {# mobile-cart-item--toggle #}
+      <div class="mobile-cart-item">
+        <div class="mobile-cart-item__container">
+          <div class="mobile-cart-item__container__card">
+            <div class="mobile-cart-product-card">
+              <div class="mobile-cart-product-card">
+                <div class="mobile-cart-product-card__image">
+                  <a href="{{ props.product.href }}">
+                    {{ _imageContainer.ImageContainer({src: product.thumb, alt: product.name, title: product.name}) }}
+                  </a>
+                </div>
+                <div class="mobile-cart-product-card__middle">
+                  <div className="mobile-cart-product-card-description">
+                    <span>{{product.name}}</span>
+                    <div className="mobile-cart-product-card-description__quantity-price">
+                      <span>{{product.quantity}}</span>
+                      <span style="color: #ccc, margin: 0px 5px">&#215;</span>
+                      <span>{{product.price}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="mobile-cart-product-card__price">
+                  {# {{_currency.Currency({ price: total.text }, { fontWeight: 500, fontSize: 15 })}} #}
+                </div>
+              </div>
+            </div>
+            <div class="mobile-cart-item__container__delete">
+              {# <button>Delete</button> #}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{#   <CartItemGrid
+      lines={props.shoppingCart.lines}
+      items={props.items}
+      onItemRemove={props.onItemRemove} />
+  <CartCheckout /> #}

@@ -1,21 +1,33 @@
-<div class="left-menu">
+{% import 'scarfinity/template/components/utility/_icons.twig' as _icons %}
+<div class="left-menu white">
   {% for category in categories %}
-  {% if category.category_id == category_id %} 
-  <a href="{{ category.href }}" class="left-menu__item active">{{ category.name }}</a> 
-  {% if category.children %}
-  {% for child in category.children %}
-  {% if child.category_id == child_id %}
-  <div class="left-menu__item__sub-item active">
-    <a href="{{ child.href }}">{{ child.name }}</a> 
-  </div>
-  {% else %} 
-  <div class="left-menu__item__sub-item">
-    <a href="{{ child.href }}">{{ child.name }}</a>
-  </div>
-  {% endif %}
-  {% endfor %}
-  {% endif %}
-  {% else %} <a href="{{ category.href }}" class="left-menu__item">{{ category.name }}</a> 
-  {% endif %}
+    {% if category.children or page_name == 'home' %} 
+      <a href="{{ category.href }}" class="left-menu__item active">
+        {{ category.name }}
+        {% if category.children_count > 0 %}
+          <span class="sIcon"><i class="fa fa-caret-down"></i></span>
+        {% endif %}
+      </a> 
+      {% if category.children %}
+        {% for child in category.children %}
+          {% if child.category_id == child_id %}
+            <div class="left-menu__item__sub-item active">
+              <a href="{{ child.href }}">{{ child.name }}</a> 
+            </div>
+          {% else %} 
+            <div class="left-menu__item__sub-item">
+              <a href="{{ child.href }}">{{ child.name }}</a>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% else %}
+      <a href="{{ category.href }}" class="left-menu__item">
+        {{ category.name }}
+        {% if category.children_count > 0 %}
+          <span class="sIcon"><i class="fa fa-caret-down"></i></span>
+        {% endif %}
+      </a> 
+    {% endif %}
   {% endfor %}
 </div>

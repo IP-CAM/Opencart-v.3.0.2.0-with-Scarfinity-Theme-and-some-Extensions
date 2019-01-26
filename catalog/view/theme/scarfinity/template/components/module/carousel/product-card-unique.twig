@@ -1,0 +1,14 @@
+<div class="product-card-unique">
+    {% for banner in banners %}
+        <div class="product-card-unique__item">
+            <div class="product-card-unique__item__image">
+                <img src="{{ banner.image }}" />
+            </div>
+            <div class="product-card-unique__item__content">
+                <h3>{{ banner.title }}</h3>
+                <p>{{ banner.description }}</p>
+                <a href="{{ banner.link }}"><i class="fa fa-angle-right"></i><span>Читать больше</span></a>
+            </div>
+        </div>
+    {% endfor %}
+</div>

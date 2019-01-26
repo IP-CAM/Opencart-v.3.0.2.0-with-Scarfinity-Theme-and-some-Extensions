@@ -24,16 +24,17 @@
 <link href="catalog/view/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
 <script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="catalog/view/javascript/lodash/lodash.js" type="text/javascript"></script>
+<script src="catalog/view/javascript/slideout.js/dist/slideout.min.js" type="text/javascript"></script>
 <link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 <link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet" type="text/css" />
 <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Roboto:400,300,500,700' type='text/css'>
-<link href="catalog/view/theme/scarfinity/stylesheet/stylesheet.css" rel="stylesheet">
 {% for style in styles %}
 <link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}" />
 {% endfor %}
 {% for script in scripts %}
 <script src="{{ script }}" type="text/javascript"></script>
 {% endfor %}
+<link href="catalog/view/theme/scarfinity/stylesheet/stylesheet.css" rel="stylesheet">
 <script src="catalog/view/javascript/common.js" type="text/javascript"></script>
 <script src="catalog/view/javascript/cart.js" type="text/javascript"></script>
 <script src="catalog/view/theme/scarfinity/js/components/cart.js" type="text/javascript"></script>
@@ -47,39 +48,84 @@
 {% endfor %}
 </head>
 <body>
-    <nav class="info-menu">
-        <div class="container">
-            <div class="row">
-            <div class="col-lg-12 info-menu__container">
-                <ul class="info-menu-navigation">
-                <li><a href="{{ contact }}"><i class="fa fa-phone"></i></a> <span class="hidden-xs hidden-sm hidden-md">{{ telephone }}</span></li>
-                <li class="dropdown"><a href="{{ account }}" title="{{ text_account }}" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_account }}</span> <span class="caret"></span></a>
-                    <ul class="dropdown-menu dropdown-menu-right">
-                    {% if logged %}
-                    <li><a href="{{ account }}">{{ text_account }}</a></li>
-                    <li><a href="{{ order }}">{{ text_order }}</a></li>
-                    <li><a href="{{ transaction }}">{{ text_transaction }}</a></li>
-                    <li><a href="{{ download }}">{{ text_download }}</a></li>
-                    <li><a href="{{ logout }}">{{ text_logout }}</a></li>
-                    {% else %}
-                    <li><a href="{{ register }}">{{ text_register }}</a></li>
-                    <li><a href="{{ login }}">{{ text_login }}</a></li>
-                    {% endif %}
-                    </ul>
-                </li>
-                <li><a href="{{ wishlist }}" id="wishlist-total" title="{{ text_wishlist }}"><i class="fa fa-heart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_wishlist }}</span></a></li>
-                <li><a href="{{ shopping_cart }}" title="{{ text_shopping_cart }}"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_shopping_cart }}</span></a></li>
-                <li><a href="{{ checkout }}" title="{{ text_checkout }}"><i class="fa fa-share"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_checkout }}</span></a></li>
-                </ul>
-            </div>
-            </div>
-        </div>
-    </nav>
+
+  {# Меню для мобильной навигации #}
+  <nav id="mobile-left-menu" class="slideout-menu">
+    {# Left menu #}
+    <div class="mobile-nav-left-menu">
+      <div class="mobile-nav-left-menu__title">SCARFINITY</div>
+      <ul class="mobile-nav-ul">
+        <li class="link"><span><a href="{{about_us}}">О нас</a></span></li>
+        <li class="link"><span><a href="">Доставка и оплата</a></span></li>
+        <li class="link"><span><a href="">Как сделать заказ?</a></span></li>
+        <li class="link"><span><a href="">О нас</a></span></li>
+        <li class="link"><span><a href="">Контакты</a></span></li>
+        <li class="link"><span><a href="{{ account }}">{{ text_account }}</a></span></li>
+        <li class="link"><span><a href="">{{ telephone }}</a></span></li>
+      </ul>
+      <div class="mobile-nav-left-menu__footer">{{ powered }}</div>
+    </div>
+    {# Left menu end #}
+  </nav>
+  {# End mobile navigation menu content #}
+
+  <nav id="mobile-cart" class="slideout-menu slideout-menu-right"></nav>
+
+  {# Мобильный хедер, остается приклеенным в верху страницы #}
+  <div class="mobile-nav-header" id="mobile-nav-header">
+    <div class="mobile-nav-header__hamburger">
+      <div class="mobile__hamburger-button" >
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <div class="mobile-nav-header__middle" id="mobile-nav-middle">
+      <span>Каталог</span>
+      <span class="sIcon"><i class="fa fa-angle-down"></i></span>
+    </div>
+    <div class="mobile-nav-header__cart" id="mobile-nav-header__cart">
+      <div class="mobile-nav-cart-button">
+        <div class="mobile-nav-cart-button__icon"></div>
+        <span class="mobile-nav-cart-button__bage">0</span>
+      </div>
+    </div>
+  </div>
+  {# Основная панель приложения #}
+  {# В мобильной версии сдвигается вправо #}
   <header>
+    <nav class="info-menu">
+      <div class="container">
+          <div class="row">
+          <div class="col-lg-12 info-menu__container">
+              <ul class="info-menu-navigation">
+              <li><a href="{{ contact }}"><i class="fa fa-phone"></i></a> <span class="hidden-xs hidden-sm hidden-md">{{ telephone }}</span></li>
+              <li class="dropdown"><a href="{{ account }}" title="{{ text_account }}" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_account }}</span> <span class="caret"></span></a>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                  {% if logged %}
+                  <li><a href="{{ account }}">{{ text_account }}</a></li>
+                  <li><a href="{{ order }}">{{ text_order }}</a></li>
+                  <li><a href="{{ transaction }}">{{ text_transaction }}</a></li>
+                  <li><a href="{{ download }}">{{ text_download }}</a></li>
+                  <li><a href="{{ logout }}">{{ text_logout }}</a></li>
+                  {% else %}
+                  <li><a href="{{ register }}">{{ text_register }}</a></li>
+                  <li><a href="{{ login }}">{{ text_login }}</a></li>
+                  {% endif %}
+                  </ul>
+              </li>
+              <li><a href="{{ wishlist }}" id="wishlist-total" title="{{ text_wishlist }}"><i class="fa fa-heart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_wishlist }}</span></a></li>
+              <li><a href="{{ shopping_cart }}" title="{{ text_shopping_cart }}"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_shopping_cart }}</span></a></li>
+              <li><a href="{{ checkout }}" title="{{ text_checkout }}"><i class="fa fa-share"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_checkout }}</span></a></li>
+              </ul>
+          </div>
+          </div>
+      </div>
+    </nav>
     <div class="top-menu">
       <div class="container">
-        <div class="row">
-          <div class="col-sm-2">
+        <div class="top-menu__container">
+          <div class="top-menu__container__logo">
             <div id="logo">
               {% if logo %}
                 <a href="{{ home }}">
@@ -87,11 +133,11 @@
                 </a>
               {% else %}
                 {% set name = 'scarfinity' %}
-                <h1><a href="{{ home }}">{{ name }}</a></h1>
+                <a href="{{ home }}">{{ name }}</a>
               {% endif %}
             </div>
           </div>
-          <div class="col-sm-3">
+          <div class="top-menu__container__contacts">
             <div class="contact-us">
               <div class="contact-us__line">
                 <span class="contact-us__line__title">Новосибирск: </span>
@@ -102,14 +148,16 @@
               <div class="contact-us__phone">Часы работы: с 08:00 до 18:00</div>
             </div>
           </div>
-          <div class="col-sm-3">{{ search }}</div>
-          <div class="col-sm-1 top-menu__wish-and-compare">
+          <div class="top-menu__container__search">
+            {{ search }}
+          </div>
+          <div class="top-menu__container__cart">
+            <div class="top-menu__wish-and-compare">
               {% set icon %}{{_icons.Heart({size: 32})}}{% endset %}
               {{_iconButton.iconButton({href: wishlist, icon: icon, bage: {value: wishlist_count}})}}
               {% set icon %}{{_icons.BarChart({size: 32})}}{% endset %}
               {{_iconButton.iconButton({href: compare, icon: icon, bage: {value: compare_count}})}}
-          </div>
-          <div class="col-sm-3" style="text-align: right;">
+            </div>
             <div id="cart" class="navigation-cart-block">
               {{ cart }}
             </div>
@@ -118,19 +166,140 @@
       </div>
     </div>
   </header>
-{#   <div class="main-menu">
-    <div class="main-menu-container container">
-      <span class="main-menu-catalog-button">
-        {{_icons.Tiles({size: 24})}}
-        <span class="main-menu-catalog-button__text">Каталог товаров</span>
-      </span>
-      <div class="main-menu-ul">
-        
-      </div>
-    </div>
-  </div> #}
   {{ menu }}
+  <main id="panel" data-slideout-ignore>
 
+
+{# Scripts #}
+<script type="text/javascript">
+  var tolerance = 70;
+
+  var slideout = new Slideout({
+    'panel': document.getElementById('panel'),
+    'menu': document.getElementById('mobile-left-menu'),
+    'padding': 256,
+    'tolerance': tolerance
+  });
+
+  var fixed = document.getElementById('mobile-nav-header');
+  var mmm = document.getElementById('mobile-main-menu');
+
+  slideout.on('translatestart', function() {
+    if(!slideoutCart.isOpen()) {
+      $('#mobile-left-menu').addClass('active');
+    }
+  });
+
+  slideout.on('translate', function(translated) {
+    fixed.style.transform = 'translateX(' + translated + 'px)';
+    mmm.style.transform = 'translateX(' + translated + 'px)';
+  });
+
+  slideout.on('beforeopen', function () {
+    fixed.style.transition = 'transform 300ms ease';
+    fixed.style.transform = 'translateX(256px)';
+    mmm.style.transition = 'transform 300ms ease';
+    mmm.style.transform = 'translateX(256px)';
+    $('#mobile-left-menu').addClass('active');
+  });
+
+  slideout.on('beforeclose', function () {
+    fixed.style.transition = 'transform 300ms ease';
+    fixed.style.transform = 'translateX(0px)';
+    mmm.style.transition = 'transform 300ms ease';
+    mmm.style.transform = 'translateX(0px)';
+  });
+
+  slideout.on('open', function () {
+    fixed.style.transition = '';
+    mmm.style.transition = '';
+  });
+
+  slideout.on('close', function () {
+    fixed.style.transition = '';
+    mmm.style.transition = '';
+    $('#mobile-left-menu').removeClass('active');
+  });
+
+  var slideoutCart = new Slideout({
+    'panel': document.getElementById('panel'),
+    'menu': document.getElementById('mobile-cart'),
+    'padding': 256,
+    'tolerance': tolerance,
+    'side': 'right'
+  });
+
+  slideoutCart.on('translatestart', function() {
+    if(!slideoutCart.isOpen()) {
+      $('#mobile-cart').addClass('active');
+    }
+  });
+
+  slideoutCart.on('translate', function(translated) {
+    fixed.style.transform = 'translateX(' + translated + 'px)';
+    mmm.style.transform = 'translateX(' + translated + 'px)';
+  });
+
+  slideoutCart.on('beforeopen', function () {
+    fixed.style.transition = 'transform 300ms ease';
+    fixed.style.transform = 'translateX(-256px)';
+    mmm.style.transition = 'transform 300ms ease';
+    mmm.style.transform = 'translateX(-256px)';
+    $('#mobile-cart').addClass('active');
+  });
+
+  slideoutCart.on('beforeclose', function () {
+    fixed.style.transition = 'transform 300ms ease';
+    fixed.style.transform = 'translateX(0px)';
+    mmm.style.transition = 'transform 300ms ease';
+    mmm.style.transform = 'translateX(0px)';
+  });
+
+  slideoutCart.on('open', function () {
+    fixed.style.transition = '';
+    mmm.style.transition = '';
+  });
+
+  slideoutCart.on('close', function () {
+    fixed.style.transition = '';
+    mmm.style.transition = '';
+    $('#mobile-cart').removeClass('active');
+  });
+
+</script>
+
+<script type="text/javascript">
+  $('.mobile-nav-header__cart').on('click', function() {
+    slideoutCart.toggle();
+  });
+
+  $('.mobile__hamburger-button').on('click', function() {
+    slideout.toggle();
+  });
+
+  $('#mobile-nav-middle').on('click', function() {
+    mobileMenu.toggle();
+    $(this).toggleClass('active');
+  });
+</script>
+
+<script type="text/javascript">
+  $('.mobile-nav-ul > li').on('click', function() {
+    var subMenu = $(this).find('.mobile-nav-ul');
+    if(subMenu) {
+      $(this).toggleClass('active');
+      subMenu.slideToggle('normal');
+    }
+  });
+
+  $('.mobile-nav-ul > li.link').on('click', function() {
+    var link = $(this).find('a');
+    if(link && link.attr('href')) {
+      location = link.attr('href');
+    }
+  });
+</script>
+{# Srcripts end #}
 
 
 

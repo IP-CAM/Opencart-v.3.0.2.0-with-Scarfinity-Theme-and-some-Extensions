@@ -7,6 +7,8 @@ class ControllerExtensionModuleFeatured extends Controller {
 
 		$this->load->model('tool/image');
 
+		$data['name'] = $setting['name'];
+
 		$data['products'] = array();
 
 		if (!$setting['limit']) {

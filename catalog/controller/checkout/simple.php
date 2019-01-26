@@ -1,5 +1,21 @@
 <?php
 class ControllerCheckoutSimple extends Controller {
+	public function validate() {
+		$this->load->language('checkout/checkout');
+
+		$json = array();
+
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+			$json['redirect'] = $this->url->link('checkout/cart');
+		}
+
+		$json['count_products'] = $this->cart->countProducts();
+		$json['sub_total'] = $this->cart->getSubTotal();
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
 	public function customerSave() {
 		$this->load->language('checkout/checkout');
 

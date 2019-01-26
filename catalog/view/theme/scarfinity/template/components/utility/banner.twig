@@ -1,0 +1,124 @@
+{% macro ScaleBarContainer(props) %}
+    <div class="banner-scale-container">
+        {% for item in props.banners %}
+            <div class="banner-scale-item">
+                <div class="banner-scale-item__scale"></div>
+            </div>
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{% macro BannerSlideBar(props) %}
+    <div class="banner-slide">
+        {% for slide in props.slides %}
+            <div class="banner-slide-item banner-slide-item--slide-{{loop.index - 1}}">
+                <div class="banner-slide-item__white"></div>
+            </div>
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{% macro Banner(props) %}
+    {% import 'scarfinity/template/components/utility/_icons.twig' as _icons %}
+    {% import _self as _ %}
+
+    {% set id = props.id|default(random()) %}
+
+    <div class="banner" id="{{ id }}">
+        <div class="banner__container">
+            <div class="banner__container__content">
+                <div class="banner__container__content__button prev">
+                    {{ _icons.ChevronLeft({ size: 14 }) }}
+                </div>
+                <div class="banner__container__content__slider">
+                    <div id="carousel{{ id }}" class="swiper-container">
+                        <div class="swiper-wrapper">
+                            {% for banner in props.banners %}
+                                <div class="swiper-slide text-center">
+                                    {% if banner.link %}
+                                        <a href="{{ banner.link }}">
+                                            <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" />
+                                        </a>
+                                    {% else %}
+                                        <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" />
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {{ _.BannerSlideBar({ slides: props.banners }) }}
+                </div>
+                <div class="banner__container__content__button next">
+                    {{ _icons.ChevronRight({ size: 14 }) }}
+                </div>
+            </div>
+            <div class="banner__container__menu">
+                {{ _.ScaleBarContainer({ banners: props.banners }) }}
+                <div class="banner-menu">
+                    {% for banner in props.banners %}
+                        <div class="banner-menu-item" data-index="0{{loop.index}}">
+                            <div class="banner-menu-item__title banner-menu-item__title--style0{{loop.index}}">
+                                {{ _icons.DotSmall({ size: 16 }) }}
+                                {{ _icons.BaselineArrowForward({ size: 16 }) }}
+                                <span class="banner-menu-item__title__text">{{banner.title}}</span>
+                            </div>
+                            <span class="banner-menu-item__subtitle">{{banner.description}}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript"><!--
+        var speed = 5000;
+        var bannerId = '{{id}}';
+        var slidesCount = parseInt('{{props.banners|length}}');
+
+        function sliderGo(step) {
+            var bar = $('.banner-slide');
+            var items = bar.find('.banner-slide-item');
+
+
+            _.forEach(items, function(item, index) {
+                var white = $(item).find('.banner-slide-item__white');
+
+                if(index < step) {
+                    white.css({'transition': '', 'left': '100%'});
+                } else if (index == step) {
+                    white.css({'transition': '', 'left': 0});
+                    var timeout = setTimeout(function() { 
+                        white.css({'transition': 'left ' + speed + 'ms ease-in-out', 'left': '100%'});
+                        clearTimeout(timeout);
+                        timeout = undefined;
+                    }, 50);
+                } else {
+                    white.css({'transition': '', 'left': 0});
+                }
+            });
+        }
+
+        if(swiper == null) {
+            var swiper = {};
+        }
+
+        swiper[bannerId] = new Swiper('#carousel' + bannerId, {
+            mode: 'horizontal',
+            slidesPerView: 1,
+            loop: true,
+            autoplay: speed,
+            onSlideChangeEnd: function(data) {
+                sliderGo(data.realIndex);
+            }
+        });
+
+        $('#' + bannerId + ' .banner__container__content__button.prev').on('click', function() {
+            swiper[bannerId].slidePrev();
+        });
+
+        $('#' + bannerId + ' .banner__container__content__button.next').on('click', function() {
+            swiper[bannerId].slideNext();
+        });
+
+    --></script>
+{% endmacro %}

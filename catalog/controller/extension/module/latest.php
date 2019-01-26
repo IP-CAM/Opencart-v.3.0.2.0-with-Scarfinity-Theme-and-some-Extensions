@@ -7,6 +7,8 @@ class ControllerExtensionModuleLatest extends Controller {
 
 		$this->load->model('tool/image');
 
+		$data['name'] = explode('-', $setting['name'])[0];
+
 		$data['products'] = array();
 
 		$filter_data = array(

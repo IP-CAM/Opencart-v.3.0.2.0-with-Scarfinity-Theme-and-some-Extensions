@@ -19,6 +19,18 @@ footer {
     }
 }
 
+.footer-greed {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 25px 0px;
+
+    @media screen and (max-width: 768px) {
+        flex-wrap: wrap;
+        padding: 25px 20px;
+    }
+}
+
 .footer-social {
     &__title {
         display: block;
@@ -37,15 +49,9 @@ footer {
     }
 }
 
-.footer-body {
-    padding: 25px 0px;
-
-    @media screen and (max-width: 1200px) {
-        margin: 0px 20px;
-    }
-}
-
 .footer-menu {
+    margin-bottom: 20px;
+
     &__title {
         display: block;
         padding: 0;
@@ -78,6 +84,13 @@ footer {
         
         &:hover {
             color: rgba(247, 246, 245, 1.0);
+        }
+    }
+
+    @media screen and (max-width: 992px) {
+        &--social {
+            flex: 1;
+            flex-basis: 100%;
         }
     }
 }

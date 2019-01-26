@@ -1,4 +1,7 @@
-<div class="swiper-viewport">
+{% include 'scarfinity/template/components/module/carousel/' ~ name ~ '.twig' ignore missing %}
+
+
+{# <div class="swiper-viewport">
   <div id="carousel{{ module }}" class="swiper-container">
     <div class="swiper-wrapper">{% for banner in banners %}
       <div class="swiper-slide text-center">{% if banner.link %}<a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" /></a>{% else %}<img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" />{% endif %}</div>
@@ -21,4 +24,4 @@ $('#carousel{{ module }}').swiper({
 	autoplay: 2500,
 	loop: true
 });
---></script>
+--></script> #}

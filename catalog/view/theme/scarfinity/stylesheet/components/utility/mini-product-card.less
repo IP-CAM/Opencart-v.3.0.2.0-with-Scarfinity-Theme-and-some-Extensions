@@ -1,0 +1,60 @@
+//  Colors ------------------------------------------------
+@title:     #303030;
+@border:    #d7d7d7;
+//  -------------------------------------------------------
+
+.mini-product-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 70px;
+
+    &__image {
+        width: 62px;
+        height: 62px;
+        border: 1px solid @border;
+    }
+
+    &__content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 10px;
+
+        &__title {
+            display: block;
+            position: relative;
+
+            max-width: 140px;
+            width: 140px;
+            text-overflow: wrap;
+            overflow: hidden;
+
+            font-size: 13px;
+            font-weight: 400;
+            //white-space: nowrap;
+
+            margin: 0;
+            margin-bottom: 5px;
+
+            & > a {
+                height: 15px;
+                line-height: 15px;
+                color: @title;
+            }
+        }
+
+        &__pricing {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            line-height: normal;
+            height: 20px;
+
+            &__price {
+                margin-right: 10px;
+            }
+        }
+    }
+}
