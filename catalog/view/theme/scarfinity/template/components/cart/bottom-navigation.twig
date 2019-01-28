@@ -13,18 +13,19 @@
 
 {% macro BottomNavigation(props) %}
     {% import _self as _ %}
+    {% import 'scarfinity/template/components/button.twig' as _button  %}
 
     <div class="cart__bottom-navigation{{props.orderTotal ? ' check' : ''}}">
         <div class="cart__bottom-navigation__left">
             <a id="cart-button-prev" class="cart__button-prev" href="{{props.prevHref}}"}>{{props.prevTitle}}</a>
         </div>
-        {% if props.orderTotal %}
-            <div class="cart__bottom-navigation__check">
+        <div class="cart__bottom-navigation__right">
+            {{ _button.BasicButton({ chevron: 'right', id: 'cart-button-next', disabled: props.disabled }) }}
+        </div>
+        <div class="cart__bottom-navigation__check">
+            {% if props.orderTotal %}
                 {{ _.PaymentCheck({total: props.orderTotal}) }}
-            </div>
-        {% endif %}
-        <div id="cart-button-next" class="cart__bottom-navigation__right">
-            <a class="cart__button-next" href="{{props.nextHref}}">{{props.nextTitle}}</a>
+            {% endif %}
         </div>
     </div>    
 {% endmacro %}

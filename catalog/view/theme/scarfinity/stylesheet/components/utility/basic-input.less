@@ -23,7 +23,7 @@
 .sInput-container {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: baseline;
     padding: 5px 0px;
     box-sizing: border-box;
 
@@ -34,9 +34,10 @@
         color: #555;
         min-width: 80px;
         margin-bottom: 0px;
+        line-height: 44px;
     }
 
-    & > .sInput, & > .sDropdown {
+    & .sInput, & .sDropdown, & > div {
         flex: 1;
     }
 
@@ -102,10 +103,10 @@
 }
 
 .sInput-error {
-    color: red;
+    color: #e05543 !important;
     display: block;
     flex-basis: 100%;
-    margin: 6px 0px 8px 90px;
+    margin: 6px 0px 8px 0px;
     padding: 0;
     font-size: 12px;
 }

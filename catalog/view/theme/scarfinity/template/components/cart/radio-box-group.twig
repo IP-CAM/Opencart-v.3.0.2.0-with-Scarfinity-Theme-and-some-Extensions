@@ -7,18 +7,14 @@
     {% import 'scarfinity/template/components/currency.twig' as currency %}
     {% import 'scarfinity/template/components/utility/select-box.twig' as _selectBox %}
 
-    <div
-        class="radio-box-group{{
-            props.valid == true ? "radio-box-group--success" : 
-            props.valid == false ? " radio-box-group--error" : ""
-        }}">
+    <div class="radio-box-group">
         <span class="radio-box-group__title">{{props.title}}</span>
         {% if props.items %}
             {% if props.items|length > 0 %}
                 {% for item in props.items %}
-                    <div class="radio-box-group__item">
+                    <label class="radio-box-group__item" for="{{item.name}}">
                         {{
-                            _selectBox.Radio({ name: name, label: item.title, secondary: item.subTitle })
+                            _selectBox.Radio({ name: name, id: item.name, label: item.title, secondary: item.subTitle })
                         }}
                         <span class="radio-box-group__item__price">
                             {{
@@ -30,7 +26,7 @@
                                 )
                             }}
                         </span>
-                    </div>
+                    </label>
                 {% endfor %}
             {% endif %}
         {% endif %}

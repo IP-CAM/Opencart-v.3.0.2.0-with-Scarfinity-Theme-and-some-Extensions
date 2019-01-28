@@ -1,20 +1,22 @@
 {% macro BasicInput(props) %}
-    <div class="sInput-container{{props.required ? ' required': ''}}{{props.type == 'hidden' ? ' hidden': ''}}">
+    <div class="sInput-container{{props.required ? ' required': ''}}{{ props.hidden and props.hidden == true ? ' hidden': ''}}">
         {% set id = props.id|default(random()) %}
         {% if props.label %}
             <label for="{{id}}">{{props.label}}:</label>
         {% endif %}
-        <input
-            class="sInput{{props.valid and props.valid == true ? " sInput--success" : props.valid and props.valid == false ? " sInput--error": ""}}"
-            id="{{id}}",
-            type="{{props.type}}"
-            name="{{props.name}}"
-            value="{{props.value}}"
-            placeholder="{{props.placeholder}}"
-            data-group="{{props.group|default('s')}}"
-            data-code="{{props.code|default('')}}"
-            {{props.disabled ? disabled: ''}}
-            {{props.readonly ? readonly : ''}} />
+        <div>
+            <input
+                class="sInput{{props.valid and props.valid == true ? " sInput--success" : props.valid and props.valid == false ? " sInput--error": ""}}"
+                id="{{id}}",
+                type="{{props.type}}"
+                name="{{props.name}}"
+                value="{{props.value}}"
+                placeholder="{{props.placeholder}}"
+                data-group="{{props.group|default('s')}}"
+                data-code="{{props.code|default('')}}"
+                {{props.disabled ? 'disabled': ''}}
+                {{props.readonly ? readonly : ''}} />
+        </div>
     </div>
 {% endmacro %}
 

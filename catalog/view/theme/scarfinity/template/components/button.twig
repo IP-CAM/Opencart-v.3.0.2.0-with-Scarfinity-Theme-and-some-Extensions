@@ -23,7 +23,13 @@
             {{'button-basic--orange'}}
         {% endif %}
     {% endset %}
-    <button class="button-basic {{color}}" id="{{props.id}}">
-        {{ props.title }}
+    {% set chevron %}
+        {% if props.chevron == 'right' %}
+            {{'button-basic--chevron-right'}}
+        {% endif %}
+    {% endset %}
+    <button class="button-basic {{color}} {{chevron}}" id="{{props.id}}" {{ props.disabled and props.disabled == true ? 'disabled': '' }}>
+        <i class="fa fa-spinner" aria-hidden="true"></i>
+        <a>{{ props.title }}</a>
     </button>
 {% endmacro %}

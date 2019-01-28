@@ -1,6 +1,10 @@
 @delim-left:    rgba(0, 0, 0, 0.1);
 @delim-right:   rgba(255, 255, 255, 0.17);
 
+@button-background:         #1bb869;
+@button-left-border:        rgba(0, 0, 0, 0.1);
+@button-right-border:       rgba(255, 255, 255, 0.17);
+
 @keyframes loader {
 	100% {
 		transform: rotate(360deg);
@@ -208,8 +212,7 @@
 
 .button-basic {
     border-radius: 2px;
-    display: block;
-    width: 100%;
+    display: inline-block;
     max-height: 40px;
     height: 40px;
 
@@ -228,14 +231,39 @@
 
     user-select: none;
 
-	font-size: 12px;
-	font-weight: 600;
-	color: #ffffff;
+    transition: padding 0.3s ease;
 
-    text-transform: uppercase;
+    & > i {
+        user-select: none;
+        font-size: 18px;
+        opacity: 0;
+        display: none;
+        transition: all 0.3s ease;
+        color: #fff;
+    }
+
+    & > a {
+        user-select: none;
+        font-size: 12px;
+        font-weight: 500;
+        color: #ffffff !important;
+        text-decoration: none;
+    }
     
     &:hover {
         background-color: #37c17b;
+    }
+
+    &--chevron {
+        &-right {
+            background-image: 
+                url('../../image/icons/chevron-right.svg'),
+                linear-gradient(270deg, @button-right-border 1px, @button-left-border 1px);
+            background-size: 26px 26px, 2px 100%;
+            background-position: right 4px center, right 34px center;
+            background-repeat: no-repeat, no-repeat;
+            padding-right: 44px;
+        }
     }
 
     &--orange {
@@ -243,6 +271,26 @@
 
         &:hover {
             background-color: #ef8742
+        }
+    }
+
+    &:disabled {
+        background-color: #ef8742;
+        font-size: 0px;
+        display: inline-block;
+        max-width: 80px;
+        padding: 0px 20px;
+        background-image: none;
+
+        & > a {
+            display: none;
+        }
+
+        & > i {
+            display: block;
+            font-size: 16px;
+            opacity: 1;
+            animation: loader 0.7s linear 0s infinite;
         }
     }
 }

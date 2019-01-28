@@ -7,29 +7,29 @@
     <div class="alert alert-warning alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
 {% endif %}
 {% if shipping_methods %}
-    <div class="radio-box-group">
+    <div class="radio-box-group" data-name="shipping_methods">
         <span class="radio-box-group__title">{{ text_shipping_method }}</span>
         {% for shipping_method in shipping_methods %}
             <strong class="radio-box-group__sub-title">{{ shipping_method.title }}</strong>
-            {% set code = 'flat.flat' %}
-                {% if not shipping_method.error %}
-                    {% for quote in shipping_method.quote %}
-                        <div class="radio-box-group__item">
-                            {{
-                                _selectBox.Radio({
-                                    group: 'shipping_method',
-                                    name: 'shipping_method',
-                                    value: quote.code,
-                                    label: quote.title
-                                }) 
-                            }}
-                            {{
-                                _currency.Currency(
-                                    { 'price': quote.text, 'subTitle': '' }, 
-					                { 'fontSize': 15, 'fontWeight': 600 }
-                                )
-                            }}
-                        </div>
+            {% if not shipping_method.error %}
+                {% for quote in shipping_method.quote %}
+                    <label class="radio-box-group__item" for="{{quote.code}}">
+                        {{
+                            _selectBox.Radio({
+                                group: 'shipping_method',
+                                name: 'shipping_method',
+                                value: quote.code,
+                                id: quote.code,
+                                label: quote.title
+                            }) 
+                        }}
+                        {{
+                            _currency.Currency(
+                                { 'price': quote.text, 'subTitle': '' }, 
+                                { 'fontSize': 15, 'fontWeight': 600 }
+                            )
+                        }}
+                    </label>
                 {% endfor %}
             {% else %}
                 <div class="alert alert-danger alert-dismissible">{{ shipping_method.error }}</div>
@@ -84,9 +84,4 @@
             $(this).attr('checked', 'checked').prop("checked", true).change();
         }
     });
-
-    {# $('input[data-code$="' + code + '"]')
-        .parent()
-        .removeClass('hidden'); #}
-
 </script>

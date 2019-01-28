@@ -11,6 +11,20 @@ class ControllerCheckoutLogin extends Controller {
 			$data['account'] = 'register';
 		}
 
+		if($this->customer->isLogged()) {
+			$data['customer_status'] = 'logged';
+
+			$data['customer'] = array(
+				'firstname' => $this->customer->getFirstname(),
+				'lastname' => $this->customer->getLastname(),
+				'email' => $this->customer->getEmail(),
+				'telephone' => $this->customer->getTelephone(),
+			);
+
+		} else {
+			$data['customer_status'] = 'not-logged';
+		}
+
 		$data['forgotten'] = $this->url->link('account/forgotten', '', true);
 
 		$this->response->setOutput($this->load->view('checkout/login', $data));

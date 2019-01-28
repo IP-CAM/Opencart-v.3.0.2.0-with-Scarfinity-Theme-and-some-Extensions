@@ -26,6 +26,7 @@
 		<input
 			type="radio"
 			name="{{props.name}}"
+			id="{{props.id}}"
 			data-group="{{props.group|default('s')}}"
 			value="{{props.value|default(id)}}"
 			{{ props.checked ? 'checked': '' }}

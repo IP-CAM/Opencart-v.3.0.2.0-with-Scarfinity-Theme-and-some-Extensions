@@ -71,7 +71,8 @@
                   prevHref: continue,
                   prevTitle: button_shopping,
                   nextHref: checkout,
-                  nextTitle: button_checkout
+                  nextTitle: button_checkout,
+                  disabled: true
                 })
               }}
             </div>
@@ -123,21 +124,16 @@
             success: function(html) {
                 $('#cart-checkout-requisites-login').html(html);
 
-                $.ajax({
-                    url: 'index.php?route=checkout/guest',
-                    success: function(html) {
-                        $('#cart-checkout-login-guest').html(html);
-
-                        nextButtonSet({
-                            label: 'Доставка и оплата',
-                            action: 'customerSave'
-                        });
-
-                    }
+                nextButtonSet({
+                    label: 'Доставка и оплата',
+                    action: 'customerSave'
                 });
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            },
+            complete: function() {
+                $('#cart-button-next').prop('disabled', false);
             }
         });
     });
@@ -152,6 +148,10 @@
             lastname: '',
             telephone: '',
             email: ''
+        },
+        login: {
+            email: '',
+            password: '',
         },
         shipping_address: {
             country_id: '176',
@@ -182,6 +182,33 @@
 
                 if(action) action();
             }
+        },
+        customerLogin: function(actions) {
+            var checkout = this;
+
+            $.ajax({
+                url: 'index.php?route=checkout/login/save',
+                type: 'post',
+                data: checkout.login,
+                dataType: 'json',
+                beforeSend: function() {
+                    $('#button-login').button('loading');
+                },
+                complete: function() {
+                    $('#button-login').button('reset');
+                },
+                success: function(json) {
+                    console.log(json);
+                    if (json['redirect']) {
+                        location = json['redirect'];
+                    } else if (json['error']) {
+                        if(actions['error']) actions['error'](json['error']);
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+            });
         },
         customerSave: function(actions = {}) {
             var checkout = this;
@@ -282,18 +309,22 @@
                 data: _.merge(checkout.shipping_address, checkout.shipping_method, checkout.payment_method, checkout.terms, checkout.additional),
                 dataType: 'json',
                 beforeSend: actions['beforeSend'],
+                beforeSend: function() {
+                    if(actions['beforeSend']) actions['beforeSend']();
+                },
                 success: function(json) {
                     if(json['redirect']) {
                         location = json['redirect'];
                     } else if(json['error']){
-                        console.error('Some errors', json['error']);
                         if(actions['error']) actions['error'](json['error']);
                     } else {
-                        console.log('ShippingAndPaymentsSave success!');
                         if(actions['success']) actions['success'](json);
                     }
                 },
-                error: checkout.__error(actions['error'])
+                error: checkout.__error(actions['error']),
+                complete: function() {
+                    if(actions['complete']) actions['complete']();
+                }
             });
         },
         confirm: function(actions = {}) {
@@ -305,7 +336,6 @@
                 dataType: 'json',
                 success: function(json) {
                     if(json['redirect']) {
-                        alert(json);
                         location = json['redirect'];
                     } else {
                         if(actions['success']) actions['success'](json);
@@ -321,7 +351,6 @@
                 url: 'index.php?route=extension/payment/cod/confirm',
                 dataType: 'json',
                 success: function(json) {
-                    alert(json);
                     location = json['redirect'];
                 },
                 error: checkout.__error(actions['error'])
@@ -350,6 +379,8 @@
         var group = target.data('group');
         var name = target.attr('name');
         var value = target.val();
+        var checked = target.attr('checked');
+        console.log('[select-box]', type, name, value, checked);
 
         if(checkout[group]) {
             if(type == 'radio') {
@@ -376,12 +407,28 @@
             checkout[group][name] = value;
         }
     });
-</script>
 
+    $(document).delegate('#button-login', 'click', function() {
+        if(typeof ui) {
+            ui.customerLogin();
+        }
+    });
+</script>
 
 {# Form events #}
 <script type="text/javascript">
     var ui = {
+        customerLogin: function() {
+            var ui = this;
+
+            if(checkout) {
+                checkout.customerLogin({
+                    beforeSend: ui.beforeSend('cart-checkout-login-login', function() {}),
+                    success: function() {},
+                    error: ui.displayErrors(function(errors) {})
+                });
+            }
+        },
         customerSave: function() {
             var ui = this;
             if(checkout) {
@@ -391,6 +438,7 @@
                         // go to Shipping and Payments
                         goTo(3);
                         $('a[href="#cart-checkout-payments"]').trigger('click');
+                        $('#cart-button-next').prop('disabled', true);
                         nextButtonSet({ label: 'Оформить заказ', action: 'shippingAndPaymentsSave' })
 
                         checkout.shippingAddressGet({
@@ -400,7 +448,6 @@
                                 checkout.paymentMethodsGet({
                                     success: function(html) {
                                         $('#cart-checkout-payments-method').html(html);
-                                        console.log('Shipping and Payments loaded!');
                                     }
                                 });
                             }
@@ -411,7 +458,7 @@
             }
         },
         shippingMethodChange: function(shippingMethodCode) {
-            console.log(shippingMethodCode);
+            console.log('[shipping-method-change]', shippingMethodCode);
 
             $('select[data-code^="shipping"], input[data-code^="shipping"]')
                 .parents('.sInput-container')
@@ -429,20 +476,24 @@
         shippingAndPaymentsSave: function() {
             if(checkout) {
                 checkout.shippingAndPaymentsSave({
-                    beforeSend: ui.beforeSend('cart-checkout-payments', function() {}),
+                    beforeSend: ui.beforeSend('cart-checkout-payments', function() {
+                        $('#cart-button-next').prop('disabled', true);
+                    }),
                     success: function(json) {
                         checkout.confirm({
                             success: function() {
                                 checkout.paymentConfirm({
                                     success: function() {
-                                        alert(json);
                                         location = json['redirect'];
                                     }
                                 });
                             }
                         });
                     },
-                    error: ui.displayErrors(function(errors) {})
+                    error: ui.displayErrors(function(errors) {}),
+                    complete: function() {
+                        $('#cart-button-next').prop('disabled', false);
+                    }
                 });
             }
         },
@@ -451,16 +502,22 @@
 
             ui.container = $('#' + containerId);
             $(ui.container).find('.sInput-error').remove();
-            $(ui.container).find('.sInput').removeClass('sInput--success sInput--error sInput--validate');
+            $(ui.container).find('.sInput--error').removeClass('sInput--success sInput--error sInput--validate');
+
+            if(callback) callback();
         },
         displayErrors: function(callback) {
             var ui = this;
 
             return function(errors) {
                 _.forIn(errors, function(error, name) {
-                    $(ui.container).find('input[name$="' + name +'"], select[name$="' + name + '"], input[type="checkbox"][name$="' + name + '"]')
+                    $(ui.container).find('input[type!="checkbox"][name$="' + name +'"], div[data-name$="' + name + '"]')
                         .addClass('sInput--error')
-                        .parents('.sInput-container, .select-box')
+                        .after('<p class="sInput-error">' + error + '</p>');
+
+                    $(ui.container).find('input[type="checkbox"][name$="' + name + '"], select[name$="' + name + '"]')
+                        .addClass('sInput--error')
+                        .parents('.select-box, .sInput-container')
                         .append('<p class="sInput-error">' + error + '</p>');
                 });
 
@@ -481,6 +538,7 @@
                     success: function(html) {
                         console.log('Shipping methods load double check!');
                         $('#cart-checkout-requisites-shipping-method').html(html);
+                        $('#cart-button-next').prop('disabled', false);
                     }
                 });
             }
@@ -503,6 +561,12 @@
     });
 </script>
 {# Next button events end #}
+
+{# Common form events #}
+<script type="text/javascript">
+
+</script>
+{# Common form events end #}
 
 {# {% if not logged %}
 {% else %}
@@ -1026,7 +1090,7 @@ $(document).delegate('#button-account', 'click', function() {
 });
 
 // Login
-$(document).delegate('#button-login', 'click', function() {
+{# $(document).delegate('#button-login', 'click', function() {
     $.ajax({
         url: 'index.php?route=checkout/login/save',
         type: 'post',
@@ -1056,7 +1120,7 @@ $(document).delegate('#button-login', 'click', function() {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
-});
+}); #}
 
 // Register
 $(document).delegate('#button-register', 'click', function() {

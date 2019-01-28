@@ -26,41 +26,45 @@ class ControllerCheckoutSimple extends Controller {
 			$json['redirect'] = $this->url->link('checkout/cart');
 		}
 
-		if (!$json) {
-			if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
-				$json['error']['firstname'] = $this->language->get('error_firstname');
+		if(!$this->customer->isLogged()) {
+			if (!$json) {
+				if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+					$json['error']['firstname'] = $this->language->get('error_firstname');
+				}
+
+				if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+					$json['error']['lastname'] = $this->language->get('error_lastname');
+				}
+
+				if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+					$this->request->post['email'] = 'noemail@scarfinity.ru';
+					// $json['error']['email'] = $this->language->get('error_email');
+				}
+
+				if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+					$json['error']['telephone'] = $this->language->get('error_telephone');
+				}
+
+				// Customer Group
+				if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+					$customer_group_id = $this->request->post['customer_group_id'];
+				} else {
+					$customer_group_id = $this->config->get('config_customer_group_id');
+				}
 			}
 
-			if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
-				$json['error']['lastname'] = $this->language->get('error_lastname');
-			}
+			if (!$json) {
+				$this->session->data['account'] = 'guest';
 
-			if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
-				$this->request->post['email'] = 'noemail@scarfinity.ru';
-				// $json['error']['email'] = $this->language->get('error_email');
-			}
-
-			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-				$json['error']['telephone'] = $this->language->get('error_telephone');
-			}
-
-			// Customer Group
-			if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
-				$customer_group_id = $this->request->post['customer_group_id'];
-			} else {
-				$customer_group_id = $this->config->get('config_customer_group_id');
+				$this->session->data['guest']['customer_group_id'] = $customer_group_id;
+				$this->session->data['guest']['firstname'] = $this->request->post['firstname'];
+				$this->session->data['guest']['lastname'] = $this->request->post['lastname'];
+				$this->session->data['guest']['email'] = $this->request->post['email'];
+				$this->session->data['guest']['telephone'] = $this->request->post['telephone'];
 			}
 		}
 
 		if (!$json) {
-			$this->session->data['account'] = 'guest';
-
-			$this->session->data['guest']['customer_group_id'] = $customer_group_id;
-			$this->session->data['guest']['firstname'] = $this->request->post['firstname'];
-			$this->session->data['guest']['lastname'] = $this->request->post['lastname'];
-			$this->session->data['guest']['email'] = $this->request->post['email'];
-			$this->session->data['guest']['telephone'] = $this->request->post['telephone'];
-
 			$this->session->data['payment_address']['firstname'] = $this->request->post['firstname'];
 			$this->session->data['payment_address']['lastname'] = $this->request->post['lastname'];
 			$this->session->data['payment_address']['company'] = ''; // $this->request->post['company'];
@@ -1316,12 +1320,12 @@ class ControllerCheckoutSimple extends Controller {
 
 			// Валидация способа доставки
 			if (!isset($this->request->post['shipping_method'])) {
-				$json['error']['warning'] = $this->language->get('error_shipping');
+				$json['error']['shipping_methods'] = $this->language->get('error_shipping');
 			} else {
 				$shipping = explode('.', $this->request->post['shipping_method']);
 
 				if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
-					$json['error']['warning'] = $this->language->get('error_shipping');
+					$json['error']['shipping_methods'] = $this->language->get('error_shipping');
 				}
 			}
 

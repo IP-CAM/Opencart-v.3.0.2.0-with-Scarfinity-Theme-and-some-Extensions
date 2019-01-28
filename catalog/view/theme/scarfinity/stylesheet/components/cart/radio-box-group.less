@@ -8,6 +8,10 @@
 .radio-box-group {
     margin: 0px 0px;
     border: 1px solid #d7d7d7;
+    background-color: #f9f9f9;
+    background-size: 18px 44px;
+    background-position: right 10px top 0px;
+    background-repeat: no-repeat;
     border-radius: 2px;
     overflow: hidden;
 
@@ -19,7 +23,7 @@
         
         padding: 12px 15px;
 
-        background-color: #f9f9f9;
+        background-color: transparent;
 
         font-family: "Roboto";
         font-size: 14px;
@@ -48,8 +52,10 @@
         align-items: center;
 
         padding: 12px 15px;
+        margin: 0;
 
         border-top: 1px solid #d7d7d7;
+        background-color: #fff;
 
         &:hover {
             cursor: pointer;
@@ -126,7 +132,7 @@
 
     &--error & {
         &__title {
-            border-bottom-color: @error;
+            background-image: url('../../../image/icons/error.svg');
         }
     }
 

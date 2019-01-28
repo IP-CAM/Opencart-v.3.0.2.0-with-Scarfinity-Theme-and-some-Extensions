@@ -2,108 +2,142 @@
 {% import 'scarfinity/template/components/utility/basic-input.twig' as basicInput %}
 
 {% set tabAnonymousContent %}
-      {{ 
-          basicInput.basicInput({
-              label: entry_firstname,
-              value: '',
-              name: 'lastname',
-              group: 'customer',
-              type: 'text',
-              placeholder: 'Фамилия',
-              required: true
-          })
-      }}
-      {{ 
-          basicInput.basicInput({
-              value: '',
-              name: 'firstname',
-              group: 'customer',
-              type: 'text',
-              placeholder: 'Имя',
-              required: true
-          })
-      }}
-      {{ 
-          basicInput.basicInput({
-              value: '',
-              name: 'email',
-              group: 'customer',
-              type: 'email',
-              placeholder: 'E-mail'
-          })
-      }}
-      {{ 
-          basicInput.basicInput({
-              value: '',
-              name: 'telephone',
-              group: 'customer',
-              type: 'phone',
-              placeholder: 'Телефон',
-              required: true
-          })
-      }} 
+    {{ 
+        basicInput.basicInput({
+            label: entry_firstname,
+            value: firstname,
+            name: 'firstname',
+            group: 'customer',
+            type: 'text',
+            placeholder: entry_firstname,
+            required: true
+        })
+    }}
+    {{ 
+        basicInput.basicInput({
+            label: entry_lastname,
+            value: lastname,
+            name: 'lastname',
+            group: 'customer',
+            type: 'text',
+            placeholder: entry_lastname,
+            required: true
+        })
+    }}
+    {{ 
+        basicInput.basicInput({
+            label: entry_telephone,
+            value: telephone,
+            name: 'telephone',
+            group: 'customer',
+            type: 'phone',
+            placeholder: entry_telephone,
+            required: true
+        })
+    }}
+    {{ 
+        basicInput.basicInput({
+            label: entry_email,
+            value: email,
+            name: 'email',
+            group: 'customer',
+            type: 'email',
+            placeholder: entry_email
+        })
+    }}
 {% endset %}
 
 {% set tabRegisteredContent %}
-    <h2>{{ text_returning_customer }}</h2>
     <p>{{ text_i_am_returning_customer }}</p>
-    <div class="form-group">
-      <label class="control-label" for="input-email">{{ entry_email }}</label>
-      <input type="text" name="email" value="" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
-    </div>
-    <div class="form-group">
-      <label class="control-label" for="input-password">{{ entry_password }}</label>
-      <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
-      <a href="{{ forgotten }}">{{ text_forgotten }}</a></div>
+    {{ 
+        basicInput.basicInput({
+            label: entry_email,
+            value: '',
+            name: 'email',
+            group: 'login',
+            type: 'text',
+            placeholder: entry_email,
+            required: true
+        })
+    }}
+    {{ 
+        basicInput.basicInput({
+            label: entry_password,
+            value: '',
+            name: 'password',
+            group: 'login',
+            type: 'password',
+            placeholder: entry_password,
+            required: true
+        })
+    }}
+    <a href="{{ forgotten }}">{{ text_forgotten }}</a>
     <input type="button" value="{{ button_login }}" id="button-login" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
 {% endset %}
 
-{{ 
-    _navTab.NavTab({id: 'cart-checkout-login', tabs: [
-        { id: 'guest', title: text_new_customer, content: tabAnonymousContent }, 
-        { id: 'login', title: 'У меня есть аккаунт', content: tabRegisteredContent }
-    ]})
-}} 
+{% if customer_status == 'logged' %}
+    <p>Вы уже зарегистрированны в системе!</p>
+    {{ 
+        basicInput.basicInput({
+            label: entry_firstname,
+            value: customer.firstname,
+            name: 'lastname',
+            group: 'customer',
+            type: 'text',
+            placeholder: 'Фамилия',
+            disabled: true
+        })
+    }}
+    {{ 
+        basicInput.basicInput({
+            label: entry_lastname,
+            value: customer.lastname,
+            name: 'firstname',
+            group: 'customer',
+            type: 'text',
+            placeholder: 'Имя',
+            disabled: true
+        })
+    }}
+    {{ 
+        basicInput.basicInput({
+            label: entry_email,
+            value: customer.email,
+            name: 'email',
+            group: 'customer',
+            type: 'email',
+            placeholder: 'E-mail',
+            disabled: true
+        })
+    }}
+    {{ 
+        basicInput.basicInput({
+            label: entry_telephone,
+            value: customer.telephone,
+            name: 'telephone',
+            group: 'customer',
+            type: 'phone',
+            placeholder: 'Телефон',
+            disabled: true
+        })
+    }} 
 
+    <script type="text/javascript">
+        var inputs = $('.sInput[data-group="customer"]').each(function() {
+            switch($(this).attr('name')) {
+            case 'firstname': $(this).val('{{customer.firstname}}').trigger('input'); break;
+            case 'lastname': $(this).val('{{customer.lastname}}').trigger('input'); break;
+            case 'telephone': $(this).val('{{customer.telephone}}').trigger('input'); break;
+            case 'email': $(this).val('{{customer.email}}').trigger('input'); break;
+            }
+        });
+    </script>
 
-
-
-{# <div class="row">
-  <div class="col-sm-6">
-    <h2>{{ text_new_customer }}</h2>
-    <p>{{ text_checkout }}</p>
-    <div class="radio">
-      <label> {% if account == 'register' %}
-        <input type="radio" name="account" value="register" checked="checked" />
-        {% else %}
-        <input type="radio" name="account" value="register" />
-        {% endif %}
-        {{ text_register }}</label>
-    </div>
-    {% if checkout_guest %}
-    <div class="radio">
-      <label> {% if account == 'guest' %}
-        <input type="radio" name="account" value="guest" checked="checked" />
-        {% else %}
-        <input type="radio" name="account" value="guest" />
-        {% endif %}
-        {{ text_guest }}</label>
-    </div>
-    {% endif %}
-    <p>{{ text_register_account }}</p>
-    <input type="button" value="{{ button_continue }}" id="button-account" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
-  </div>
-  <div class="col-sm-6">
-    <h2>{{ text_returning_customer }}</h2>
-    <p>{{ text_i_am_returning_customer }}</p>
-    <div class="form-group">
-      <label class="control-label" for="input-email">{{ entry_email }}</label>
-      <input type="text" name="email" value="" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
-    </div>
-    <div class="form-group">
-      <label class="control-label" for="input-password">{{ entry_password }}</label>
-      <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
-      <a href="{{ forgotten }}">{{ text_forgotten }}</a></div>
-    <input type="button" value="{{ button_login }}" id="button-login" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
-  </div>
-</div> #}
+{% else %}
+    {{ 
+        _navTab.NavTab({id: 'cart-checkout-login', tabs: [
+            { id: 'guest', title: text_new_customer, content: tabAnonymousContent }, 
+            { id: 'login', title: 'У меня есть аккаунт', content: tabRegisteredContent }
+        ]})
+    }} 
+{% endif %}
