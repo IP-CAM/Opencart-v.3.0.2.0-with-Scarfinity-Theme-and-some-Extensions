@@ -37,6 +37,23 @@ class ControllerCheckoutShippingMethod extends Controller {
 			array_multisort($sort_order, SORT_ASC, $method_data);
 
 			$this->session->data['shipping_methods'] = $method_data;
+
+			// Список магазинов
+			$this->load->model('localization/location');
+
+			$results = $this->model_localization_location->getLocations();
+			echo $result; die;
+
+			foreach ($results as $location) {
+				$data_locations[] = array(
+					'name' 		=> $location['name'] . ' ' . $location['address'],
+					'address' 	=> $location['address'],
+					'telephone' => $location['telephone']
+				);
+			}
+
+			$data['entry_locataion'] = 'Выберете магазин';
+			$data['locations'] = $data_locations;
 		}
 
 		if (empty($this->session->data['shipping_methods'])) {

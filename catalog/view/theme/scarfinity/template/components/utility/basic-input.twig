@@ -5,13 +5,14 @@
             <label for="{{id}}">{{props.label}}:</label>
         {% endif %}
         <input
-            class="sInput{{props.valid == true ? " sInput--success" : props.valid == false ? " sInput--error": ""}}"
+            class="sInput{{props.valid and props.valid == true ? " sInput--success" : props.valid and props.valid == false ? " sInput--error": ""}}"
             id="{{id}}",
             type="{{props.type}}"
             name="{{props.name}}"
             value="{{props.value}}"
             placeholder="{{props.placeholder}}"
             data-group="{{props.group|default('s')}}"
+            data-code="{{props.code|default('')}}"
             {{props.disabled ? disabled: ''}}
             {{props.readonly ? readonly : ''}} />
     </div>

@@ -41,6 +41,7 @@
 {% import 'scarfinity/template/components/utility/value-switch.twig' as _valueSwitch  %}
 {% import 'scarfinity/template/components/utility/drop-down.twig' as _dropDown  %}
 {% import 'scarfinity/template/components/utility/price-range.twig' as _priceRange  %}
+{% import 'scarfinity/template/components/utility/item-list.twig' as _itemList  %}
 
 {% import 'scarfinity/template/components/lib/currying.twig' as _currying %}
 
@@ -67,9 +68,11 @@
 
       <div class="row">
         <div class="col-xs-12 col-sm-9 col-md-6 col-lg-10">
-          {{ _priceRange.PriceRange({ id: 0 }) }}
+          {{ _itemList.ItemList({}) }}
         </div>
       </div>
+
+      <div>{{ _itemList.ItemList({}) }}</div>
 
 
       {{ description }}

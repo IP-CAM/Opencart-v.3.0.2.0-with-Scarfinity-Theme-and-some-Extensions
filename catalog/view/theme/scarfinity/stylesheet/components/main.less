@@ -64,8 +64,15 @@ main {
 	}
 }
 
-#panel {
-	@media screen and (max-width: 768px) {
-        box-shadow: rgba(0, 0, 0, 0.3) 0px -55px 12px;
+.top {
+	position: fixed;
+	top: 20%;
+	background-color: yellow;
+	z-index: 700;
+
+	&.t1 {
+		left: 0px;
+		right: 0px;
+		height: 60%;
 	}
 }

@@ -35,13 +35,13 @@
                 href="{{props.url|replace({'{page}': c - 1})}}"
                 class="s-pagination-container__button{{c <= 1 ? ' ds' : ''}}">
                     {{_icons.ChevronLeft({size: 13})}}
-                    <span>Предыдущая</span>
+                    <span class="s-pagination-container__button__label">Предыдущая</span>
             </a>
             {{pages}}
             <a
                 href="{{props.url|replace({'{page}': c + 1})}}"
                 class="s-pagination-container__button r{{c >= max ? ' ds' : ''}}">
-                    <span>Следующая</span>
+                    <span class="s-pagination-container__button__label">Следующая</span>
                     {{_icons.ChevronRight({size: 13})}}
             </a>
         </div>

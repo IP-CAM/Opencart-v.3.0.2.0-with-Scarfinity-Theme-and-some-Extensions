@@ -1,0 +1,32 @@
+.item-list {
+    margin: 0;
+    padding: 0;
+
+    &__item {
+        line-height: 26px;
+    }
+}
+
+.item-list-container {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 26px * 6;
+
+    &::-webkit-scrollbar-track {
+        border-radius: 16px;
+        background-color: #fafafa;
+    }
+
+    &::-webkit-scrollbar
+    {
+        border-radius: 16px;
+        width: 8px;
+        background-color: #fafafa;
+    }
+    
+    &::-webkit-scrollbar-thumb
+    {
+        border-radius: 16px;
+        background-color: #d7d7d7;
+    }
+}

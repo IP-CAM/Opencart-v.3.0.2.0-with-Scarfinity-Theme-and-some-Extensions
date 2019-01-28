@@ -1,0 +1,9 @@
+{% macro ItemList(props) %}
+    <div class="item-list-container">
+        <ul class="item-list">
+            {% for item in props.items %}
+                <li class="item-list__item">{{item}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endmacro %}

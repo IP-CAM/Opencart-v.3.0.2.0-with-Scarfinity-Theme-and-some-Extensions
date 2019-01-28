@@ -250,6 +250,22 @@ class ControllerCheckoutSimple extends Controller {
 
 		$this->session->data['shipping_methods'] = $method_data;
 
+		// Список магазинов
+		$this->load->model('localisation/location');
+
+		$results = $this->model_localisation_location->getLocations();
+
+		foreach ($results as $result) {
+			$data_locations[] = array(
+				'name' 		=> $result['name'] . ' ' . $result['address'],
+				'address' 	=> $result['address'],
+				'telephone' => $result['telephone']
+			);
+		}
+
+		$data['entry_locataion'] = 'Выберете магазин';
+		$data['locations'] = $data_locations;
+
 		if (empty($this->session->data['shipping_methods'])) {
 			$data['error_warning'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact'));
 		} else {
@@ -1322,7 +1338,7 @@ class ControllerCheckoutSimple extends Controller {
 				$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout_id'));
 
 				if ($information_info && $this->request->post['agree'] === 'false') {
-					$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+					$json['error']['agree'] = sprintf($this->language->get('error_agree'), $information_info['title']);
 				}
 			}
 		}

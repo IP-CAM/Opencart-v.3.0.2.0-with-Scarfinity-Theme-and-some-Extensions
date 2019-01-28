@@ -167,105 +167,120 @@
     </div>
   </header>
   {{ menu }}
+  <div id="mobile-filters-container" class="mobile-filters-container"></div>
   <main id="panel" data-slideout-ignore>
 
 
 {# Scripts #}
 <script type="text/javascript">
-  var tolerance = 70;
+    var tolerance = 70;
 
-  var slideout = new Slideout({
-    'panel': document.getElementById('panel'),
-    'menu': document.getElementById('mobile-left-menu'),
-    'padding': 256,
-    'tolerance': tolerance
-  });
+    var slideout = new Slideout({
+      'panel': document.getElementById('panel'),
+      'menu': document.getElementById('mobile-left-menu'),
+      'padding': 256,
+      'tolerance': tolerance
+    });
 
-  var fixed = document.getElementById('mobile-nav-header');
-  var mmm = document.getElementById('mobile-main-menu');
+    var fixed = document.getElementById('mobile-nav-header');
+    var mmm = document.getElementById('mobile-main-menu');
+    var mfc = document.getElementById('mobile-filters-container');
 
-  slideout.on('translatestart', function() {
-    if(!slideoutCart.isOpen()) {
+    slideout.on('translatestart', function() {
+      if(!slideoutCart.isOpen()) {
+        $('#mobile-left-menu').addClass('active');
+      }
+    });
+
+    slideout.on('translate', function(translated) {
+      fixed.style.transform = 'translateX(' + translated + 'px)';
+      mmm.style.transform = 'translateX(' + translated + 'px)';
+      mfc.style.transform = 'translateX(' + translated + 'px)';
+    });
+
+    slideout.on('beforeopen', function () {
+      fixed.style.transition = 'transform 300ms ease';
+      fixed.style.transform = 'translateX(256px)';
+      mmm.style.transition = 'transform 300ms ease';
+      mmm.style.transform = 'translateX(256px)';
+      mfc.style.transition = 'transform 300ms ease';
+      mfc.style.transform = 'translateX(256px)';
       $('#mobile-left-menu').addClass('active');
-    }
-  });
+    });
 
-  slideout.on('translate', function(translated) {
-    fixed.style.transform = 'translateX(' + translated + 'px)';
-    mmm.style.transform = 'translateX(' + translated + 'px)';
-  });
+    slideout.on('beforeclose', function () {
+      fixed.style.transition = 'transform 300ms ease';
+      fixed.style.transform = 'translateX(0px)';
+      mmm.style.transition = 'transform 300ms ease';
+      mmm.style.transform = 'translateX(0px)';
+      mfc.style.transition = 'transform 300ms ease';
+      mfc.style.transform = 'translateX(0px)';
+    });
 
-  slideout.on('beforeopen', function () {
-    fixed.style.transition = 'transform 300ms ease';
-    fixed.style.transform = 'translateX(256px)';
-    mmm.style.transition = 'transform 300ms ease';
-    mmm.style.transform = 'translateX(256px)';
-    $('#mobile-left-menu').addClass('active');
-  });
+    slideout.on('open', function () {
+      fixed.style.transition = '';
+      mmm.style.transition = '';
+      mfc.style.transition = '';
+    });
 
-  slideout.on('beforeclose', function () {
-    fixed.style.transition = 'transform 300ms ease';
-    fixed.style.transform = 'translateX(0px)';
-    mmm.style.transition = 'transform 300ms ease';
-    mmm.style.transform = 'translateX(0px)';
-  });
+    slideout.on('close', function () {
+      fixed.style.transition = '';
+      mmm.style.transition = '';
+      mfc.style.transition = '';
+      $('#mobile-left-menu').removeClass('active');
+    });
 
-  slideout.on('open', function () {
-    fixed.style.transition = '';
-    mmm.style.transition = '';
-  });
+    var slideoutCart = new Slideout({
+      'panel': document.getElementById('panel'),
+      'menu': document.getElementById('mobile-cart'),
+      'padding': 256,
+      'tolerance': tolerance,
+      'side': 'right'
+    });
 
-  slideout.on('close', function () {
-    fixed.style.transition = '';
-    mmm.style.transition = '';
-    $('#mobile-left-menu').removeClass('active');
-  });
+    slideoutCart.on('translatestart', function() {
+      if(!slideoutCart.isOpen()) {
+        $('#mobile-cart').addClass('active');
+      }
+    });
 
-  var slideoutCart = new Slideout({
-    'panel': document.getElementById('panel'),
-    'menu': document.getElementById('mobile-cart'),
-    'padding': 256,
-    'tolerance': tolerance,
-    'side': 'right'
-  });
+    slideoutCart.on('translate', function(translated) {
+      fixed.style.transform = 'translateX(' + translated + 'px)';
+      mmm.style.transform = 'translateX(' + translated + 'px)';
+      mfc.style.transform = 'translateX(' + translated + 'px)';
+    });
 
-  slideoutCart.on('translatestart', function() {
-    if(!slideoutCart.isOpen()) {
+    slideoutCart.on('beforeopen', function () {
+      fixed.style.transition = 'transform 300ms ease';
+      fixed.style.transform = 'translateX(-256px)';
+      mmm.style.transition = 'transform 300ms ease';
+      mmm.style.transform = 'translateX(-256px)';
+      mfc.style.transition = 'transform 300ms ease';
+      mfc.style.transform = 'translateX(-256px)';
       $('#mobile-cart').addClass('active');
-    }
-  });
+    });
 
-  slideoutCart.on('translate', function(translated) {
-    fixed.style.transform = 'translateX(' + translated + 'px)';
-    mmm.style.transform = 'translateX(' + translated + 'px)';
-  });
+    slideoutCart.on('beforeclose', function () {
+      fixed.style.transition = 'transform 300ms ease';
+      fixed.style.transform = 'translateX(0px)';
+      mmm.style.transition = 'transform 300ms ease';
+      mmm.style.transform = 'translateX(0px)';
+      mfc.style.transition = 'transform 300ms ease';
+      mfc.style.transform = 'translateX(0px)';
+    });
 
-  slideoutCart.on('beforeopen', function () {
-    fixed.style.transition = 'transform 300ms ease';
-    fixed.style.transform = 'translateX(-256px)';
-    mmm.style.transition = 'transform 300ms ease';
-    mmm.style.transform = 'translateX(-256px)';
-    $('#mobile-cart').addClass('active');
-  });
+    slideoutCart.on('open', function () {
+      fixed.style.transition = '';
+      mmm.style.transition = '';
+      mfc.style.transition = '';
+    });
 
-  slideoutCart.on('beforeclose', function () {
-    fixed.style.transition = 'transform 300ms ease';
-    fixed.style.transform = 'translateX(0px)';
-    mmm.style.transition = 'transform 300ms ease';
-    mmm.style.transform = 'translateX(0px)';
-  });
-
-  slideoutCart.on('open', function () {
-    fixed.style.transition = '';
-    mmm.style.transition = '';
-  });
-
-  slideoutCart.on('close', function () {
-    fixed.style.transition = '';
-    mmm.style.transition = '';
-    $('#mobile-cart').removeClass('active');
-  });
-
+    slideoutCart.on('close', function () {
+      fixed.style.transition = '';
+      mmm.style.transition = '';
+      mfc.style.transition = '';
+      $('#mobile-cart').removeClass('active');
+    });
 </script>
 
 <script type="text/javascript">

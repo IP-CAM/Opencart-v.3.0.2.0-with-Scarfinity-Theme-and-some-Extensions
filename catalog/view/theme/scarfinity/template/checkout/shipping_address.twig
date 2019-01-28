@@ -13,15 +13,15 @@
     {% endfor %}
     <div class="col-md-12">
         {{
-        _dropDown.DropDown({
-            label: entry_country,
-            name: 'country_id',
-            id: 'input-shipping-country',
-            group: 'shipping_address',
-            head: text_select,
-            options: options,
-            required: true
-        })
+            _dropDown.DropDown({
+                label: entry_country,
+                name: 'country_id',
+                id: 'input-shipping-country',
+                group: 'shipping_address',
+                head: text_select,
+                options: options,
+                required: true
+            })
         }}
     </div>
     <div class="col-md-12">
@@ -29,7 +29,6 @@
             basicInput.basicInput({
                 label: entry_city,
                 value: '',
-                valid: true,
                 name: 'city',
                 group: 'shipping_address',
                 type: 'text',
@@ -37,21 +36,19 @@
                 required: true
             })
         }}
-        {{ 
+        {# {{ 
             basicInput.basicInput({
                 label: entry_address_1,
                 value: '',
-                valid: true,
                 name: 'address_1',
                 group: 'shipping_address',
                 type: 'text',
                 placeholder: "Введите адрес"
             })
-        }}
+        }} #}
         {{ 
             basicInput.basicInput({
                 value: '',
-                valid: true,
                 name: 'address_2',
                 type: 'hidden',
                 placeholder: ''
@@ -60,19 +57,17 @@
         {{ 
             basicInput.basicInput({
                 value: '120',
-                valid: true,
                 name: 'zone_id',
                 type: 'hidden',
                 placeholder: ''
             })
         }}
     </div>
-    <div class="col-md-5">
+    {# <div class="col-md-5">
         {{ 
             basicInput.basicInput({
                 label: entry_postcode,
-                value: '888888',
-                valid: true,
+                value: '',
                 name: 'postcode',
                 group: 'shipping_address',
                 type: 'text',
@@ -86,7 +81,7 @@
             <span class="accent">индекс</span>
             . Если индекс не определился, введите его сами.
         </p>
-    </div>
+    </div> #}
     <div>
       {{ 
           basicInput.basicInput({

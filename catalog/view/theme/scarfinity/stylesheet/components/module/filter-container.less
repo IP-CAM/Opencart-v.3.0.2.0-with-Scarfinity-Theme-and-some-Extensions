@@ -1,46 +1,99 @@
-.filters-container {
-    background: #f1f1f1;
+@keyframes plus-in{
+    from {transform: rotateZ(0deg);}
+    to {transform: rotateZ(180deg);}
+}
 
-    &__navigation {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background: #f1f1f1;
-        padding: 0px 0px;
+@keyframes plus-out{
+    from {transform: rotateZ(180deg);}
+    to {transform: rotateZ(0deg);}
+}
+
+.mobile-filters-container {
+    position: fixed;
+    top: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 798;
+    user-select: none;
+    pointer-events: none;
+
+    &__container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow-y: scroll;
+        background: #fff;
+        z-index: 5;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+        pointer-events: all;
+    }
+
+    &__button {
+        position: absolute;
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        background: #bf4f79;
+        bottom: 30px;
+        right: 30px;
+        cursor: pointer;
+        box-shadow: 0px 2px 5px #666;
+        z-index: 800;
+        pointer-events: all;
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-image: url('../../../image/icons/filter.svg');
+            background-position: left 10px top 10px;
+            background-size: 34px 34px;
+            background-repeat: no-repeat;
+
+            animation: plus-out 0.3s ease;
+        }
+    }
+
+    &--open & {
+        &__container {
+            transform: translateY(0%);
+        }
         
-        &__title {
-            font-size: 13px;
-            color: #808080;
-            flex: 1;
-            text-align: right;
-            margin: 0px 10px;
-        }
-
-        &__dropdown {
-            flex: 2;
-        }
-    }
-    
-    @media screen and (min-width: 768px) {
-        &__navigation {
-            display: none;
-        }
-    }
-
-    @media screen and (max-width: 767px) {
-        // Коменсации линии вертикальной таблицы в широкой версии
-        margin-bottom: -14px;
-
-        &__filters {
-            padding: 7px 0px;
-
-            &--close {
-                display: none;
-                padding: 0;
+        &__button {
+            &:after {
+                animation: plus-in 0.3s ease;
+                background-image: url('../../../image/icons/clear.svg');
             }
         }
     }
+
+    &--init {
+        display: none;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    @media screen and (max-width: 768px) {
+        &-open {
+			&, body, .slideout-panel {
+				overflow: hidden;
+			}
+		}
+    }
+
+    @media screen and (min-width: 768px) {
+        display: none;
+    }
 }
+
 
 .filter-toggle-button {
     display: flex;

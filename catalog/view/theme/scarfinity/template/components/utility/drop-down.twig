@@ -1,13 +1,13 @@
 {% macro DropDown(props) %}
     {% import 'scarfinity/template/components/utility/_icons.twig' as _icons  %}
     {% set id = props.id|default(random()) %}
-    <div class="sInput-container{{props.required ? ' required': ''}}{{props.type == 'hidden' ? ' hidden': ''}}">
+    <div class="sInput-container{{props.required ? ' required': ''}}{{props.type == 'hidden' or props.hidden and props.hidden == true ? ' hidden': ''}}">
         {% if props.label %}
             <label for="{{id}}">{{props.label}}:</label>
         {% endif %}
         <div class="sDropdown sDropdown--{{props.style|default('gray')}}">
             <div>
-                <select id="{{id}}" name="{{props.name}}" data-group="{{props.group}}">
+                <select id="{{id}}" name="{{props.name}}" data-group="{{props.group}}" data-code="{{props.code|default('')}}">
                     {% if props.head %}
                         <option value="" selected="selected">{{ props.head }}</option>
                     {% endif %}

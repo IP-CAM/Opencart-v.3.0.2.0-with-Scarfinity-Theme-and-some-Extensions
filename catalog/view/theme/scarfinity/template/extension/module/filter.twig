@@ -1,65 +1,125 @@
 {% import 'scarfinity/template/components/module/filter.twig' as _filter %}
 
-{# <div class="panel panel-default">
-  <div class="panel-heading">{{ heading_title }}</div>
-  <div class="list-group">
-    {% for filter_group in filter_groups %} <a class="list-group-item">{{ filter_group.name }}</a>
-    <div class="list-group-item">
-      <div id="filter-group{{ filter_group.filter_group_id }}">
-      {% for filter in filter_group.filter %}
-        <div class="checkbox">
-          <label>{% if filter.filter_id in filter_category %}
-            <input type="checkbox" name="filter[]" value="{{ filter.filter_id }}" checked="checked" />
-            {{ filter.name }}
-            {% else %}
-            <input type="checkbox" name="filter[]" value="{{ filter.filter_id }}" />
-            {{ filter.name }}
-            {% endif %}</label>
-        </div>
-        {% endfor %}</div>
+<div id="layout-filters">
+  <div id="filters" class="panel panel-default">
+    <div class="panel-heading">{{ heading_title }}</div>
+      <div class="list-group">
+        {{ _filter.PriceRange({ name: 'Цена за 1 еденицу (опт)', pmin: pmin, pmax: pmax }) }}
+        {% for filter_group in filter_groups %}
+          {% set filterName = filter_group.name|lower %}
+          {% if filterName == "colors" %}
+            {{ _filter.ColorFilter({ filters: filter_group.filter, filterCategory: filter_category }) }}
+          {% else %}
+            {{ _filter.SeasonFilter({ name: filter_group.name, filters: filter_group.filter, filterCategory: filter_category }) }}
+          {% endif %}
+        {% endfor %}
+      </div>
+    <div class="panel-footer">
+      <button type="button" id="button-filter" class="btn btn-primary">{{ button_filter }}</button>
     </div>
-    {% endfor %}</div>
-  <div class="panel-footer text-right">
-    <button type="button" id="button-filter" class="btn btn-primary">{{ button_filter }}</button>
-  </div>
-</div> #}
-
-<div class="panel panel-default">
-  <div class="panel-heading">{{ heading_title }}</div>
-    <div class="list-group">
-      {{ _filter.PriceRange({ name: 'Цена за 1 еденицу (опт)', pmin: pmin, pmax: pmax }) }}
-      {% for filter_group in filter_groups %}
-        {% set filterName = filter_group.name|lower %}
-        {% if filterName == "colors" %}
-          {{ _filter.ColorFilter({ filters: filter_group.filter, filterCategory: filter_category }) }}
-        {% else %}
-          {{ _filter.SeasonFilter({ name: filter_group.name, filters: filter_group.filter, filterCategory: filter_category }) }}
-        {% endif %}
-      {% endfor %}
-    </div>
-  <div class="panel-footer text-right">
-    <button type="button" id="button-filter" class="btn btn-primary">{{ button_filter }}</button>
   </div>
 </div>
 
+<script type="text/javascript">
+  $('#mobile-filters-container').append('<div class="mobile-filters-container__container"></div><div class="mobile-filters-container__button"></div>');
 
+  var filter = {
+    places: {
+      768: 'mobile-filters-container .mobile-filters-container__container',
+    },
+    place: 'layout-filters',
+    target: 'filters',
+    init: function() {
+      var filter = this;
 
+      filter['_places'] = _.orderBy(_.map(_.toPairs(filter.places), function(o) {
+        return { breakpoint: o[0], target: o[1] }
+      }), 'breakpoint').reverse();
 
-<script type="text/javascript"><!--
-$('#button-filter').on('click', function() {
-	filter = [];
+      $(window).resize(function() {
+        filter.changePlace();
+      });
+      filter.changePlace();
+    },
+    changePlace: function() {
+      var filter = this;
 
-	$('input[name^=\'filter\']:checked').each(function(element) {
-		filter.push(this.value);
-	});
+      var width = $(window).width();
+      var place = filter.place;
 
-  var prices = '';
-  $('input[name^=\'pmin\'], input[name^=\'pmax\']').each(function() {
-    if(this.value != '') {
-      prices += '&' + this.name + '=' + this.value;
+      _.forEach(filter['_places'], function(p) {
+        if(width <= p.breakpoint) {
+          place = p.target;
+        }
+      });
+
+      if(place != '') {
+        $('#' + place).html($('#' + filter.target));
+      }
     }
+  };
+
+  $(document).ready(function() {
+    filter.init();
   });
 
-	location = '{{ action }}&filter=' + filter.join(',') + prices;
-});
-//--></script> 
+</script>
+
+<script type="text/javascript">
+  var mobileFilters = {
+    isOpen: false,
+    container: document.getElementById('mobile-filters-container'),
+    open: function() {
+      var filters = this;
+
+      if(!filters.isOpen) {
+        filters.isOpen = true;
+
+        $('html').addClass('mobile-filters-container-open');
+        $(filters.container).addClass('mobile-filters-container--open');
+      }
+    },
+    close: function() {
+      var filters = this;
+
+      if(filters.isOpen) {
+        filters.isOpen = false;
+
+        $('html').removeClass('mobile-filters-container-open');
+        $(filters.container).removeClass('mobile-filters-container--open');
+      }
+    },
+    toggle: function() {
+      var filters = this;
+
+      if(filters.isOpen) {
+        filters.close();
+      } else {
+        filters.open();
+      }
+    }
+  }
+
+  $('#mobile-filters-container .mobile-filters-container__button').on('click', function() {
+    mobileFilters.toggle();
+  });
+</script>
+
+<script type="text/javascript">
+  $(document).delegate('#button-filter', 'click', function() {
+    filter = [];
+
+    $('input[name^=\'filter\']:checked').each(function(element) {
+      filter.push(this.value);
+    });
+
+    var prices = '';
+    $('input[name^=\'pmin\'], input[name^=\'pmax\']').each(function() {
+      if(this.value != '') {
+        prices += '&' + this.name + '=' + this.value;
+      }
+    });
+
+    location = '{{ action }}&filter=' + filter.join(',') + prices;
+  });
+</script> 

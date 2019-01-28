@@ -44,22 +44,24 @@
 {% macro SeasonFilter(props) %}
     {% import _self as _ %}
     {% import 'scarfinity/template/components/utility/select-box.twig' as _selectBox %}
+    {% import 'scarfinity/template/components/utility/item-list.twig' as _itemList %}
 
     {% set content %}
-        <div>
-            {% for filter in props.filters %}
-                {% set checked = filter.filter_id in props.filterCategory %}
-                {{
-                    _selectBox.CheckBox({
-                        label: filter.name ~ " ("~ filter.count ~")",
-                        name: 'filter[]',
-                        value: filter.filter_id,
-                        checked: checked,
-                        disabled: filter.count == 0
-                    })
-                }}
-            {% endfor %}
-        </div>
+        {% set items = [] %}
+        {% for filter in props.filters %}
+            {% set checked = filter.filter_id in props.filterCategory %}
+            {% 
+                set item = _selectBox.CheckBox({
+                    label: filter.name ~ " ("~ filter.count ~")",
+                    name: 'filter[]',
+                    value: filter.filter_id,
+                    checked: checked,
+                    disabled: filter.count == 0
+                })
+            %}
+            {% set items = items|merge([item]) %}
+        {% endfor %}
+        {{ _itemList.ItemList({ items: items }) }}
     {% endset %}
 
     {{

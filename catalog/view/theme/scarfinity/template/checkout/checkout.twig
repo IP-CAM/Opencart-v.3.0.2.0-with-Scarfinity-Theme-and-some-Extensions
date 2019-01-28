@@ -30,6 +30,7 @@
                     <a data-toggle="tab" href="#cart-checkout-requisites">1</a>
                     <a data-toggle="tab" href="#cart-checkout-payments">2</a>
                 </div>
+                <div id="checkout-errors"></div>
                 <div id="cart-checkout" class="tab-content">
                     <div class="tab-pane active" id="cart-checkout-requisites">
                         <form class="requisites">
@@ -83,6 +84,8 @@
 <script type="text/javascript">
     function goTo(step) {
         $('#checkout-checkout .cart__header-navigation').attr("data-step", step);
+        $('.cart-header-navigation-item').removeClass('active');
+        $('.cart-header-navigation-item[data-value="' + step + '"]').addClass('active');
     }
 
     function nextButtonSet(data) {
@@ -194,6 +197,7 @@
                         location = json['redirect'];
                     } else if(json['error']) {
                         console.warn('Customer Save - has errors!');
+                        if(actions['error']) actions['error'](json['error']);
                     } else {
                         console.log('Customer save succesed!');
                         if(actions['success']) actions['success'](json);
@@ -283,6 +287,7 @@
                         location = json['redirect'];
                     } else if(json['error']){
                         console.error('Some errors', json['error']);
+                        if(actions['error']) actions['error'](json['error']);
                     } else {
                         console.log('ShippingAndPaymentsSave success!');
                         if(actions['success']) actions['success'](json);
@@ -334,8 +339,6 @@
         var name = target.name;
         var value = target.value;
 
-        console.log(group, name, value);
-
         if(checkout[group]) {
             checkout[group][name] = value;
         }
@@ -348,11 +351,13 @@
         var name = target.attr('name');
         var value = target.val();
 
-        console.log(type, group, name, value);
-
         if(checkout[group]) {
             if(type == 'radio') {
                 checkout[group][name] = value; 
+
+                if(group == 'shipping_method' && ui) {
+                    ui.shippingMethodChange(value);
+                }
             }
 
             if(type == 'checkbox') {
@@ -378,12 +383,11 @@
 <script type="text/javascript">
     var ui = {
         customerSave: function() {
+            var ui = this;
             if(checkout) {
                 checkout.customerSave({
+                    beforeSend: ui.beforeSend('cart-checkout-requisites', function() {}),
                     success: function(json) {
-                        // on succeed
-                        console.log('Double succeed!');
-                        
                         // go to Shipping and Payments
                         goTo(3);
                         $('a[href="#cart-checkout-payments"]').trigger('click');
@@ -401,13 +405,31 @@
                                 });
                             }
                         });
-                    }
+                    },
+                    error: ui.displayErrors(function(errors) {})
                 });
             }
+        },
+        shippingMethodChange: function(shippingMethodCode) {
+            console.log(shippingMethodCode);
+
+            $('select[data-code^="shipping"], input[data-code^="shipping"]')
+                .parents('.sInput-container')
+                .addClass('hidden');
+            
+            $('select[data-code$="' + shippingMethodCode + '"], input[data-code$="' + shippingMethodCode + '"]')
+                .removeClass('sInput--error')
+                .trigger('input')
+                .change()
+                .parents('.sInput-container')
+                .removeClass('hidden')
+                .find('.sInput-error')
+                .remove();
         },
         shippingAndPaymentsSave: function() {
             if(checkout) {
                 checkout.shippingAndPaymentsSave({
+                    beforeSend: ui.beforeSend('cart-checkout-payments', function() {}),
                     success: function(json) {
                         checkout.confirm({
                             success: function() {
@@ -419,8 +441,30 @@
                                 });
                             }
                         });
-                    }
+                    },
+                    error: ui.displayErrors(function(errors) {})
                 });
+            }
+        },
+        beforeSend: function(containerId, callback) {
+            var ui = this;
+
+            ui.container = $('#' + containerId);
+            $(ui.container).find('.sInput-error').remove();
+            $(ui.container).find('.sInput').removeClass('sInput--success sInput--error sInput--validate');
+        },
+        displayErrors: function(callback) {
+            var ui = this;
+
+            return function(errors) {
+                _.forIn(errors, function(error, name) {
+                    $(ui.container).find('input[name$="' + name +'"], select[name$="' + name + '"], input[type="checkbox"][name$="' + name + '"]')
+                        .addClass('sInput--error')
+                        .parents('.sInput-container, .select-box')
+                        .append('<p class="sInput-error">' + error + '</p>');
+                });
+
+                if(callback) callback(errors);
             }
         }
     };
