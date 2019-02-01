@@ -193,6 +193,7 @@ class ControllerAccountOrder extends Controller {
 			);
 
 			$data['payment_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+			$data['payment_address'] = '';
 
 			$data['payment_method'] = $order_info['payment_method'];
 
@@ -200,7 +201,10 @@ class ControllerAccountOrder extends Controller {
 				$format = $order_info['shipping_address_format'];
 			} else {
 				$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
+				$format = '{address_1}' . "\n" . '{city} {postcode}' . "\n" . '{country}';
 			}
+
+			$format = '{address_1}' . "\n" . '{city} {postcode}' . "\n" . '{country}';
 
 			$find = array(
 				'{firstname}',

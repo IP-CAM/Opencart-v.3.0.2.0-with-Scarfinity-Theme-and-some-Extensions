@@ -81,7 +81,7 @@
         basicInput.basicInput({
             label: entry_firstname,
             value: customer.firstname,
-            name: 'lastname',
+            name: 'firstname',
             group: 'customer',
             type: 'text',
             placeholder: 'Фамилия',
@@ -92,21 +92,10 @@
         basicInput.basicInput({
             label: entry_lastname,
             value: customer.lastname,
-            name: 'firstname',
+            name: 'lastname',
             group: 'customer',
             type: 'text',
             placeholder: 'Имя',
-            disabled: true
-        })
-    }}
-    {{ 
-        basicInput.basicInput({
-            label: entry_email,
-            value: customer.email,
-            name: 'email',
-            group: 'customer',
-            type: 'email',
-            placeholder: 'E-mail',
             disabled: true
         })
     }}
@@ -121,6 +110,17 @@
             disabled: true
         })
     }} 
+    {{ 
+        basicInput.basicInput({
+            label: entry_email,
+            value: customer.email,
+            name: 'email',
+            group: 'customer',
+            type: 'email',
+            placeholder: 'E-mail',
+            disabled: true
+        })
+    }}
 
     <script type="text/javascript">
         var inputs = $('.sInput[data-group="customer"]').each(function() {

@@ -90,6 +90,7 @@ class ControllerCommonCart extends Controller {
 				$option_data[] = array(
 					'name'  => $option['name'],
 					'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value),
+					'image' => $this->model_tool_image->resize($option['image'], 256, 256),
 					'type'  => $option['type'],
 					'product_option_id'       => $option['product_option_id'],
 					'product_option_value_id' => $option['product_option_value_id'],

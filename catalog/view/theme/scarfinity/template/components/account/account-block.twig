@@ -1,3 +1,42 @@
-{% macro name(params) %}
-	
+{% macro AccountBlock(props) %}
+    <div class="personal-menu">
+            <div class="personal-menu__header">
+                <div class="personal-menu__button">
+                    <a to={this.props.settings || '/'}>
+                        <IconButton style={styles.button} iconStyle={styles.icon}>
+                            <Settings />
+                        </IconButton>
+                    </a>
+                </div>
+                <div>
+                    <div class="personal-menu__avatar"></div>
+                </div>
+                <div class="personal-menu__button">
+                    <a to={this.props.logout || '/'}>
+                        <IconButton style={styles.button} iconStyle={styles.icon}>
+                            <ExitToApp />
+                        </IconButton>
+                    </a>
+                </div>
+            </div>
+            <div class="personal-menu__body">
+                <ul>
+                    {
+                        _.map(_.filter(this.props.links, l => l.use === true), (link, index) =>
+                            <li key={index}>
+                                <a
+                                    to={link.path}>
+                                        <span>
+                                            <Badge value={link.badge} style={{
+                                                right: -26
+                                            }} />
+                                            {link.title}
+                                        </span>
+                                </a>
+                            </li>
+                        )
+                    }
+                </ul>
+            </div>
+    </div>
 {% endmacro %}

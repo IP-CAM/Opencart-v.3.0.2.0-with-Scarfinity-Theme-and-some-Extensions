@@ -1,5 +1,5 @@
 {% macro imageContainer(props) %}
-    <div class="image-container init">
+    <div class="image-container {{props.init and props.init == true ? 'init' : ''}}">
     	<div class="image-container__dummy"></div>
         <div class="image-container__container">
             {% if props.src %}

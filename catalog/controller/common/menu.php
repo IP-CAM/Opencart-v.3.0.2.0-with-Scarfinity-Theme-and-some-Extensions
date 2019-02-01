@@ -30,11 +30,9 @@ class ControllerCommonMenu extends Controller {
 							'filter_sub_category' => true
 						);
 
-						$level3_child_productsCount = $this->config->get('config_product_count') ? $this->model_catalog_product->getTotalProducts($filter_data): 0;
 						$level3_data[] = array(
 							'name' => $child3['name'],
-							'href' => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'] . '_' . $child3['category_id']),
-							'productsCount' => $level3_child_productsCount
+							'href' => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'] . '_' . $child3['category_id'])
 						);
 					}
 
@@ -45,7 +43,7 @@ class ControllerCommonMenu extends Controller {
 					);
 
 					$children_data[] = array(
-						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
+						'name'  => $child['name'],
 						'href'  => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id']),
 						'children' => $level3_data
 					);

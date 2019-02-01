@@ -134,7 +134,7 @@ class ControllerCheckoutCart extends Controller {
 					}
 				}
 
-				$data['products'][] = array(
+				$data['products']/*[$product['product_id']]*/[] = array(
 					'cart_id'   => $product['cart_id'],
 					'product_id'=> $product['product_id'],
 					'thumb'     => $image,

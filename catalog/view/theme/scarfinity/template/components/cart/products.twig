@@ -2,6 +2,21 @@
 	{% import 'scarfinity/template/components/currency.twig' as currency %}
 	{% import 'scarfinity/template/components/cart/product-card.twig' as productCard %}
 
+{#     <h1>{{ props.products|length }}</h1>
+
+{% for product_group in props.products %}
+    <div>
+        {% for product in product_group %}
+            <h2>{{product.name}}</h2>
+            <div>
+                {% for option in product.option %}
+                    <h1>{{option.value}}</h1>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+{% endfor %} #}
+
     {% set productsCount = props.products|length %}
     <div class="cart__products-container">
         <div class="cart__header-row" id="cart-header-products-count"></div>

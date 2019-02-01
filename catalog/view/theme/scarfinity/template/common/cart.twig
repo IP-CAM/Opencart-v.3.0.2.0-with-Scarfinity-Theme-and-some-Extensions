@@ -5,10 +5,21 @@
 
   {% set lines %}
     {% for product in products %}
+      {% set image %}
+        {% for option in product.option %} 
+            {{ 
+                _imageContainer.imageContainer({
+                    src: option.image,
+                    alt: props.product.title ~ ' - ' ~ option.value,
+                    name: props.product.name ~ ' - ' ~ option.value
+                }) 
+            }}
+        {% endfor %}
+    {% endset %}
       <div class="cart-popup__item">
         <div class="cart-popup-product-card">
           <div class="cart-popup-product-card__image">
-            {{ _imageContainer.ImageContainer({src: product.thumb, alt: product.name, title: product.name}) }}
+            {{ image }}
           </div>
           <div class="cart-popup-product-card__content">
               <a href="{{product.href}}" class="cart-popup-product-card__content__title">

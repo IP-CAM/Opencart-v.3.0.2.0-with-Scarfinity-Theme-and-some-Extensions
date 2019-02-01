@@ -1,4 +1,9 @@
+{% import 'scarfinity/template/components/navigation/breadcrumbs.twig' as _breadcrumbs %}
+
 {{ header }}
+
+{{ _breadcrumbs.Breadcrumbs({ breadcrumbs: breadcrumbs }) }}
+
 <div id="account-return" class="container">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}

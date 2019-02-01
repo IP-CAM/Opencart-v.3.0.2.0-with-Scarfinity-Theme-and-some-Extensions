@@ -93,6 +93,185 @@ class ControllerCheckoutSimple extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function customerRegister() {
+		$this->load->language('checkout/checkout');
+
+		$json = array();
+
+		// Validate if customer is already logged out.
+		if ($this->customer->isLogged()) {
+			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
+		}
+
+		// Validate cart has products and has stock.
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+			$json['redirect'] = $this->url->link('checkout/cart');
+		}
+
+		// Validate minimum quantity requirements.
+		$products = $this->cart->getProducts();
+
+		foreach ($products as $product) {
+			$product_total = 0;
+
+			foreach ($products as $product_2) {
+				if ($product_2['product_id'] == $product['product_id']) {
+					$product_total += $product_2['quantity'];
+				}
+			}
+
+			if ($product['minimum'] > $product_total) {
+				$json['redirect'] = $this->url->link('checkout/cart');
+
+				break;
+			}
+		}
+
+		if (!$json) {
+			$this->load->model('account/customer');
+
+			if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+				$json['error']['firstname'] = $this->language->get('error_firstname');
+			}
+
+			if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+				$json['error']['lastname'] = $this->language->get('error_lastname');
+			}
+
+			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+				$json['error']['telephone'] = $this->language->get('error_telephone');
+			}
+
+			if(isset($this->request->post['email']) && (utf8_strlen($this->request->post['email']) > 0)) {
+				if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+					$json['error']['email'] = $this->language->get('error_email');
+				}
+
+				if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
+					$json['error']['email'] = $this->language->get('error_exists');
+				}
+			} else {
+				$this->request->post['email'] = 'noemail@scarfinity.ru';
+			}
+
+			// if ((utf8_strlen(trim($this->request->post['address_1'])) < 3) || (utf8_strlen(trim($this->request->post['address_1'])) > 128)) {
+			// 	$json['error']['address_1'] = $this->language->get('error_address_1');
+			// }
+
+			// if ((utf8_strlen(trim($this->request->post['city'])) < 2) || (utf8_strlen(trim($this->request->post['city'])) > 128)) {
+			// 	$json['error']['city'] = $this->language->get('error_city');
+			// }
+
+			// $this->load->model('localisation/country');
+
+			// $country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
+
+			// if ($country_info && $country_info['postcode_required'] && (utf8_strlen(trim($this->request->post['postcode'])) < 2 || utf8_strlen(trim($this->request->post['postcode'])) > 10)) {
+			// 	$json['error']['postcode'] = $this->language->get('error_postcode');
+			// }
+
+			// if ($this->request->post['country_id'] == '') {
+			// 	$json['error']['country'] = $this->language->get('error_country');
+			// }
+
+			// if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '' || !is_numeric($this->request->post['zone_id'])) {
+			// 	$json['error']['zone'] = $this->language->get('error_zone');
+			// }
+
+			// if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+			// 	$json['error']['password'] = $this->language->get('error_password');
+			// }
+
+			// if ($this->request->post['confirm'] != $this->request->post['password']) {
+			// 	$json['error']['confirm'] = $this->language->get('error_confirm');
+			// }
+
+			// if ($this->config->get('config_account_id')) {
+			// 	$this->load->model('catalog/information');
+
+			// 	$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
+
+			// 	if ($information_info && !isset($this->request->post['agree'])) {
+			// 		$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+			// 	}
+			// }
+
+			// Customer Group
+			if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+				$customer_group_id = $this->request->post['customer_group_id'];
+			} else {
+				$customer_group_id = $this->config->get('config_customer_group_id');
+			}
+
+			// Captcha
+			if ($this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
+				$captcha = $this->load->controller('extension/captcha/' . $this->config->get('config_captcha') . '/validate');
+
+				if ($captcha) {
+					$json['error']['captcha'] = $captcha;
+				}
+			}
+		}
+
+		if (!$json) {
+			$customer = array(
+				'firstname' 	=> 	$this->request->post['firstname'],
+				'lastname' 		=> 	$this->request->post['lastname'],
+				'email' 		=> 	$this->request->post['email'],
+				'telephone' 	=> 	$this->request->post['telephone'],
+				'password' 		=> 	'password',
+				'company' 		=> 	'',
+				'address_1' 	=> 	'',
+				'address_2' 	=> 	'',
+				'postcode'		=> 	'',
+				'city' 			=> 	'',
+				'address_1' 	=> 	'',
+				'country_id' 	=> 	'',
+				'zone_id' 		=> 	1,
+			);
+
+			$customer_id = $this->model_account_customer->addCustomer($customer);
+
+			// Default Payment Address
+			$this->load->model('account/address');
+				
+			$address_id = $this->model_account_address->addAddress($customer_id, $customer);
+			
+			// Set the address as default
+			$this->model_account_customer->editAddressId($customer_id, $address_id);
+			
+			// Clear any previous login attempts for unregistered accounts.
+			$this->model_account_customer->deleteLoginAttempts($customer['email']);
+
+			$this->session->data['account'] = 'register';
+
+			$this->load->model('account/customer_group');
+
+			$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
+
+			if ($customer_group_info && !$customer_group_info['approval']) {
+				$this->customer->login($customer['email'], $customer['password']);
+
+				$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+
+				if (!empty($this->request->post['shipping_address'])) {
+					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+				}
+			} else {
+				$json['redirect'] = $this->url->link('account/success');
+			}
+
+			unset($this->session->data['guest']);
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_method']);
+			unset($this->session->data['payment_methods']);
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
 	public function guestSave() {
 		$this->load->language('checkout/checkout');
 
@@ -259,6 +438,8 @@ class ControllerCheckoutSimple extends Controller {
 
 		$results = $this->model_localisation_location->getLocations();
 
+		$data_locations = array();
+		
 		foreach ($results as $result) {
 			$data_locations[] = array(
 				'name' 		=> $result['name'] . ' ' . $result['address'],

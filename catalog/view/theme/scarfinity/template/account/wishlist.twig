@@ -1,7 +1,8 @@
 {% import 'scarfinity/template/components/navigation/breadcrumbs.twig' as _breadcrumbs %}
 
 {{ header }}
-{{ _breadcrumbs.Breadcrumbs({breadcrumbs: breadcrumbs}) }}
+
+{{ _breadcrumbs.Breadcrumbs({ breadcrumbs: breadcrumbs }) }}
 
 <div id="account-wishlist" class="container">
   {% if success %}

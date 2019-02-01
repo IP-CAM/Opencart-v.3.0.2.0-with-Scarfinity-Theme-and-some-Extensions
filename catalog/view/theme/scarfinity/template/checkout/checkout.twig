@@ -147,7 +147,15 @@
             firstname: '',
             lastname: '',
             telephone: '',
-            email: ''
+            email: '',
+            get: function() {
+                return {
+                    firstname: this.firstname,
+                    lastname: this.lastname,
+                    telephone: this.telephone,
+                    email: this.email == '' ? this.telephone + '@scarfinity.ru' : this.email
+                };
+            }
         },
         login: {
             email: '',
@@ -214,8 +222,8 @@
             var checkout = this;
 
             $.ajax({
-                url: 'index.php?route=checkout/simple/customerSave',
-                data: checkout.customer,
+                url: 'index.php?route=checkout/simple/customerRegister',
+                data: checkout.customer.get(),
                 method: 'post',
                 dataType: 'json',
                 beforeSend: function() {},
@@ -223,7 +231,7 @@
                     if(json['redirect']) {
                         location = json['redirect'];
                     } else if(json['error']) {
-                        console.warn('Customer Save - has errors!');
+                        console.warn('Customer Save - has errors!', json);
                         if(actions['error']) actions['error'](json['error']);
                     } else {
                         console.log('Customer save succesed!');

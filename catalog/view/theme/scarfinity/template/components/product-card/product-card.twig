@@ -30,7 +30,7 @@
 										<label>
 										<input type="radio" name="product-card-swiper" value="{{image.popup}}">
 										<a href="{{ image.popup }}" title="{{ heading_title }}">
-											{{ _imageContainer.imageContainer({ src: image.thumb }) }}
+											{{ _imageContainer.imageContainer({ src: image.thumb, init: true }) }}
 										</a>
 										</label>
 									</div>
@@ -195,7 +195,7 @@
 	<script type="text/javascript">
         var productCardImageContainerSwiper = new Swiper('#p_card-i_gallery-swiper', {
             mode: 'horizontal',
-            slidesPerView: 6,
+            slidesPerView: 5,
             pagination: false,
             paginationClickable: false,
             spaceBetween: 0,
@@ -207,7 +207,7 @@
             autoHeight: false,
             breakpoints: {
                 1024: {
-                    slidesPerView: 6,
+                    slidesPerView: 5,
                 },
                 768: {
                     slidesPerView: 5,

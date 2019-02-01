@@ -1,33 +1,20 @@
 {% macro ProductCard(props) %}
-	{% import 'scarfinity/template/components/currency.twig' as currency %}
+    {% import 'scarfinity/template/components/currency.twig' as currency %}
 	{% import 'scarfinity/template/components/image-container.twig' as imageContainer %}
 
-{# import FlatButton           from 'material-ui/FlatButton';
-import IconButton           from 'material-ui/IconButton';
-import NavigationCancel     from 'material-ui/svg-icons/navigation/cancel';
-import ColorPicker          from '../../utility/color-picker'; #}
-
-
-
-{# import Currency             from '../../utility/currency';
-import Quantity             from '../../utility/quantity';
-import ImageContainer       from '../../utility/image-container'; #}
-
-{# const styles = {
-    mediumIcon: {
-        width: 22,
-        height: 22,
-        color: "#ccc",
-        hoverColor: "#e46a5a",
-    },
-
-    medium: {
-        width: 36,
-        height: 36,
-        padding: 2,
-        hoverColor: "#e46a5a",
-    },
-} #}
+{% set image %}
+    {% for option in props.product.option %} 
+        {% if option.name|lower|split('*')[1] == 'colors' %}
+            {{ 
+                imageContainer.imageContainer({
+                    src: option.image,
+                    alt: props.product.title ~ ' - ' ~ option.value,
+                    name: props.product.name ~ ' - ' ~ option.value
+                }) 
+            }}
+        {% endif %}
+    {% endfor %}
+{% endset %}
 
 <div class="cart__product-card">
     <div class="cart__product-card__back-remove-block">
@@ -37,15 +24,7 @@ import ImageContainer       from '../../utility/image-container'; #}
             <button onclick="cart.remove('{{ props.product.cart_id }}');">D</button>  
         </div>
         <div class="cart__product-card__image-block">
-            <div class="cart__product-card__image-block__image">
-            	{{ 
-                    imageContainer.imageContainer({
-                        src: props.product.thumb,
-                        alt: props.product.title,
-                        name: props.product.name
-                    }) 
-                }}
-            </div>
+            <div class="cart__product-card__image-block__image">{{ image }}</div>
         </div>
         <div class="cart__product-card__content-block">
             <a
@@ -59,7 +38,6 @@ import ImageContainer       from '../../utility/image-container'; #}
                     {% if option.name|lower|split('*')[1] == 'colors' %}
                         <div class="title">Цвет:</div>
                         <small>{{ option.value }}</small>
-                        <img style="width: 50px; height: 50px;" src={{option.image}} />
                     {% endif %}
                 {% endfor %}
             </div>
