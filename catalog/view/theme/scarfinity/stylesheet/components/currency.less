@@ -13,20 +13,28 @@
         align-items: baseline;
     }
 
+    &__prefix {
+        margin-right: 4px;
+        color: #505050;
+        font-size: 14px;
+    }
+
     &__value {
         flex: 0;
         font-size: 1.0em;
         color: @primary;
+        color: #303030;
+        font-weight: 500;
 
         transition: color 0.3s ease;
     }
 
     &__unsale-value {
-        font-size: 0.6em;
+        font-size: 0.8em;
         font-weight: 400;
         position: relative;
         color: @secondary;
-        margin-left: 14px;
+        margin-left: 4px;
         
         &:after {
             content: "";
@@ -39,10 +47,22 @@
         }
     }
 
+    &__unit {
+        margin-left: 4px;
+        color: #999;
+        font-size: 13px;
+    }
+
     &__subtitle {
         display: block;
         font-size: 12px;
         color: #808080;
+    }
+
+    &--accent & {
+        &__value {
+            color: #e05543;
+        }
     }
 
     @media screen and (max-width: 670px) {

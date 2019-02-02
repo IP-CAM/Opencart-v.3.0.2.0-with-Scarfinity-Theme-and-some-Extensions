@@ -67,10 +67,12 @@
 
 </main>
 
-
 {% for script in scripts %}
 <script src="{{ script }}" type="text/javascript"></script>
 {% endfor %}
+
+<script src="catalog/view/javascript/sticky.js/dist/sticky.min.js" type="text/javascript"></script>
+<script>var sticky = new Sticky('[data-sticky]', {});</script>
 
 <!-- Load React. -->
 <!-- Note: when deploying, replace "development.js" with "production.min.js". -->

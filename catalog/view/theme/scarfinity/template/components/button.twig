@@ -1,5 +1,5 @@
 {% macro catalogProductCardButton(button) %}
-    <button class="product-card-catalog-button" onclick="cart.add('{{ button.productId }}');">
+    <button class="product-card-catalog-button">
     	{{ button.label|default('В корзину') }}
     </button>
 {% endmacro %}

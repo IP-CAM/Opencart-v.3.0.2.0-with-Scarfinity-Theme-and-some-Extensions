@@ -11,9 +11,9 @@
 
 	<div class="product-card__container">
 		<h1 class="product-card-title">{{ props.headingTitle }}</h1>
-		<div class="row">
-			<div class="col-sm-12 col-md-6">
-				<div class="product-card-image-container">
+		<div class="row product-card-left">
+			<div class="col-sm-12 col-md-6 is-sticky-container" data-sticky-container>	
+				<div class="product-card-image-container is-sticky" data-sticky data-sticky-wrap data-margin-top="10" data-sticky-for="768">
 					<div id="product-card-main-thumb" class="product-card-image-container__main">
 						{{ _imageContainer.imageContainer({ src: props.thumb }) }}
 					</div>
@@ -44,6 +44,7 @@
 						</div>
 					</div>
 				</div>
+				
 			</div>
 			<div class="col-sm-12 col-md-6">
 				<div class="product-card__product-info-container">
@@ -88,16 +89,18 @@
 						</div>
 
 						<div class="row product-card-core process">
-							<div class="col-md-12">
+							<div class="col-md-12" data-sticky-container>
 								<div class="product-card-discounts">
 									<hr>
 									<div class="product-card-discounts__container">
-										<div class="product-card__product-info__pricing-block">
-											<span>Ваша цена: </span>
-											{{ currency.currency(
-												{ 'price': props.price, 'special': props.special, 'subTitle': 'Цена за шт.' }, 
-												{ 'fontSize': 30, 'fontWeight': 600 }) 
-											}}
+										<div class="product-card__product-info__pricing-block is-sticky-container">
+											<div class="product-price is-sticky" data-sticky data-margin-top="10" data-sticky-wrap data-sticky-for="768">
+												<span>Ваша цена: </span>
+												{{ currency.currency(
+													{ 'price': props.price, 'special': props.special, unit: '/ шт.' }, 
+													{ 'fontSize': 30, 'fontWeight': 600, 'style': 'accent' }) 
+												}}
+											</div>
 										</div>
 										<div class="product-card-discounts__container__lines">
 											<div>
@@ -132,7 +135,8 @@
 							</div>
 							<div class="col-md-12 product-card-colors">
 								<h3>Выберите цвета</h3>
-								<p>Минимальное количество в корзине: <span class="accent">{{props.productMinQuantity}} шт.</span></p>
+								{# <p>Минимальное количество в корзине: <span class="accent">{{props.productMinQuantity}} шт.</span></p> #}
+								<p>У вас в корзине: <span class="value" id="cart-quantity">0</span> шт.</p>
 
 								{# Product options segment #}
 								{% for option in props.options %}
@@ -193,36 +197,38 @@
 	{{ _ribbon.Ribbon({ type: 'new' }) }}
 
 	<script type="text/javascript">
-        var productCardImageContainerSwiper = new Swiper('#p_card-i_gallery-swiper', {
-            mode: 'horizontal',
-            slidesPerView: 5,
-            pagination: false,
-            paginationClickable: false,
-            spaceBetween: 0,
-            slidesOffsetBefore: 0,
-            slidesOffsetAfter: 0,
-            autoplay: false,
-            autoplayDisableOnInteraction: true,
-            loop: false,
-            autoHeight: false,
-            breakpoints: {
-                1024: {
-                    slidesPerView: 5,
-                },
-                768: {
-                    slidesPerView: 5,
-                },
-                640: {
-                    slidesPerView: 4,
-                },
-                350: {
-                    slidesPerView: 4,
-                },
-                280: {
-                    slidesPerView: 4,
-                }
-            }
-        });
+		if(typeof Swiper) {
+			var productCardImageContainerSwiper = new Swiper('#p_card-i_gallery-swiper', {
+				mode: 'horizontal',
+				slidesPerView: 5,
+				pagination: false,
+				paginationClickable: false,
+				spaceBetween: 0,
+				slidesOffsetBefore: 0,
+				slidesOffsetAfter: 0,
+				autoplay: false,
+				autoplayDisableOnInteraction: true,
+				loop: false,
+				autoHeight: false,
+				breakpoints: {
+					1024: {
+						slidesPerView: 5,
+					},
+					768: {
+						slidesPerView: 5,
+					},
+					640: {
+						slidesPerView: 4,
+					},
+					350: {
+						slidesPerView: 4,
+					},
+					280: {
+						slidesPerView: 4,
+					}
+				}
+			});
+		}
 
         var mainImage = $('#product-card-main-thumb img');
 

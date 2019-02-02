@@ -100,6 +100,7 @@
   }
 
   var product_id = "{{product_id}}";
+  var product_qunatity_container = $('#cart-quantity');
 
   function fillProductOptions() {
     var options = $('#product .ctr-utt');
@@ -115,6 +116,8 @@
       qInput.data('tmp-value', quantity);
       qInput.val(quantity).trigger("change");
     });
+
+    product_qunatity_container.text(sCart.getProductQuantity(product.product_id));
   }
 
   function updateCurrentPrice() {

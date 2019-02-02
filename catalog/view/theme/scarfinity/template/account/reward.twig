@@ -6,15 +6,8 @@
 
 <div id="account-reward" class="container">
   
-  <div class="row">{{ column_left }}
-    {% if column_left and column_right %}
-    {% set class = 'col-sm-6' %}
-    {% elseif column_left or column_right %}
-    {% set class = 'col-sm-9' %}
-    {% else %}
-    {% set class = 'col-sm-12' %}
-    {% endif %}
-    <div id="content" class="{{ class }}">{{ content_top }}
+  <div class="row s-content">{{ column_left }}
+    <div id="content" class="s-content__middle">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       <p>{{ text_total }} <b>{{ total }}</b>.</p>
       <div class="table-responsive">

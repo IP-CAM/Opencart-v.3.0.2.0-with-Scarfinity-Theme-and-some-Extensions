@@ -7,16 +7,16 @@
     {% import 'scarfinity/template/components/button.twig' as button %}
 
     <div class="product-card-catalog">
-        <div class="product-card-catalog__image">
+        <a href="{{product.href}}" class="product-card-catalog__image">
             <div class="product-card-catalog__image__image">
                 {{ imageContainer.imageContainer({src: product.thumb, alt: product.name, name: product.name}) }}
             </div>
-            <a 
-                href="#"
+            {# <a 
+                href="{{product.href}}"
                 class="product-card-catalog__image__info">
-                <span>Цвета:</span>
-            </a>
-        </div>
+            </a> #}
+            <span class="product-card-catalog__image__color">Доступно цветов: {{product.props['color']|default(1)}}</span>
+        </a>
 
         <div class="product-card-catalog__rating">
             {{ ratingBox.ratingBox(product.rating) }}
@@ -27,8 +27,8 @@
             <div class="product-card-catalog-footer">
                 <div class="product-card-catalog-footer__price">
                     {{ currency.currency(
-                        { 'price': product.price, 'special': product.special }, 
-                        { 'fontSize': 18, 'fontWeight': 500 }) 
+                        { 'price': product.price, 'special': product.special, 'prefix': 'от', 'unit': '/ шт.' }, 
+                        { 'fontSize': 18, 'fontWeight': 500, 'style': 'accent' }) 
                     }}
                 </div>
                 <div class="product-card-catalog-footer__button">
@@ -36,8 +36,8 @@
                 </div>
             </div>
         </div>
-        {% if product.special %}
-            {{ ribbon.ribbon('sale') }}
+        {% if product.props['ribbon'] %}
+            {{ ribbon.ribbon(product.props['ribbon']) }}
         {% endif %}
     </div>
     

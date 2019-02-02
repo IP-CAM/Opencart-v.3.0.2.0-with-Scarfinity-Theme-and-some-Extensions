@@ -231,10 +231,8 @@
                     if(json['redirect']) {
                         location = json['redirect'];
                     } else if(json['error']) {
-                        console.warn('Customer Save - has errors!', json);
                         if(actions['error']) actions['error'](json['error']);
                     } else {
-                        console.log('Customer save succesed!');
                         if(actions['success']) actions['success'](json);
                     }
                 },

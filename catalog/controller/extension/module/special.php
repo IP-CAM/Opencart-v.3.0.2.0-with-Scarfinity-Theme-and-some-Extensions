@@ -27,7 +27,7 @@ class ControllerExtensionModuleSpecial extends Controller {
 				}
 
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-					$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					$price = $this->currency->format($this->tax->calculate($result['price_origin'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 				} else {
 					$price = false;
 				}
@@ -50,6 +50,15 @@ class ControllerExtensionModuleSpecial extends Controller {
 					$rating = false;
 				}
 
+				$props = array();
+
+				foreach(explode(',', $result['location']) as $prop) {
+					$values = explode(':', $prop);
+					if(isset($values[1]) && isset($values[0])) {
+						$props[$values[0]] = $values[1]; 
+					}
+				}
+
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
@@ -59,7 +68,8 @@ class ControllerExtensionModuleSpecial extends Controller {
 					'special'     => $special,
 					'tax'         => $tax,
 					'rating'      => $rating,
-					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id']),
+					'props'		  => $props
 				);
 			}
 

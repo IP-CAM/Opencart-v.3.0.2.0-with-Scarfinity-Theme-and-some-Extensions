@@ -38,20 +38,24 @@
 		padding: 10px;
 
 		&:hover & {
-			&__image {
-				filter: opacity(90%) blur(2px);
-			}
+			@media screen and (min-width: 769px) {
+				&__image {
+					// filter: opacity(90%) blur(2px);
+				}
 
-			&__info {
-				background: rgba(255, 255, 255, 0.84);
-				opacity: 1;
-				pointer-events: auto;
-				cursor: pointer;
+				&__info {
+					background: rgba(255, 255, 255, 0.84);
+					opacity: 1;
+					pointer-events: auto;
+					cursor: pointer;
+					text-decoration: none;
+				}
 			}
 		}
 
 		&__image {
 			transition: all 0.2s ease-in-out;
+			text-decoration: none;
 		}
 		
 		&__info {
@@ -61,7 +65,7 @@
 			bottom: 0;
 			left: 0;
 
-			padding: 0px 35px;
+			padding: 0px 18px;
 
 			display: flex;
 			flex-direction: column;
@@ -71,13 +75,17 @@
 			font-size: 0;
 
 			& > span {
-				font-size: 14px;
+				font-size: 13px;
 				font-weight: 500;
-				text-transform: uppercase;
+				text-transform: none;
+				border-radius: 2px;
+				background-color: rgba(60, 85, 105, 0.6);
+				text-decoration: none;
 
-				color: #555;
+				color: #fff;
 				text-align: center;
 				margin: 7px 0px;
+				padding: 8px 15px;
 				user-select: none;
 			}
 
@@ -88,6 +96,17 @@
 			opacity: 0;
 			user-select: none;
 			pointer-events: none;
+		}
+
+		&__color {
+			display: block;
+			text-align: center;
+			margin: 0;
+			background-color: #f3f3f3;
+			line-height: 20px;
+			font-size: 12px;
+			border-radius: 2px;
+			color: #303030;
 		}
 	}
 
@@ -141,7 +160,7 @@
 		flex: 1;
 		display: block;
 		font-weight: 400;
-		font-size: 14px;
+		font-size: 13px;
 		line-height: 24px;
 
 		text-transform: capitalize;
@@ -151,7 +170,7 @@
 
 		margin: 3px 0px;
 
-		cursor: default;
+		cursor: pointer;
 	}
 
 	&__ribbon {
@@ -172,11 +191,12 @@
 
 	&:hover {
 		.product-card-catalog-footer__button{
-			opacity: 1;
-			pointer-events: all;
+			// opacity: 1;
+			// pointer-events: all;
 		}
 
-		filter: drop-shadow(rgba(0, 0, 0, 0.2) 0px 6px 12px);
+		// filter: drop-shadow(rgba(0, 0, 0, 0.2) 0px 6px 12px);
+		box-shadow: rgba(0, 0, 0, 0.3) 0px 6px 16px;
 		transform: translateY(-4px);
 	}
 }

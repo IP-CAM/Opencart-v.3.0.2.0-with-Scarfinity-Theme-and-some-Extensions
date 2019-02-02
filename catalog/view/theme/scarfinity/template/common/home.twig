@@ -5,15 +5,9 @@
 {{ header }}
 {{ _breadcrumbs.Breadcrumbs() }}
 <div id="common-home" class="container">
-  <div class="row">{{ column_left }}
-    {% if column_left and column_right %}
-    {% set class = 'col-sm-6' %}
-    {% elseif column_left or column_right %}
-    {% set class = 'col-sm-9' %}
-    {% else %}
-    {% set class = 'col-sm-12' %}
-    {% endif %}
-    <div id="content" class="{{ class }} col-sm-no-padding">
+  <div class="row s-content">
+    {{ column_left }}
+    <div id="content" class="s-content__middle col-sm-no-padding">
       {{ content_top }}
       <h1>{{ heading_title }}</h1>
       {# <div class="utp-banners">
