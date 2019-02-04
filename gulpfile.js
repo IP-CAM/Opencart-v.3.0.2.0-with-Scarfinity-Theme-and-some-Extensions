@@ -34,4 +34,21 @@ gulp.task('watch', ['less'], function() {
     gulp.watch('catalog/view/theme/scarfinity/libs/**/*', browserSync.reload);
 });
 
+gulp.task('deploy', function() {
+    var conn = ftp.create({
+        host:       'scarfinity.beget.tech',
+        user:       'scarfinity',
+        password:   'qrs9742z',
+        parallel:   10,
+        // log:        gutil.log
+    });
+
+    var globs = [
+        'catalog/**'
+    ];
+
+    return gulp.src(globs, { buffer: false })
+        .pipe(conn.dest('/home/s/scarfinity/scarfinity.beget.tech/public_html/catalog'));
+});
+
 gulp.task('default', ['watch']);
