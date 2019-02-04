@@ -353,9 +353,13 @@
 }
 
 .product-card-left {
-	@media screen and (min-width: 768px){
+	@media screen and (min-width: 768px) {
 		display: flex;
 		flex-wrap: wrap;
+
+		& > div {
+			flex: 1;
+		}
 	}
 }
 
@@ -763,6 +767,7 @@
 	&__line {
 		display: flex;
 		justify-content: space-between;
+		align-items: baseline;
 		margin: 0px 0px 12px 0px;
 		font-size: 13px;
 
@@ -788,6 +793,12 @@
 			& > span:last-child {
 				color: #e05543;
 			}
+		}
+
+		&--unsale {
+			font-size: 11px;
+			color: #808080;
+			text-decoration: line-through;
 		}
 	}
 

@@ -108,14 +108,15 @@
 													<span>Эта модель</span>
 													<span>Цена за шт</span>
 												</div>
-												<div class="product-card-discounts__line">
-													<span>1-2 шт.</span>
-													<span>{{props.price}}</span>
-												</div>
 												{% for discount in props.discounts %}
 													<div class="product-card-discounts__line">
 														<span>{{discount.quantity}} шт. и более</span>
-														<span>{{discount.price}}</span>
+														{% if discount.unsale %}
+															<span class="product-card-discounts__line--unsale">{{discount.unsale}}</span>
+															<span>{{discount.price}}</span>
+														{% else %}
+															<span>{{discount.price}}</span>
+														{% endif %}
 													</div>
 												{% endfor %}
 											</div>
