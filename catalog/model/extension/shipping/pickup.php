@@ -37,4 +37,34 @@ class ModelExtensionShippingPickup extends Model {
 
 		return $method_data;
 	}
+
+	public function getFields() {
+		$fields = array();
+
+		// Список точек самовывоза
+		$query = $this->db->query("SELECT location_id, name, address, geocode, telephone, fax, image, open, comment FROM " . DB_PREFIX . "location");
+
+		$data_locations = array();
+		
+		foreach ($query->rows as $result) {
+			$data_locations[] = array(
+				'name' 		=> $result['name'] . ' ' . $result['address'],
+				'address' 	=> $result['address'],
+				'telephone' => $result['telephone']
+			);
+		}
+
+		$fields[] = array(
+			'type'			=> 'select',
+			'name'			=> 'address_1',
+			'label'			=> 'Выберете магазин',
+			'placeholder'	=> 'Выберете магазин',
+			'options'		=> $data_locations,
+			'sort_order'	=> 0,
+			'required'		=> true,
+			'error'			=> 'Выберите пункт самовывоза!'
+		);
+
+		return $fields;
+	}
 }

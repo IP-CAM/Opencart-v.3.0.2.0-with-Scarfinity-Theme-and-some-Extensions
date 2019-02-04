@@ -1,21 +1,5 @@
 <?php
 class ControllerCheckoutSimple extends Controller {
-	public function validate() {
-		$this->load->language('checkout/checkout');
-
-		$json = array();
-
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$json['redirect'] = $this->url->link('checkout/cart');
-		}
-
-		$json['count_products'] = $this->cart->countProducts();
-		$json['sub_total'] = $this->cart->getSubTotal();
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
 	public function customerSave() {
 		$this->load->language('checkout/checkout');
 
@@ -351,7 +335,7 @@ class ControllerCheckoutSimple extends Controller {
 	public function shippingMethodsGet() {
 		$this->load->language('checkout/checkout');
 
-		// Формирование ардреса, для запроса
+		// Формирование адреса, для запроса
 		$address = array();
 
 		if(isset($this->request->post['zone_id'])) {
@@ -384,7 +368,8 @@ class ControllerCheckoutSimple extends Controller {
 						'title'      => $quote['title'],
 						'quote'      => $quote['quote'],
 						'sort_order' => $quote['sort_order'],
-						'error'      => $quote['error']
+						'error'      => $quote['error'],
+						'fields'	 => $this->{'model_extension_shipping_' . $result['code']}->getFields()
 					);
 				}
 			}
@@ -1390,9 +1375,8 @@ class ControllerCheckoutSimple extends Controller {
 		$json = array();
 
 		// Validate if customer is logged in.
-		if ($this->customer->isLogged()) {
-			// $json['redirect'] = $this->url->link('checkout/checkout', '', true);
-			// $json['error'] = 'User logged in';
+		if (!$this->customer->isLogged()) {
+			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
 		}
 
 		// Validate if shipping is required. If not the customer should not have reached this page.
@@ -1444,9 +1428,9 @@ class ControllerCheckoutSimple extends Controller {
 				$json['error']['city'] = $this->language->get('error_city');
 			}
 
-			if ((utf8_strlen(trim($this->request->post['address_1'])) < 3) || (utf8_strlen(trim($this->request->post['address_1'])) > 128)) {
-				$json['error']['address_1'] = $this->language->get('error_address_1');
-			}
+			// if ((utf8_strlen(trim($this->request->post['address_1'])) < 3) || (utf8_strlen(trim($this->request->post['address_1'])) > 128)) {
+			// 	$json['error']['address_1'] = $this->language->get('error_address_1');
+			// }
 
 			if(isset($this->request->post['country_id'])) {
 				$this->load->model('localisation/country');
@@ -1474,6 +1458,16 @@ class ControllerCheckoutSimple extends Controller {
 
 				if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
 					$json['error']['shipping_methods'] = $this->language->get('error_shipping');
+				}
+
+				if(isset($shipping[0]) && isset($shipping[1]) && isset($this->session->data['shipping_methods'][$shipping[0]]['fields'])) {
+					foreach($this->session->data['shipping_methods'][$shipping[0]]['fields'] as $field) {
+						if($field['required']) {
+							if((utf8_strlen(trim($this->request->post[$field['name']])) < 3) || (utf8_strlen(trim($this->request->post[$field['name']])) > 128)) {
+								$json['error'][$field['name']] = $field['error'];
+							}
+						}
+					}
 				}
 			}
 

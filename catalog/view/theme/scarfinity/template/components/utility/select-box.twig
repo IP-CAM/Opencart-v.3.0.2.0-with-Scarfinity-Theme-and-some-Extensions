@@ -5,6 +5,7 @@
 			type="checkbox"
 			name="{{props.name}}"
 			data-group="{{props.group|default('s')}}"
+			data-form="{{props.form|default('s')}}"
 			value="{{props.value}}"
 			{{ props.checked ? 'checked': '' }}
 			{{ props.disabled ? 'disabled': '' }} />
@@ -28,6 +29,7 @@
 			name="{{props.name}}"
 			id="{{props.id}}"
 			data-group="{{props.group|default('s')}}"
+			data-form="{{props.form|default('s')}}"
 			value="{{props.value|default(id)}}"
 			{{ props.checked ? 'checked': '' }}
 			{{ props.disabled ? 'disabled': '' }} />

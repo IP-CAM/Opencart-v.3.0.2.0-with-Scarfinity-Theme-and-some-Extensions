@@ -383,6 +383,7 @@
         var target = $(this);
         var type = target.attr('type');
         var group = target.data('group');
+        var form = target.data('form');
         var name = target.attr('name');
         var value = target.val();
         var checked = target.attr('checked');
@@ -393,7 +394,7 @@
                 checkout[group][name] = value; 
 
                 if(group == 'shipping_method' && ui) {
-                    ui.shippingMethodChange(value);
+                    ui.shippingMethodChange(form, value);
                 }
             }
 
@@ -463,14 +464,18 @@
                 });
             }
         },
-        shippingMethodChange: function(shippingMethodCode) {
-            console.log('[shipping-method-change]', shippingMethodCode);
+        shippingMethodChange: function(form, shippingMethodCode) {
+            $('form[name^=shipping_method_fields]')
+                .addClass('hidden');
+
+            $('form[name=shipping_method_fields_' + form + ']')
+                .removeClass('hidden');
 
             $('select[data-code^="shipping"], input[data-code^="shipping"]')
                 .parents('.sInput-container')
                 .addClass('hidden');
             
-            $('select[data-code$="' + shippingMethodCode + '"], input[data-code$="' + shippingMethodCode + '"]')
+            $('select[data-code$="' + form + '"], input[data-code$="' + form + '"]')
                 .removeClass('sInput--error')
                 .trigger('input')
                 .change()
@@ -487,12 +492,24 @@
                     }),
                     success: function(json) {
                         checkout.confirm({
+                            beforeSend: ui.beforeSend('cart-checkout-payments', function() {
+                                $('#cart-button-next').prop('disabled', true);
+                            }),
                             success: function() {
                                 checkout.paymentConfirm({
+                                    beforeSend: ui.beforeSend('cart-checkout-payments', function() {
+                                        $('#cart-button-next').prop('disabled', true);
+                                    }),
                                     success: function() {
                                         location = json['redirect'];
+                                    },
+                                    complete: function() {
+                                        $('#cart-button-next').prop('disabled', false);
                                     }
                                 });
+                            },
+                            complete: function() {
+                                $('#cart-button-next').prop('disabled', false);
                             }
                         });
                     },

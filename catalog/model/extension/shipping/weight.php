@@ -64,4 +64,19 @@ class ModelExtensionShippingWeight extends Model {
 
 		return $method_data;
 	}
+
+	public function getFields() {
+		$fields = array();
+
+		$fields[] = array(
+			'type'			=> 'text',
+			'name'			=> 'address123',
+			'label'			=> 'Адрес доставки',
+			'placeholder'	=> 'Введите адрес достаки Почта России',
+			'sort_order'	=> 0,
+			'required'		=> true
+		);
+
+		return $fields;
+	}
 }

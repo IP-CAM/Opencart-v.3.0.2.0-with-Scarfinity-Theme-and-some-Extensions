@@ -37,4 +37,20 @@ class ModelExtensionShippingFlat extends Model {
 
 		return $method_data;
 	}
+
+	public function getFields() {
+		$fields = array();
+
+		$fields[] = array(
+			'type'			=> 'text',
+			'name'			=> 'address_1',
+			'label'			=> 'Адрес доставки',
+			'placeholder'	=> 'Адрес доставки',
+			'sort_order'	=> 0,
+			'required'		=> true,
+			'error'			=> 'Адрес должен быть от 3 до 128 символов!'
+		);
+
+		return $fields;
+	}
 }
