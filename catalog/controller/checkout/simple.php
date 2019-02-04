@@ -219,6 +219,8 @@ class ControllerCheckoutSimple extends Controller {
 			unset($this->session->data['payment_methods']);
 		}
 
+		$json['continue'] = $this->url->link('checkout/requisites');
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}

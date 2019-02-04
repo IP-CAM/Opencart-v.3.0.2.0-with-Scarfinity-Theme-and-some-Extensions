@@ -11,14 +11,13 @@
 
 	<div class="product-card__container">
 		<h1 class="product-card-title">{{ props.headingTitle }}</h1>
-		<div class="row product-card-left" data-sticky-container>
-			<div class="col-sm-12 col-md-6 is-sticky-container">	
-				<div class="product-card-image-container is-sticky" data-margin-top="10" data-sticky-wrap data-sticky-for="768">
+		<div class="row product-card-left">
+			<div class="col-sm-12 col-md-6 is-sticky-container" data-sticky-container>	
+				<div class="product-card-image-container is-sticky" data-sticky data-sticky-wrap data-margin-top="10" data-sticky-for="768">
 					<div id="product-card-main-thumb" class="product-card-image-container__main">
-						<img class="img-responsive" src="{{ props.thumb }}" alt="{{ props.headingTitle }}" name="{{ props.headingTitle }}" />
-						{# {{ _imageContainer.imageContainer({ src: props.thumb }) }} #}
+						{{ _imageContainer.imageContainer({ src: props.thumb }) }}
 					</div>
-					<div class="p_card-i_gallery-swiper init" data-slideout-ignore>
+					<div class="p_card-i_gallery-swiper" data-slideout-ignore>
 						<div class="p_card-i_gallery-swiper__button p_card-i_gallery-swiper__button--prev">
 						{{ _icons.ChevronLeft({ size: 12 }) }}
 						</div>
@@ -27,11 +26,11 @@
 							<div class="swiper-container" id="p_card-i_gallery-swiper">
 								<div class="swiper-wrapper">
 									{% for image in props.images %}
-									<div class="swiper-slide p_card-i_gallery-s_slide">
+									<div class="swiper-slide p_card-i_gallery-s_slide init">
 										<label>
 										<input type="radio" name="product-card-swiper" value="{{image.popup}}">
 										<a href="{{ image.popup }}" title="{{ heading_title }}">
-											{{ _imageContainer.imageContainer({ src: image.thumb }) }}
+											{{ _imageContainer.imageContainer({ src: image.thumb, init: true }) }}
 										</a>
 										</label>
 									</div>
@@ -95,7 +94,7 @@
 									<hr>
 									<div class="product-card-discounts__container">
 										<div class="product-card__product-info__pricing-block is-sticky-container">
-											<div class="product-price is-sticky" data-sticky data-margin-top="10" data-sticky-for="768">
+											<div class="product-price is-sticky" data-sticky data-margin-top="10" data-sticky-wrap data-sticky-for="768">
 												<span>Ваша цена: </span>
 												{{ currency.currency(
 													{ 'price': props.price, 'special': props.special, unit: '/ шт.' }, 
@@ -148,7 +147,7 @@
 												<div class="col-md-3 col-sm-4 col-xs-4 col-sm-no-padding" style="text-align: center;">
 													<div class="product-card-quantity ctr-utt">
 														<div class="product-card-quantity__title">{{option_value.name}}</div>
-														<img class="img-responsive" src="{{option_value.image_f}}" />
+														<img src="{{option_value.image_f}}" />
 														<div class="product-card-quantity__control">
 															<button name="dec"><span><i class="fa fa-minus"></i></span></button>
 															<input
@@ -212,9 +211,6 @@
 				autoplayDisableOnInteraction: true,
 				loop: false,
 				autoHeight: false,
-				onInit: function() {
-					$('.p_card-i_gallery-swiper').removeClass('init');
-				},
 				breakpoints: {
 					1024: {
 						slidesPerView: 5,

@@ -1,0 +1,234 @@
+{# core import #}
+{% import 'scarfinity/template/components/navigation/breadcrumbs.twig' as _breadcrumbs %}
+
+{# import #}
+{% import 'scarfinity/template/components/cart/header-navigation.twig' as headerNavigation %}
+{% import 'scarfinity/template/components/cart/price-calculation.twig' as _priceCalculation %}
+{% import 'scarfinity/template/components/cart/payments.twig' as _payments %}
+{% import 'scarfinity/template/components/cart/bottom-navigation.twig' as _bottomNavigation %}
+{% import 'scarfinity/template/components/cart/radio-box-group.twig' as _radioBoxGroup %}
+{% import 'scarfinity/template/components/utility/select-box.twig' as _selectBox %}
+
+{{ header }}
+{{ _breadcrumbs.Breadcrumbs({ breadcrumbs: breadcrumbs, topOffset: 0 }) }}
+<div id="checkout-requisites" class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-no-padding">
+        {% if error_warning %}
+            <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endif %}
+
+        <div id="cart" class="container">
+          <div class="row">
+            <h1>{{ heading_title }}</h1>
+            <br>
+            <div class="cart">
+                {{ headerNavigation.HeaderNavigation({ step:'3' }) }}
+                <div id="checkout-errors"></div>
+                <div class="payments" id="cart-checkout-payments">
+                    <div class="requisites-row row">
+                        <div class="col-md-6 col-sm-12">
+                            <span class="requisites-title"><b>Аддрес </b>доставки</span>
+                            <div id="cart-checkout-requisites-shipping" class=""></div>
+                            <hr >
+                            <span class="requisites-title"><b>Способ </b>доставки</span>
+                            <div id="cart-checkout-requisites-shipping-method"></div>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <span class="requisites-title">Способ <b>оплаты</b></span>
+                            <div id="cart-checkout-payments-method"></div>
+                        </div>
+                        <div class="requisites-row__delim hidden-sm"></div>
+                    </div>
+                </div> 
+              {{
+                _bottomNavigation.BottomNavigation({
+                  prevTitle: button_shopping,
+                  nextTitle: 'Оформить заказ',
+                  disabled: true
+                })
+              }}
+            </div>
+          </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    checkout.shippingAddressGet({
+        success: function(html) {
+            $('#cart-checkout-requisites-shipping').html(html);
+
+            checkout.paymentMethodsGet({
+                success: function(html) {
+                    $('#cart-checkout-payments-method').html(html);
+                }
+            });
+        }
+    });
+</script>
+
+{# Form events #}
+<script type="text/javascript">
+    var ui = {
+        shippingMethodChange: function(form, shippingMethodCode) {
+            $('form[name^=shipping_method_fields]')
+                .addClass('hidden');
+
+            $('form[name=shipping_method_fields_' + form + ']')
+                .removeClass('hidden');
+
+            $('select[data-code^="shipping"], input[data-code^="shipping"]')
+                .parents('.sInput-container')
+                .addClass('hidden');
+            
+            $('select[data-code$="' + form + '"], input[data-code$="' + form + '"]')
+                .removeClass('sInput--error')
+                .trigger('input')
+                .change()
+                .parents('.sInput-container')
+                .removeClass('hidden')
+                .find('.sInput-error')
+                .remove();
+        },
+        shippingAndPaymentsSave: function() {
+            if(checkout) {
+                checkout.shippingAndPaymentsSave({
+                    beforeSend: ui.beforeSend('cart-checkout-payments', function() {
+                        $('#cart-button-next').prop('disabled', true);
+                    }),
+                    success: function(json) {
+                        checkout.confirm({
+                            beforeSend: ui.beforeSend('cart-checkout-payments', function() {
+                                $('#cart-button-next').prop('disabled', true);
+                            }),
+                            success: function() {
+                                checkout.paymentConfirm({
+                                    beforeSend: ui.beforeSend('cart-checkout-payments', function() {
+                                        $('#cart-button-next').prop('disabled', true);
+                                    }),
+                                    success: function() {
+                                        location = json['redirect'];
+                                    },
+                                    complete: function() {
+                                        $('#cart-button-next').prop('disabled', false);
+                                    }
+                                });
+                            },
+                            complete: function() {
+                                $('#cart-button-next').prop('disabled', false);
+                            }
+                        });
+                    },
+                    error: ui.displayErrors(function(errors) {}),
+                    complete: function() {
+                        $('#cart-button-next').prop('disabled', false);
+                    }
+                });
+            }
+        },
+        beforeSend: function(containerId, callback) {
+            var ui = this;
+
+            ui.container = $('#' + containerId);
+            $(ui.container).find('.sInput-error').remove();
+            $(ui.container).find('.sInput--error').removeClass('sInput--success sInput--error sInput--validate');
+
+            if(callback) callback();
+        },
+        displayErrors: function(callback) {
+            var ui = this;
+
+            return function(errors) {
+                _.forIn(errors, function(error, name) {
+                    $(ui.container).find('input[type!="checkbox"][name$="' + name +'"], div[data-name$="' + name + '"]')
+                        .addClass('sInput--error')
+                        .after('<p class="sInput-error">' + error + '</p>');
+
+                    $(ui.container).find('input[type="checkbox"][name$="' + name + '"], select[name$="' + name + '"]')
+                        .addClass('sInput--error')
+                        .parents('.select-box, .sInput-container')
+                        .append('<p class="sInput-error">' + error + '</p>');
+                });
+
+                if(callback) callback(errors);
+            }
+        }
+    };
+
+    var shippingMethodsTimeout = null;
+    $(document).delegate('#checkout-requisites .sInput[name$="city"]', 'input', function() {
+        clearTimeout(shippingMethodsTimeout);
+
+        shippingMethodsTimeout = setTimeout(function() {
+            clearTimeout(shippingMethodsTimeout);
+
+            if(checkout) {
+                checkout.shippingMethodsGet({
+                    success: function(html) {
+                        $('#cart-checkout-requisites-shipping-method').html(html);
+                        $('#cart-button-next').prop('disabled', false);
+                    }
+                });
+            }
+        }, 800);
+    });
+</script>
+{# Form events end #}
+
+{# UI Delegate #}
+<script type="text/javascript">
+    $(document).delegate('#checkout-requisites .sInput', 'input', function(e) {
+        var target = e.target;
+        var group = $(target).data('group');
+        var name = target.name;
+        var value = target.value;
+
+        if(checkout[group]) {
+            checkout[group][name] = value;
+        }
+    });
+
+    $(document).delegate('#checkout-requisites .select-box input', 'change', function(e) {
+        var target = $(this);
+        var type = target.attr('type');
+        var group = target.data('group');
+        var form = target.data('form');
+        var name = target.attr('name');
+        var value = target.val();
+        var checked = target.attr('checked');
+
+        if(checkout[group]) {
+            if(type == 'radio') {
+                checkout[group][name] = value; 
+
+                if(group == 'shipping_method' && ui) {
+                    ui.shippingMethodChange(form, value);
+                }
+            }
+
+            if(type == 'checkbox') {
+                checkout[group][name] = target.prop('checked');
+            }
+        }
+    });
+
+    $(document).delegate('#checkout-requisites .sDropdown select', 'change', function() {
+        var target = $(this);
+        var name = target.attr('name');
+        var group = target.data('group');
+        var value = target.val();
+    
+        if(checkout[group]) {
+            checkout[group][name] = value;
+        }
+    });
+
+    // Сохранение реквизитов доставки
+    $('#cart-button-next').on('click', function() {
+        ui.shippingAndPaymentsSave();
+    });
+</script>

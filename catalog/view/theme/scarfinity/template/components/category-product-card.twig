@@ -8,15 +8,10 @@
 
     <div class="product-card-catalog">
         <a href="{{product.href}}" class="product-card-catalog__image">
-            <div class="product-card-catalog__image__image">
-                {{ imageContainer.imageContainer({src: product.thumb, alt: product.name, name: product.name}) }}
-            </div>
-            {# <a 
-                href="{{product.href}}"
-                class="product-card-catalog__image__info">
-            </a> #}
-            <span class="product-card-catalog__image__color">Доступно цветов: {{product.props['color']|default(1)}}</span>
+            <img class="img-responsive" src="{{product.thumb}}" alt="{{product.name}}" name="{{product.name}}"/>
         </a>
+        
+        <div class="product-card-catalog__image__color">Доступно цветов: {{product.props['color']|default(1)}}</div>
 
         <div class="product-card-catalog__rating">
             {{ ratingBox.ratingBox(product.rating) }}
@@ -40,6 +35,4 @@
             {{ ribbon.ribbon(product.props['ribbon']) }}
         {% endif %}
     </div>
-    
-    {{ imageContainer.init() }}
 {% endmacro %}

@@ -20,7 +20,7 @@
             <a id="cart-button-prev" class="cart__button-prev" href="{{props.prevHref}}"}>{{props.prevTitle}}</a>
         </div>
         <div class="cart__bottom-navigation__right">
-            {{ _button.BasicButton({ chevron: 'right', id: 'cart-button-next', disabled: props.disabled }) }}
+            {{ _button.BasicButton({ title: props.nextTitle, chevron: 'right', id: 'cart-button-next', disabled: props.disabled }) }}
         </div>
         <div class="cart__bottom-navigation__check">
             {% if props.orderTotal %}

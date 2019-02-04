@@ -140,21 +140,29 @@
 
 <div id="cart" class="container">
   <div class="row">
-    <h1>{{ heading_title }}</h1>
-    <div class="cart">
-      {{ headerNavigation.HeaderNavigation({ step:'1' }) }}
-      {{ _products.products({ products: products, totals: totals }) }}
-      {{
-        _bottomNavigation.BottomNavigation({
-          prevHref: continue,
-          prevTitle: button_shopping,
-          nextHref: checkout,
-          nextTitle: button_checkout
-        })
-      }}
+    <div class="col-sm-12 col-sm-no-padding">
+      <h1>{{ heading_title }}</h1>
+      <div class="cart">
+        {{ headerNavigation.HeaderNavigation({ step:'1' }) }}
+        {{ _products.products({ products: products, totals: totals }) }}
+        {{
+          _bottomNavigation.BottomNavigation({
+            prevHref: continue,
+            prevTitle: button_shopping,
+            nextTitle: button_checkout
+          })
+        }}
+      </div>
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+    // Оформление заказа
+    $('#cart-button-next').on('click', function() {
+        location = "{{ checkout }}"
+    });
+</script>
 
 {{ footer }}
 

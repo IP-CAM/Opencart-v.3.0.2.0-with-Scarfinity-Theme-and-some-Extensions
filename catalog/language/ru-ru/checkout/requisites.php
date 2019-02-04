@@ -1,20 +1,13 @@
 <?php
 // Heading
-$_['heading_title']                  = 'Контактная информация';
+$_['heading_title']                  = 'Доставка и оплата';
 
 // Text
 $_['text_cart']                      = 'Корзина покупок';
-$_['text_checkout_option']           = 'Шаг %s: Способ оформления заказа';
-$_['text_checkout_account']          = 'Шаг %s: Профиль &amp; Платежная информация';
-$_['text_checkout_payment_address']  = 'Шаг %s: Платежная информация';
-$_['text_checkout_shipping_address'] = 'Шаг %s: Адрес доставки';
-$_['text_checkout_shipping_method']  = 'Шаг %s: Способ доставки';
-$_['text_checkout_payment_method']   = 'Шаг %s: Способ оплаты';
-$_['text_checkout_confirm']          = 'Шаг %s: Подтверждение заказа';
 $_['text_modify']                    = 'Изменить &raquo;';
 $_['text_new_customer']              = 'Новый покупатель';
 $_['text_returning_customer']        = 'Зарегистрированный пользователь';
-$_['text_checkout']                  = 'Варианты Оформления заказа';
+$_['text_checkout']                  = 'Контактная информация';
 $_['text_i_am_returning_customer']   = 'Я совершал здесь покупки ранее и регистрировался';
 $_['text_register']                  = 'Регистрация';
 $_['text_guest']                     = 'Оформить заказ без регистрации';
