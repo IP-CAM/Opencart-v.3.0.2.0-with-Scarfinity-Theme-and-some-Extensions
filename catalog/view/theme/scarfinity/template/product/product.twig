@@ -169,7 +169,7 @@
       input.val(Math.max(0, parseInt(input.val()) + (name == 'inc' ? 1 : -1))).trigger('change');
   });
 
-  $('.ctr-utt input[name$=quantity]').on('change paste keyup', function(e) {
+  $('.ctr-utt input[name$=quantity]').on('change', function(e) {
     var input = $(this);
     var parent = input.parent().parent();
     var option = parent.find('input[type="hidden"]');

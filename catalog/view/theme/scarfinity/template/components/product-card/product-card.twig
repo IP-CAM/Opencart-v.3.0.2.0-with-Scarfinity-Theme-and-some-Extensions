@@ -148,7 +148,7 @@
 												<div class="col-md-3 col-sm-4 col-xs-4 col-sm-no-padding" style="text-align: center;">
 													<div class="product-card-quantity ctr-utt">
 														<div class="product-card-quantity__title">{{option_value.name}}</div>
-														<img class="img-responsive" src="{{option_value.image_f}}" />
+														<img class="img-responsive img-option" src="{{option_value.image}}" data-full="{{option_value.image_f}}" />
 														<div class="product-card-quantity__control">
 															<button name="dec"><span><i class="fa fa-minus"></i></span></button>
 															<input
@@ -244,8 +244,10 @@
                 mainImage.attr('src', input.val());
             }
         });
-    </script>
 
-	{{ _imageContainer.Init() }}
+		$('.img-option').on('click', function() {
+			mainImage.attr('src', $(this).data('full'));
+		});
+    </script>
 
 {% endmacro %}
