@@ -5,34 +5,86 @@
     {% import 'scarfinity/template/components/currency.twig' as currency %}
     {% import 'scarfinity/template/components/utility/ribbon.twig' as ribbon %}
     {% import 'scarfinity/template/components/button.twig' as button %}
+    {% import 'scarfinity/template/components/utility/icon-button.twig' as _iconButton %}
+    {% import 'scarfinity/template/components/utility/_icons.twig' as _icons %}
 
-    <div class="product-card-catalog">
-        <a href="{{product.href}}" class="product-card-catalog__image">
-            <img class="img-responsive" src="{{product.thumb}}" alt="{{product.name}}" name="{{product.name}}"/>
-        </a>
-        
-        <div class="product-card-catalog__image__color">Доступно цветов: {{product.props['color']|default(1)}}</div>
+    <div class="product-card-catalog" id="product-card-catalog[{{product.product_id}}]">
+        <div class="product-card-catalog__image">
+            {% if product.images and product.images|length > 1 %}  
+                <div class="swiper-container" id="product-card-catalog-swiper-{{product.product_id}}">
+                    <div class="swiper-wrapper">
+                        {% for image in product.images %}
+                        <div class="swiper-slide">
+                            <img class="img-responsive" src="{{image.popup}}" alt="{{product.name}}" name="{{product.name}}"/>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <a class="product-card-catalog__image__link" href="{{product.href}}"></a>
+                    <div class="product-card-catalog__image__button product-card-catalog__image__button--prev">{{ _icons.ChevronLeft({ size: 14 }) }}</div>
+                    <div class="product-card-catalog__image__button product-card-catalog__image__button--next">{{ _icons.ChevronRight({ size: 14 }) }}</div>
+                </div>
+            {% else %}
+                <img class="img-responsive" src="{{product.image}}" alt="{{product.name}}" name="{{product.name}}"/>
+                <a class="product-card-catalog__image__link" href="{{product.href}}"></a>
+            {% endif %}
 
-        <div class="product-card-catalog__rating">
-            {{ ratingBox.ratingBox(product.rating) }}
         </div>
 
         <div class="product-card-catalog__description">
-            <a href="{{product.href}}" class="product-card-catalog__title">{{ product.name }}</a>
-            <div class="product-card-catalog-footer">
-                <div class="product-card-catalog-footer__price">
-                    {{ currency.currency(
-                        { 'price': product.price, 'special': product.special, 'prefix': 'от', 'unit': '/ шт.' }, 
-                        { 'fontSize': 18, 'fontWeight': 500, 'style': 'accent' }) 
-                    }}
+            <div class="product-card-catalog__navigation">
+                <div class="product-card-catalog__navigation__favorite">
+                    {% set icon %}{{_icons.Heart({size: 20})}}{% endset %}
+                    {{_iconButton.iconButton({onClick: "wishlist.add('" ~ product.product_id ~ "')", icon: icon})}}
+                    {% set icon %}{{_icons.BarChart({size: 22})}}{% endset %}
+                    {{_iconButton.iconButton({onClick: "compare.add('" ~ product.product_id ~ "')", icon: icon})}}
                 </div>
-                <div class="product-card-catalog-footer__button">
-                    {{ button.catalogProductCardButton({ 'label': data.buttonLabel, 'productId': product.product_id }) }}
+                <div class="product-card-catalog__rating">
+                    {{ ratingBox.ratingBox(product.rating) }}
+                    <span class="product-card-catalog__rating__count">({{product.reviews|default(0)}})</span>
                 </div>
+                <div id="product-card-catalog-swiper-pagination-{{product.product_id}}" class="swiper-pagination product-card-catalog__navigation__pagination"></div>
+            </div>
+
+            <div><span class="product-card-catalog__title">Доступно цветов: {{product.props['color']|default(1)}}</span></div>
+            <div class="product-card-catalog__description__info">
+                <h2><a href="{{product.href}}" class="product-card-catalog__title">{{ product.name }}</a></h2>
+                <span>{{ product.description }}</span>
+            </div>
+
+            <div class="product-card-catalog__price">
+                {{ currency.currency(
+                    { 'price': product.price, 'special': product.special, 'prefix': 'от', 'unit': '/ шт.' }, 
+                    { 'fontSize': 18, 'fontWeight': 500, 'style': 'accent' }) 
+                }}
             </div>
         </div>
+
         {% if product.props['ribbon'] %}
             {{ ribbon.ribbon(product.props['ribbon']) }}
         {% endif %}
     </div>
+
+    <script type="text/javascript">
+		if(typeof Swiper) {
+			new Swiper('#product-card-catalog-swiper-{{product.product_id}}', {
+				mode: 'horizontal',
+				slidesPerView: 1,
+                navigation: {
+                    nextEl: '.product-card-catalog__image__button--next',
+                    prevEl: '.product-card-catalog__image__button--prev',
+                },
+                pagination: {
+                    el: '#product-card-catalog-swiper-pagination-{{product.product_id}}',
+                    dynamicBullets: true,
+                },
+				spaceBetween: 0,
+				slidesOffsetBefore: 0,
+				slidesOffsetAfter: 0,
+				autoplay: false,
+				autoplayDisableOnInteraction: true,
+				loop: false,
+				autoHeight: false,
+			});
+		}
+    </script>
 {% endmacro %}

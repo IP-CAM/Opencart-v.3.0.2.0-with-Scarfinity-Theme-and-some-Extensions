@@ -74,6 +74,12 @@ class ModelAccountCustomer extends Model {
 		return $query->row['total'];
 	}
 
+	public function getTotalCustomersByTelephone($telephone) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer WHERE LOWER(telephone) = '" . $this->db->escape(utf8_strtolower($telephone)) . "'");
+
+		return $query->row['total'];
+	}
+
 	public function addTransaction($customer_id, $description, $amount = '', $order_id = 0) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "customer_transaction SET customer_id = '" . (int)$customer_id . "', order_id = '" . (float)$order_id . "', description = '" . $this->db->escape($description) . "', amount = '" . (float)$amount . "', date_added = NOW()");
 	}

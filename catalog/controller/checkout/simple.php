@@ -90,8 +90,12 @@ class ControllerCheckoutSimple extends Controller {
 					$json['error']['telephone'] = $this->language->get('error_telephone');
 				}
 
-				if(isset($this->request->post['email']) && (utf8_strlen($this->request->post['email']) > 0)) {
-					if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+				if ($this->model_account_customer->getTotalCustomersByTelephone($this->request->post['telephone'])) {
+					$json['error']['telephone'] = $this->language->get('error_p_exists');
+				}
+
+				if((utf8_strlen($this->request->post['email']) > 0)) {
+					if((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
 						$json['error']['email'] = $this->language->get('error_email');
 					}
 
@@ -99,7 +103,7 @@ class ControllerCheckoutSimple extends Controller {
 						$json['error']['email'] = $this->language->get('error_exists');
 					}
 				} else {
-					$this->request->post['email'] = 'noemail@scarfinity.ru';
+					$json['error']['telephone'] = $this->language->get('error_telephone');
 				}
 
 				// if ((utf8_strlen(trim($this->request->post['address_1'])) < 3) || (utf8_strlen(trim($this->request->post['address_1'])) > 128)) {

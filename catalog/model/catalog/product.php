@@ -213,6 +213,7 @@ class ModelCatalogProduct extends Model {
 
 		foreach ($query->rows as $result) {
 			$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
+			$product_data[$result['product_id']]['images'] = $this->getProductImages($result['product_id']);
 		}
 
 		return $product_data;
@@ -263,6 +264,7 @@ class ModelCatalogProduct extends Model {
 
 		foreach ($query->rows as $result) {
 			$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
+			$product_data[$result['product_id']]['images'] = $this->getProductImages($result['product_id']);
 		}
 
 		return $product_data;
@@ -276,6 +278,7 @@ class ModelCatalogProduct extends Model {
 
 			foreach ($query->rows as $result) {
 				$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
+				$product_data[$result['product_id']]['images'] = $this->getProductImages($result['product_id']);
 			}
 
 			$this->cache->set('product.latest.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit, $product_data);
@@ -292,6 +295,7 @@ class ModelCatalogProduct extends Model {
 	
 			foreach ($query->rows as $result) {
 				$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
+				$product_data[$result['product_id']]['images'] = $this->getProductImages($result['product_id']);
 			}
 			
 			$this->cache->set('product.popular.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit, $product_data);
@@ -310,6 +314,7 @@ class ModelCatalogProduct extends Model {
 
 			foreach ($query->rows as $result) {
 				$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
+				$product_data[$result['product_id']]['images'] = $this->getProductImages($result['product_id']);
 			}
 
 			$this->cache->set('product.bestseller.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit, $product_data);

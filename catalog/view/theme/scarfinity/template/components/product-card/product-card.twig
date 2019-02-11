@@ -14,9 +14,9 @@
 		<div class="row product-card-left" data-sticky-container>
 			<div class="col-sm-12 col-md-6 is-sticky-container">	
 				<div class="product-card-image-container is-sticky" data-margin-top="10" data-sticky-wrap data-sticky-for="768">
-					<div id="product-card-main-thumb" class="product-card-image-container__main">
-						<img class="img-responsive" src="{{ props.thumb }}" alt="{{ props.headingTitle }}" name="{{ props.headingTitle }}" />
-						{# {{ _imageContainer.imageContainer({ src: props.thumb }) }} #}
+					<div id="product-card-main-thumb" class="product-card-image-container__main magnifier-thumb-wrapper">
+						{# <img class="img-responsive" src="{{ props.thumb }}" alt="{{ props.headingTitle }}" name="{{ props.headingTitle }}" /> #}
+						{{ _imageContainer.imageContainer({ src: props.image, large: props.popup, magnifer: 'img-magnifer' }) }}
 					</div>
 					<div class="p_card-i_gallery-swiper init" data-slideout-ignore>
 						<div class="p_card-i_gallery-swiper__button p_card-i_gallery-swiper__button--prev">
@@ -29,7 +29,7 @@
 									{% for image in props.images %}
 									<div class="swiper-slide p_card-i_gallery-s_slide">
 										<label>
-										<input type="radio" name="product-card-swiper" value="{{image.popup}}">
+										<input type="radio" name="product-card-swiper" value="{{image.image}}" data-large="{{image.popup}}">
 										<a href="{{ image.popup }}" title="{{ heading_title }}">
 											{{ _imageContainer.imageContainer({ src: image.thumb }) }}
 										</a>
@@ -47,7 +47,12 @@
 				</div>
 				
 			</div>
-			<div class="col-sm-12 col-md-6">
+			<div class="col-sm-12 col-md-6" style="position: relative">
+				<div class="product-card-preview">
+					<div class="product-card-preview__container">
+						<div class="magnifier-preview" id="preview"></div>
+					</div>
+				</div>
 				<div class="product-card__product-info-container">
 					<div class="product-card__product-title">
 						<div class="product-card__product-title__review-block">
@@ -237,17 +242,60 @@
 
         var mainImage = $('#product-card-main-thumb img');
 
+		var evt, m = undefined;
+		var mobile = false;
+
+		function updateMagnifier() {
+			if(!mobile) {
+				evt = new Event();
+				m = new Magnifier(evt);
+
+				$('#preview').html('');
+
+				m.attach({
+					thumb: '#img-magnifer',
+					largeWrapper: 'preview',
+					zoom: 3
+				});
+			}
+		}
+
         $('#p_card-i_gallery-swiper .swiper-slide').on('mouseover', function(e) {
             var input = $(this).find('input[type="radio"]');
             if(input != null) {
-                input.prop("checked", true);
-                mainImage.attr('src', input.val());
+				if(input.prop("checked") != true) {
+					input.prop("checked", true);
+
+					mainImage.attr('src', input.val());
+					mainImage.attr('data-large-img-url', input.data('large'));
+
+					updateMagnifier();
+				}
             }
         });
 
 		$('.img-option').on('click', function() {
 			mainImage.attr('src', $(this).data('full'));
+			mainImage.attr('data-large-img-url', $(this).data('full'));
+			updateMagnifier();
 		});
+
+		$(document).ready(function() {
+			mobile = $(window).width() <= 768;
+			updateMagnifier();
+		});
+
+		$(window).resize(function() {
+			if($(window).width() <= 768 && !mobile) {
+				mobile = true;
+				evt = null;
+				m = null;
+				updateMagnifier();
+			} else if($(window).width() > 768 && mobile) {
+				mobile = false;
+				updateMagnifier();
+			}
+		})
     </script>
 
 {% endmacro %}

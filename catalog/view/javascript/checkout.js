@@ -9,7 +9,7 @@ var checkout = {
                 firstname: this.firstname,
                 lastname: this.lastname,
                 telephone: this.telephone,
-                email: this.email == '' ? this.telephone + '@scarfinity.ru' : this.email
+                email: this.email == '' ? this.telephone == '' ? '' : this.telephone + '@scarfinity.ru' : this.email
             };
         }
     },

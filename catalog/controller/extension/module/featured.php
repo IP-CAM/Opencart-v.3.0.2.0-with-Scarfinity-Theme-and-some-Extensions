@@ -28,6 +28,17 @@ class ControllerExtensionModuleFeatured extends Controller {
 						$image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
 					}
 
+					$images = array();
+
+					if($result['images']) {
+						foreach ($result['images'] as $image) {
+							$images[] = array(
+								'popup' => $this->model_tool_image->resize($image['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_height')),
+								'thumb' => $this->model_tool_image->resize($image['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_height'))
+							);
+						}
+					}
+
 					if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 						$price = $this->currency->format($this->tax->calculate($product_info['price_origin'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 					} else {
@@ -63,7 +74,8 @@ class ControllerExtensionModuleFeatured extends Controller {
 
 					$data['products'][] = array(
 						'product_id'  => $product_info['product_id'],
-						'thumb'       => $image,
+						'image'       => $image,
+						'images'      => $images,
 						'name'        => $product_info['name'],
 						'description' => utf8_substr(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('theme_' . $this->config->get('config_theme') . '_product_description_length')) . '..',
 						'price'       => $price,

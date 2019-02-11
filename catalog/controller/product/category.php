@@ -117,6 +117,8 @@ class ControllerProductCategory extends Controller {
 
 			$this->document->addStyle('catalog/view/javascript/nouislider/nouislider.min.css');
 			$this->document->addScript('catalog/view/javascript/nouislider/nouislider.min.js');
+			$this->document->addStyle('catalog/view/javascript/swiper/dist/css/swiper.min.css');
+			$this->document->addScript('catalog/view/javascript/swiper/dist/js/swiper.min.js');
 
 			$data['heading_title'] = $category_info['name'];
 
@@ -197,10 +199,22 @@ class ControllerProductCategory extends Controller {
 			$results = $this->model_catalog_product->getProducts($filter_data);
 
 			foreach ($results as $result) {
+
 				if ($result['image']) {
 					$image = $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
 				} else {
 					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
+				}
+
+				$images = array();
+
+				if($result['images']) {
+					foreach ($result['images'] as $image) {
+						$images[] = array(
+							'popup' => $this->model_tool_image->resize($image['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_height')),
+							'thumb' => $this->model_tool_image->resize($image['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_height'))
+						);
+					}
 				}
 
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
@@ -238,7 +252,8 @@ class ControllerProductCategory extends Controller {
 
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
-					'thumb'       => $image,
+					'image'		  => $image,
+					'images'      => $images,
 					'name'        => $result['name'],
 					'description' => utf8_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('theme_' . $this->config->get('config_theme') . '_product_description_length')) . '..',
 					'price'       => $price,
@@ -246,6 +261,7 @@ class ControllerProductCategory extends Controller {
 					'tax'         => $tax,
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 					'rating'      => $result['rating'],
+					'reviews'     => (int)$result['reviews'],
 					'href'        => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url),
 					'props'		  => $props	
 				);
@@ -651,6 +667,17 @@ class ControllerProductCategory extends Controller {
 					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
 				}
 
+				$images = array();
+
+				if($result['images']) {
+					foreach ($result['images'] as $image) {
+						$images[] = array(
+							'popup' => $this->model_tool_image->resize($image['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_height')),
+							'thumb' => $this->model_tool_image->resize($image['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_height'))
+						);
+					}
+				}
+
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 					$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 				} else {
@@ -677,7 +704,8 @@ class ControllerProductCategory extends Controller {
 
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
-					'thumb'       => $image,
+					'image'       => $image,
+					'images'	  => $images,
 					'name'        => $result['name'],
 					'description' => utf8_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('theme_' . $this->config->get('config_theme') . '_product_description_length')) . '..',
 					'price'       => $price,

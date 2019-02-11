@@ -158,7 +158,9 @@
                     success: function(json) {
                         location = json['continue'];
                     },
-                    error: ui.displayErrors(function(errors) {})
+                    error: ui.displayErrors(function(errors) {
+                        $('#cart-button-next').prop('disabled', false);
+                    })
                 });
             }
         },

@@ -2,8 +2,12 @@
     <div class="image-container {{props.init and props.init == true ? 'init' : ''}}">
     	<div class="image-container__dummy"></div>
         <div class="image-container__container">
-            {% if props.src %}
-                <img src="{{props.src}}" alt="{{props.alt}}" name="{{props.name}}"/>
+            {% if props.magnifer %}
+                <div class="magnifier-thumb-wrapper">
+                    <img id="{{props.magnifer}}" data-large-img-url="{{props.large}}" src="{{props.src}}" alt="{{props.alt}}" name="{{props.name}}" />
+                </div>
+            {% elseif props.src %}
+                <img id="{{props.id}}" src="{{props.src}}" alt="{{props.alt}}" name="{{props.name}}" />
             {% endif %}
         </div>
     </div>

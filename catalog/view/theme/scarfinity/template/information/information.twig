@@ -50,66 +50,19 @@
 
 {{ _breadcrumbs.Breadcrumbs({ breadcrumbs: breadcrumbs, topOffset: 0 }) }}
 <div id="information-information" class="container">
-  <div class="row">
+  <div class="row s-content">
 
     {{ column_left }}
 
-    {% if column_left and column_right %}
-    {% set class = 'col-sm-6' %}
-    {% elseif column_left or column_right %}
-    {% set class = 'col-sm-9' %}
-    {% else %}
-    {% set class = 'col-sm-12' %}
-    {% endif %}
-
-    <div id="content" class="{{ class }}">
-      {# {{ content_top }} #}
-
+    <div id="content" class="s-content__middle">
+      {{ content_top }}
       <h1>{{ heading_title }}</h1>
-
-      <div class="row" data-sticky-container>
-        <div class="col-xs-12 col-sm-9 col-md-6 col-lg-10" style="min-height: 1500px;">
-          <h2 style="color: red; font-size: 26px; padding: 60px; border: 1px solid black; background-color: white;" data-sticky data-margin-top="100">Hello world!</h2>
-        </div>
-      </div>
-
-      <div>{{ _itemList.ItemList({}) }}</div>
-
-
       {{ description }}
-
-      {% if column_right %}
-        {% for key, module in column_right['modules'] %}
-          <h1>{{key}}</h1>
-          {{module}}
-        {% endfor %}
-      {% endif %}
-
       {{ content_bottom }}
     </div>
     
   </div>
 </div>
-
-<script>
-  $('#test_button_1').on('click', function() {
-    $('#test_button_2').prop('disabled', false);
-    $(this).prop('disabled', true);
-  });
-  $('#test_button_2').on('click', function() {
-    $('#test_button_1').prop('disabled', false);
-    $(this).prop('disabled', true);
-  });
-</script>
-
-	<script type="text/javascript">
-		$(document).ready(function() {
-			if(typeof Sticky) {
-				var mainImageContainerSticky = new Sticky('[data-sticky]', {});
-			}
-		});
-	</script>
-
 {{ footer }}
 
 

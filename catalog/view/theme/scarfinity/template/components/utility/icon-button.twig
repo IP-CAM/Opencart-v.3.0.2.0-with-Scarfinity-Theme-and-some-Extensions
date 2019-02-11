@@ -1,9 +1,15 @@
 {% macro IconButton(props) %}
 	{% import 'scarfinity/template/components/utility/notify-bage.twig' as _bage %}
-	<a class="sIcon-button" href="{{props.href}}">
+	{% if props.onClick %}
+		<a class="sIcon-button" onclick={{props.onClick}}>
+	{% else %}
+		<a class="sIcon-button" href="{{props.href}}">	
+	{% endif %}
+	
 		{{props.icon}}
 		{% if props.bage %}
 			{{_bage.Bage({ value: props.bage.value })}}
 		{% endif %}
+
 	</a>
 {% endmacro %}

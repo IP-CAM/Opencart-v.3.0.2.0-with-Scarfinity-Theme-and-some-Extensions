@@ -227,6 +227,8 @@ class ControllerProductProduct extends Controller {
 			$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/swiper.min.css');
 			$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/opencart.css');
 			$this->document->addScript('catalog/view/javascript/jquery/swiper/js/swiper.jquery.js');
+			$this->document->addStyle('catalog/view/javascript/magnifer/css/magnifer.min.css');
+			$this->document->addScript('catalog/view/javascript/magnifer/js/magnifer.min.js');
 
 			$data['heading_title'] = $product_info['name'];
 
@@ -262,9 +264,9 @@ class ControllerProductProduct extends Controller {
 			}
 
 			if ($product_info['image']) {
-				$data['thumb'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_thumb_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_thumb_height'));
+				$data['image'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_related_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_related_height'));
 			} else {
-				$data['thumb'] = '';
+				$data['image'] = '';
 			}
 
 			$data['images'] = array();
@@ -274,6 +276,7 @@ class ControllerProductProduct extends Controller {
 			foreach ($results as $result) {
 				$data['images'][] = array(
 					'popup' => $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_height')),
+					'image' => $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_related_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_related_height')),
 					'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_height'))
 				);
 			}
@@ -399,6 +402,12 @@ class ControllerProductProduct extends Controller {
 					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_related_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_related_height'));
 				}
 
+				if ($result['image']) {
+					$image_large = $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_height'));
+				} else {
+					$image_large = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_height'));
+				}
+
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 					$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 				} else {
@@ -425,7 +434,8 @@ class ControllerProductProduct extends Controller {
 
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
-					'thumb'       => $image,
+					'image'       => $image,
+					'popup' 	  => $image_large,
 					'name'        => $result['name'],
 					'description' => utf8_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('theme_' . $this->config->get('config_theme') . '_product_description_length')) . '..',
 					'price'       => $price,

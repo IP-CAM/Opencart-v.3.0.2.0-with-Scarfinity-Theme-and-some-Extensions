@@ -7,11 +7,12 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    height: 70px;
+    margin: 10px 0px;
 
     &__image {
-        width: 62px;
-        height: 62px;
+        flex: 0 0 52px;
+        width: 52px;
+        height: 52px;
         border: 1px solid @border;
     }
 
@@ -26,14 +27,14 @@
             display: block;
             position: relative;
 
-            max-width: 140px;
-            width: 140px;
-            text-overflow: wrap;
+            max-width: 120px;
+            width: 120px;
+            text-overflow: ellipsis;
             overflow: hidden;
 
             font-size: 13px;
             font-weight: 400;
-            //white-space: nowrap;
+            white-space: nowrap;
 
             margin: 0;
             margin-bottom: 5px;
