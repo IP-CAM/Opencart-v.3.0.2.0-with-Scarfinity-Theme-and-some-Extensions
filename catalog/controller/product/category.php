@@ -263,7 +263,12 @@ class ControllerProductCategory extends Controller {
 					'rating'      => $result['rating'],
 					'reviews'     => (int)$result['reviews'],
 					'href'        => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url),
-					'props'		  => $props	
+					'props'		  => $props,
+					'date'		  => array(
+						'added'	  	=> $result['date_added'],
+						'modified'	=> $result['date_modified'],
+						'available'	=> $result['date_available'],
+					)
 				);
 			}
 
@@ -713,7 +718,12 @@ class ControllerProductCategory extends Controller {
 					'tax'         => $tax,
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 					'rating'      => $result['rating'],
-					'href'        => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url)
+					'href'        => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url),
+					'date'		  => array(
+						'added'	  	=> $result['date_added'],
+						'modified'	=> $result['date_modified'],
+						'available'	=> $result['date_available'],
+					)
 				);
 			}
 

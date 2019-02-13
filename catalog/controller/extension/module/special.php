@@ -81,7 +81,12 @@ class ControllerExtensionModuleSpecial extends Controller {
 					'tax'         => $tax,
 					'rating'      => $rating,
 					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id']),
-					'props'		  => $props
+					'props'		  => $props,
+					'date'		  => array(
+						'added'	  	=> $result['date_added'],
+						'modified'	=> $result['date_modified'],
+						'available'	=> $result['date_available'],
+					)
 				);
 			}
 
