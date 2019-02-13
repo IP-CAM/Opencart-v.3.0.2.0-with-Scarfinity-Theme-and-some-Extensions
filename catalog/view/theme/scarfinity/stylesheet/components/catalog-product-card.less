@@ -1,3 +1,5 @@
+@import '../lib/media.less';
+
 @keyframes onLoadCatalogProductCard {
 	0% {
 		opacity: 0;
@@ -31,6 +33,12 @@
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px;
 	border-radius: 2px;
 	background: white;
+
+	.m-xs({
+		box-shadow: none;
+		animation: none;
+		border-radius: 0px;
+	});
 
 	&__image {
 		display: block;
@@ -163,6 +171,18 @@
 		position: relative;
 		color: #303030;
 
+		.m-xs({
+			& .sIcon {
+				width: 30px !important;
+				height: 30px !important;
+
+				& svg {
+					width: 30px;
+					height: 30px;
+				}
+			}
+		});
+
 		&__favorite {
 			display: flex;
 
@@ -189,9 +209,17 @@
 		}
 	}
 
+	&__colors {
+		margin: 5px 0px;
+	}
+
 	&__description {
 		padding: 5px 10px 10px 10px;
 		font-size: 12px;
+
+		.m-xs({
+			font-size: 14px;
+		});
 
 		&__info {
 			display: block;
@@ -224,6 +252,10 @@
 		margin: 3px 0px;
 
 		cursor: pointer;
+
+		.m-xs({
+			font-size: 14px;
+		});
 	}
 
 	&__ribbon {
@@ -234,12 +266,6 @@
 		right: -4px;
 		pointer-events: none;
 		user-select: none;
-	}
-
-	@media screen and (max-width: 545px) {
-		&__title {
-			font-size: 12px;
-		}
 	}
 
 	&:hover {
@@ -286,8 +312,45 @@
 
 .product-card-catalog-row {
 	margin: 0px -7px;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .product-card-catalog-container {
-	padding: 7px;
+	position: relative;
+	min-height: 1px;
+	float: left;
+	
+	max-width: 100%;
+	flex: 1 1 100%;
+
+	&--catalog {
+		padding: 0px 7px;
+		margin-bottom: 14px;
+
+		.m-xs({
+			padding: 0px 0px;
+			margin-bottom: 0px;
+		});
+	}
+
+	.m-xs({
+		max-width: 100%;
+	});
+
+	.m-sm({
+		max-width: 50%;
+	});
+
+	.m-md({
+		max-width: 33.333333%;
+	});
+
+	.m-lg({
+		max-width: 33.3333333%;
+	});
+
+	.m-xl({
+		max-width: 33.3333333333%;
+	})
 }

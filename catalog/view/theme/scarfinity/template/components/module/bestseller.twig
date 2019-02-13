@@ -27,7 +27,7 @@
     <h3>{{ props.heading_title }}</h3>
     <div class="row display-flex">
         {% for product in props.products %}
-            <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3" style="margin-bottom: 28px; padding: 0px 8px;">
+            <div class="product-card-catalog-container product-card-catalog-container--catalog">
                 {{ _categoryProductCard.categoryProductCard(product, { buttonLabel: props.button_cart }) }}
             </div>
         {% endfor %}

@@ -1,0 +1,15 @@
+.responsive(@minWidth; @maxWidth; @rules) {
+    @media only screen and (min-width: @minWidth) and (max-width: @maxWidth) {
+        @rules();
+    }
+}
+
+.m-xs(@rules) { .responsive(0px, 576px, @rules); }
+.m-sm(@rules) { .responsive(576px, 768px, @rules); }
+.m-md(@rules) { .responsive(768px, 992px, @rules); }
+.m-lg(@rules) { .responsive(992px, 1200px, @rules); }
+.m-xl(@rules) { 
+    @media only screen and (min-width: 1200px) {
+        @rules();
+    }
+}

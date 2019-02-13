@@ -148,7 +148,7 @@
 								{# Product options segment #}
 								{% for option in props.options %}
 									{% if option.type == 'radio' and option.name|lower|split('*')[1] == 'colors' %}
-										<div class="row">
+										<div class="row product-card-option-row">
 											{% for option_value in option.product_option_value %}
 												<div class="col-md-3 col-sm-4 col-xs-4 col-sm-no-padding" style="text-align: center;">
 													<div class="product-card-quantity ctr-utt">

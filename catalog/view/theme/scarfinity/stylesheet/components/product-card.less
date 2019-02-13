@@ -1,3 +1,5 @@
+@import '../lib/media.less';
+
 .row.display-flex {
 	display: flex;
 	flex-wrap: wrap;
@@ -484,7 +486,7 @@
 
 .product-card-quantity {
 	border: 1px solid #eee;
-	border-radius: 2px;
+	// border-radius: 2px;
 	overflow: hidden;
 	display: inline-flex;
 	flex-direction: column;
@@ -502,8 +504,6 @@
 	}
 
 	& > img {
-		width: 72px;
-		height: 72px;
 		margin: 3px 0px;
 		cursor: pointer;
 	}
@@ -512,8 +512,8 @@
 		font-family: "Roboto";
 		font-weight: 500;
 		font-size: 17px;
-		width: 50px;
-		color: #808080;
+		display: inline-flex;
+		max-width: 50px;
 		text-align: center;
 		height: 26px;
 		border: none;
@@ -521,7 +521,7 @@
 	}
 
 	&__control {
-		background: #ddd;
+		// background: #ddd;
 		display: inline-flex;
 		flex-direction: row;
 		justify-content: space-between;
@@ -610,12 +610,14 @@
 	}
 
 	@media screen and (max-width: 576px) {
-		margin: 0px 0px 10px 0px;
-
-		& input {
-			width: 42px;
-		}
+		margin: 4px 4px 10px 4px;
 	}
+}
+
+.product-card-option-row {
+	.m-xs({
+		margin: 0px -4px;
+	});
 }
 
 .product-card-addToCart {

@@ -45,7 +45,7 @@
                 <div id="product-card-catalog-swiper-pagination-{{product.product_id}}" class="swiper-pagination product-card-catalog__navigation__pagination"></div>
             </div>
 
-            <div><span class="product-card-catalog__title">Доступно цветов: {{product.props['color']|default(1)}}</span></div>
+            <div class="product-card-catalog__colors"><span class="product-card-catalog__title">Доступно цветов: {{product.props['color']|default(1)}}</span></div>
             <div class="product-card-catalog__description__info">
                 <h2><a href="{{product.href}}" class="product-card-catalog__title">{{ product.name }}</a></h2>
                 <span>{{ product.description }}</span>
