@@ -66,13 +66,30 @@
           {% endfor %}
         </ul>
       {% endset %}
+
+      {% set tabDescriptionContent %}
+        <h3>Характеристики</h3>
+        <ul class="info-list">
+          {% for attribute_group in attribute_groups %}
+            {% for attribute in attribute_group.attribute %}
+              <li>
+                <span>{{attribute.name}}</span>
+                <span>{{attribute.text}}</span>
+              </li>
+            {% endfor %}
+          {% endfor %}
+        </ul>
+        <h3>Описание</h3>
+        {{ description }}
+      {% endset %}
+
       {{
         _navTab.NavTab({
           id: 'product-card-tab-view',
           tabs: [
-            { id: 'tab-attribute', title: tab_attribute, content: tabAttributeContent },
-            { id: 'tab-description', title: tab_description, content: description },
+            { id: 'tab-description', title: tab_description, content: tabDescriptionContent },
             { id: 'tab-review', title: tab_review, content: _review.ReviewsContainer() },
+            { id: 'tab-shipping', title: tab_shipping, content: null },
           ]
         })
       }}

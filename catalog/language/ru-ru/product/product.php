@@ -43,6 +43,7 @@ $_['entry_bad']                = 'Плохо';
 $_['tab_description']          = 'Описание';
 $_['tab_attribute']            = 'Характеристики';
 $_['tab_review']               = 'Отзывов (%s)';
+$_['tab_shipping']             = 'Доставка';
 
 // Error
 $_['error_name']               = 'Имя должно быть от 3 до 25 символов!';

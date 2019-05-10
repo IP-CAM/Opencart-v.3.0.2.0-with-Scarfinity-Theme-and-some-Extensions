@@ -20,6 +20,9 @@ class ControllerCommonHome extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['heading_title'] = $this->config->get('config_meta_title');
 
+		$data['isMobile'] = constant('isMobile');
+		$data['isTablet'] = constant('isTablet');
+
 		$this->response->setOutput($this->load->view('common/home', $data));
 	}
 }

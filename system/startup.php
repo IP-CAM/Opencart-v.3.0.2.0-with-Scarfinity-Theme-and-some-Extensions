@@ -100,6 +100,12 @@ require_once(modification(DIR_SYSTEM . 'engine/proxy.php'));
 require_once(DIR_SYSTEM . 'helper/general.php');
 require_once(DIR_SYSTEM . 'helper/utf8.php');
 
+// Mobile detect
+require_once(DIR_SYSTEM . 'library/extensions/Mobile_Detect.php');
+$detect = new Mobile_Detect();
+define('isMobile', $detect->isMobile(), false);
+define('isTablet', $detect->isTablet(), false);
+
 function start($application_config) {
 	require_once(DIR_SYSTEM . 'framework.php');	
 }

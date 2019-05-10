@@ -2,17 +2,13 @@
 	{% import 'scarfinity/template/components/rating-box.twig' as _ratingBox %}
 
     <div class="review">
-        <div class="review__left-side">
+        {# <div class="review__left-side">
             <div class="review__left-side__rating">
             	{{ _ratingBax.RatingBox(props.review.rating) }}   	
             </div>
             <div class="review__left-side__avatar">
-                {# {
-                    props.userInfo &&
-                    <img src={props.userInfo.avatar} />
-                } #}
             </div>
-        </div>
+        </div> #}
         <div class="review__right-side">
             <div class="review__right-side__top-row">
                 <span class="review__right-side__top-row__user-name">
@@ -22,17 +18,17 @@
                 <div class="review__right-side__top-row__rating">
                     {{ _ratingBox.RatingBox(props.review.rating) }}
                 </div>
-                <span class="review__right-side__top-row__date">{{ review.date_added }}</span>
+                <span class="review__right-side__top-row__date">{{ props.review.date_added }}</span>
             </div>
             <div class="review__right-side__content">
                 <p class="review__right-side__content__text">
                     {{ props.review.text }}
                 </p>
             </div>
-            <div class="review__right-side__bottom-row">
+            {# <div class="review__right-side__bottom-row">
                 <span class="review__right-side__bottom-row__question" 
                       data-normal="Был ли этот отзыв полезен Вам?"
-                      data-small="Полезный отзыв?"></span>
+                      data-small="Полезный отзыв?"></span> #}
                 {# <div
                     onClick={() => {props.onClick(true)}}
                     class="review__right-side__bottom-row__answer review__right-side__bottom-row__answer--yes"
@@ -41,7 +37,7 @@
                     onClick={() => {props.onClick(false)}}
                     class="review__right-side__bottom-row__answer review__right-side__bottom-row__answer--no"
                     data-value={`(${0})`}>нет</div> #}
-            </div>
+            {# </div> #}
         </div>
     </div>
 {% endmacro %}
