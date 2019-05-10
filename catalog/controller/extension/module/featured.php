@@ -30,14 +30,14 @@ class ControllerExtensionModuleFeatured extends Controller {
 
 					$images = array();
 
-					if($result['images']) {
-						foreach ($result['images'] as $image) {
-							$images[] = array(
-								'popup' => $this->model_tool_image->resize($image['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_height')),
-								'thumb' => $this->model_tool_image->resize($image['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_height'))
-							);
-						}
-					}
+					// if($product_info['images']) {
+					// 	foreach ($product_info['images'] as $image) {
+					// 		$images[] = array(
+					// 			'popup' => $this->model_tool_image->resize($image['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_height')),
+					// 			'thumb' => $this->model_tool_image->resize($image['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_height'))
+					// 		);
+					// 	}
+					// }
 
 					if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 						$price = $this->currency->format($this->tax->calculate($product_info['price_origin'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
@@ -65,7 +65,7 @@ class ControllerExtensionModuleFeatured extends Controller {
 
 					$props = array();
 
-					foreach(explode(',', $result['location']) as $prop) {
+					foreach(explode(',', $product_info['location']) as $prop) {
 						$values = explode(':', $prop);
 						if(isset($values[1]) && isset($values[0])) {
 							$props[$values[0]] = $values[1]; 
@@ -85,9 +85,9 @@ class ControllerExtensionModuleFeatured extends Controller {
 						'href'        => $this->url->link('product/product', 'product_id=' . $product_info['product_id']),
 						'props'		  => $props,
 						'date'		  => array(
-							'added'	  	=> $result['date_added'],
-							'modified'	=> $result['date_modified'],
-							'available'	=> $result['date_available'],
+							'added'	  	=> $product_info['date_added'],
+							'modified'	=> $product_info['date_modified'],
+							'available'	=> $product_info['date_available'],
 						)
 					);
 				}
@@ -95,7 +95,7 @@ class ControllerExtensionModuleFeatured extends Controller {
 		}
 
 		if ($data['products']) {
-			return $this->load->view('extension/module/featured', $data);
+			return $this->load->view('extension/module/special_offer', $data);
 		}
 	}
 }

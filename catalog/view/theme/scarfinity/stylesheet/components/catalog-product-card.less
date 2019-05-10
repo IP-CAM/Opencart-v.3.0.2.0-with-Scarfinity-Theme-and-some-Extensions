@@ -32,7 +32,8 @@
 	box-sizing: border-box;
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px;
 	border-radius: 2px;
-	background: white;
+	background: rgba(255, 255, 255, 0.80);
+	// background: white;
 
 	.m-xs({
 		box-shadow: none;
@@ -163,6 +164,7 @@
 	}
 
 	&__navigation {
+		padding: 6px 14px 6px 14px;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -170,6 +172,7 @@
 		font-weight: 500;
 		position: relative;
 		color: #303030;
+		background: #ffffff;
 
 		.m-xs({
 			& .sIcon {
@@ -214,7 +217,7 @@
 	}
 
 	&__description {
-		padding: 5px 16px 10px 16px;
+		padding: 8px 14px 10px 14px;
 		font-size: 12px;
 
 		.m-xs({
@@ -324,16 +327,6 @@
 	max-width: 100%;
 	flex: 1 1 100%;
 
-	&--catalog {
-		padding: 0px 7px;
-		margin-bottom: 14px;
-
-		.m-xs({
-			padding: 0px 0px;
-			margin-bottom: 5px;
-		});
-	}
-
 	.m-xs({
 		max-width: 100%;
 	});
@@ -347,10 +340,36 @@
 	});
 
 	.m-lg({
-		max-width: 33.3333333%;
+		max-width: 20%;
 	});
 
 	.m-xl({
-		max-width: 33.3333333333%;
-	})
+		max-width: 20%;
+	});
+
+	&--catalog,
+	&--bestseller,
+	&--latest {
+		padding: 0px 7px;
+		margin-bottom: 14px;
+	}
+
+	&--catalog {
+		.m-xs({
+			padding: 0px 0px;
+			margin-bottom: 5px;
+		});
+
+		.m-md({
+			max-width: 33.333333%;
+		});
+	
+		.m-lg({
+			max-width: 25%;
+		});
+	
+		.m-xl({
+			max-width: 25%;
+		});
+	}
 }

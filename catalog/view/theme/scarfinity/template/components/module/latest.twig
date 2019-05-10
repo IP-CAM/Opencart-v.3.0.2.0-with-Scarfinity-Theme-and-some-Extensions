@@ -4,7 +4,7 @@
     <h3>{{ props.heading_title }}</h3>
     <div class="row display-flex">
         {% for product in props.products %}
-            <div class="product-card-catalog-container product-card-catalog-container--catalog">
+            <div class="product-card-catalog-container product-card-catalog-container--bestseller">
                 {{ _categoryProductCard.categoryProductCard(product, { buttonLabel: props.button_cart }) }}
             </div>
         {% endfor %}
@@ -13,6 +13,6 @@
 
 {% macro Latest(props) %}
     {% import _self as _ %}
-    {% if props.name|lower == 'list' %} {{ _.LatestHome(props.data) }}
+    {% if props.name|lower == 'home' %} {{ _.LatestHome(props.data) }}
     {% endif %}
 {% endmacro %}

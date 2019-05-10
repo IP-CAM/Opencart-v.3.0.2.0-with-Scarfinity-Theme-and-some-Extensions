@@ -1,0 +1,9 @@
+{% if products and products|length %}
+    {% import 'scarfinity/template/components/utility/special-offer.twig' as _specialOffer %}
+
+    {{
+        _specialOffer.SpecialOffer({
+            products: products
+        })
+    }}
+{% endif %}

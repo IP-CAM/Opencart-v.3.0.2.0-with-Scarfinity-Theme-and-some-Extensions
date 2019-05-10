@@ -5,10 +5,22 @@
 {{ header }}
 {{ _breadcrumbs.Breadcrumbs() }}
 <div id="common-home" class="container">
-  <div class="row s-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="top-container">
+        <div class="top-container__banner">
+          {{ content_top }}
+        </div>
+        <div class="top-container__right-offer">
+          {{ column_right.modules['recomended-home'] }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div calss="row">
     {# {{ column_left }} #}
-    <div id="content" class="s-content__middle col-sm-no-padding">
-      {{ content_top }}
+    <div id="content" class="col-sm-no-padding">
       <h1>{{ heading_title }}</h1>
       {# <div class="utp-banners">
         {{ _uniqueOffer.UniqueOfferSmall({}) }}
@@ -17,6 +29,6 @@
       </div> #}
     {{ content_bottom }}
     </div>
-    {{ column_right }}</div>
+    </div>
 </div>
 {{ footer }}

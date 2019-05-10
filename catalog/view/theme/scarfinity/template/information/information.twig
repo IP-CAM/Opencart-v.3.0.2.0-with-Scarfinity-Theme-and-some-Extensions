@@ -34,6 +34,7 @@
 
 
 {% import 'scarfinity/template/components/utility/select-box.twig' as _selectBox %}
+{% import 'scarfinity/template/components/utility/special-offer.twig' as _specialOffer %}
 {% import 'scarfinity/template/components/utility/color-picker.twig' as _colorPicker %}
 {% import 'scarfinity/template/components/utility/input-search.twig' as _inputSearch %}
 {% import 'scarfinity/template/components/utility/_icons.twig' as _icons  %}
@@ -57,6 +58,10 @@
     <div id="content" class="s-content__middle">
       {{ content_top }}
       <h1>{{ heading_title }}</h1>
+
+      <div style="width: 180px">
+        {{ _specialOffer.SpecialOffer({}) }}
+      </div>
 
       <div class="__info-trash">
         <div>1</div>

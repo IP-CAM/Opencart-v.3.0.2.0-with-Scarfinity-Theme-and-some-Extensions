@@ -49,6 +49,7 @@ class ControllerCommonColumnRight extends Controller {
 			$part = explode('.', $module['code']);
 
 			if (isset($part[0]) && $this->config->get('module_' . $part[0] . '_status')) {
+				echo 'extension/module/' . $part[0];
 				$module_data = $this->load->controller('extension/module/' . $part[0]);
 
 				if ($module_data) {

@@ -3,6 +3,13 @@ class ControllerCommonMenu extends Controller {
 	public function index() {
 		$this->load->language('common/menu');
 
+		$data['isMobile'] = constant('isMobile');
+		$data['isTablet'] = constant('isTablet');
+
+		if(!isset($this->request->get['route']) || $this->request->get['route'] == 'common/home') {
+			$data['isHome'] = true;
+		}
+
 		// Menu
 		$this->load->model('catalog/category');
 

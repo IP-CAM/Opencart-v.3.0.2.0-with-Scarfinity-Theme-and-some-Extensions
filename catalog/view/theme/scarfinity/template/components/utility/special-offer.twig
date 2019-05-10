@@ -1,0 +1,73 @@
+{% macro SpecialOffer(props) %}
+    {% set product = random(props.products) %}
+    {% set id = "__special-offer_#{props.id|default(random())}" %}
+    {% set date = "2019-05-11" %}
+
+    <script>
+        (function() {
+            var toDate = Date.parse('{{date}}');
+
+            setInterval(function() {
+                var remainig = toDate - Date.now();
+                var ms = remainig % 1000;
+                remainig = (remainig - ms) / 1000;
+                var seconds = remainig % 60;
+                remainig = (remainig - seconds) / 60;
+                var minutes = remainig % 60;
+                var hours = (remainig - minutes) / 60;
+                var timeString = `${`0${hours}`.slice(-2)}:${`0${minutes}`.slice(-2)}:${`0${seconds}`.slice(-2)}`;
+
+                console.log(timeString);
+            }(), 60000);
+        }());
+    </script>
+
+    <div class="special-offer">
+        <div class="special-offer__content">
+            <div class="special-offer-timer">
+                {{"Истекает через:"}}
+                <span class="special-offer-timer__time">{{"12:42:03"}}</span>
+            </div>
+            <div class="special-offer-image">
+                <img class="img-responsive" src="{{product.image}}" alt="{{product.name}}" name="{{product.name}}"/>
+            </div>
+            <div class="special-offer-body">
+                <div class="special-offer-timer special-offer-timer--horisontal">
+                    {"Истекает через:"}
+                    <span class="special-offer-timer__time">{timeString}</span>
+                </div>
+                <span class="special-offer-title">{{product.name}}</span>
+                <div class="special-offer-price">
+                    <div class="special-offer-price__info">
+                        <span class="special-offer-price__info__header">{{"Цена"}}</span>
+                        <span class="special-offer-price__info__content">
+                            <Currency
+                                original={3294}
+                                fontSize={15}
+                                glyphFull/>
+                        </span>
+                    </div>
+                    <div class="special-offer-price__price">
+                        <Currency
+                            original={899}
+                            fontSize={20}
+                            fontWeight={500}
+                            glyphFull/>
+                    </div>
+                    <div class="special-offer-price__info">
+                        <span class="special-offer-price__info__header">{{"Экономия"}}</span>
+                        <span class="special-offer-price__info__content">
+                            <Currency
+                                original={3294 - 899}
+                                fontSize={15}
+                                glyphFull/>
+                        </span>
+                    </div>
+                </div>
+                <div class="special-offer-button">
+                    <GrayButton title={"В корзину"} />
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

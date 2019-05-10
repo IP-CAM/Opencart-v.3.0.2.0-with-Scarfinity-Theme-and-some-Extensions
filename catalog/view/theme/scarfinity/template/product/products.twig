@@ -20,10 +20,8 @@
                 <span>Показаны все товары в данной категории</span> 
             {% endif %}
         </div>
-        {% if next_href %}
-            <div class="catalog-footer__pagination">
-                {{_pagination.Pagination(pagination_data)}}
-            </div>
-        {% endif %}
+        <div class="catalog-footer__pagination">
+            {{_pagination.Pagination(pagination_data)}}
+        </div>
     </div>
 </div>

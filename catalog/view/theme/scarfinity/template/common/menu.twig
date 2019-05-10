@@ -77,39 +77,45 @@
 {% import 'scarfinity/template/components/utility/_icons.twig' as _icons %}
 
 {# Mobile #}
-<div class="mobile-nav" id="mobile-main-menu">
-  <div class="mobile-nav__container">
-    {# Middle menu #}
-    <div class="mobile-nav-middle-menu">
-      <ul class="mobile-nav-ul">
-        {% for category in categories %}
-          <li>
-            {% if category.children %}
-              <span><a href="{{ category.href }}">{{ category.name }}</a><span class="sIcon"><i class="fa fa-angle-down"></i></span></span>
-              <ul class="mobile-nav-ul">
-                {% for child in category.children %}
-                  <li><span><a href="{{ child.href }}">{{ child.name }}</a></span></li>
-                {% endfor %}
-              </ul>
-            {% else %}
-              <span><a href="{{ category.href }}">{{category.name}}</a></span>
-            {% endif %}
-          </li>
-          
-        {% endfor %}
-      </ul>
+{% if isMobile %}
+  <div class="mobile-nav" id="mobile-main-menu">
+    <div class="mobile-nav__container">
+      {# Middle menu #}
+      <div class="mobile-nav-middle-menu">
+        <ul class="mobile-nav-ul">
+          {% for category in categories %}
+            <li>
+              {% if category.children %}
+                <span><a href="{{ category.href }}">{{ category.name }}</a><span class="sIcon"><i class="fa fa-angle-down"></i></span></span>
+                <ul class="mobile-nav-ul">
+                  {% for child in category.children %}
+                    <li><span><a href="{{ child.href }}">{{ child.name }}</a></span></li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <span><a href="{{ category.href }}">{{category.name}}</a></span>
+              {% endif %}
+            </li>
+            
+          {% endfor %}
+        </ul>
+      </div>
+      {# Middle menu end #}
     </div>
-    {# Middle menu end #}
-  </div>
-</div>  
-{# Mobile end #}
+  </div>  
+{% else %}
+  {# Desktop menu #}
+  <div class="main-menu" id="main-menu">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
 
-<div class="main-menu" id="main-menu">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-
-          <div class="main-menu-catalog-button">
+          {# Все меню лежит внутри кнопки #}
+          {% if isHome %}
+            <div class="main-menu-catalog-button main-menu-catalog-button--desktop-open">
+          {% else %}
+            <div class="main-menu-catalog-button">
+          {% endif %}
             <i class="fa fa-th"></i><span>Каталог товаров</span>
             <div class="main-menu-catalog-ul__container">
               <div class="main-menu-catalog-ul">
@@ -153,6 +159,52 @@
               </div>
             </div>
           </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% if isMobile %}
+  <script type="text/javascript">
+    var mobileMenu = {
+      isOpen: false,
+      menu: document.getElementById('mobile-main-menu'),
+      open: function() {
+        this.isOpen = true;
+
+        $('html').addClass('mobile-nav-open');
+        $(this.menu).addClass('open');
+      },
+      close: function() {
+        this.isOpen = false;
+
+        $('html').removeClass('mobile-nav-open');
+        $(this.menu).removeClass('open');
+      },
+      toggle: function() {
+        this.isOpen ? this.close() : this.open();
+      }
+    }
+  </script>
+{% else %}
+  <script type="text/javascript">
+    $('.main-menu-ul').mouseenter(function() {
+      $(this).addClass('enter');
+      $(this).delay(200).queue(function(next) {
+        if($(this).hasClass('enter')) {
+          $(this).addClass('active');
+        }
+        next();
+      })
+    }).mouseleave(function() {
+      $(this).removeClass('enter').removeClass('active');
+    });
+  </script>
+{% endif %}
+
+
         {# <div class="main-menu-ul"> #}
 {#           <div class="main-menu-ul__container">
             <div class="main-menu-ul__container__nav-ul">
@@ -239,47 +291,6 @@
           {% endfor %} #}
 
         {# </div> #}
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<script type="text/javascript">
-  $('.main-menu-ul').mouseenter(function() {
-    $(this).addClass('enter');
-    $(this).delay(200).queue(function(next) {
-      if($(this).hasClass('enter')) {
-        $(this).addClass('active');
-      }
-      next();
-    })
-  }).mouseleave(function() {
-    $(this).removeClass('enter').removeClass('active');
-  });
-</script>
-
-<script type="text/javascript">
-  var mobileMenu = {
-    isOpen: false,
-    menu: document.getElementById('mobile-main-menu'),
-    open: function() {
-      this.isOpen = true;
-
-      $('html').addClass('mobile-nav-open');
-      $(this.menu).addClass('open');
-    },
-    close: function() {
-      this.isOpen = false;
-
-      $('html').removeClass('mobile-nav-open');
-      $(this.menu).removeClass('open');
-    },
-    toggle: function() {
-      this.isOpen ? this.close() : this.open();
-    }
-  }
-</script>
 
 
 

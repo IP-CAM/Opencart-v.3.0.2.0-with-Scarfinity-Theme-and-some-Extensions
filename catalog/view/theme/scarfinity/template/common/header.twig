@@ -47,279 +47,288 @@
 {{ analytic }}
 {% endfor %}
 </head>
+
+
 <body>
+  {% if (isMobile or isTablet) %}
 
-  {# Меню для мобильной навигации #}
-  <nav id="mobile-left-menu" class="slideout-menu">
-    {# Left menu #}
-    <div class="mobile-nav-left-menu">
-      <div class="mobile-nav-left-menu__title">SCARFINITY</div>
-      <ul class="mobile-nav-ul">
-        <li class="link"><span><a href="{{about_us}}">О нас</a></span></li>
-        <li class="link"><span><a href="">Доставка и оплата</a></span></li>
-        <li class="link"><span><a href="">Как сделать заказ?</a></span></li>
-        <li class="link"><span><a href="">О нас</a></span></li>
-        <li class="link"><span><a href="">Контакты</a></span></li>
-        <li class="link"><span><a href="{{ account }}">{{ text_account }}</a></span></li>
-        <li class="link"><span><a href="">{{ telephone }}</a></span></li>
-      </ul>
-      <div class="mobile-nav-left-menu__footer">{{ powered }}</div>
-    </div>
-    {# Left menu end #}
-  </nav>
-  {# End mobile navigation menu content #}
-
-  <nav id="mobile-cart" class="slideout-menu slideout-menu-right"></nav>
-
-  {# Мобильный хедер, остается приклеенным в верху страницы #}
-  <div class="mobile-nav-header" id="mobile-nav-header">
-    <div class="mobile-nav-header__hamburger">
-      <div class="mobile__hamburger-button" >
-        <span></span>
-        <span></span>
-        <span></span>
+    {# Меню для мобильной навигации #}
+    <nav id="mobile-left-menu" class="slideout-menu">
+      {# Left menu #}
+      <div class="mobile-nav-left-menu">
+        <div class="mobile-nav-left-menu__title">SCARFINITY</div>
+        <ul class="mobile-nav-ul">
+          <li class="link"><span><a href="{{about_us}}">О нас</a></span></li>
+          <li class="link"><span><a href="">Доставка и оплата</a></span></li>
+          <li class="link"><span><a href="">Как сделать заказ?</a></span></li>
+          <li class="link"><span><a href="">О нас</a></span></li>
+          <li class="link"><span><a href="">Контакты</a></span></li>
+          <li class="link"><span><a href="{{ account }}">{{ text_account }}</a></span></li>
+          <li class="link"><span><a href="">{{ telephone }}</a></span></li>
+        </ul>
+        <div class="mobile-nav-left-menu__footer">{{ powered }}</div>
       </div>
-    </div>
-    <div class="mobile-nav-header__middle" id="mobile-nav-middle">
-      <span>Каталог</span>
-      <span class="sIcon"><i class="fa fa-angle-down"></i></span>
-    </div>
-    <div class="mobile-nav-header__cart" id="mobile-nav-header__cart">
-      <div class="mobile-nav-cart-button">
-        <div class="mobile-nav-cart-button__icon"></div>
-        <span class="mobile-nav-cart-button__bage">0</span>
-      </div>
-    </div>
-  </div>
-  {# Основная панель приложения #}
-  {# В мобильной версии сдвигается вправо #}
-  <header>
-    <nav class="info-menu">
-      <div class="container">
-          <div class="row">
-          <div class="col-lg-12 info-menu__container">
-              <ul class="info-menu-navigation">
-              <li><a href="{{ contact }}"><i class="fa fa-phone"></i></a> <span class="hidden-xs hidden-sm">{{ telephone }}</span></li>
-              <li><a href="{{ wishlist }}" id="wishlist-total" title="{{ text_wishlist }}"><i class="fa fa-heart"></i> <span class="hidden-xs hidden-sm">{{ text_wishlist }}</span></a></li>
-              <li><a href="{{ shopping_cart }}" title="{{ text_shopping_cart }}"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm">{{ text_shopping_cart }}</span></a></li>
-              <li><a href="{{ checkout }}" title="{{ text_checkout }}"><i class="fa fa-share"></i> <span class="hidden-xs hidden-sm">{{ text_checkout }}</span></a></li>
-              </ul>
-              <div class="dropdown info-menu-navigation__li" style="margin: 0;">
-                <a href="{{ account }}" title="{{ text_account }}" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-user"></i>
-                  <span class="hidden-xs hidden-sm">{{ text_account }}</span>
-                  <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-right">
-                  {% if logged %}
-                    <li><a href="{{ account }}">{{ text_account }}</a></li>
-                    <li><a href="{{ order }}">{{ text_order }}</a></li>
-                    <li><a href="{{ transaction }}">{{ text_transaction }}</a></li>
-                    <li><a href="{{ download }}">{{ text_download }}</a></li>
-                    <li><a href="{{ logout }}">{{ text_logout }}</a></li>
-                  {% else %}
-                    <li><a href="{{ register }}">{{ text_register }}</a></li>
-                    <li><a href="{{ login }}">{{ text_login }}</a></li>
-                  {% endif %}
-                </ul>
-              </div>
-          </div>
-          </div>
-      </div>
+      {# Left menu end #}
     </nav>
-    <div class="top-menu">
-      <div class="container">
-        <div class="top-menu__container">
-          <div class="top-menu__container__logo">
-            <div id="logo">
-              {% if logo %}
-                <a href="{{ home }}">
-                  <img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" />
-                </a>
-              {% else %}
-                {% set name = 'scarfinity' %}
-                <a href="{{ home }}">{{ name }}</a>
-              {% endif %}
+    {# End mobile navigation menu content #}
+
+    <nav id="mobile-cart" class="slideout-menu slideout-menu-right"></nav>
+
+    {# Мобильный хедер, остается приклеенным в верху страницы #}
+    <div class="mobile-nav-header" id="mobile-nav-header">
+      <div class="mobile-nav-header__hamburger">
+        <div class="mobile__hamburger-button" >
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div class="mobile-nav-header__middle" id="mobile-nav-middle">
+        <span>Каталог</span>
+        <span class="sIcon"><i class="fa fa-angle-down"></i></span>
+      </div>
+      <div class="mobile-nav-header__cart" id="mobile-nav-header__cart">
+        <div class="mobile-nav-cart-button">
+          <div class="mobile-nav-cart-button__icon"></div>
+          <span class="mobile-nav-cart-button__bage">0</span>
+        </div>
+      </div>
+    </div>
+
+    {# Основная панель приложения #}
+    {# В мобильной версии сдвигается вправо #}
+    <div id="mobile-filters-container" class="mobile-filters-container"></div>
+    <main id="panel" data-slideout-ignore>
+  {% else %}
+    <header>
+      <nav class="info-menu">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12 info-menu__container">
+                <ul class="info-menu-navigation">
+                <li><a href="{{ contact }}"><i class="fa fa-phone"></i></a> <span class="hidden-xs hidden-sm">{{ telephone }}</span></li>
+                <li><a href="{{ wishlist }}" id="wishlist-total" title="{{ text_wishlist }}"><i class="fa fa-heart"></i> <span class="hidden-xs hidden-sm">{{ text_wishlist }}</span></a></li>
+                <li><a href="{{ shopping_cart }}" title="{{ text_shopping_cart }}"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm">{{ text_shopping_cart }}</span></a></li>
+                <li><a href="{{ checkout }}" title="{{ text_checkout }}"><i class="fa fa-share"></i> <span class="hidden-xs hidden-sm">{{ text_checkout }}</span></a></li>
+                </ul>
+                <div class="dropdown info-menu-navigation__li" style="margin: 0;">
+                  <a href="{{ account }}" title="{{ text_account }}" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-user"></i>
+                    <span class="hidden-xs hidden-sm">{{ text_account }}</span>
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    {% if logged %}
+                      <li><a href="{{ account }}">{{ text_account }}</a></li>
+                      <li><a href="{{ order }}">{{ text_order }}</a></li>
+                      <li><a href="{{ transaction }}">{{ text_transaction }}</a></li>
+                      <li><a href="{{ download }}">{{ text_download }}</a></li>
+                      <li><a href="{{ logout }}">{{ text_logout }}</a></li>
+                    {% else %}
+                      <li><a href="{{ register }}">{{ text_register }}</a></li>
+                      <li><a href="{{ login }}">{{ text_login }}</a></li>
+                    {% endif %}
+                  </ul>
+                </div>
             </div>
           </div>
-          <div class="top-menu__container__contacts">
-            <div class="contact-us">
-              <div class="contact-us__line">
-                <span class="contact-us__line__title">Новосибирск: </span>
-                <span class="contact-us__line__value">{{ telephone }}</span></div>
-              <div class="contact-us__line">
-                <span class="contact-us__line__title">Регионы: </span> 
-                <span class="contact-us__line__value">{{ telephone }}</span></div>
-              <div class="contact-us__phone">Часы работы: с 08:00 до 18:00</div>
+        </div>
+      </nav>
+      <div class="top-menu">
+        <div class="container">
+          <div class="top-menu__container">
+            <div class="top-menu__container__logo">
+              <div id="logo">
+                {% if logo %}
+                  <a href="{{ home }}">
+                    <img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" />
+                  </a>
+                {% else %}
+                  {% set name = 'scarfinity' %}
+                  <a href="{{ home }}">{{ name }}</a>
+                {% endif %}
+              </div>
             </div>
-          </div>
-          <div class="top-menu__container__search">
-            {{ search }}
-          </div>
-          <div class="top-menu__container__cart">
-            <div class="top-menu__wish-and-compare">
-              {% set icon %}{{_icons.Heart({size: 32})}}{% endset %}
-              {{_iconButton.iconButton({href: wishlist, icon: icon, bage: {value: wishlist_count}})}}
-              {% set icon %}{{_icons.BarChart({size: 32})}}{% endset %}
-              {{_iconButton.iconButton({href: compare, icon: icon, bage: {value: compare_count}})}}
+            <div class="top-menu__container__contacts">
+              <div class="contact-us">
+                <div class="contact-us__line">
+                  <span class="contact-us__line__title">Новосибирск: </span>
+                  <span class="contact-us__line__value">{{ telephone }}</span></div>
+                <div class="contact-us__line">
+                  <span class="contact-us__line__title">Регионы: </span> 
+                  <span class="contact-us__line__value">{{ telephone }}</span></div>
+                <div class="contact-us__phone">Часы работы: с 08:00 до 18:00</div>
+              </div>
             </div>
-            <div id="cart" class="navigation-cart-block">
-              {{ cart }}
+            <div class="top-menu__container__search">
+              {{ search }}
+            </div>
+            <div class="top-menu__container__cart">
+              <div class="top-menu__wish-and-compare">
+                {% set icon %}{{_icons.Heart({size: 32})}}{% endset %}
+                {{_iconButton.iconButton({href: wishlist, icon: icon, bage: {value: wishlist_count}})}}
+                {% set icon %}{{_icons.BarChart({size: 32})}}{% endset %}
+                {{_iconButton.iconButton({href: compare, icon: icon, bage: {value: compare_count}})}}
+              </div>
+              <div id="cart" class="navigation-cart-block">
+                {{ cart }}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </header>
-  {{ menu }}
-  <div id="mobile-filters-container" class="mobile-filters-container"></div>
-  <main id="panel" data-slideout-ignore>
+    </header>
+    {{ menu }}
+    <main>
+  {% endif %}
 
 
-{# Scripts #}
-<script type="text/javascript">
-    var tolerance = 70;
+{% if isMobile or isTablet %}
+  {# Scripts #}
+  <script type="text/javascript">
+      var tolerance = 70;
 
-    var slideout = new Slideout({
-      'panel': document.getElementById('panel'),
-      'menu': document.getElementById('mobile-left-menu'),
-      'padding': 256,
-      'tolerance': tolerance
-    });
+      var slideout = new Slideout({
+        'panel': document.getElementById('panel'),
+        'menu': document.getElementById('mobile-left-menu'),
+        'padding': 256,
+        'tolerance': tolerance
+      });
 
-    var fixed = document.getElementById('mobile-nav-header');
-    var mmm = document.getElementById('mobile-main-menu');
-    var mfc = document.getElementById('mobile-filters-container');
+      var fixed = document.getElementById('mobile-nav-header');
+      var mmm = document.getElementById('mobile-main-menu');
+      var mfc = document.getElementById('mobile-filters-container');
 
-    slideout.on('translatestart', function() {
-      if(!slideoutCart.isOpen()) {
+      slideout.on('translatestart', function() {
+        if(!slideoutCart.isOpen()) {
+          $('#mobile-left-menu').addClass('active');
+        }
+      });
+
+      slideout.on('translate', function(translated) {
+        fixed.style.transform = 'translateX(' + translated + 'px)';
+        mmm.style.transform = 'translateX(' + translated + 'px)';
+        mfc.style.transform = 'translateX(' + translated + 'px)';
+      });
+
+      slideout.on('beforeopen', function () {
+        fixed.style.transition = 'transform 300ms ease';
+        fixed.style.transform = 'translateX(256px)';
+        mmm.style.transition = 'transform 300ms ease';
+        mmm.style.transform = 'translateX(256px)';
+        mfc.style.transition = 'transform 300ms ease';
+        mfc.style.transform = 'translateX(256px)';
         $('#mobile-left-menu').addClass('active');
-      }
-    });
+      });
 
-    slideout.on('translate', function(translated) {
-      fixed.style.transform = 'translateX(' + translated + 'px)';
-      mmm.style.transform = 'translateX(' + translated + 'px)';
-      mfc.style.transform = 'translateX(' + translated + 'px)';
-    });
+      slideout.on('beforeclose', function () {
+        fixed.style.transition = 'transform 300ms ease';
+        fixed.style.transform = 'translateX(0px)';
+        mmm.style.transition = 'transform 300ms ease';
+        mmm.style.transform = 'translateX(0px)';
+        mfc.style.transition = 'transform 300ms ease';
+        mfc.style.transform = 'translateX(0px)';
+      });
 
-    slideout.on('beforeopen', function () {
-      fixed.style.transition = 'transform 300ms ease';
-      fixed.style.transform = 'translateX(256px)';
-      mmm.style.transition = 'transform 300ms ease';
-      mmm.style.transform = 'translateX(256px)';
-      mfc.style.transition = 'transform 300ms ease';
-      mfc.style.transform = 'translateX(256px)';
-      $('#mobile-left-menu').addClass('active');
-    });
+      slideout.on('open', function () {
+        fixed.style.transition = '';
+        mmm.style.transition = '';
+        mfc.style.transition = '';
+      });
 
-    slideout.on('beforeclose', function () {
-      fixed.style.transition = 'transform 300ms ease';
-      fixed.style.transform = 'translateX(0px)';
-      mmm.style.transition = 'transform 300ms ease';
-      mmm.style.transform = 'translateX(0px)';
-      mfc.style.transition = 'transform 300ms ease';
-      mfc.style.transform = 'translateX(0px)';
-    });
+      slideout.on('close', function () {
+        fixed.style.transition = '';
+        mmm.style.transition = '';
+        mfc.style.transition = '';
+        $('#mobile-left-menu').removeClass('active');
+      });
 
-    slideout.on('open', function () {
-      fixed.style.transition = '';
-      mmm.style.transition = '';
-      mfc.style.transition = '';
-    });
+      var slideoutCart = new Slideout({
+        'panel': document.getElementById('panel'),
+        'menu': document.getElementById('mobile-cart'),
+        'padding': 256,
+        'tolerance': tolerance,
+        'side': 'right'
+      });
 
-    slideout.on('close', function () {
-      fixed.style.transition = '';
-      mmm.style.transition = '';
-      mfc.style.transition = '';
-      $('#mobile-left-menu').removeClass('active');
-    });
+      slideoutCart.on('translatestart', function() {
+        if(!slideoutCart.isOpen()) {
+          $('#mobile-cart').addClass('active');
+        }
+      });
 
-    var slideoutCart = new Slideout({
-      'panel': document.getElementById('panel'),
-      'menu': document.getElementById('mobile-cart'),
-      'padding': 256,
-      'tolerance': tolerance,
-      'side': 'right'
-    });
+      slideoutCart.on('translate', function(translated) {
+        fixed.style.transform = 'translateX(' + translated + 'px)';
+        mmm.style.transform = 'translateX(' + translated + 'px)';
+        mfc.style.transform = 'translateX(' + translated + 'px)';
+      });
 
-    slideoutCart.on('translatestart', function() {
-      if(!slideoutCart.isOpen()) {
+      slideoutCart.on('beforeopen', function () {
+        fixed.style.transition = 'transform 300ms ease';
+        fixed.style.transform = 'translateX(-256px)';
+        mmm.style.transition = 'transform 300ms ease';
+        mmm.style.transform = 'translateX(-256px)';
+        mfc.style.transition = 'transform 300ms ease';
+        mfc.style.transform = 'translateX(-256px)';
         $('#mobile-cart').addClass('active');
+      });
+
+      slideoutCart.on('beforeclose', function () {
+        fixed.style.transition = 'transform 300ms ease';
+        fixed.style.transform = 'translateX(0px)';
+        mmm.style.transition = 'transform 300ms ease';
+        mmm.style.transform = 'translateX(0px)';
+        mfc.style.transition = 'transform 300ms ease';
+        mfc.style.transform = 'translateX(0px)';
+      });
+
+      slideoutCart.on('open', function () {
+        fixed.style.transition = '';
+        mmm.style.transition = '';
+        mfc.style.transition = '';
+      });
+
+      slideoutCart.on('close', function () {
+        fixed.style.transition = '';
+        mmm.style.transition = '';
+        mfc.style.transition = '';
+        $('#mobile-cart').removeClass('active');
+      });
+  </script>
+
+  <script type="text/javascript">
+    $('.mobile-nav-header__cart').on('click', function() {
+      slideoutCart.toggle();
+    });
+
+    $('.mobile__hamburger-button').on('click', function() {
+      slideout.toggle();
+    });
+
+    $('#mobile-nav-middle').on('click', function() {
+      mobileMenu.toggle();
+      $(this).toggleClass('active');
+    });
+  </script>
+
+  <script type="text/javascript">
+    $('.mobile-nav-ul > li').on('click', function() {
+      var subMenu = $(this).find('.mobile-nav-ul');
+      if(subMenu) {
+        $(this).toggleClass('active');
+        subMenu.slideToggle('normal');
       }
     });
 
-    slideoutCart.on('translate', function(translated) {
-      fixed.style.transform = 'translateX(' + translated + 'px)';
-      mmm.style.transform = 'translateX(' + translated + 'px)';
-      mfc.style.transform = 'translateX(' + translated + 'px)';
+    $('.mobile-nav-ul > li.link').on('click', function() {
+      var link = $(this).find('a');
+      if(link && link.attr('href')) {
+        location = link.attr('href');
+      }
     });
-
-    slideoutCart.on('beforeopen', function () {
-      fixed.style.transition = 'transform 300ms ease';
-      fixed.style.transform = 'translateX(-256px)';
-      mmm.style.transition = 'transform 300ms ease';
-      mmm.style.transform = 'translateX(-256px)';
-      mfc.style.transition = 'transform 300ms ease';
-      mfc.style.transform = 'translateX(-256px)';
-      $('#mobile-cart').addClass('active');
-    });
-
-    slideoutCart.on('beforeclose', function () {
-      fixed.style.transition = 'transform 300ms ease';
-      fixed.style.transform = 'translateX(0px)';
-      mmm.style.transition = 'transform 300ms ease';
-      mmm.style.transform = 'translateX(0px)';
-      mfc.style.transition = 'transform 300ms ease';
-      mfc.style.transform = 'translateX(0px)';
-    });
-
-    slideoutCart.on('open', function () {
-      fixed.style.transition = '';
-      mmm.style.transition = '';
-      mfc.style.transition = '';
-    });
-
-    slideoutCart.on('close', function () {
-      fixed.style.transition = '';
-      mmm.style.transition = '';
-      mfc.style.transition = '';
-      $('#mobile-cart').removeClass('active');
-    });
-</script>
-
-<script type="text/javascript">
-  $('.mobile-nav-header__cart').on('click', function() {
-    slideoutCart.toggle();
-  });
-
-  $('.mobile__hamburger-button').on('click', function() {
-    slideout.toggle();
-  });
-
-  $('#mobile-nav-middle').on('click', function() {
-    mobileMenu.toggle();
-    $(this).toggleClass('active');
-  });
-</script>
-
-<script type="text/javascript">
-  $('.mobile-nav-ul > li').on('click', function() {
-    var subMenu = $(this).find('.mobile-nav-ul');
-    if(subMenu) {
-      $(this).toggleClass('active');
-      subMenu.slideToggle('normal');
-    }
-  });
-
-  $('.mobile-nav-ul > li.link').on('click', function() {
-    var link = $(this).find('a');
-    if(link && link.attr('href')) {
-      location = link.attr('href');
-    }
-  });
-</script>
-{# Srcripts end #}
+  </script>
+  {# Srcripts end #}
+{% endif %}
 
 
 
