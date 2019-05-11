@@ -168,10 +168,10 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		font-size: 17px;
-		font-weight: 500;
+		font-size: 15px;
+		font-weight: 400;
 		position: relative;
-		color: #303030;
+		color: #808080;
 		background: #ffffff;
 
 		.m-xs({
@@ -190,7 +190,13 @@
 			display: flex;
 
 			& .sIcon-button {
-				fill: #555;
+				fill: #303030;
+				opacity: 0.4;
+				transition: all 0.3s ease;
+
+				&:hover {
+					opacity: 1;
+				}
 			}
 		}
 
@@ -219,6 +225,15 @@
 	&__description {
 		padding: 8px 14px 10px 14px;
 		font-size: 12px;
+		position: relative;
+
+		&__rating {
+			& > .rating-box {
+				font-size: 10px !important;
+			}
+			// position: absolute;
+			// top: -5px;
+		}
 
 		.m-xs({
 			font-size: 14px;

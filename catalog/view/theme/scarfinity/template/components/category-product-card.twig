@@ -9,10 +9,11 @@
     {% import 'scarfinity/template/components/utility/_icons.twig' as _icons %}
 
     {% set swiper_id = product.product_id ~ random() %}
+    {% set swiper = true %}
 
     <div class="product-card-catalog" id="product-card-catalog[{{swiper_id}}]">
         <div class="product-card-catalog__image">
-            {% if product.images and product.images|length > 1 %}  
+            {% if product.images and product.images|length > 1 and swiper %}  
                 <div class="swiper-container" id="product-card-catalog-swiper-{{swiper_id}}">
                     <div class="swiper-wrapper">
                         {% for image in product.images %}
@@ -26,7 +27,7 @@
                     <div class="product-card-catalog__image__button product-card-catalog__image__button--next">{{ _icons.ChevronRight({ size: 14 }) }}</div>
                 </div>
             {% else %}
-                <img class="img-responsive" src="{{product.image}}" alt="{{product.name}}" name="{{product.name}}"/>
+                <img class="img-responsive" src="{{product.images[0].popup}}" alt="{{product.name}}" name="{{product.name}}"/>
                 <a class="product-card-catalog__image__link" href="{{product.href}}"></a>
             {% endif %}
 
@@ -40,13 +41,14 @@
                 {{_iconButton.iconButton({onClick: "compare.add('" ~ product.product_id ~ "')", icon: icon})}}
             </div>
             <div class="product-card-catalog__rating">
-                {{ ratingBox.ratingBox(product.rating) }}
+                {# {{ ratingBox.ratingBox(product.rating) }} #}
                 {# <span class="product-card-catalog__rating__count">({{product.reviews|default(0)}})</span> #}
             </div>
             <div id="product-card-catalog-swiper-pagination-{{swiper_id}}" class="swiper-pagination product-card-catalog__navigation__pagination"></div>
         </div>
         
         <div class="product-card-catalog__description">
+            <div class="product-card-catalog__description__rating">{{ ratingBox.ratingBox(product.rating) }}</div>
 
             {# <div class="product-card-catalog__colors"><span class="product-card-catalog__title">Доступно цветов: {{product.props['color']|default(1)}}</span></div> #}
             <div class="product-card-catalog__description__info">
