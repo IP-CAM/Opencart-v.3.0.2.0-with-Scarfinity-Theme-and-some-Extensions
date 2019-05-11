@@ -5,6 +5,9 @@ class ControllerCommonFooter extends Controller {
 
 		$this->load->model('catalog/information');
 
+		$data['isMobile'] = constant('isMobile');
+		$data['isTablet'] = constant('isTablet');
+
 		$data['informations'] = array();
 
 		foreach ($this->model_catalog_information->getInformations() as $result) {

@@ -3,6 +3,9 @@ class ControllerCommonCart extends Controller {
 	public function index() {
 		$this->load->language('common/cart');
 
+		$data['isMobile'] = constant('isMobile');
+		$data['isTablet'] = constant('isTablet');
+
 		// Totals
 		$this->load->model('setting/extension');
 

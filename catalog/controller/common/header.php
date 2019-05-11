@@ -4,6 +4,9 @@ class ControllerCommonHeader extends Controller {
 		// Analytics
 		$this->load->model('setting/extension');
 
+		$data['isMobile'] = constant('isMobile');
+		$data['isTablet'] = constant('isTablet');
+
 		$data['analytics'] = array();
 
 		$analytics = $this->model_setting_extension->getExtensions('analytics');

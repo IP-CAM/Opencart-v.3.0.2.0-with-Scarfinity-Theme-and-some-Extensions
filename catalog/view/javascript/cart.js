@@ -141,7 +141,7 @@ var sCart = {
 
 function updateCart() {
     // $('html, body').animate({ scrollTop: 0 }, 'slow');
-    $('#cart').load('index.php?route=common/cart/info');
+    $('#cart, #mobile-cart').load('index.php?route=common/cart/info');
 }
 
 sCart.addEventListener('afterload', updateCart);
