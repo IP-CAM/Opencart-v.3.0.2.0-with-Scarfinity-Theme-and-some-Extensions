@@ -1,4 +1,7 @@
+
 {% macro SpecialOffer(props) %}
+    {% import 'scarfinity/template/components/currency.twig' as currency %}
+
     {% set product = random(props.products) %}
     {% set id = "__special-offer_#{props.id|default(random())}" %}
     {% set date = "2019-05-11" %}
@@ -41,26 +44,16 @@
                     <div class="special-offer-price__info">
                         <span class="special-offer-price__info__header">{{"Цена"}}</span>
                         <span class="special-offer-price__info__content">
-                            <Currency
-                                original={3294}
-                                fontSize={15}
-                                glyphFull/>
+                            {{ product.price }}
                         </span>
                     </div>
                     <div class="special-offer-price__price">
-                        <Currency
-                            original={899}
-                            fontSize={20}
-                            fontWeight={500}
-                            glyphFull/>
+                        {{ product.special }}
                     </div>
                     <div class="special-offer-price__info">
                         <span class="special-offer-price__info__header">{{"Экономия"}}</span>
                         <span class="special-offer-price__info__content">
-                            <Currency
-                                original={3294 - 899}
-                                fontSize={15}
-                                glyphFull/>
+                            {{ product.benefit }}
                         </span>
                     </div>
                 </div>
