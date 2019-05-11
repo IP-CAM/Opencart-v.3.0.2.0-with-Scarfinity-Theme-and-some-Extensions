@@ -1,7 +1,7 @@
 {% macro catalogProductCardButton(button) %}
-    <button class="product-card-catalog-button">
+    <a href="{{button.href}}" class="product-card-catalog-button">
     	{{ button.label|default('В корзину') }}
-    </button>
+    </a>
 {% endmacro %}
 
 {% macro productCardButton(data) %}

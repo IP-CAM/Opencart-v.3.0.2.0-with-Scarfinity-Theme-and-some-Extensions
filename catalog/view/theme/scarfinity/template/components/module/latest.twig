@@ -2,7 +2,7 @@
     {% import 'scarfinity/template/components/category-product-card.twig' as _categoryProductCard %}
 
     <h3>{{ props.heading_title }}</h3>
-    <div class="row display-flex">
+    <div class="row display-flex col-sm-no-padding">
         {% for product in props.products %}
             <div class="product-card-catalog-container product-card-catalog-container--bestseller">
                 {{ _categoryProductCard.categoryProductCard(product, { buttonLabel: props.button_cart }) }}

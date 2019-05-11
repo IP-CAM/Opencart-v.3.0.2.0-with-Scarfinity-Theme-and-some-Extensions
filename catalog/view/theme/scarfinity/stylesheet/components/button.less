@@ -39,7 +39,8 @@
 	font-weight: 500;
 	color: #ffffff;
 
-	text-transform: uppercase;
+    text-transform: uppercase;
+    text-decoration: none;
 	
 	// transition: color 0.2s ease 0.3s, max-width 0.2s ease 0.1s, padding 0.2s ease 0.1s;
 
@@ -50,8 +51,13 @@
 	}
 
 	&.complete {
-		background-color: #1bb869;
-	}
+        background-color: #1bb869;
+        text-decoration: none;
+    }
+    
+    &:hover {
+        color: #fff;
+    }
 }
 
 .product-card-button {

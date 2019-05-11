@@ -9,7 +9,7 @@
 						<span class="utility__currency__prefix">{{ price.prefix }}</span>
 					{% endif %}
                     {% if price.special %}
-                    	<span class="utility__currency__value">{{ price.special }}</span>
+                    	<span class="utility__currency__value utility__currency__value--special">{{ price.special }}</span>
                         <span class="utility__currency__unsale-value">{{ price.price }}</span>
                     {% else %}
                         <span class="utility__currency__value" data-base="{{price.price}}">{{ price.price }}</span>

@@ -1,3 +1,5 @@
+@import '../../lib/media.less';
+
 #common-home {
     h1 {
         text-align: center;
@@ -26,7 +28,17 @@
             margin-left: 14px;
             width: 210px;
             height: 390px;
+        }
 
+        @media screen and (max-width: 756px) {
+            padding: 0px;
+            display: block;
+
+            &__right-offer {
+                margin: 14px 0px 0px 0px;
+                width: auto;
+                height: auto;
+            }
         }
     }
 }

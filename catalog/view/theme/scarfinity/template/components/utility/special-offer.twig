@@ -1,6 +1,7 @@
 
 {% macro SpecialOffer(props) %}
     {% import 'scarfinity/template/components/currency.twig' as currency %}
+    {% import 'scarfinity/template/components/button.twig' as _button %}
 
     {% set product = random(props.products) %}
     {% set id = "__special-offer_#{props.id|default(random())}" %}
@@ -36,8 +37,8 @@
             </div>
             <div class="special-offer-body">
                 <div class="special-offer-timer special-offer-timer--horisontal">
-                    {"Истекает через:"}
-                    <span class="special-offer-timer__time">{timeString}</span>
+                    {{"Истекает через:"}}
+                    <span class="special-offer-timer__time">{{"12:42:03"}}</span>
                 </div>
                 <span class="special-offer-title">{{product.name}}</span>
                 <div class="special-offer-price">
@@ -58,7 +59,10 @@
                     </div>
                 </div>
                 <div class="special-offer-button">
-                    <GrayButton title={"В корзину"} />
+                    {{ _button.catalogProductCardButton({
+                        title: 'купить',
+                        href: product.href
+                    }) }}
                 </div>
             </div>
         </div>
