@@ -4,7 +4,15 @@
 
     <div class="col-xs-12 col-sm-7 col-md-6 product-card-image-container">
         <div id="product-card-main-thumb" class="product-card-image-container__main">
-            {{ imageContainer.imageContainer({src: props.thumb }) }}
+          <div id="carousel-product-card-main-image" class="swiper-container">
+            <div class="swiper-wrapper">
+              {% for image in props.images %}
+                <div class="swiper-slide">
+                  {{ imageContainer.imageContainer({src: image.popup }) }}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
         </div>
         <div class="product-card-image-container__galery">
             <div class="product-card-swiper">
@@ -30,6 +38,18 @@
     </div>
 
     <script type="text/javascript">
+        var productCardMainImageSwiper = new Swiper('#carousel-product-card-main-image') {
+            mode: 'horizontal',
+            slidesPerView: 1,
+            pagination: false,
+            paginationClickable: false,
+            spaceBetween: 0,
+            autoplay: false,
+            autoplayDisableOnInteraction: true,
+            loop: false,
+            autoHeight: true,
+        }
+
         var productCardSwiper = new Swiper('#carousel-product-card', {
             mode: 'horizontal',
             slidesPerView: 6,

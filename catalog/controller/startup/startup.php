@@ -129,6 +129,9 @@ class ControllerStartupStartup extends Controller {
 		
 			$this->db->query("UPDATE `" . DB_PREFIX . "marketing` SET clicks = (clicks + 1) WHERE code = '" . $this->db->escape($this->request->get['tracking']) . "'");
 		}		
+
+		// API
+		$this->session->data['api_id'] = 1;
 		
 		// Currency
 		$code = '';

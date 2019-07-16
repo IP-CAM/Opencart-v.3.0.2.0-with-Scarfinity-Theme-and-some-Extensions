@@ -81,7 +81,11 @@
         </ul>
         <h3>Описание</h3>
         {{ description }}
+        {% for image in images %}
+          <img src="{{ image.popup }}" title="{{ heading_title }}" alt="{{ heading_title }}" />
+        {% endfor %}
       {% endset %}
+
 
       {{
         _navTab.NavTab({
@@ -89,7 +93,7 @@
           tabs: [
             { id: 'tab-description', title: tab_description, content: tabDescriptionContent },
             { id: 'tab-review', title: tab_review, content: _review.ReviewsContainer() },
-            { id: 'tab-shipping', title: tab_shipping, content: null },
+            { id: 'tab-shipping', title: tab_shipping, content: shipping_info },
           ]
         })
       }}
@@ -263,6 +267,7 @@ $('#button-review').on('click', function() {
 });
 
 $(document).ready(function() {
+  return;
 	$('#p_card-i_gallery-swiper').magnificPopup({
 		type:'image',
 		delegate: 'a',

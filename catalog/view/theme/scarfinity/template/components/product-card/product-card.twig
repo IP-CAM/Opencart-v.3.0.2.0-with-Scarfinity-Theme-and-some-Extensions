@@ -14,10 +14,21 @@
 		<div class="row product-card-left" data-sticky-container>
 			<div class="col-sm-12 col-md-6 is-sticky-container">	
 				<div class="product-card-image-container is-sticky" data-margin-top="10" data-sticky-wrap data-sticky-for="768">
-					<div id="product-card-main-thumb" class="product-card-image-container__main magnifier-thumb-wrapper">
-						{# <img class="img-responsive" src="{{ props.thumb }}" alt="{{ props.headingTitle }}" name="{{ props.headingTitle }}" /> #}
-						{{ _imageContainer.imageContainer({ src: props.image, large: props.popup, magnifer: 'img-magnifer' }) }}
+					<div id="carousel-product-card-main-image" class="swiper-container">
+						<div class="swiper-wrapper">
+							{% for image in props.images %}
+								<div class="swiper-slide">
+									<a href="{{ image.popup }}" title="{{ heading_title }}">
+										{{ _imageContainer.imageContainer({ src: image.image }) }}
+									</a>
+								</div>
+							{% endfor %}
+						</div>
 					</div>
+					{# <div id="product-card-main-thumb" class="product-card-image-container__main magnifier-thumb-wrapper">
+						<img class="img-responsive" src="{{ props.thumb }}" alt="{{ props.headingTitle }}" name="{{ props.headingTitle }}" />
+						{{ _imageContainer.imageContainer({ src: props.image, large: props.popup, magnifer: 'img-magnifer' }) }}
+					</div> #}
 					<div class="p_card-i_gallery-swiper init" data-slideout-ignore>
 						<div class="p_card-i_gallery-swiper__button p_card-i_gallery-swiper__button--prev">
 						{{ _icons.ChevronLeft({ size: 12 }) }}
@@ -30,7 +41,7 @@
 									<div class="swiper-slide p_card-i_gallery-s_slide">
 										<label>
 										<input type="radio" name="product-card-swiper" value="{{image.image}}" data-large="{{image.popup}}">
-										<a href="{{ image.popup }}" title="{{ heading_title }}">
+										<a  title="{{ heading_title }}">
 											{{ _imageContainer.imageContainer({ src: image.thumb }) }}
 										</a>
 										</label>
@@ -153,7 +164,7 @@
 												<div class="col-md-3 col-sm-4 col-xs-4 col-sm-no-padding" style="text-align: center;">
 													<div class="product-card-quantity ctr-utt">
 														<div class="product-card-quantity__title">{{option_value.name}}</div>
-														<img class="img-responsive img-option" src="{{option_value.image}}" data-full="{{option_value.image_f}}" />
+														<a href="{{ option_value.image_f }}"><img class="img-responsive img-option" src="{{option_value.image}}" /></a>
 														<div class="product-card-quantity__control">
 															<button name="dec"><span><i class="fa fa-minus"></i></span></button>
 															<input
@@ -205,6 +216,28 @@
 
 	<script type="text/javascript">
 		if(typeof Swiper) {
+			var productCardImageContainerSwiper;
+
+			var productCardMainImageSwiper = new Swiper('#carousel-product-card-main-image', {
+				mode: 'horizontal',
+				slidesPerView: 1,
+				pagination: false,
+				paginationClickable: false,
+				spaceBetween: 0,
+				autoplay: false,
+				autoplayDisableOnInteraction: true,
+				loop: false,
+				autoHeight: true,
+				onInit: function() {
+					$('#p_card-i_gallery-swiper a').eq(0).addClass('pc_active');
+				},
+				onSlideChangeEnd: function(e) {
+					$('#p_card-i_gallery-swiper a').eq(e.previousIndex).removeClass('pc_active');
+					$('#p_card-i_gallery-swiper a').eq(e.activeIndex).addClass('pc_active');
+					productCardImageContainerSwiper.slideTo(e.activeIndex);
+				}
+			});
+
 			var productCardImageContainerSwiper = new Swiper('#p_card-i_gallery-swiper', {
 				mode: 'horizontal',
 				slidesPerView: 5,
@@ -219,6 +252,13 @@
 				autoHeight: false,
 				onInit: function() {
 					$('.p_card-i_gallery-swiper').removeClass('init');
+					productCardMainImageSwiper.slideTo(0, 0);
+				},
+				onTap: function(e) {
+					productCardMainImageSwiper.slideTo(e.clickedIndex, 0);
+				},
+				ocClick: function(e) {
+					productCardMainImageSwiper.slideTo(e.clickedIndex, 0);
 				},
 				breakpoints: {
 					1024: {
@@ -240,62 +280,33 @@
 			});
 		}
 
-        var mainImage = $('#product-card-main-thumb img');
-
-		var evt, m = undefined;
-		var mobile = false;
-
-		function updateMagnifier() {
-			if(!mobile) {
-				evt = new Event();
-				m = new Magnifier(evt);
-
-				$('#preview').html('');
-
-				m.attach({
-					thumb: '#img-magnifer',
-					largeWrapper: 'preview',
-					zoom: 3
-				});
-			}
-		}
-
-        $('#p_card-i_gallery-swiper .swiper-slide').on('mouseover', function(e) {
-            var input = $(this).find('input[type="radio"]');
-            if(input != null) {
-				if(input.prop("checked") != true) {
-					input.prop("checked", true);
-
-					mainImage.attr('src', input.val());
-					mainImage.attr('data-large-img-url', input.data('large'));
-
-					updateMagnifier();
-				}
-            }
-        });
-
-		$('.img-option').on('click', function() {
-			mainImage.attr('src', $(this).data('full'));
-			mainImage.attr('data-large-img-url', $(this).data('full'));
-			updateMagnifier();
-		});
-
 		$(document).ready(function() {
-			mobile = $(window).width() <= 768;
-			updateMagnifier();
+			$('#carousel-product-card-main-image').magnificPopup({
+				type:'image',
+				delegate: 'a',
+				gallery: {
+					enabled: true
+				},
+				mainClass: 'mfp-with-zoom', // this class is for CSS animation below
+				zoom: {
+					enabled: false, // By default it's false, so don't forget to enable it
+					duration: 300, // duration of the effect, in milliseconds
+					easing: 'ease-in-out', // CSS transition easing function
+					opener: function(openerElement) {
+						// openerElement is the element on which popup was initialized, in this case its <a> tag
+						// you don't need to add "opener" option if this code matches your needs, it's defailt one.
+						return openerElement.is('img') ? openerElement : openerElement.find('img');
+					}
+				}
+			});
+
+			$('.product-card-quantity').magnificPopup({
+				type: 'image',
+				delegate: 'a',
+				mainClass: 'mfp-with-zoom'
+			});
 		});
 
-		$(window).resize(function() {
-			if($(window).width() <= 768 && !mobile) {
-				mobile = true;
-				evt = null;
-				m = null;
-				updateMagnifier();
-			} else if($(window).width() > 768 && mobile) {
-				mobile = false;
-				updateMagnifier();
-			}
-		})
     </script>
 
 {% endmacro %}

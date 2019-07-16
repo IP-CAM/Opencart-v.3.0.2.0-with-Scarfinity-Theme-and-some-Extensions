@@ -66,6 +66,9 @@ class ControllerCommonMenu extends Controller {
 			}
 		}
 
+		$data['contact'] = $this->url->link('information/contact');
+		$data['about_us'] = $this->url->link('information/about_us', '', true);
+
 		return $this->load->view('common/menu', $data);
 	}
 }
