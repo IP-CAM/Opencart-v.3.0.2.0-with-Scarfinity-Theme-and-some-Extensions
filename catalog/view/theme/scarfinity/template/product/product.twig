@@ -73,7 +73,7 @@
           {% for attribute_group in attribute_groups %}
             {% for attribute in attribute_group.attribute %}
               <li>
-                <span>{{attribute.name}}</span>
+                <span>{{attribute.name}}:</span>
                 <span>{{attribute.text}}</span>
               </li>
             {% endfor %}
@@ -92,7 +92,7 @@
           id: 'product-card-tab-view',
           tabs: [
             { id: 'tab-description', title: tab_description, content: tabDescriptionContent },
-            { id: 'tab-review', title: tab_review, content: _review.ReviewsContainer() },
+            { id: 'tab-review', title: tab_review, content: _review.ReviewsContainer({ entry_name: entry_name, customer_name: customer_name }) },
             { id: 'tab-shipping', title: tab_shipping, content: shipping_info },
           ]
         })

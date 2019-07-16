@@ -43,23 +43,34 @@
 {% endmacro %}
 
 {% macro LeaveReview(props) %}
-	{% import 'scarfinity/template/components/rating-box.twig' as _ratingBox %}
+	{% import 'scarfinity/template/components/rating-box.twig'          as _ratingBox %}
+    {% import 'scarfinity/template/components/utility/basic-input.twig' as _basicInput %}
 
    	<form id="form-review" class="review-container-leave">
    		<div id="leave-conatiner-leave-message"></div>
         <div class="review-container-leave__top-row">
-            <div class="review-container-leave__top-row__avatar"></div>
-            <div class="review-container-leave__top-row__user-name">Михаил Силантьев</div>
-            <div class="review-container-leave__top-row__rating">
+            {# <div class="review-container-leave__top-row__avatar"></div> #}
+            <div class="review-container-leave__top-row__user-name">
+                {{ 
+                    _basicInput.basicInput({
+                        label: 'Ваше имя',
+                        value: '',
+                        name: 'name',
+                        group: '',
+                        type: 'text',
+                        placeholder: '',
+                        required: false
+                    })
+                }}
+                {# <label class="control-label" for="input-name">{{ props.entry_name }}</label>
+                <input type="text" name="name" value="{{ props.customer_name }}" id="input-name" class="form-control" /> #}
+            </div>
+            {# <div class="review-container-leave__top-row__rating">
                 <span class="review-container-leave__top-row__rating__label">Оценка:</span>
-                {{ _ratingBox.RatingBox(props.review.rating) }}
-            </div>
-            <div>
-            	<label class="control-label" for="input-name">{{ entry_name }}</label>
-                <input type="text" name="name" value="{{ customer_name }}" id="input-name" class="form-control" />
-            </div>
-            <hr>
-            <input type="radio" name="rating" value="5" checked />
+                {{ _ratingBox.RatingBox(props.rating) }}
+            </div> #}
+            {# <hr> #}
+            <input type="radio" name="rating" value="5" checked hidden />
         </div>
         <div class="review-container-leave__text-box">
             <textarea
@@ -77,7 +88,7 @@
             <div class="review-container-leave__bottom-row__button">
             	<button type="button" id="button-review">Оставить отзыв</button>
             </div>
-            <div class="review-container-leave__bottom-row__notice">Минимальная длина: 20 символов</div>
+            <div class="review-container-leave__bottom-row__notice">Минимальная длина: 25 символов</div>
         </div>
     </form>
 {% endmacro %}
@@ -85,7 +96,7 @@
 {% macro ReviewsContainerHeader(props) %}
 	<div class="review-container-header">
         <span class="review-container-header__title">{{props.title}}</span>
-        <div class="review-container-header__count">{{props.reviewsCount|default(0)}}</div>
+        {# <div class="review-container-header__count">{{props.reviewsCount|default(0)}}</div> #}
         <div class="review-container-header__button">
         	<a
         		class="review-container-toggle-button"
@@ -105,28 +116,28 @@
         	<div class="tab-pane active" id="reviews-container-reviews">
         		{{ 
         			_.ReviewsContainerHeader({ 
-        				title: 'Reviews', 
+        				title: 'Отзывы', 
         				button: { 
-        					label: 'Leave Review', 
+        					label: 'Оставить отзыв', 
         					href: 'reviews-container-leave-review' 
         				} 
         			}) 
         		}}
         		<div id="review">
-        			<p>Loding......</p>
+        			<p>Загрузка..</p>
         		</div>
         	</div>
         	<div class="tab-pane" id="reviews-container-leave-review">
         		{{ 
         			_.ReviewsContainerHeader({ 
-        				title: 'Leave Review', 
+        				title: 'Оставить отзыв', 
         				button: { 
-        					label: 'Back to Reviews', 
+        					label: 'Назад к отзывам', 
         					href: 'reviews-container-reviews' 
         				} 
         			}) 
         		}}
-        		{{ _.LeaveReview() }}
+        		{{ _.LeaveReview(props) }}
         	</div>
         </div>
     </div>
