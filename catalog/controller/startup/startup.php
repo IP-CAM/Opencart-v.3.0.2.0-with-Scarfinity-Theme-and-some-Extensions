@@ -131,7 +131,7 @@ class ControllerStartupStartup extends Controller {
 		}		
 
 		// API
-		$this->session->data['api_id'] = 1;
+		// $this->session->data['api_id'] = 1;
 		
 		// Currency
 		$code = '';

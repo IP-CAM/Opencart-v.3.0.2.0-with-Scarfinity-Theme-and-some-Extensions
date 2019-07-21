@@ -127,7 +127,7 @@
             {% else %}
               <div class="main-menu-catalog-button">
             {% endif %}
-              <i class="fa fa-th"></i><span>Каталог товаров</span>
+              <a href="{{ catalog }}" class="main-menu-catalog-button-a"><i class="fa fa-th"></i><span>Каталог товаров</span></a>
               <div class="main-menu-catalog-ul__container">
                 <div class="main-menu-catalog-ul">
                   <ul class="main-menu-catalog-ul__special">
@@ -177,7 +177,7 @@
                 <div>{{ _.MainMenuButton({ title: text_contact, href: contact }) }}</div>
                 <div></div>
                 <div></div>
-                <div>{{ _.MainMenuButton({ title: 'Распродажа!', href: contact }) }}</div>
+                <div>{{ _.MainMenuButton({ title: 'Распродажа!', href: special }) }}</div>
             </div>
 
           </div>

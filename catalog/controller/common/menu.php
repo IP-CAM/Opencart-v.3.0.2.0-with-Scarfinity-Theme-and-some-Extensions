@@ -66,6 +66,8 @@ class ControllerCommonMenu extends Controller {
 			}
 		}
 
+		$data['catalog'] = $this->url->link('product/catalog');
+		$data['special'] = $this->url->link('product/special');
 		$data['contact'] = $this->url->link('information/contact');
 		$data['about_us'] = $this->url->link('information/about_us', '', true);
 

@@ -232,7 +232,7 @@
 					$('#p_card-i_gallery-swiper a').eq(0).addClass('pc_active');
 				},
 				onSlideChangeEnd: function(e) {
-					$('#p_card-i_gallery-swiper a').eq(e.previousIndex).removeClass('pc_active');
+					$('#p_card-i_gallery-swiper a').removeClass('pc_active');
 					$('#p_card-i_gallery-swiper a').eq(e.activeIndex).addClass('pc_active');
 					productCardImageContainerSwiper.slideTo(e.activeIndex);
 				}
