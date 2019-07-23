@@ -8,16 +8,16 @@
 {{ _breadcrumbs.Breadcrumbs({breadcrumbs: breadcrumbs}) }}
 
 <div id="product-search" class="container">
-  <div class="row">{{ column_left }}
-    {% if column_left and column_right %}
-    {% set class = 'col-sm-6' %}
-    {% elseif column_left or column_right %}
-    {% set class = 'col-sm-9' %}
-    {% else %}
-    {% set class = 'col-sm-12' %}
-    {% endif %}
-    <div id="content" class="{{ class }}">{{ content_top }}
+  <div class="row s-content">
+
+    {{ column_left }}
+
+    <div id="content" class="s-content__middle">
+    
+      {{ content_top }}
+
       <h1>{{ heading_title }}</h1>
+      
       <label class="control-label" for="input-search">{{ entry_search }}</label>
       <div class="row">
         <div class="col-sm-4">

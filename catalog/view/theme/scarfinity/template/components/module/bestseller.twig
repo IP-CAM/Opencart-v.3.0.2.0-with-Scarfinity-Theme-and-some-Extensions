@@ -5,9 +5,7 @@
     {% set children %}
         {% for product in props.products %}
             {{
-                _miniProductCard.MiniProductCard({
-                    product: product
-                })
+                _miniProductCard.MiniProductCard(product)
             }}
         {% endfor %}
     {% endset %}

@@ -1,9 +1,7 @@
-<div class="sidebar">
-  <ul class="nav nav-tabs nav-stacked">
-    {% for information in informations %}
-    <li><a href="{{ information.href }}">{{ information.title }}</a></li>
-    {% endfor %}
-    <li><a href="{{ contact }}">{{ text_contact }}</a></li>
-    <li><a href="{{ sitemap }}">{{ text_sitemap }}</a></li>
-  </ul>
+<div class="left-menu white">
+  {% for information in informations %}
+    <a href="{{ information.href }}" class="left-menu__item">{{ information.title }}</a> 
+  {% endfor %}
+  <a href="{{ contact }}" class="left-menu__item">{{ text_contact }}</a> 
+  <a href="{{ sitemap }}" class="left-menu__item">{{ text_sitemap }}</a> 
 </div>

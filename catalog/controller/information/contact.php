@@ -39,6 +39,8 @@ class ControllerInformationContact extends Controller {
 			'href' => $this->url->link('information/contact')
 		);
 
+		$data['heading_title'] = $this->language->get('heading_title');
+
 		if (isset($this->error['name'])) {
 			$data['error_name'] = $this->error['name'];
 		} else {
@@ -182,6 +184,8 @@ class ControllerInformationContact extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('information/contact')
 		);
+
+		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['continue'] = $this->url->link('common/home');
 

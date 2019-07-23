@@ -1,4 +1,4 @@
-{% macro MiniProductCard(props) %}
+{% macro MiniProductCard(product) %}
     {% import 'scarfinity/template/components/image-container.twig' as _imageContainer %}
     {% import 'scarfinity/template/components/currency.twig' as _currency %}
     {% import 'scarfinity/template/components/utility/ribbon.twig' as _ribbon %}
@@ -9,23 +9,50 @@
                 <a href="{{ props.product.href }}">
                     {{ 
                         _imageContainer.ImageContainer({ 
-                            src: props.product.thumb,
-                            alt: props.product.name,
-                            name: props.product.name
+                            src: product.images[0].popup,
+                            alt: product.name,
+                            name: product.name
                         }) 
                     }}
+
+            {# <div class="image-container">
+                <div class="image-container__dummy"></div>
+                <div class="image-container__container">
+                    {% if product.images and product.images|length > 1 and swiper %}  
+                        <div class="swiper-container" id="product-card-catalog-swiper-{{swiper_id}}">
+                            <div class="swiper-wrapper">
+
+
+                                {% for image in product.images %}
+                                <div class="swiper-slide">
+                                    <img class="img-responsive" src="{{image.popup}}" alt="{{product.name}}" name="{{product.name}}"/>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <a class="product-card-catalog__image__link" href="{{product.href}}"></a>
+                            <div class="product-card-catalog__image__button product-card-catalog__image__button--prev">{{ _icons.ChevronLeft({ size: 14 }) }}</div>
+                            <div class="product-card-catalog__image__button product-card-catalog__image__button--next">{{ _icons.ChevronRight({ size: 14 }) }}</div>
+                        </div>
+                    {% else %}
+                        <img class="img-responsive" src="{{product.images[0].popup}}" alt="{{product.name}}" name="{{product.name}}"/>
+                        <a class="product-card-catalog__image__link" href="{{product.href}}"></a>
+                    {% endif %}
+                </div>
+            </div> #}
+
+
                 </a>
             </div>
             <div 
                 class="mini-product-card__content">
                     <h4 class="mini-product-card__content__title">
-                        <a href="{{ props.product.href }}">{{ props.product.name }}</a>
+                        <a href="{{ product.href }}">{{ product.name }}</a>
                     </h4> 
                     <div class="mini-product-card__content__pricing">
                         <div class="mini-product-card__content__pricing__price">
                             {{ 
                                 _currency.currency(
-                                    { 'price': props.product.price, 'special': props.product.special }, 
+                                    { 'price': product.price, 'special': product.special }, 
                                     { 'fontSize': 15, 'fontWeight': 600 }) 
                             }}
                         </div>

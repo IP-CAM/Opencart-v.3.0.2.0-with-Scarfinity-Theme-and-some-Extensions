@@ -13,24 +13,30 @@
 
     <div class="product-card-catalog" id="product-card-catalog[{{swiper_id}}]">
         <div class="product-card-catalog__image">
-            {% if product.images and product.images|length > 1 and swiper %}  
-                <div class="swiper-container" id="product-card-catalog-swiper-{{swiper_id}}">
-                    <div class="swiper-wrapper">
-                        {% for image in product.images %}
-                        <div class="swiper-slide">
-                            <img class="img-responsive" src="{{image.popup}}" alt="{{product.name}}" name="{{product.name}}"/>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <a class="product-card-catalog__image__link" href="{{product.href}}"></a>
-                    <div class="product-card-catalog__image__button product-card-catalog__image__button--prev">{{ _icons.ChevronLeft({ size: 14 }) }}</div>
-                    <div class="product-card-catalog__image__button product-card-catalog__image__button--next">{{ _icons.ChevronRight({ size: 14 }) }}</div>
-                </div>
-            {% else %}
-                <img class="img-responsive" src="{{product.images[0].popup}}" alt="{{product.name}}" name="{{product.name}}"/>
-                <a class="product-card-catalog__image__link" href="{{product.href}}"></a>
-            {% endif %}
+            <div class="image-container">
+                <div class="image-container__dummy"></div>
+                <div class="image-container__container">
+                    {% if product.images and product.images|length > 1 and swiper %}  
+                        <div class="swiper-container" id="product-card-catalog-swiper-{{swiper_id}}">
+                            <div class="swiper-wrapper">
 
+
+                                {% for image in product.images %}
+                                <div class="swiper-slide">
+                                    <img class="img-responsive" src="{{image.popup}}" alt="{{product.name}}" name="{{product.name}}"/>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <a class="product-card-catalog__image__link" href="{{product.href}}"></a>
+                            <div class="product-card-catalog__image__button product-card-catalog__image__button--prev">{{ _icons.ChevronLeft({ size: 14 }) }}</div>
+                            <div class="product-card-catalog__image__button product-card-catalog__image__button--next">{{ _icons.ChevronRight({ size: 14 }) }}</div>
+                        </div>
+                    {% else %}
+                        <img class="img-responsive" src="{{product.images[0].popup}}" alt="{{product.name}}" name="{{product.name}}"/>
+                        <a class="product-card-catalog__image__link" href="{{product.href}}"></a>
+                    {% endif %}
+                </div>
+            </div>
         </div>
 
         <div class="product-card-catalog__navigation">
@@ -92,7 +98,7 @@
 				autoplay: false,
 				autoplayDisableOnInteraction: true,
 				loop: false,
-				autoHeight: false,
+				autoHeight: false
 			});
 		}
     </script>
