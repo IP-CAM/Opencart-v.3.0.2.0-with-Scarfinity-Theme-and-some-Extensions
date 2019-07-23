@@ -72,9 +72,14 @@
             {# <div>{{product.date.added|date("F jS \\a\\t g:ia") }}</div> #}
         </div>
 
-        {% if product.props['ribbon'] %}
-            {{ ribbon.ribbon(product.props['ribbon']) }}
+        {# {% if "now"|date("m/d/Y") %}
+            {{ "now"|date("m/d/Y") }}
         {% endif %}
+         #}
+
+        {# {% if product.props['ribbon'] %}
+            {{ ribbon.ribbon(product.props['ribbon']) }}
+        {% endif %} #}
     </div>
 
     <script type="text/javascript">

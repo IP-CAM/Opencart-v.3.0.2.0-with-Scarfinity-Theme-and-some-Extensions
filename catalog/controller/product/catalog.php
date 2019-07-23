@@ -24,9 +24,9 @@ class ControllerProductCatalog extends Controller {
 
 		$data['heading_title'] = 'Каталог товаров';
 
-		// $this->document->setTitle($category_info['meta_title']);
-		// $this->document->setDescription($category_info['meta_description']);
-		// $this->document->setKeywords($category_info['meta_keyword']);
+		$this->document->setTitle('Каталог товаров');
+		$this->document->setDescription('');
+		$this->document->setKeywords('');
 
 		$this->document->addStyle('catalog/view/javascript/nouislider/nouislider.min.css');
 		$this->document->addScript('catalog/view/javascript/nouislider/nouislider.min.js');
