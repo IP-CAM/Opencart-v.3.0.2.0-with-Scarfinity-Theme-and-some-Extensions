@@ -124,7 +124,7 @@ class ControllerProductCatalog extends Controller {
 						'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 						'rating'      => $result['rating'],
 						'reviews'     => (int)$result['reviews'],
-						// 'href'        => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id']),
+						'href'        => $this->url->link('product/product', '&product_id=' . $result['product_id']),
 						'props'		  => $props,
 						'date'		  => array(
 							'added'	  	=> $result['date_added'],

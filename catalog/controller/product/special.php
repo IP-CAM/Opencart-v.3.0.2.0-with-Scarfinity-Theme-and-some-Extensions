@@ -43,6 +43,8 @@ class ControllerProductSpecial extends Controller {
 			'href' => $this->url->link('common/home')
 		);
 
+		$data['heading_title'] = 'Акции';
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {

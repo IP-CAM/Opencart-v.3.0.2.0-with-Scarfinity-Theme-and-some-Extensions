@@ -33,6 +33,10 @@
 {% for script in scripts %}
 <script src="{{ script }}" type="text/javascript"></script>
 {% endfor %}
+
+<script src="catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js" type="text/javascript"></script>
+<link href="catalog/view/javascript/jquery/magnific/magnific-popup.css" type="text/css" rel="stylesheet" media="screen" />
+
 <link href="catalog/view/theme/scarfinity/stylesheet/stylesheet.css" rel="stylesheet">
 <script src="catalog/view/javascript/common.js" type="text/javascript"></script>
 <script src="catalog/view/javascript/cart.js" type="text/javascript"></script>
@@ -54,13 +58,14 @@
     <nav id="mobile-left-menu" class="slideout-menu">
       {# Left menu #}
       <div class="mobile-nav-left-menu">
-        <div class="mobile-nav-left-menu__title">SCARFINITY</div>
+        <div class="mobile-nav-left-menu__title">
+          <a href="" class="mobile-nav-left-menu__title__container"><span>SCARFINITY.RU</span></a>
+        </div>
         <ul class="mobile-nav-ul">
-          <li class="link"><span><a href="{{about_us}}">О нас</a></span></li>
-          <li class="link"><span><a href="">Доставка и оплата</a></span></li>
-          <li class="link"><span><a href="">Как сделать заказ?</a></span></li>
-          <li class="link"><span><a href="">О нас</a></span></li>
-          <li class="link"><span><a href="">Контакты</a></span></li>
+          <li class="link"><span><a href="{{ about_us }}">О нас</a></span></li>
+          <li class="link"><span><a href="{{ about_us }}">Доставка и оплата</a></span></li>
+          <li class="link"><span><a href="{{ about_us }}">Как сделать заказ?</a></span></li>
+          <li class="link"><span><a href="{{ contact }}">Контакты</a></span></li>
           <li class="link"><span><a href="{{ account }}">{{ text_account }}</a></span></li>
           <li class="link"><span><a href="">{{ telephone }}</a></span></li>
         </ul>

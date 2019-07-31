@@ -7,7 +7,7 @@
     {% set id = "__special-offer_#{props.id|default(random())}" %}
     {% set date = "2019-05-11" %}
 
-    <script>
+    {# <script>
         (function() {
             var toDate = Date.parse('{{date}}');
 
@@ -24,13 +24,13 @@
                 console.log(timeString);
             }(), 60000);
         }());
-    </script>
+    </script> #}
 
     <div class="special-offer">
         <div class="special-offer__content">
             <div class="special-offer-timer">
-                {{"Истекает через:"}}
-                <span class="special-offer-timer__time">{{"12:42:03"}}</span>
+                {{"Специальное предложение:"}}
+                {# <span class="special-offer-timer__time">{{"12:42:03"}}</span> #}
             </div>
             <div class="special-offer-image">
                 <img class="img-responsive" src="{{product.image}}" alt="{{product.name}}" name="{{product.name}}"/>

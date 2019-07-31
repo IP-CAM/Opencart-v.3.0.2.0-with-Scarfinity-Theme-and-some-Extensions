@@ -106,9 +106,13 @@
             mode: 'horizontal',
             slidesPerView: 1,
             loop: true,
-            autoplay: speed,
-            onSlideChangeEnd: function(data) {
-                sliderGo(data.realIndex);
+            autoplay: {
+                delay: speed
+            },
+            on: {
+                slideChangeTransitionEnd: function(data) {
+                    sliderGo(this.realIndex);
+                }
             }
         });
 

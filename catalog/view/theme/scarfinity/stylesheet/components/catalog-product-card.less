@@ -228,11 +228,34 @@
 		position: relative;
 
 		&__rating {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 4px;
+
 			& > .rating-box {
 				font-size: 10px !important;
 			}
 			// position: absolute;
 			// top: -5px;
+
+			&__colors {
+				color: #808080;
+				text-decoration: none;
+				transition: all 0.3s ease;
+				padding-left: 17px;
+				background-image: url('../../image/icons/icons8-color-wheel-80.png');
+				background-position: left center;
+				background-size: 12px 12px;
+				background-repeat: no-repeat;
+				line-height: 16px;
+				text-transform: lowercase;
+
+				&:hover {
+					color: #bf4f79;
+					text-decoration: none;
+				}
+			}
 		}
 
 		.m-xs({

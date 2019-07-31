@@ -131,8 +131,11 @@
               <div class="main-menu-catalog-ul__container">
                 <div class="main-menu-catalog-ul">
                   <ul class="main-menu-catalog-ul__special">
-                    {% for category in ['Распродажа', 'Весенняя коллекция', 'Очки'] %}
-                      <li><a href="{{category.href}}"><i></i><span>{{category}}</span></a></li>
+                    {% for category in [
+                        { title: 'Распродажа', href: special },
+                        { title: 'Осенняя коллекция', href: '' },
+                      ] %}
+                      <li><a href="{{category.href}}"><i></i><span>{{category.title}}</span></a></li>
                     {% endfor %}
                   </ul>
                   <ul class="main-menu-catalog-ul__common">

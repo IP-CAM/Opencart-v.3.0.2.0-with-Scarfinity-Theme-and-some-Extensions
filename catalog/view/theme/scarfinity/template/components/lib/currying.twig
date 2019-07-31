@@ -9,5 +9,6 @@
     
     {% if type == 'product' %}{{_.decOfNum(['Товар','Товара','Товаров'], count)}}
     {% elseif type == 'products' %}{{_.decOfNum(['Товара','Товаров','Товаров'], count)}}
+    {% elseif type == 'color' %}{{_.decOfNum(['Цвет','Цвета','Цветов'], count)}}
     {% endif %}
 {% endmacro %}

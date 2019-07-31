@@ -7,6 +7,7 @@
     {% import 'scarfinity/template/components/button.twig' as button %}
     {% import 'scarfinity/template/components/utility/icon-button.twig' as _iconButton %}
     {% import 'scarfinity/template/components/utility/_icons.twig' as _icons %}
+    {% import 'scarfinity/template/components/lib/currying.twig' as _currying %}
 
     {% set swiper_id = product.product_id ~ random() %}
     {% set swiper = true %}
@@ -19,8 +20,6 @@
                     {% if product.images and product.images|length > 1 and swiper %}  
                         <div class="swiper-container" id="product-card-catalog-swiper-{{swiper_id}}">
                             <div class="swiper-wrapper">
-
-
                                 {% for image in product.images %}
                                 <div class="swiper-slide">
                                     <img class="img-responsive" src="{{image.popup}}" alt="{{product.name}}" name="{{product.name}}"/>
@@ -47,6 +46,7 @@
                 {{_iconButton.iconButton({onClick: "compare.add('" ~ product.product_id ~ "')", icon: icon})}}
             </div>
             <div class="product-card-catalog__rating">
+                
                 {# {{ ratingBox.ratingBox(product.rating) }} #}
                 {# <span class="product-card-catalog__rating__count">({{product.reviews|default(0)}})</span> #}
             </div>
@@ -54,9 +54,18 @@
         </div>
         
         <div class="product-card-catalog__description">
-            <div class="product-card-catalog__description__rating">{{ ratingBox.ratingBox(product.rating) }}</div>
+            <div class="product-card-catalog__description__rating colors-mfp">
+                {{ ratingBox.ratingBox(product.rating) }}
 
-            {# <div class="product-card-catalog__colors"><span class="product-card-catalog__title">Доступно цветов: {{product.props['color']|default(1)}}</span></div> #}
+                {% set colorCount = product.props['color']|default(1) %}
+                {% set color_image_href = product.images|first %}
+                {% if colorCount > 1 %}
+                    {% set color_image_href = product.images|last %}
+                {% endif %}
+                
+                <a href="{{color_image_href.popup}}" class="product-card-catalog__description__rating__colors">{{colorCount}} {{_currying.__('color', colorCount)}} </a>
+            </div>
+
             <div class="product-card-catalog__description__info">
                 <h2><a href="{{product.href}}" class="product-card-catalog__title">{{ product.name }}</a></h2>
                 <span>{{ product.description }}</span>
@@ -106,5 +115,11 @@
 				autoHeight: false
 			});
 		}
+
+        $('.colors-mfp').magnificPopup({
+            delegate: 'a',
+            type: 'image',
+            mainClass: 'mfp-with-zoom'
+        });
     </script>
 {% endmacro %}
