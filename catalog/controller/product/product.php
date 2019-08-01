@@ -15,7 +15,7 @@ class ControllerProductProduct extends Controller {
 		
 		// Shipping information
 		$this->load->model('catalog/information');
-		$information_info = $this->model_catalog_information->getInformation(8);
+		$information_info = $this->model_catalog_information->getInformation(6);
 		$data['shipping_info'] = html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8');
 
 		$this->load->model('catalog/category');

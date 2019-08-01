@@ -221,6 +221,8 @@
         var name = target.attr('name');
         var group = target.data('group');
         var value = target.val();
+
+        console.log(name, group, value);
     
         if(checkout[group]) {
             checkout[group][name] = value;

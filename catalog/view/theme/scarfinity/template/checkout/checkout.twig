@@ -29,10 +29,10 @@
                 <div id="checkout-errors"></div>
                 <div class="requisites" id="cart-checkout-requisites">
                     <div class="requisites-row row">
-                        <div class="col-md-6 col-sm-12">
+                        {# <div class="col-md-6 col-sm-12">
                             <span class="requisites-title"><b>Состав </b>заказа</span>
                             {{ _priceCalculation.priceCalculation({ productsTotal: 0, deliveryTotal: 0 }) }}
-                        </div>
+                        </div> #}
                         <div class="col-md-6 col-sm-12">
                             <span class="requisites-title"><b>Контактная </b>информация</span>
                             <div id="cart-checkout-requisites-login"></div>
@@ -120,6 +120,8 @@
         var name = target.attr('name');
         var group = target.data('group');
         var value = target.val();
+
+        console.log(name, group, value);
     
         if(checkout[group]) {
             checkout[group][name] = value;

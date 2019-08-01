@@ -1,5 +1,97 @@
 <?php
 class ControllerCheckoutSimple extends Controller {
+	public function validateTelephone($telephone) {
+		if(empty($telephone) || utf8_strlen($telephone) < 10) {
+			return null;
+		}
+
+		if ($this->config->get('module_sms_alert_status')) {
+				
+			$telephone = "+7" . substr($telephone, -10, 10);
+
+			$this->load->language('extension/module/sms_alert');
+
+			$message = urlencode($this->language->get('text_telephone_validation'));
+
+			$sms_cost = "https://sms.ru/sms/cost?api_id=". $this->config->get('module_sms_alert_id') . "&to=" . $telephone . "&msg=" . $message . "&json=1";
+
+			$sms_cots_data = json_decode(file_get_contents($sms_cost), true);
+
+			if(isset($sms_cots_data["status_code"]) && $sms_cots_data["status_code"] == 100) {
+				// OK
+				if(isset($sms_cots_data["sms"])) {
+					foreach ($sms_cots_data["sms"] as $tphone => $sms) {
+						$telephone = $tphone;
+
+						if($sms["status_code"] == 202 || $sms["status_code"] == 207) {
+							return null;
+						} 
+					}
+				}
+			}
+		}
+
+		return $telephone;
+	}
+
+	public function sendRegistrationSms($customer) {
+		if ($this->config->get('module_sms_alert_status')) {
+						
+			$this->load->language('extension/module/sms_alert');
+
+			$this->load->model('extension/module/sms_alert');
+
+			$message = urlencode($this->language->get('text_registration') . $customer['password']);
+
+			$sms_cost = "https://sms.ru/sms/cost?api_id=". $this->config->get('module_sms_alert_id') . "&to=" . $customer["telephone"] . "&msg=" . $message . "&json=1";
+
+			$sms_cots_data = json_decode(file_get_contents($sms_cost), true);
+
+			if(isset($sms_cots_data["status_code"]) && $sms_cots_data["status_code"] == 100) {
+				// OK
+				if(isset($sms_cots_data["total_cost"]) && $sms_cots_data["total_cost"] <= 5 ) {
+					// send sms
+					$sms_send = "http://sms.ru/sms/send?api_id=" . $this->config->get('module_sms_alert_id') . "&to=" . $customer["telephone"] . "&text=" . $message;
+
+					$sms_send_data = json_decode(file_get_contents($sms_send), true);
+
+					$this->log->write($sms_send);
+				}
+			}
+		}
+	}
+
+	public function sendOrderPostSms($order_id) {
+		if ($this->config->get('module_sms_alert_status')) {
+
+			if ($this->customer->isLogged()) {
+
+				$customer_info = $this->model_account_customer->getCustomer($this->customer->getId());
+					
+				$this->load->language('extension/module/sms_alert');
+
+				$this->load->model('extension/module/sms_alert');
+
+				$message = urlencode($this->language->get('text_order_post') . $order_id);
+
+				$sms_cost = "https://sms.ru/sms/cost?api_id=". $this->config->get('module_sms_alert_id') . "&to=" . $customer_info["telephone"] . "&msg=" . $message . "&json=1";
+
+				$sms_cots_data = json_decode(file_get_contents($sms_cost), true);
+
+				if($sms_cots_data["status_code"] == 100) {
+					// OK
+					if($sms_cots_data["total_cost"] <= 5 ) {
+						// send sms
+						$sms_send = "http://sms.ru/sms/send?api_id=" . $this->config->get('module_sms_alert_id') . "&to=" . $customer_info["telephone"] . "&text=" . $message;
+
+						$sms_send_data = json_decode(file_get_contents($sms_send), true);
+					}
+				}
+
+			}
+		}
+	}
+
 	public function customerSave() {
 		$this->load->language('checkout/checkout');
 
@@ -82,11 +174,13 @@ class ControllerCheckoutSimple extends Controller {
 					$json['error']['firstname'] = $this->language->get('error_firstname');
 				}
 
-				if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
-					$json['error']['lastname'] = $this->language->get('error_lastname');
-				}
+				// if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+				// 	$json['error']['lastname'] = $this->language->get('error_lastname');
+				// }
 
-				if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+				$this->request->post['telephone'] = $this->validateTelephone($this->request->post['telephone']);
+
+				if(empty($this->request->post['telephone'])) {
 					$json['error']['telephone'] = $this->language->get('error_telephone');
 				}
 
@@ -94,17 +188,17 @@ class ControllerCheckoutSimple extends Controller {
 					$json['error']['telephone'] = $this->language->get('error_p_exists');
 				}
 
-				if((utf8_strlen($this->request->post['email']) > 0)) {
-					if((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
-						$json['error']['email'] = $this->language->get('error_email');
-					}
+				// if((utf8_strlen($this->request->post['email']) > 0)) {
+				// 	if((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+				// 		$json['error']['email'] = $this->language->get('error_email');
+				// 	}
 
-					if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
-						$json['error']['email'] = $this->language->get('error_exists');
-					}
-				} else {
-					$json['error']['telephone'] = $this->language->get('error_telephone');
-				}
+				// 	if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
+				// 		$json['error']['email'] = $this->language->get('error_exists');
+				// 	}
+				// } else {
+				// 	$json['error']['telephone'] = $this->language->get('error_telephone');
+				// }
 
 				// if ((utf8_strlen(trim($this->request->post['address_1'])) < 3) || (utf8_strlen(trim($this->request->post['address_1'])) > 128)) {
 				// 	$json['error']['address_1'] = $this->language->get('error_address_1');
@@ -166,12 +260,14 @@ class ControllerCheckoutSimple extends Controller {
 			}
 
 			if (!$json) {
+				$password = $this->model_account_customer->getNewPassword();
+
 				$customer = array(
 					'firstname' 	=> 	$this->request->post['firstname'],
-					'lastname' 		=> 	$this->request->post['lastname'],
-					'email' 		=> 	$this->request->post['email'],
+					'lastname' 		=> 	'',
+					'email' 		=> 	$this->request->post['telephone'] . "@scarfinity.ru",
 					'telephone' 	=> 	$this->request->post['telephone'],
-					'password' 		=> 	'password',
+					'password' 		=> 	$password,
 					'company' 		=> 	'',
 					'address_1' 	=> 	'',
 					'address_2' 	=> 	'',
@@ -181,6 +277,10 @@ class ControllerCheckoutSimple extends Controller {
 					'country_id' 	=> 	'',
 					'zone_id' 		=> 	1,
 				);
+
+				$this->sendRegistrationSms($customer);
+
+				//tt();
 
 				$customer_id = $this->model_account_customer->addCustomer($customer);
 
@@ -471,7 +571,6 @@ class ControllerCheckoutSimple extends Controller {
 
 			if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
 				$json['error']['warning'] = $this->language->get('error_shipping');
-				$json['asdfasdfdsf'] = isset($this->session->data['shipping_methods']);
 			}
 		}
 
@@ -694,8 +793,19 @@ class ControllerCheckoutSimple extends Controller {
 
 			$recurring = $this->cart->hasRecurringProducts();
 
-			foreach ($results as $result) {
-				if ($this->config->get('payment_' . $result['code'] . '_status')) {
+			$payment_methods_hard = array(
+				0 => array(
+					'code' => 'cod',
+					'status' => true
+				),
+				1 => array(
+					'code' => 'sber_online',
+					'status' => true
+				)
+			);
+
+			foreach ($payment_methods_hard as $result) {
+				if ($result['status']) {
 					$this->load->model('extension/payment/' . $result['code']);
 
 					$method = $this->{'model_extension_payment_' . $result['code']}->getMethod($this->session->data['payment_address'], $total);
@@ -1000,7 +1110,7 @@ class ControllerCheckoutSimple extends Controller {
 			if ($this->cart->hasShipping()) {
 				$order_data['shipping_firstname'] = $this->session->data['shipping_address']['firstname'];
 				$order_data['shipping_lastname'] = $this->session->data['shipping_address']['lastname'];
-				$order_data['shipping_company'] = ''; //$this->session->data['shipping_address']['company'];
+				$order_data['shipping_company'] = $this->session->data['shipping_address']['company'];
 				$order_data['shipping_address_1'] = ''; //$this->session->data['shipping_address']['address_1'];
 				$order_data['shipping_address_2'] = ''; //$this->session->data['shipping_address']['address_2'];
 				$order_data['shipping_city'] = ''; //$this->session->data['shipping_address']['city'];
@@ -1156,7 +1266,11 @@ class ControllerCheckoutSimple extends Controller {
 
 			$this->load->model('checkout/order');
 
-			$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
+			$order_id = $this->model_checkout_order->addOrder($order_data);
+
+			$this->session->data['order_id'] = $order_id;
+
+			$this->sendOrderPostSms($order_id);
 
 			$this->load->model('tool/upload');
 
@@ -1469,7 +1583,7 @@ class ControllerCheckoutSimple extends Controller {
 				if(isset($shipping[0]) && isset($shipping[1]) && isset($this->session->data['shipping_methods'][$shipping[0]]['fields'])) {
 					foreach($this->session->data['shipping_methods'][$shipping[0]]['fields'] as $field) {
 						if($field['required']) {
-							if((utf8_strlen(trim($this->request->post[$field['name']])) < 3) || (utf8_strlen(trim($this->request->post[$field['name']])) > 128)) {
+							if((utf8_strlen(trim($this->request->post[$field['name']])) < 1) || (utf8_strlen(trim($this->request->post[$field['name']])) > 128)) {
 								$json['error'][$field['name']] = $field['error'];
 							}
 						}
@@ -1850,7 +1964,95 @@ class ControllerCheckoutSimple extends Controller {
 
 			$this->load->model('checkout/order');
 
-			$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
+			$order_id = $this->model_checkout_order->addOrder($order_data);
+
+			$this->session->data['order_id'] = $order_id;
+
+			$this->sendOrderPostSms($order_id);
+
+			$this->load->model('tool/upload');
+
+			$data['products'] = array();
+
+			foreach ($this->cart->getProducts() as $product) {
+				$option_data = array();
+
+				foreach ($product['option'] as $option) {
+					if ($option['type'] != 'file') {
+						$value = $option['value'];
+					} else {
+						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+
+						if ($upload_info) {
+							$value = $upload_info['name'];
+						} else {
+							$value = '';
+						}
+					}
+
+					$option_data[] = array(
+						'name'  => $option['name'],
+						'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
+					);
+				}
+
+				$recurring = '';
+
+				if ($product['recurring']) {
+					$frequencies = array(
+						'day'        => $this->language->get('text_day'),
+						'week'       => $this->language->get('text_week'),
+						'semi_month' => $this->language->get('text_semi_month'),
+						'month'      => $this->language->get('text_month'),
+						'year'       => $this->language->get('text_year'),
+					);
+
+					if ($product['recurring']['trial']) {
+						$recurring = sprintf($this->language->get('text_trial_description'), $this->currency->format($this->tax->calculate($product['recurring']['trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['trial_cycle'], $frequencies[$product['recurring']['trial_frequency']], $product['recurring']['trial_duration']) . ' ';
+					}
+
+					if ($product['recurring']['duration']) {
+						$recurring .= sprintf($this->language->get('text_payment_description'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
+					} else {
+						$recurring .= sprintf($this->language->get('text_payment_cancel'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
+					}
+				}
+
+				$data['products'][] = array(
+					'cart_id'    => $product['cart_id'],
+					'product_id' => $product['product_id'],
+					'name'       => $product['name'],
+					'model'      => $product['model'],
+					'option'     => $option_data,
+					'recurring'  => $recurring,
+					'quantity'   => $product['quantity'],
+					'subtract'   => $product['subtract'],
+					'price'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
+					'total'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']),
+					'href'       => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+				);
+			}
+
+			// Gift Voucher
+			$data['vouchers'] = array();
+
+			if (!empty($this->session->data['vouchers'])) {
+				foreach ($this->session->data['vouchers'] as $voucher) {
+					$data['vouchers'][] = array(
+						'description' => $voucher['description'],
+						'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency'])
+					);
+				}
+			}
+
+			$data['totals'] = array();
+
+			foreach ($order_data['totals'] as $total) {
+				$data['totals'][] = array(
+					'title' => $total['title'],
+					'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
+				);
+			}
 
 			// $data['payment'] = $this->load->controller('extension/payment/' . $this->session->data['payment_method']['code']);
 		} else {

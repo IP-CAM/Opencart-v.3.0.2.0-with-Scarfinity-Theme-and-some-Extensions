@@ -2,6 +2,7 @@
 {% import 'scarfinity/template/components/utility/basic-input.twig' as basicInput %}
 
 {% set tabAnonymousContent %}
+    <p>Введите имя и номер телефона. На указанный номер придет смс с паролем к личному кабинету.</p>
     {{ 
         basicInput.basicInput({
             label: entry_firstname,
@@ -13,7 +14,7 @@
             required: true
         })
     }}
-    {{ 
+    {# {{ 
         basicInput.basicInput({
             label: entry_lastname,
             value: lastname,
@@ -23,7 +24,7 @@
             placeholder: entry_lastname,
             required: true
         })
-    }}
+    }} #}
     {{ 
         basicInput.basicInput({
             label: entry_telephone,
@@ -35,7 +36,7 @@
             required: true
         })
     }}
-    {{ 
+    {# {{ 
         basicInput.basicInput({
             label: entry_email,
             value: email,
@@ -44,7 +45,7 @@
             type: 'email',
             placeholder: entry_email
         })
-    }}
+    }} #}
 {% endset %}
 
 {% set tabRegisteredContent %}
@@ -88,7 +89,7 @@
             disabled: true
         })
     }}
-    {{ 
+    {# {{ 
         basicInput.basicInput({
             label: entry_lastname,
             value: customer.lastname,
@@ -98,7 +99,7 @@
             placeholder: 'Имя',
             disabled: true
         })
-    }}
+    }} #}
     {{ 
         basicInput.basicInput({
             label: entry_telephone,
@@ -106,11 +107,11 @@
             name: 'telephone',
             group: 'customer',
             type: 'phone',
-            placeholder: 'Телефон',
+            placeholder: 'Телефон +7(',
             disabled: true
         })
     }} 
-    {{ 
+    {# {{ 
         basicInput.basicInput({
             label: entry_email,
             value: customer.email,
@@ -120,7 +121,7 @@
             placeholder: 'E-mail',
             disabled: true
         })
-    }}
+    }} #}
 
     <script type="text/javascript">
         var inputs = $('.sInput[data-group="customer"]').each(function() {

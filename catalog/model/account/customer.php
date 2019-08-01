@@ -154,5 +154,9 @@ class ModelAccountCustomer extends Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_affiliate` WHERE `tracking` = '" . $this->db->escape($tracking) . "'");
 
 		return $query->row;
-	}			
+	}	
+	
+	public function getNewPassword($length = 8) {
+		return token($length);
+	}
 }

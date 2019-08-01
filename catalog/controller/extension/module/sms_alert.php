@@ -15,7 +15,7 @@ class ControllerExtensionModuleSmsAlert extends Controller {
 				if (in_array($status, $this->config->get('module_sms_alert_processing_status'))) {
 
 					$req = "http://sms.ru/sms/send?api_id=" . $this->config->get('module_sms_alert_id') . "&to=" . $this->config->get('module_sms_alert_tel') . "&text=".urlencode($this->language->get('text_order') . $order_id);
-					file_get_contents($req);
+					// file_get_contents($req);
 					
 					// тест запроса
 					// $this->log->write($req);
@@ -23,5 +23,4 @@ class ControllerExtensionModuleSmsAlert extends Controller {
 			}
 		}
 	}
-
 }

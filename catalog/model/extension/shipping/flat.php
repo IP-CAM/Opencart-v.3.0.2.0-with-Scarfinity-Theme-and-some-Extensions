@@ -46,9 +46,63 @@ class ModelExtensionShippingFlat extends Model {
 			'name'			=> 'address_1',
 			'label'			=> 'Адрес доставки',
 			'placeholder'	=> 'Адрес доставки',
-			'sort_order'	=> 0,
+			'sort_order'	=> 1,
 			'required'		=> true,
 			'error'			=> 'Адрес должен быть от 3 до 128 символов!'
+		);
+
+		$transport = array(
+			0 => array(
+				'name' 		=> "ТК 'Энергия'",
+				'address' 	=> '',
+				'telephone' => ''
+			),
+			1 => array(
+				'name' 		=> "ТК 'Деловые Линии'",
+				'address' 	=> '',
+				'telephone' => ''
+			),
+			2 => array(
+				'name' 		=> "ТК 'ПЭК'",
+				'address' 	=> '',
+				'telephone' => ''
+			),
+			3 => array(
+				'name' 		=> "ТК 'Байкал-сервис'",
+				'address' 	=> '',
+				'telephone' => ''
+			),
+			4 => array(
+				'name' 		=> "ТК 'РАТЭК'",
+				'address' 	=> '',
+				'telephone' => ''
+			),
+			5 => array(
+				'name' 		=> "ТК 'ЖелДорЭкспедиция'",
+				'address' 	=> '',
+				'telephone' => ''
+			),
+			6 => array(
+				'name' 		=> "CDEK",
+				'address' 	=> '',
+				'telephone' => ''
+			),
+			7 => array(
+				'name' 		=> "EMS Почта России",
+				'address' 	=> '',
+				'telephone' => ''
+			),
+		);
+
+		$fields[] = array(
+			'type'			=> 'select',
+			'name'			=> 'company',
+			'label'			=> 'Выберете транспортную компанию',
+			'placeholder'	=> 'Транспортная компания',
+			'options'		=> $transport,
+			'sort_order'	=> 0,
+			'required'		=> true,
+			'error'			=> 'Выберете транспортную компанию!'
 		);
 
 		return $fields;
