@@ -1,7 +1,7 @@
 {% macro BasicInput(props) %}
     <div class="sInput-container{{props.required ? ' required': ''}}{{ props.hidden and props.hidden == true ? ' hidden': ''}}">
         {% set id = props.id|default(random()) %}
-        {% if props.label %}
+        {% if props.label and props.type != 'hidden' %}
             <label for="{{id}}">{{props.label}}:</label>
         {% endif %}
         <div>

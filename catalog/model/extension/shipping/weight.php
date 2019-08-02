@@ -91,6 +91,18 @@ class ModelExtensionShippingWeight extends Model {
 		$fields = array();
 
 		$fields[] = array(
+			'type'			=> 'hidden',
+			'name'			=> 'city',
+			'value'			=> 'Новосибирск',
+			'label'			=> 'Выберите город',
+			'placeholder'	=> 'Выберите город',
+			'sort_order'	=> 0,
+			'required'		=> true,
+			'error'			=> 'Выберите город!',
+			'hidden'		=> true
+		);
+
+		$fields[] = array(
 			'type'			=> 'text',
 			'name'			=> 'company',
 			'label'			=> 'Номер автобуса',

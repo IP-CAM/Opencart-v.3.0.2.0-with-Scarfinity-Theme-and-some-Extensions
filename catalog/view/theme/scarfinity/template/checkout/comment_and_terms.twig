@@ -1,0 +1,31 @@
+{% import 'scarfinity/template/components/utility/select-box.twig' as _selectBox %}
+{% import 'scarfinity/template/components/utility/basic-input.twig' as _basicInput %}
+
+<span class="cart-strong">Комментарий к заказу</span>
+{{
+  _basicInput.TextArea({
+    group: 'additional',
+    rows: 8,
+    name: 'comment',
+    placeholder: text_comments
+  })
+}}
+<br /><br />
+{% if text_agree %}
+  {{ 
+    _selectBox.CheckBox({
+      group: 'terms',
+      name: 'agree',
+      value: '',
+      label: text_agree
+    }) 
+  }}
+{% endif %}
+
+<script type="text/javascript">
+    var comment = '{{comment}}';
+    $('.sInputTextArea textarea[name$="comment"]').val(comment).trigger('input');
+
+    var agree = '{{agree}}';
+    $('.select-box input[type="checkbox"][data-group$="terms"][name$="agree"]').prop('checked', agree ? true : false).change();
+</script>

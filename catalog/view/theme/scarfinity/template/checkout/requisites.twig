@@ -8,6 +8,7 @@
 {% import 'scarfinity/template/components/cart/bottom-navigation.twig' as _bottomNavigation %}
 {% import 'scarfinity/template/components/cart/radio-box-group.twig' as _radioBoxGroup %}
 {% import 'scarfinity/template/components/utility/select-box.twig' as _selectBox %}
+{% import 'scarfinity/template/components/utility/basic-input.twig' as _basicInput %}
 
 {{ header }}
 {{ _breadcrumbs.Breadcrumbs({ breadcrumbs: breadcrumbs, topOffset: 0 }) }}
@@ -30,15 +31,39 @@
                 <div class="payments" id="cart-checkout-payments">
                     <div class="requisites-row row">
                         <div class="col-md-6 col-sm-12">
-                            <span class="requisites-title"><b>Аддрес </b>доставки</span>
+                            {# <span class="requisites-title"><b>Аддрес </b>доставки</span>
                             <div id="cart-checkout-requisites-shipping" class=""></div>
-                            <hr >
+                            <hr > #}
                             <span class="requisites-title"><b>Способ </b>доставки</span>
                             <div id="cart-checkout-requisites-shipping-method"></div>
+                            <div id="cart-checkout-payments-method"></div>
                         </div>
                         <div class="col-md-6 col-sm-12">
-                            <span class="requisites-title">Способ <b>оплаты</b></span>
-                            <div id="cart-checkout-payments-method"></div>
+                            {# <span class="requisites-title">Способ <b>оплаты</b></span>
+                            <div id="cart-checkout-payments-method"></div> #}
+                            <span class="requisites-title">Дополнительная <b>информация</b></span>
+                            <div id="cart-checkout-comment-and-terms">
+                                <span class="cart-strong">Комментарий к заказу</span>
+                                {{
+                                    _basicInput.TextArea({
+                                        group: 'additional',
+                                        rows: 8,
+                                        name: 'comment',
+                                        placeholder: text_comments
+                                    })
+                                }}
+                                <br /><br />
+                                {% if text_agree %}
+                                    {{ 
+                                        _selectBox.CheckBox({
+                                        group: 'terms',
+                                        name: 'agree',
+                                        value: '',
+                                        label: text_agree
+                                        }) 
+                                    }}
+                                {% endif %}
+                            </div>
                         </div>
                         <div class="requisites-row__delim hidden-sm"></div>
                     </div>
@@ -58,23 +83,40 @@
 </div>
 
 <script type="text/javascript">
-    checkout.shippingAddressGet({
-        success: function(html) {
-            $('#cart-checkout-requisites-shipping').html(html);
 
-            checkout.paymentMethodsGet({
-                success: function(html) {
-                    $('#cart-checkout-payments-method').html(html);
-                }
-            });
-        }
-    });
+    $(document).ready(function() {
+        checkout.shippingMethodsGet({
+            success: function(html) {
+                $('#cart-checkout-requisites-shipping-method').html(html);
+                $('#cart-button-next').prop('disabled', false);
+            }
+        });
+    });    
+
+    var comment = '{{comment}}';
+    $('.sInputTextArea textarea[name$="comment"]').val(comment).trigger('input');
+
+    var agree = '{{agree}}';
+    $('.select-box input[type="checkbox"][data-group$="terms"][name$="agree"]').prop('checked', agree ? true : false).change();
+
 </script>
 
 {# Form events #}
 <script type="text/javascript">
     var ui = {
         shippingMethodChange: function(form, shippingMethodCode) {
+            console.warn('ShippingMethodChanged!');
+
+            $('#cart-checkout-payments-method').html('');
+            
+            if(checkout) {
+                checkout.paymentMethodsGet({
+                    success: function(html) {
+                        $('#cart-checkout-payments-method').html(html);
+                    }
+                });
+            }
+
             $('form[name^=shipping_method_fields]')
                 .addClass('hidden');
 
@@ -101,6 +143,8 @@
                         $('#cart-button-next').prop('disabled', true);
                     }),
                     success: function(json) {
+                        console.log(json);
+
                         checkout.confirm({
                             beforeSend: ui.beforeSend('cart-checkout-payments', function() {
                                 $('#cart-button-next').prop('disabled', true);
@@ -158,24 +202,6 @@
             }
         }
     };
-
-    var shippingMethodsTimeout = null;
-    $(document).delegate('#checkout-requisites .sInput[name$="city"]', 'input', function() {
-        clearTimeout(shippingMethodsTimeout);
-
-        shippingMethodsTimeout = setTimeout(function() {
-            clearTimeout(shippingMethodsTimeout);
-
-            if(checkout) {
-                checkout.shippingMethodsGet({
-                    success: function(html) {
-                        $('#cart-checkout-requisites-shipping-method').html(html);
-                        $('#cart-button-next').prop('disabled', false);
-                    }
-                });
-            }
-        }, 800);
-    });
 </script>
 {# Form events end #}
 
@@ -200,6 +226,8 @@
         var name = target.attr('name');
         var value = target.val();
         var checked = target.attr('checked');
+
+        console.log(name, group, value);
 
         if(checkout[group]) {
             if(type == 'radio') {
@@ -229,8 +257,32 @@
         }
     });
 
+    // Kladr city
+    $(document).delegate('#input-shipping-country', 'change', function() {
+        var target = $(this);
+        var value = target.val();
+
+        console.log(value);
+
+        if($.kladr) {
+            if(value == 176) {
+                $('.sInput[data-group="shipping_address"][name$="city"]').kladr({
+                    type: $.kladr.type.city,
+                    select: function(obj) {
+                        console.log(obj);
+                        $(this).trigger('input');
+                    }
+                });
+            } else {
+                $('.sInput[data-group="shipping_address"][name$="city"]').kladr = undefined;
+            }
+        }
+    });
+
     // Сохранение реквизитов доставки
     $('#cart-button-next').on('click', function() {
         ui.shippingAndPaymentsSave();
     });
 </script>
+
+{{ footer }}

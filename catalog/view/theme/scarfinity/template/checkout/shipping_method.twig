@@ -3,6 +3,7 @@
 {% import 'scarfinity/template/components/utility/basic-input.twig' as basicInput %}
 {% import 'scarfinity/template/components/utility/drop-down.twig' as _dropDown %}
 
+<h1>{{error_warning}}</h1>
 {% if error_warning %}
     <div class="alert alert-warning alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
 {% endif %}
@@ -42,17 +43,20 @@
         {% for key, shipping_method in shipping_methods %}
             <form name="shipping_method_fields_{{key}}" class="hidden">
                 {% for field in shipping_method.fields %}
-                    {% if field.type == 'text' %}
+                    {% if field.type == 'text' or field.type == 'hidden' %}
                         {{
                             basicInput.basicInput({
+                                id: field.id,
                                 label: field.label,
-                                value: '',
+                                value: field.value|default(''),
                                 name: field.name,
                                 group: 'shipping_address',
                                 code: key,
                                 type: field.type,
                                 required: field.required,
-                                placeholder: field.placeholder
+                                placeholder: field.placeholder,
+                                hidden: field.hidden,
+                                disabled: field.disabled
                             })
                         }}
                     {% elseif field.type == 'select' %}

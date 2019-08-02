@@ -804,11 +804,13 @@ class ControllerCheckoutSimple extends Controller {
 				)
 			);
 
+			$data['test'] = $this->request->post['shipping_method'];
+
 			foreach ($payment_methods_hard as $result) {
 				if ($result['status']) {
 					$this->load->model('extension/payment/' . $result['code']);
 
-					$method = $this->{'model_extension_payment_' . $result['code']}->getMethod($this->session->data['payment_address'], $total);
+					$method = $this->{'model_extension_payment_' . $result['code']}->getMethod($this->request->post['shipping_method'], $total);
 
 					if ($method) {
 						if ($recurring) {
@@ -851,13 +853,17 @@ class ControllerCheckoutSimple extends Controller {
 			$data['code'] = '';
 		}
 
+		$this->response->setOutput($this->load->view('checkout/payment_method', $data));
+	}
+
+	public function commentAndTermsGet() {
+		$this->load->language('checkout/checkout');
+
 		if (isset($this->session->data['comment'])) {
 			$data['comment'] = $this->session->data['comment'];
 		} else {
 			$data['comment'] = '';
 		}
-
-		$data['scripts'] = $this->document->getScripts();
 
 		if ($this->config->get('config_checkout_id')) {
 			$this->load->model('catalog/information');
@@ -879,7 +885,7 @@ class ControllerCheckoutSimple extends Controller {
 			$data['agree'] = '';
 		}
 
-		$this->response->setOutput($this->load->view('checkout/payment_method', $data));
+		$this->response->setOutput($this->load->view('checkout/comment_and_terms', $data));
 	}
 
 	public function paymentMethodSave() {
@@ -1497,16 +1503,19 @@ class ControllerCheckoutSimple extends Controller {
 		// Validate if customer is logged in.
 		if (!$this->customer->isLogged()) {
 			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
+			$this->log->write('qwer: no loggin');
 		}
 
 		// Validate if shipping is required. If not the customer should not have reached this page.
 		if (!$this->cart->hasShipping()) {
 			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
+			$this->log->write('qwer: no shipping');
 		}
 
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$json['redirect'] = $this->url->link('checkout/cart');
+			$this->log->write('qwer: no products');
 		}
 
 		// Validate minimum quantity requirements.
@@ -1573,6 +1582,7 @@ class ControllerCheckoutSimple extends Controller {
 			// Валидация способа доставки
 			if (!isset($this->request->post['shipping_method'])) {
 				$json['error']['shipping_methods'] = $this->language->get('error_shipping');
+				$this->log->write('checkout_save.shipping_method: not isset');
 			} else {
 				$shipping = explode('.', $this->request->post['shipping_method']);
 
@@ -1585,6 +1595,7 @@ class ControllerCheckoutSimple extends Controller {
 						if($field['required']) {
 							if((utf8_strlen(trim($this->request->post[$field['name']])) < 1) || (utf8_strlen(trim($this->request->post[$field['name']])) > 128)) {
 								$json['error'][$field['name']] = $field['error'];
+								$this->log->write('checkout_save.shipping_method: custom field');
 							}
 						}
 					}
@@ -1593,9 +1604,9 @@ class ControllerCheckoutSimple extends Controller {
 
 			// Валидация способа оплаты
 			if (!isset($this->request->post['payment_method'])) {
-				$json['error']['warning'] = $this->language->get('error_payment');
+				$json['error']['payment_methods'] = $this->language->get('error_payment');
 			} elseif (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
-				$json['error1']['warning'] = $this->language->get('error_payment');
+				$json['error']['payment_methods'] = $this->language->get('error_payment');
 			}
 
 			if ($this->config->get('config_checkout_id')) {

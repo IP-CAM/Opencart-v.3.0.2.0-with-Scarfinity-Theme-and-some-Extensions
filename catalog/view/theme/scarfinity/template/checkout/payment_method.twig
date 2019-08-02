@@ -5,7 +5,8 @@
   <div class="alert alert-warning alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
 {% endif %}
 {% if payment_methods %}
-  <div class="radio-box-group">
+  <span class="requisites-title">Способ <b>оплаты</b></span>
+  <div class="radio-box-group" data-name="payment_methods">
     <span class="radio-box-group__title">{{ text_payment_method }}</span>
       {% for payment_method in payment_methods %}
         <div class="radio-box-group__item">
@@ -21,30 +22,11 @@
       {% endfor %}
   </div>
 {% endif %}
-<span class="cart-strong">Комментарий к заказу</span>
-{{
-  _basicInput.TextArea({
-    group: 'additional',
-    rows: 8,
-    name: 'comment',
-    placeholder: text_comments
-  })
-}}
-<br /><br />
-{% if text_agree %}
-  {{ 
-    _selectBox.CheckBox({
-      group: 'terms',
-      name: 'agree',
-      value: '',
-      label: text_agree
-    }) 
-  }}
-{% endif %}
 
 <script type="text/javascript">
     var code = '{{code}}';
-    $('.select-box input[type="radio"][name$="payment_method"]').each(function() {
+    console.log('CODE: ', code);
+    /*$('.select-box input[type="radio"][name$="payment_method"]').each(function() {
         if(code == '') {
           code = $(this).val();
           $(this).attr('checked', 'checked').prop("checked", true).change();
@@ -53,11 +35,13 @@
               $(this).attr('checked', 'checked').prop("checked", true).change();
           }
         }
-    });
+    });*/
 
-    var comment = '{{comment}}';
-    $('.sInputTextArea textarea[name$="comment"]').val(comment).trigger('input');
-
-    var agree = '{{agree}}';
-    $('.select-box input[type="checkbox"][data-group$="terms"][name$="agree"]').prop('checked', agree ? true : false).change();
+    if(code != '') {
+      $('.select-box input[type="radio"][name$="payment_method"]').each(function() {
+        if($(this).val() == code) {
+          $(this).attr('checked', 'checked').prop("checked", true).change();
+        }
+      });
+    }
 </script>

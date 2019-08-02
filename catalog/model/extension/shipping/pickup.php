@@ -55,6 +55,19 @@ class ModelExtensionShippingPickup extends Model {
 		}
 
 		$fields[] = array(
+			'type'			=> 'text',
+			'name'			=> 'city',
+			'value'			=> 'Новосибирск',
+			'label'			=> 'Выберите город',
+			'placeholder'	=> 'Выберите город',
+			'sort_order'	=> 0,
+			'required'		=> true,
+			'error'			=> 'Выберите город!',
+			'hidden'		=> false,
+			'disabled'		=> true
+		);
+
+		$fields[] = array(
 			'type'			=> 'select',
 			'name'			=> 'address_1',
 			'label'			=> 'Выберете магазин',

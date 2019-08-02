@@ -41,16 +41,6 @@ class ModelExtensionShippingFlat extends Model {
 	public function getFields() {
 		$fields = array();
 
-		$fields[] = array(
-			'type'			=> 'text',
-			'name'			=> 'address_1',
-			'label'			=> 'Адрес доставки',
-			'placeholder'	=> 'Адрес доставки',
-			'sort_order'	=> 1,
-			'required'		=> true,
-			'error'			=> 'Адрес должен быть от 3 до 128 символов!'
-		);
-
 		$transport = array(
 			0 => array(
 				'name' 		=> "ТК 'Энергия'",
@@ -103,6 +93,41 @@ class ModelExtensionShippingFlat extends Model {
 			'sort_order'	=> 0,
 			'required'		=> true,
 			'error'			=> 'Выберете транспортную компанию!'
+		);
+
+		$fields[] = array(
+			'type'			=> 'hidden',
+			'id'			=> 'input-shipping-country',
+			'name'			=> 'country',
+			'value'			=> '176',
+			'label'			=> 'Выберите страну',
+			'placeholder'	=> 'Выберите страну',
+			'sort_order'	=> 0,
+			'required'		=> true,
+			'error'			=> 'Выберите страну!',
+			'disabled'		=> false
+		);
+
+		$fields[] = array(
+			'type'			=> 'text',
+			'name'			=> 'city',
+			'value'			=> '',
+			'label'			=> 'Выберите город',
+			'placeholder'	=> 'Выберите город',
+			'sort_order'	=> 0,
+			'required'		=> true,
+			'error'			=> 'Выберите город!',
+			'disabled'		=> false
+		);
+		
+		$fields[] = array(
+			'type'			=> 'text',
+			'name'			=> 'address_1',
+			'label'			=> 'Адрес доставки',
+			'placeholder'	=> 'Адрес доставки',
+			'sort_order'	=> 1,
+			'required'		=> true,
+			'error'			=> 'Адрес должен быть от 3 до 128 символов!'
 		);
 
 		return $fields;

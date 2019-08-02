@@ -40,6 +40,10 @@ var checkout = {
     additional: {
         comment: ''
     },
+    __redirect: function(redirectLocation) {
+        // alert('Redirect: ' + redirectLocation);
+        location = redirectLocation;
+    },
     __error: function(action) {
         return function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -62,9 +66,8 @@ var checkout = {
                 $('#button-login').button('reset');
             },
             success: function(json) {
-                console.log(json);
                 if (json['redirect']) {
-                    location = json['redirect'];
+                    checkout.__redirect(json['redirect']);
                 } else if (json['error']) {
                     if(actions['error']) actions['error'](json['error']);
                 }
@@ -85,7 +88,7 @@ var checkout = {
             beforeSend: function() {},
             success: function(json) {
                 if(json['redirect']) {
-                    location = json['redirect'];
+                    checkout.__redirect(json['redirect']);
                 } else if(json['error']) {
                     if(actions['error']) actions['error'](json['error']);
                 } else {
@@ -120,7 +123,7 @@ var checkout = {
             beforeSend: function() {},
             success: function(json) {
                 if(json['redirect']) {
-                    location = json['redirect'];
+                    checkout.__redirect(json['redirect']);
                 } else if(json['error']) {
                     console.warn('Shipping address save errors!', json['error']);
                 } else {
@@ -151,8 +154,12 @@ var checkout = {
     paymentMethodsGet: function(actions = {}) {
         var checkout = this;
 
+        checkout.payment_method.payment_method = '';
+
         $.ajax({
             url: 'index.php?route=checkout/simple/paymentMethodsGet',
+            method: 'post',
+            data: { 'shipping_method' : checkout.shipping_method.shipping_method },
             dataType: 'html',
             beforeSend: actions['beforeSend'],
             success: function(html) {
@@ -175,8 +182,9 @@ var checkout = {
                 if(actions['beforeSend']) actions['beforeSend']();
             },
             success: function(json) {
+                console.log(json);
                 if(json['redirect']) {
-                    location = json['redirect'];
+                    checkout.__redirect(json['redirect']);
                 } else if(json['error']){
                     if(actions['error']) actions['error'](json['error']);
                 } else {
@@ -189,6 +197,21 @@ var checkout = {
             }
         });
     },
+    commentAndTermsGet: function(actions = {}) {
+        var checkout = this;
+
+        $.ajax({
+            url: 'index.php?route=checkout/simple/commentAndTermsGet',
+            method: 'post',
+            dataType: 'html',
+            beforeSend: actions['beforeSend'],
+            success: function(html) {
+                console.log('Comment and terms loaded!');
+                if(actions['success']) actions['success'](html);
+            },
+            error: checkout.__error(actions['error'])
+        });
+    },
     confirm: function(actions = {}) {
         var checkout = this;
 
@@ -198,7 +221,7 @@ var checkout = {
             dataType: 'json',
             success: function(json) {
                 if(json['redirect']) {
-                    location = json['redirect'];
+                    checkout.__redirect(json['redirect']);
                 } else {
                     if(actions['success']) actions['success'](json);
                 }
@@ -213,7 +236,7 @@ var checkout = {
             url: 'index.php?route=extension/payment/cod/confirm',
             dataType: 'json',
             success: function(json) {
-                location = json['redirect'];
+                checkout.__redirect(json['redirect']);
             },
             error: checkout.__error(actions['error'])
         });
