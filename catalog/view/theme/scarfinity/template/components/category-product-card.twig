@@ -57,7 +57,7 @@
             <div class="product-card-catalog__description__rating colors-mfp">
                 {{ ratingBox.ratingBox(product.rating) }}
 
-                {% set colorCount = product.props['color']|default(1) %}
+                {% set colorCount = product.isbn|default(1) %}
                 {% set color_image_href = product.images|first %}
                 {% if colorCount > 1 %}
                     {% set color_image_href = product.images|last %}

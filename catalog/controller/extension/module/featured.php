@@ -74,6 +74,7 @@ class ControllerExtensionModuleFeatured extends Controller {
 
 					$data['products'][] = array(
 						'product_id'  => $product_info['product_id'],
+						'isbn'		  => $result['isbn'],
 						'image'       => $image,
 						'images'      => $images,
 						'name'        => $product_info['name'],
