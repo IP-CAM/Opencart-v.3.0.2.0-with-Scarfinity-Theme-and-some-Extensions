@@ -9,6 +9,8 @@
     {% import 'scarfinity/template/components/utility/_icons.twig' as _icons %}
     {% import 'scarfinity/template/components/lib/currying.twig' as _currying %}
 
+    {% set lazy = true %}
+
     {% set swiper_id = product.product_id ~ random() %}
     {% set swiper = true %}
 
@@ -22,7 +24,11 @@
                             <div class="swiper-wrapper">
                                 {% for image in product.images %}
                                 <div class="swiper-slide">
-                                    <img class="img-responsive" src="{{image.popup}}" alt="{{product.name}}" name="{{product.name}}"/>
+                                    {% if loop.index == 1 %}
+                                        <img class="img-responsive swiper-lazy-main" src="{{image.lazy}}" data-src="{{image.thumb}}" alt="{{product.name}}" name="{{product.name}}"/>
+                                    {% else %}
+                                        <img class="img-responsive swiper-lazy" data-src="{{image.thumb}}" alt="{{product.name}}" name="{{product.name}}"/>
+                                    {% endif %}
                                 </div>
                                 {% endfor %}
                             </div>
@@ -31,7 +37,7 @@
                             <div class="product-card-catalog__image__button product-card-catalog__image__button--next">{{ _icons.ChevronRight({ size: 14 }) }}</div>
                         </div>
                     {% else %}
-                        <img class="img-responsive" src="{{product.images[0].popup}}" alt="{{product.name}}" name="{{product.name}}"/>
+                        <img class="img-responsive" src="{{product.images[0].thumb}}" alt="{{product.name}}" name="{{product.name}}"/>
                         <a class="product-card-catalog__image__link" href="{{product.href}}"></a>
                     {% endif %}
                 </div>
@@ -54,7 +60,7 @@
         </div>
         
         <div class="product-card-catalog__description">
-            <div class="product-card-catalog__description__rating colors-mfp">
+            <div id="product-card-catalog-colors-{{swiper_id}}" class="product-card-catalog__description__rating colors-mfp">
                 {{ ratingBox.ratingBox(product.rating) }}
 
                 {% set colorCount = product.isbn|default(1) %}
@@ -92,9 +98,15 @@
     </div>
 
     <script type="text/javascript">
-		if(typeof Swiper) {
+        if(catalogProductCardController) {
+            console.log('Add productcard to controller. ID:', '{{swiper_id}}');
+            catalogProductCardController.add({ swiperId: '{{swiper_id}}' });
+        }
+        
+		/*if(typeof Swiper) {
 			new Swiper('#product-card-catalog-swiper-{{swiper_id}}', {
 				mode: 'horizontal',
+                lazy: true,
 				slidesPerView: 1,
                 navigation: {
                     nextEl: '.product-card-catalog__image__button--next',
@@ -120,6 +132,6 @@
             delegate: 'a',
             type: 'image',
             mainClass: 'mfp-with-zoom'
-        });
+        });*/
     </script>
 {% endmacro %}

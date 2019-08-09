@@ -18,6 +18,8 @@ gulp.task('browser-sync', function() {
 
 gulp.task('less', function() {
     console.log(bourbon.includePaths);
+    //.pipe(concatCss('stylesheet.css?v=' + Math.round(Date.now() / 1000 / 60)))
+
     return gulp.src('catalog/view/theme/scarfinity/stylesheet/**/*.less')
         .pipe(less({ paths: bourbon.includePaths }))
         .pipe(autoprefixer(['last 15 versions']))

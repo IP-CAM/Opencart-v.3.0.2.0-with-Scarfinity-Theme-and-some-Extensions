@@ -13,16 +13,18 @@
 		<h1 class="product-card-title">{{ props.headingTitle }}</h1>
 		<div class="row product-card-left" data-sticky-container>
 			<div class="col-sm-12 col-md-6 is-sticky-container">	
-				<div class="product-card-image-container is-sticky" data-margin-top="10" data-sticky-wrap data-sticky-for="768">
-					<div id="carousel-product-card-main-image" class="swiper-container">
-						<div class="swiper-wrapper">
-							{% for image in props.images %}
-								<div class="swiper-slide">
-									<a href="{{ image.popup }}" title="{{ heading_title }}">
-										{{ _imageContainer.imageContainer({ src: image.image }) }}
-									</a>
-								</div>
-							{% endfor %}
+				<div class="product-card-image-container is-sticky" style="max-width: 512px" data-margin-top="10" data-sticky-wrap data-sticky-for="768">
+					<div class="product-card-image-container__main">
+						<div id="carousel-product-card-main-image" class="swiper-container">
+							<div class="swiper-wrapper">
+								{% for image in props.images %}
+									<div class="swiper-slide">
+										<a href="{{ image.popup }}" title="{{ heading_title }}">
+											{{ _imageContainer.imageContainer({ src: image.image }) }}
+										</a>
+									</div>
+								{% endfor %}
+							</div>
 						</div>
 					</div>
 					{# <div id="product-card-main-thumb" class="product-card-image-container__main magnifier-thumb-wrapper">

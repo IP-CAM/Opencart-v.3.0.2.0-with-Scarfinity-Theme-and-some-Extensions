@@ -40,7 +40,7 @@ class ControllerExtensionModuleCategory extends Controller {
 
 		$categories = $this->model_catalog_category->getCategories(0);
 
-		$productsCount = $this->config->get('config_product_count') && ($data['category_id'] != 0);
+		$productsCount = $this->config->get('config_product_count') && (($data['category_id'] != 0) || $data['page_name'] == 'catalogs');
 
 		foreach ($categories as $category) {
 			$children_data = array();

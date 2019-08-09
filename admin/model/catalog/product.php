@@ -71,43 +71,41 @@ class ModelCatalogProduct extends Model {
 		}
 
 		// Auto discounts
-		// $discounts = array();
+		$discounts = array();
 
-		// $price = (float)$data['price'];
+		$price = (float)$data['price'];
 
-		// if (isset($data['product_special'])) {
-		// 	foreach ($data['product_special'] as $product_special) {
-		// 		$this->db->query("INSERT INTO " . DB_PREFIX . "product_special SET product_id = '" . (int)$product_id . "', customer_group_id = '" . (int)$product_special['customer_group_id'] . "', priority = '" . (int)$product_special['priority'] . "', price = '" . (float)$product_special['price'] . "', date_start = '" . $this->db->escape($product_special['date_start']) . "', date_end = '" . $this->db->escape($product_special['date_end']) . "'");
+		if (isset($data['product_special'])) {
+			foreach ($data['product_special'] as $product_special) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "product_special SET product_id = '" . (int)$product_id . "', customer_group_id = '" . (int)$product_special['customer_group_id'] . "', priority = '" . (int)$product_special['priority'] . "', price = '" . (float)$product_special['price'] . "', date_start = '" . $this->db->escape($product_special['date_start']) . "', date_end = '" . $this->db->escape($product_special['date_end']) . "'");
 			
-		// 		$special_price = (float)$product_special['price'];
-		// 		$priority = (int)$product_special['priority'];
-		// 		$date_start = $this->db->escape($product_special['date_start']);
-		// 		$date_end = $this->db->escape($product_special['date_end']);
+				$special_price = (float)$product_special['price'];
+				$priority = (int)$product_special['priority'];
+				$date_start = $this->db->escape($product_special['date_start']);
+				$date_end = $this->db->escape($product_special['date_end']);
 
-		// 		$discounts[] = array( 'customer_group_id' => 0, 'priority' => $priority, 'quantity' => 1, 'price' => $special_price * 2, 'date_start' => $date_start, 'date_end' => $date_end );
-		// 		$discounts[] = array('customer_group_id' => 0, 'priority' => $priority, 'quantity' => 3, 'price' => min(round($special_price / 0.74 / 5) * 5, $special_price + 40), 'date_start' => $date_start, 'date_end' => $date_end );
-		// 		$discounts[] = array( 'customer_group_id' => 0, 'priority' => $priority, 'quantity' => 5, 'price' => min(round($special_price / 0.93 / 5) * 5, $special_price + 20), 'date_start' => $date_start, 'date_end' => $date_end );
-		// 		$discounts[] = array( 'customer_group_id' => 0, 'priority' => $priority, 'quantity' => 10, 'price' => $special_price, 'date_start' => $date_start, 'date_end' => $date_end );
-		// 	}
-		// }
-
-		// $discounts[] = array( 'customer_group_id' => 0, 'priority' => 0, 'quantity' => 1, 'price' => $price * 2, 'date_start' => '', 'date_end' => '' );
-		// $discounts[] = array( 'customer_group_id' => 0, 'priority' => 0, 'quantity' => 3, 'price' => min(round($price / 0.74 / 5) * 5, $price + 40), 'date_start' => '', 'date_end' => '' );
-		// $discounts[] = array( 'customer_group_id' => 0, 'priority' => 0, 'quantity' => 5, 'price' => min(round($price / 0.93 / 5) * 5, $price + 20), 'date_start' => '', 'date_end' => '' );
-		// $discounts[] = array( 'customer_group_id' => 0, 'priority' => 0, 'quantity' => 10, 'price' => $price, 'date_start' => '', 'date_end' => '' );
-
-		// foreach ($discounts as $product_discount) {
-		// 	$this->db->query("INSERT INTO " . DB_PREFIX . "product_discount SET product_id = '" . (int)$product_id . "', customer_group_id = '" . (int)$product_discount['customer_group_id'] . "', quantity = '" . (int)$product_discount['quantity'] . "', priority = '" . (int)$product_discount['priority'] . "', price = '" . (float)$product_discount['price'] . "', date_start = '" . $this->db->escape($product_discount['date_start']) . "', date_end = '" . $this->db->escape($product_discount['date_end']) . "'");
-		// }
-
-
-
-		//55
-		if (isset($data['product_discount'])) {
-			foreach ($data['product_discount'] as $product_discount) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "product_discount SET product_id = '" . (int)$product_id . "', customer_group_id = '" . (int)$product_discount['customer_group_id'] . "', quantity = '" . (int)$product_discount['quantity'] . "', priority = '" . (int)$product_discount['priority'] . "', price = '" . (float)$product_discount['price'] . "', date_start = '" . $this->db->escape($product_discount['date_start']) . "', date_end = '" . $this->db->escape($product_discount['date_end']) . "'");
+				$discounts[] = array( 'customer_group_id' => 1, 'priority' => $priority, 'quantity' => 1, 'price' => $special_price * 2, 'date_start' => $date_start, 'date_end' => $date_end );
+				$discounts[] = array('customer_group_id' => 1, 'priority' => $priority, 'quantity' => 3, 'price' => min(round($special_price / 0.74 / 5) * 5, $special_price + 40), 'date_start' => $date_start, 'date_end' => $date_end );
+				$discounts[] = array( 'customer_group_id' => 1, 'priority' => $priority, 'quantity' => 5, 'price' => min(round($special_price / 0.93 / 5) * 5, $special_price + 20), 'date_start' => $date_start, 'date_end' => $date_end );
+				$discounts[] = array( 'customer_group_id' => 1, 'priority' => $priority, 'quantity' => 10, 'price' => $special_price, 'date_start' => $date_start, 'date_end' => $date_end );
 			}
 		}
+
+		$discounts[] = array( 'customer_group_id' => 1, 'priority' => 0, 'quantity' => 1, 'price' => $price * 2, 'date_start' => '', 'date_end' => '' );
+		$discounts[] = array( 'customer_group_id' => 1, 'priority' => 0, 'quantity' => 3, 'price' => min(round($price / 0.74 / 5) * 5, $price + 40), 'date_start' => '', 'date_end' => '' );
+		$discounts[] = array( 'customer_group_id' => 1, 'priority' => 0, 'quantity' => 5, 'price' => min(round($price / 0.93 / 5) * 5, $price + 20), 'date_start' => '', 'date_end' => '' );
+		$discounts[] = array( 'customer_group_id' => 1, 'priority' => 0, 'quantity' => 10, 'price' => $price, 'date_start' => '', 'date_end' => '' );
+
+		foreach ($discounts as $product_discount) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "product_discount SET product_id = '" . (int)$product_id . "', customer_group_id = '" . (int)$product_discount['customer_group_id'] . "', quantity = '" . (int)$product_discount['quantity'] . "', priority = '" . (int)$product_discount['priority'] . "', price = '" . (float)$product_discount['price'] . "', date_start = '" . $this->db->escape($product_discount['date_start']) . "', date_end = '" . $this->db->escape($product_discount['date_end']) . "'");
+		}
+
+		//55
+		// if (isset($data['product_discount'])) {
+		// 	foreach ($data['product_discount'] as $product_discount) {
+		// 		$this->db->query("INSERT INTO " . DB_PREFIX . "product_discount SET product_id = '" . (int)$product_id . "', customer_group_id = '" . (int)$product_discount['customer_group_id'] . "', quantity = '" . (int)$product_discount['quantity'] . "', priority = '" . (int)$product_discount['priority'] . "', price = '" . (float)$product_discount['price'] . "', date_start = '" . $this->db->escape($product_discount['date_start']) . "', date_end = '" . $this->db->escape($product_discount['date_end']) . "'");
+		// 	}
+		// }
 
 		if (isset($data['product_image'])) {
 			foreach ($data['product_image'] as $product_image) {
@@ -276,17 +274,17 @@ class ModelCatalogProduct extends Model {
 				$date_start = $this->db->escape($product_special['date_start']);
 				$date_end = $this->db->escape($product_special['date_end']);
 
-				$discounts[] = array( 'customer_group_id' => 0, 'priority' => $priority, 'quantity' => 1, 'price' => $special_price * 2, 'date_start' => $date_start, 'date_end' => $date_end );
-				$discounts[] = array('customer_group_id' => 0, 'priority' => $priority, 'quantity' => 3, 'price' => min(round($special_price / 0.74 / 5) * 5, $special_price + 40), 'date_start' => $date_start, 'date_end' => $date_end );
-				$discounts[] = array( 'customer_group_id' => 0, 'priority' => $priority, 'quantity' => 5, 'price' => min(round($special_price / 0.93 / 5) * 5, $special_price + 20), 'date_start' => $date_start, 'date_end' => $date_end );
-				$discounts[] = array( 'customer_group_id' => 0, 'priority' => $priority, 'quantity' => 10, 'price' => $special_price, 'date_start' => $date_start, 'date_end' => $date_end );
+				$discounts[] = array( 'customer_group_id' => 1, 'priority' => $priority, 'quantity' => 1, 'price' => $special_price * 2, 'date_start' => $date_start, 'date_end' => $date_end );
+				$discounts[] = array('customer_group_id' => 1, 'priority' => $priority, 'quantity' => 3, 'price' => min(round($special_price / 0.74 / 5) * 5, $special_price + 40), 'date_start' => $date_start, 'date_end' => $date_end );
+				$discounts[] = array( 'customer_group_id' => 1, 'priority' => $priority, 'quantity' => 5, 'price' => min(round($special_price / 0.93 / 5) * 5, $special_price + 20), 'date_start' => $date_start, 'date_end' => $date_end );
+				$discounts[] = array( 'customer_group_id' => 1, 'priority' => $priority, 'quantity' => 10, 'price' => $special_price, 'date_start' => $date_start, 'date_end' => $date_end );
 			}
 		}
 
-		$discounts[] = array( 'customer_group_id' => 0, 'priority' => 0, 'quantity' => 1, 'price' => $price * 2, 'date_start' => '', 'date_end' => '' );
-		$discounts[] = array( 'customer_group_id' => 0, 'priority' => 0, 'quantity' => 3, 'price' => min(round($price / 0.74 / 5) * 5, $price + 40), 'date_start' => '', 'date_end' => '' );
-		$discounts[] = array( 'customer_group_id' => 0, 'priority' => 0, 'quantity' => 5, 'price' => min(round($price / 0.93 / 5) * 5, $price + 20), 'date_start' => '', 'date_end' => '' );
-		$discounts[] = array( 'customer_group_id' => 0, 'priority' => 0, 'quantity' => 10, 'price' => $price, 'date_start' => '', 'date_end' => '' );
+		$discounts[] = array( 'customer_group_id' => 1, 'priority' => 0, 'quantity' => 1, 'price' => $price * 2, 'date_start' => '', 'date_end' => '' );
+		$discounts[] = array( 'customer_group_id' => 1, 'priority' => 0, 'quantity' => 3, 'price' => min(round($price / 0.74 / 5) * 5, $price + 40), 'date_start' => '', 'date_end' => '' );
+		$discounts[] = array( 'customer_group_id' => 1, 'priority' => 0, 'quantity' => 5, 'price' => min(round($price / 0.93 / 5) * 5, $price + 20), 'date_start' => '', 'date_end' => '' );
+		$discounts[] = array( 'customer_group_id' => 1, 'priority' => 0, 'quantity' => 10, 'price' => $price, 'date_start' => '', 'date_end' => '' );
 
 		foreach ($discounts as $product_discount) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "product_discount SET product_id = '" . (int)$product_id . "', customer_group_id = '" . (int)$product_discount['customer_group_id'] . "', quantity = '" . (int)$product_discount['quantity'] . "', priority = '" . (int)$product_discount['priority'] . "', price = '" . (float)$product_discount['price'] . "', date_start = '" . $this->db->escape($product_discount['date_start']) . "', date_end = '" . $this->db->escape($product_discount['date_end']) . "'");

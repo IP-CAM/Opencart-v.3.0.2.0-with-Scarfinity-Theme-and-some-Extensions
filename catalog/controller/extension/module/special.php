@@ -11,6 +11,7 @@ class ControllerExtensionModuleSpecial extends Controller {
 		// page.[].layout_type
 		$innamed = explode('.', $setting['name']);
 		if(isset($innamed[0])) $data['page'] = $innamed[0];
+		if(isset($innamed[1])) $data['heading_title'] = $innamed[1];
 		if(isset($innamed[2])) $data['layout'] = $innamed[2];
 
 		$data['products'] = array();
@@ -32,7 +33,8 @@ class ControllerExtensionModuleSpecial extends Controller {
 					foreach ($result['images'] as $image) {
 						$images[] = array(
 							'popup' => $this->model_tool_image->resize($image['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_height')),
-							'thumb' => $this->model_tool_image->resize($image['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_height'))
+							'thumb' => $this->model_tool_image->resize($image['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height')),
+							'lazy'	=> $this->model_tool_image->resize($image['image'], 256, 256)
 						);
 					}
 				}

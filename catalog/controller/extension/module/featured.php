@@ -30,6 +30,16 @@ class ControllerExtensionModuleFeatured extends Controller {
 
 					$images = array();
 
+					if($result['images']) {
+						foreach ($result['images'] as $image) {
+							$images[] = array(
+								'popup' => $this->model_tool_image->resize($image['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_height')),
+								'thumb' => $this->model_tool_image->resize($image['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height')),
+								'lazy'	=> $this->model_tool_image->resize($image['image'], 256, 256)
+							);
+						}
+					}
+
 					// if($product_info['images']) {
 					// 	foreach ($product_info['images'] as $image) {
 					// 		$images[] = array(

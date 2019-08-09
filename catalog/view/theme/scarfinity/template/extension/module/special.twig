@@ -1,15 +1,16 @@
-{% import 'scarfinity/template/components/category-product-card.twig' as categoryProductCard %}
+{% import 'scarfinity/template/components/category-product-card.twig' as _categoryProductCard %}
 {% import 'scarfinity/template/components/utility/special-offer.twig' as _specialOffer %}
 
 {% if layout == 'block' %}
   {{ _specialOffer.SpecialOffer({ products: products }) }}
 {% else %}
-  <h3>{{ heading_title }} - {{ name|split('-')[0] }}</h3>
-  <div class="row"> 
+
+  <h3>{{ heading_title }}</h3>
+  <div class="row display-flex col-sm-no-padding">
     {% for product in products %}
-      <div class="product-card-catalog-container product-card-catalog-container--catalog">
-          {{ categoryProductCard.categoryProductCard(product) }}
-      </div>
-    {% endfor %} 
+        <div class="product-card-catalog-container product-card-catalog-container--bestseller">
+            {{ _categoryProductCard.categoryProductCard(product, { buttonLabel: props.button_cart }) }}
+        </div>
+    {% endfor %}
   </div>
 {% endif %}
