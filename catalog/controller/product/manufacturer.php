@@ -9,6 +9,12 @@ class ControllerProductManufacturer extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		// Styles - header
+		$this->document->addStyle('catalog/view/javascript/swiper/dist/css/swiper.min.css');
+
+		// Scripts - footer
+		$this->document->addScript('catalog/view/javascript/swiper/dist/js/swiper.min.js', 'footer');
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(

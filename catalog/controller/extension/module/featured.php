@@ -40,6 +40,19 @@ class ControllerExtensionModuleFeatured extends Controller {
 						}
 					}
 
+					$colors = array();
+
+					if($result['colors']) {
+						foreach ($result['colors'] as $color) {
+							$colors[] = array(
+								'image' => array(
+									'thumb' => $this->model_tool_image->resize($color['image'], 32, 32),
+									'popup' => $this->model_tool_image->resize($color['image'], 1024, 1024),
+								)
+							);
+						}
+					}
+
 					// if($product_info['images']) {
 					// 	foreach ($product_info['images'] as $image) {
 					// 		$images[] = array(
@@ -87,6 +100,7 @@ class ControllerExtensionModuleFeatured extends Controller {
 						'isbn'		  => $result['isbn'],
 						'image'       => $image,
 						'images'      => $images,
+						'colors'	  => $colors,
 						'name'        => $product_info['name'],
 						'description' => utf8_substr(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('theme_' . $this->config->get('config_theme') . '_product_description_length')) . '..',
 						'price'       => $price,

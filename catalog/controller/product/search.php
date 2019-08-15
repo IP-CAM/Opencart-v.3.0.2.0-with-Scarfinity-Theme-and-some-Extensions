@@ -123,8 +123,12 @@ class ControllerProductSearch extends Controller {
 			'href' => $this->url->link('product/search', $url)
 		);
 
+		// Styles - header
 		$this->document->addStyle('catalog/view/javascript/swiper/dist/css/swiper.min.css');
-		$this->document->addScript('catalog/view/javascript/swiper/dist/js/swiper.min.js');
+
+		// Scripts - footer
+		$this->document->addScript('catalog/view/javascript/swiper/dist/js/swiper.min.js', 'footer');
+		$this->document->addScript('catalog/view/javascript/catalog-product-card.js', 'footer');
 
 		if (isset($this->request->get['search'])) {
 			$data['heading_title'] = $this->language->get('heading_title') .  ' - ' . $this->request->get['search'];
@@ -212,6 +216,19 @@ class ControllerProductSearch extends Controller {
 					}
 				}
 
+				$colors = array();
+
+				if($result['colors']) {
+					foreach ($result['colors'] as $color) {
+						$colors[] = array(
+							'image' => array(
+								'thumb' => $this->model_tool_image->resize($color['image'], 32, 32),
+								'popup' => $this->model_tool_image->resize($color['image'], 1024, 1024),
+							)
+						);
+					}
+				}
+
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 					$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 				} else {
@@ -241,6 +258,7 @@ class ControllerProductSearch extends Controller {
 					'isbn'		  => $result['isbn'],
 					'thumb'       => $image,
 					'images'	  => $images,
+					'colors'	  => $colors,
 					'name'        => $result['name'],
 					'description' => utf8_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('theme_' . $this->config->get('config_theme') . '_product_description_length')) . '..',
 					'price'       => $price,

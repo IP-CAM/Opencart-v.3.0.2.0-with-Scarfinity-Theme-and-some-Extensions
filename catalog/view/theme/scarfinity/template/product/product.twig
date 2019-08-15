@@ -21,7 +21,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12 col-sm-no-padding">
-      <div class="product-card" id="product">
+      <div class="product-card" id="product" data-product-id="{{ product_id }}">
         {{ 
           productCard.productCard({
             'product_id': product_id,
@@ -30,6 +30,7 @@
             'special': special,
             'image': image,
             'popup': popup,
+            'stock': stock,
             images: images,
             'shortDescription': description|striptags|slice(0, 240),
             'productMinQuantity': minimum,
@@ -47,6 +48,7 @@
             discounts: discounts
           }) 
         }}
+        <input type="hidden" id="product-price-data" data-price-origin="{{price_origin}}" data-price-base="{{price}}" data-price-special="{{special}}" />
       </div>
     </div>
   </div>
@@ -111,7 +113,7 @@
 </div>
 
 
-<script type="text/javascript">
+{# <script type="text/javascript">
   var product = {
     product_id: "{{product_id}}",
     price: {
@@ -220,10 +222,10 @@
   updateCurrentPrice();
   $('#product .product-card-core').removeClass('process');
 
-</script>
+</script> #}
 
 
-<script type="text/javascript"><!--
+{# <script type="text/javascript"><!--
 $('#review').delegate('.pagination a', 'click', function(e) {
     e.preventDefault();
 
@@ -292,5 +294,5 @@ $(document).ready(function() {
     }
 	});
 });
-//--></script> 
+//--></script>  #}
 {{ footer }}

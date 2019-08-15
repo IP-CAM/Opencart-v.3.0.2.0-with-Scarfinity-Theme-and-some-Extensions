@@ -14,13 +14,13 @@
     {% set swiper_id = product.product_id ~ random() %}
     {% set swiper = true %}
 
-    <div class="product-card-catalog" id="product-card-catalog[{{swiper_id}}]">
+    <div class="product-card-catalog" id="product-card-catalog[{{swiper_id}}]" data-init="false" data-image-init="false">
         <div class="product-card-catalog__image">
             <div class="image-container">
                 <div class="image-container__dummy"></div>
                 <div class="image-container__container">
                     {% if product.images and product.images|length > 1 and swiper %}  
-                        <div class="swiper-container" id="product-card-catalog-swiper-{{swiper_id}}">
+                        <div class="swiper-container product-card-catalog-swiper" id="product-card-catalog-swiper-{{swiper_id}}">
                             <div class="swiper-wrapper">
                                 {% for image in product.images %}
                                 <div class="swiper-slide">
@@ -58,9 +58,17 @@
             </div>
             <div id="product-card-catalog-swiper-pagination-{{swiper_id}}" class="swiper-pagination product-card-catalog__navigation__pagination"></div>
         </div>
+
+        <div id="product-card-catalog-colors-{{swiper_id}}" class="product-card-catalog-colors colors-mfp">
+            {% for color in product.colors %}
+                <a class="product-card-catalog-colors__color" href="{{color.image.popup}}">
+                    <img src="{{ color.image.thumb }}" />
+                </a>
+            {% endfor %} 
+        </div>
         
         <div class="product-card-catalog__description">
-            <div id="product-card-catalog-colors-{{swiper_id}}" class="product-card-catalog__description__rating colors-mfp">
+            {# <div id="product-card-catalog-colors--{{swiper_id}}" class="product-card-catalog__description__rating ">
                 {{ ratingBox.ratingBox(product.rating) }}
 
                 {% set colorCount = product.isbn|default(1) %}
@@ -70,7 +78,7 @@
                 {% endif %}
                 
                 <a href="{{color_image_href.popup}}" class="product-card-catalog__description__rating__colors">{{colorCount}} {{_currying.__('color', colorCount)}} </a>
-            </div>
+            </div> #}
 
             <div class="product-card-catalog__description__info">
                 <h2><a href="{{product.href}}" class="product-card-catalog__title">{{ product.name }}</a></h2>
@@ -97,7 +105,7 @@
         {% endif %} #}
     </div>
 
-    <script type="text/javascript">
+    {#<script type="text/javascript">
         if(catalogProductCardController) {
             console.log('Add productcard to controller. ID:', '{{swiper_id}}');
             catalogProductCardController.add({ swiperId: '{{swiper_id}}' });
@@ -133,5 +141,5 @@
             type: 'image',
             mainClass: 'mfp-with-zoom'
         });*/
-    </script>
+    </script>#}
 {% endmacro %}

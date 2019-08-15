@@ -5,14 +5,12 @@ class ControllerCommonHome extends Controller {
 		$this->document->setDescription($this->config->get('config_meta_description'));
 		$this->document->setKeywords($this->config->get('config_meta_keyword'));
 
-		$this->document->addStyle('catalog/view/javascript/nouislider/nouislider.min.css');
-		$this->document->addScript('catalog/view/javascript/nouislider/nouislider.min.js');
 		$this->document->addStyle('catalog/view/javascript/swiper/dist/css/swiper.min.css');
-		$this->document->addScript('catalog/view/javascript/swiper/dist/js/swiper.min.js');
 
-		// Для большого слайдера
-		// $this->document->addStyle('catalog/view/javascript/jquery/swiper/css/swiper.min.css');
-		// $this->document->addScript('catalog/view/javascript/jquery/swiper/js/swiper.jquery.js');
+		// Скрипт для работы большого слайдера
+		$this->document->addScript('catalog/view/javascript/swiper/dist/js/swiper.min.js', 'footer');
+		$this->document->addScript('catalog/view/javascript/catalog-product-card.js', 'footer');
+		$this->document->addScript('catalog/view/javascript/slideshow.js', 'footer');
 
 		if (isset($this->request->get['route'])) {
 			$this->document->addLink($this->config->get('config_url'), 'canonical');
@@ -22,6 +20,7 @@ class ControllerCommonHome extends Controller {
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 		$data['heading_title'] = $this->config->get('config_meta_title');

@@ -49,7 +49,7 @@ class ControllerCommonHeader extends Controller {
 		$this->load->language('common/header');
 
 		// Css hash
-		// $data['cssHash'] = round(filemtime('catalog/view/theme/scarfinity/stylesheet/stylesheet.css') / 60);
+		$data['cssHash'] = round(filemtime('catalog/view/theme/scarfinity/stylesheet/stylesheet.css') / 60);
 
 		// Compare
 		if (!isset($this->session->data['compare'])) {

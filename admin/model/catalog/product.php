@@ -46,8 +46,14 @@ class ModelCatalogProduct extends Model {
 						if(isset($product_option['name'])) {
 							$option_info = explode("*", $product_option['name']);
 							if(isset($option_info[1]) && $option_info[1] == "colors") {
-								// ISBN - информация о количестве цветов у модели
-								$this->db->query("UPDATE " . DB_PREFIX . "product SET isbn = '" . count($product_option['product_option_value']) . "' WHERE product_id = '" . (int)$product_id . "'");
+								$product_quantity = 0;
+
+								foreach ($product_option['product_option_value'] as $product_option_value) {
+									$product_quantity += (int)$product_option_value['quantity'];
+								}
+
+								// Количество данной модели в зависимости от цвета
+								$this->db->query("UPDATE " . DB_PREFIX . "product SET quantity = '" . $product_quantity . "' WHERE product_id = '" . (int)$product_id . "'");
 							}
 						}
 
@@ -59,9 +65,6 @@ class ModelCatalogProduct extends Model {
 					$this->db->query("INSERT INTO " . DB_PREFIX . "product_option SET product_id = '" . (int)$product_id . "', option_id = '" . (int)$product_option['option_id'] . "', value = '" . $this->db->escape($product_option['value']) . "', required = '" . (int)$product_option['required'] . "'");
 				}
 			}
-
-			// ISBN - информация о количестве цветов у модели
-			$this->db->query("UPDATE " . DB_PREFIX . "product SET isbn = '" . count($data['product_option']) . "' WHERE product_id = '" . (int)$product_id . "'");
 		}
 
 		if (isset($data['product_recurring'])) {
@@ -212,7 +215,7 @@ class ModelCatalogProduct extends Model {
 
 		if (isset($data['product_option'])) {
 			foreach ($data['product_option'] as $product_option) {
-				if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') {
+				if ($product_option['type'] == 'color' || $product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') {
 					if (isset($product_option['product_option_value'])) {
 						$this->db->query("INSERT INTO " . DB_PREFIX . "product_option SET product_option_id = '" . (int)$product_option['product_option_id'] . "', product_id = '" . (int)$product_id . "', option_id = '" . (int)$product_option['option_id'] . "', required = '" . (int)$product_option['required'] . "'");
 
@@ -221,8 +224,14 @@ class ModelCatalogProduct extends Model {
 						if(isset($product_option['name'])) {
 							$option_info = explode("*", $product_option['name']);
 							if(isset($option_info[1]) && $option_info[1] == "colors") {
-								// ISBN - информация о количестве цветов у модели
-								$this->db->query("UPDATE " . DB_PREFIX . "product SET isbn = '" . count($product_option['product_option_value']) . "' WHERE product_id = '" . (int)$product_id . "'");
+								$product_quantity = 0;
+
+								foreach ($product_option['product_option_value'] as $product_option_value) {
+									$product_quantity += (int)$product_option_value['quantity'];
+								}
+
+								// Количество данной модели в зависимости от цвета
+								$this->db->query("UPDATE " . DB_PREFIX . "product SET quantity = '" . $product_quantity . "' WHERE product_id = '" . (int)$product_id . "'");
 							}
 						}
 

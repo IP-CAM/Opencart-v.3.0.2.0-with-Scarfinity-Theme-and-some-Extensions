@@ -224,17 +224,18 @@ class ControllerProductProduct extends Controller {
 			$this->document->setDescription($product_info['meta_description']);
 			$this->document->setKeywords($product_info['meta_keyword']);
 			$this->document->addLink($this->url->link('product/product', 'product_id=' . $this->request->get['product_id']), 'canonical');
-			$this->document->addScript('catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js');
-			$this->document->addStyle('catalog/view/javascript/jquery/magnific/magnific-popup.css');
-			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
-			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
-			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
-			$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
-			$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/swiper.min.css');
-			$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/opencart.css');
-			$this->document->addScript('catalog/view/javascript/jquery/swiper/js/swiper.jquery.js');
-			$this->document->addStyle('catalog/view/javascript/magnifer/css/magnifer.min.css');
-			$this->document->addScript('catalog/view/javascript/magnifer/js/magnifer.min.js');
+
+			// Styles - header
+			$this->document->addStyle('catalog/view/javascript/swiper/dist/css/swiper.min.css');
+			// $this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
+
+			// Scripts - footer
+			$this->document->addScript('catalog/view/javascript/swiper/dist/js/swiper.min.js', 'footer');
+			$this->document->addScript('catalog/view/javascript/product-card.js', 'footer');
+			$this->document->addScript('catalog/view/javascript/catalog-product-card.js', 'footer');
+			// $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
+			// $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
+			// $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
 
 			$data['heading_title'] = $product_info['name'];
 
@@ -325,9 +326,10 @@ class ControllerProductProduct extends Controller {
 				}
 
 				$data['discounts'][] = array(
-					'quantity' => $discount['quantity'],
-					'price'    => $price,
-					'unsale'  => $unsale
+					'quantity' 	=> $discount['quantity'],
+					'price'    	=> $price,
+					'unsale'  	=> $unsale,
+					'available'	=> $product_info['quantity'] >= $discount['quantity']
 				);
 			}
 
@@ -337,15 +339,40 @@ class ControllerProductProduct extends Controller {
 				$product_option_value_data = array();
 
 				foreach ($option['product_option_value'] as $option_value) {
-					if (!$option_value['subtract'] || ($option_value['quantity'] > 0)) {
+					if (!$option_value['subtract'] || true/* || ($option_value['quantity'] > 0)*/) {
 						if ((($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) && (float)$option_value['price']) {
 							$price = $this->currency->format($this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax') ? 'P' : false), $this->session->data['currency']);
 						} else {
 							$price = false;
 						}
 
+						$stock_status = [
+							array( 'min' => 50, 'max' => 9999, 'status' => 'in-stock', 'text' => 'в наличии' ),
+							array( 'min' => 35, 'max' => 50, 'status' => 'in-stock-l', 'text' => 'много' ),
+							array( 'min' => 25, 'max' => 35, 'status' => 'in-stock-m', 'text' => 'не много' ),
+							array( 'min' => 10, 'max' => 25, 'status' => 'in-stock-s', 'text' => 'мало' ),
+							array( 'min' => 6, 'max' => 10, 'status' => 'in-stock-s10', 'text' => 'меньше 10' ),
+							array( 'min' => 4, 'max' => 6, 'status' => 'in-stock-s5', 'text' => 'меньше 5' ),
+							array( 'min' => 2, 'max' => 4, 'status' => 'in-stock-s3', 'text' => 'меньше 3' ),
+							array( 'min' => 1, 'max' => 2, 'status' => 'in-stock-s1', 'text' => '1-2' ),
+							array( 'min' => 0, 'max' => 1, 'status' => 'not-in-stock', 'text' => 'нет' )
+						];
+
+						$stock = array();
+
+						foreach($stock_status as $status) {
+							if($status['min'] <= $option_value['quantity'] && $status['max'] > $option_value['quantity']) {
+								$stock = array(
+									'status' => $status['status'],
+									'text'	 => $status['text']
+								);
+							}
+						}
+
 						$product_option_value_data[] = array(
 							'product_option_value_id' => $option_value['product_option_value_id'],
+							'available'				  => $option_value['quantity'] > 0,
+							'stock'					  => $stock,
 							'option_value_id'         => $option_value['option_value_id'],
 							'name'                    => $option_value['name'],
 							'image'                   => $this->model_tool_image->resize($option_value['image'], 150, 150),

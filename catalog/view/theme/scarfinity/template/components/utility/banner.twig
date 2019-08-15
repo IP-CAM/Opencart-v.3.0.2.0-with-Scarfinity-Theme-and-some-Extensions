@@ -24,7 +24,7 @@
 
     {% set id = props.id|default(random()) %}
 
-    <div class="banner" id="{{ id }}">
+    <div class="banner" data-init="false" id="{{ id }}">
         <div class="banner__container">
             <div class="banner__container__content">
                 <div class="banner__container__content__button prev">
@@ -70,7 +70,7 @@
         </div>
     </div>
 
-    <script type="text/javascript"><!--
+    {# <script type="text/javascript"><!--
         var speed = 5000;
         var bannerId = '{{id}}';
         var slidesCount = parseInt('{{props.banners|length}}');
@@ -124,5 +124,5 @@
             swiper[bannerId].slideNext();
         });
 
-    --></script>
+    --></script> #}
 {% endmacro %}

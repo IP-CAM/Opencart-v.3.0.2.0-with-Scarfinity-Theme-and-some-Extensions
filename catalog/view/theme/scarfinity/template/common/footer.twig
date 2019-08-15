@@ -2,8 +2,6 @@
 {% import 'scarfinity/template/components/image-container.twig' as _imageContainer %}
 {% import 'scarfinity/template/components/utility/mail-line.twig' as _mainLine  %}
 
-{{ _imageContainer.Init() }}
-
 <div style="margin-top: 26px;"></div>
 {{ _mainLine.MainLine() }}
 <footer>
@@ -66,6 +64,12 @@
 </footer>
 
 </main>
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+{# <script src="catalog/view/javascript/jquery/jquery-2.1.1.min.js" type="text/javascript"></script> #}
+
+<script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="catalog/view/javascript/lodash/lodash.js" type="text/javascript"></script>
 
 {% if isMobile or isTablet %}
   {# Scripts #}
@@ -216,10 +220,56 @@
   {# Srcripts end #}
 {% endif %}
 
+{% if isMobile %}
+  <script type="text/javascript">
+    var mobileMenu = {
+      isOpen: false,
+      menu: document.getElementById('mobile-main-menu'),
+      open: function() {
+        this.isOpen = true;
+
+        $('html').addClass('mobile-nav-open');
+        $(this.menu).addClass('open');
+      },
+      close: function() {
+        this.isOpen = false;
+
+        $('html').removeClass('mobile-nav-open');
+        $(this.menu).removeClass('open');
+      },
+      toggle: function() {
+        this.isOpen ? this.close() : this.open();
+      }
+    }
+  </script>
+{% else %}
+  <script type="text/javascript">
+    $('.main-menu-ul').mouseenter(function() {
+      $(this).addClass('enter');
+      $(this).delay(200).queue(function(next) {
+        if($(this).hasClass('enter')) {
+          $(this).addClass('active');
+        }
+        next();
+      })
+    }).mouseleave(function() {
+      $(this).removeClass('enter').removeClass('active');
+    });
+  </script>
+{% endif %}
+
+<script src="catalog/view/javascript/common.js" type="text/javascript"></script>
+<script src="catalog/view/javascript/cart.js" type="text/javascript"></script>
+<script src="catalog/view/theme/scarfinity/js/components/cart.js" type="text/javascript"></script>
 
 {% for script in scripts %}
 <script src="{{ script }}" type="text/javascript"></script>
 {% endfor %}
+
+<!-- Yandex.Metrika counter --> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(54779674, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/54779674" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+
+<script src="catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js" type="text/javascript"></script>
+<script src="catalog/view/theme/scarfinity/js/lib/currying.js" type="text/javascript"></script>
 
 <script src="catalog/view/javascript/sticky.js/dist/sticky.min.js" type="text/javascript"></script>
 <script>var sticky = new Sticky('[data-sticky]', {});</script>
