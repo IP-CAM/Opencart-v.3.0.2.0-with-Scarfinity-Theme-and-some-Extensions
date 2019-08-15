@@ -5,6 +5,12 @@ class ControllerCheckoutCart extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		// Styles - header
+
+		// Scripts - footer
+		$this->document->addScript('catalog/view/javascript/checkout.core.js', 'footer');
+		$this->document->addScript('catalog/view/javascript/checkout.cart.js', 'footer');
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(

@@ -60,7 +60,7 @@
 {# нового пользователя #}
 {# Если пользователь зарегистрирован, вывести форму #}
 {# с данными о данном заказчике с возможностью изменения #}
-<script type="text/javascript">
+{# <script type="text/javascript">
     $.ajax({
         url: 'index.php?route=checkout/login',
         dataType: 'html',
@@ -75,10 +75,10 @@
             $('#cart-button-next').prop('disabled', false);
         }
     });
-</script>
+</script> #}
 
 {# UI Delegate #}
-<script type="text/javascript">
+{# <script type="text/javascript">
     $(document).delegate('#checkout-checkout .sInput', 'input', function(e) {
         var target = e.target;
         var group = $(target).data('group');
@@ -133,10 +133,10 @@
             ui.customerLogin();
         }
     });
-</script>
+</script> #}
 
 {# Form events #}
-<script type="text/javascript">
+{# <script type="text/javascript">
     var ui = {
         customerLogin: function() {
             var ui = this;
@@ -200,7 +200,7 @@
         ui.customerSave();
     });
 
-</script>
+</script> #}
 {# Form events end #}
 
 {{ footer }}

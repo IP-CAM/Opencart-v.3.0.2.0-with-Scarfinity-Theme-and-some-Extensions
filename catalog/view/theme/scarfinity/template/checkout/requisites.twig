@@ -84,25 +84,13 @@
 
 <script type="text/javascript">
 
-    $(document).ready(function() {
-        checkout.shippingMethodsGet({
-            success: function(html) {
-                $('#cart-checkout-requisites-shipping-method').html(html);
-                $('#cart-button-next').prop('disabled', false);
-            }
-        });
-    });    
-
     var comment = '{{comment}}';
-    $('.sInputTextArea textarea[name$="comment"]').val(comment).trigger('input');
-
     var agree = '{{agree}}';
-    $('.select-box input[type="checkbox"][data-group$="terms"][name$="agree"]').prop('checked', agree ? true : false).change();
 
 </script>
 
 {# Form events #}
-<script type="text/javascript">
+{# <script type="text/javascript">
     var ui = {
         shippingMethodChange: function(form, shippingMethodCode) {
             console.warn('ShippingMethodChanged!');
@@ -202,11 +190,11 @@
             }
         }
     };
-</script>
+</script> #}
 {# Form events end #}
 
 {# UI Delegate #}
-<script type="text/javascript">
+{# <script type="text/javascript">
     $(document).delegate('#checkout-requisites .sInput', 'input', function(e) {
         var target = e.target;
         var group = $(target).data('group');
@@ -283,6 +271,6 @@
     $('#cart-button-next').on('click', function() {
         ui.shippingAndPaymentsSave();
     });
-</script>
+</script> #}
 
 {{ footer }}

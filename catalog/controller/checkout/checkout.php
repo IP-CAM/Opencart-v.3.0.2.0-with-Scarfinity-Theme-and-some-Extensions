@@ -27,7 +27,12 @@ class ControllerCheckoutCheckout extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->document->addScript('catalog/view/javascript/checkout.js');
+		// Styles - header
+
+		// Scripts - footer
+		$this->document->addScript('catalog/view/javascript/checkout.js', 'footer');
+		$this->document->addScript('catalog/view/javascript/checkout.core.js', 'footer');
+		$this->document->addScript('catalog/view/javascript/checkout.checkout.js', 'footer');
 
 		// Required by klarna
 		if ($this->config->get('payment_klarna_account') || $this->config->get('payment_klarna_invoice')) {

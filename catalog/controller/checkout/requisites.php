@@ -30,14 +30,19 @@ class ControllerCheckoutRequisites extends Controller {
 		$this->load->language('checkout/requisites');
 
 		$this->document->setTitle($this->language->get('heading_title'));
+		
+		// Styles - header
+		$this->document->addStyle('catalog/view/javascript/jquery.kladr/jquery.kladr.min.css');
 
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
-		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
-		$this->document->addScript('catalog/view/javascript/jquery.kladr/jquery.kladr.min.js');
-        $this->document->addStyle('catalog/view/javascript/jquery.kladr/jquery.kladr.min.css');
-        $this->document->addScript('catalog/view/javascript/checkout.js');
+		// Scripts - footer
+		$this->document->addScript('catalog/view/javascript/jquery.kladr/jquery.kladr.min.js', 'footer');
+		$this->document->addScript('catalog/view/javascript/checkout.js', 'footer');
+		$this->document->addScript('catalog/view/javascript/checkout.core.js', 'footer');
+		$this->document->addScript('catalog/view/javascript/checkout.requisites.js', 'footer');
+		// $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
+		// $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
+		// $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
+		// $this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
 		// Required by klarna
 		if ($this->config->get('payment_klarna_account') || $this->config->get('payment_klarna_invoice')) {

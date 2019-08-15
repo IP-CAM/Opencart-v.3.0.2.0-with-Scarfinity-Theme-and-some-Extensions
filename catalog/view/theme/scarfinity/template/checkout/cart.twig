@@ -157,11 +157,8 @@
   </div>
 </div>
 
-<script type="text/javascript">
-    // Оформление заказа
-    $('#cart-button-next').on('click', function() {
-        location = "{{ checkout }}"
-    });
+<script>
+  var checkoutLocation = '{{checkout}}';
 </script>
 
 {{ footer }}

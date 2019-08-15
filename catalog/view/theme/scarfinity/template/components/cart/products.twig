@@ -19,7 +19,7 @@
 
     {% set productsCount = props.products|length %}
     <div class="cart__products-container">
-        <div class="cart__header-row" id="cart-header-products-count"></div>
+        <div class="cart__header-row" id="cart-header-products-count" data-products-count="{{productsCount}}"></div>
         <div class="cart__product-card cart__product-card--header">
             <div class="cart__product-card__container">
                 <div class="cart__product-card__remove-block">
@@ -60,9 +60,5 @@
             {% endfor %}
         </ul>
     </div>
-
-    <script type="text/javascript">
-        $('#cart-header-products-count').text('У вас ' + "{{productsCount}}" + ' ' + crr_products("{{productsCount}}") + ' в коризине');
-    </script>
 
 {% endmacro %}
