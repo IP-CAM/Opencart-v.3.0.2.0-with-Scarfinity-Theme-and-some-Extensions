@@ -16,10 +16,5 @@
             selectedValue: props.valueSwitch.selectedValue 
         })}}
     </div>
-
-    <script type="text/javascript">
-        $('input[type="radio"][name="{{props.valueSwitch.name}}"], #{{props.sort.id}}').on('change', function(e) {
-            location = e.target.value;
-        });
-    </script>
+    
 {% endmacro %}

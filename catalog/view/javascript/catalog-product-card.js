@@ -13,7 +13,6 @@ var catalogProductCardController = {
 	},
 	'__init': function() {
 		$('.product-card-catalog[data-init="false"]').each(function(index, card) {
-			console.log('init product card...');
 			var swiper = $(card).find('.product-card-catalog-swiper');
 			var pagination = $(card).find('.swiper-pagination');
 
@@ -58,7 +57,6 @@ var catalogProductCardController = {
 			// Images
 			var swiperLazy = $(card).find('.swiper-lazy-main');
 			$(swiperLazy).each(function(index, img) {
-				console.log($(img).attr('data-src'));
 				$(img).attr('src', $(img).attr('data-src'));
 				$(img).attr('data-src', null);
 			});
@@ -75,8 +73,6 @@ var catalogProductCardController = {
 			});
 
 			$(card).attr('data-init', 'true');
-
-			console.log('Card init done!');
 		});
 	},
 	'initCard': function(cardIndex, colors = true) {
@@ -86,7 +82,6 @@ var catalogProductCardController = {
 		if(card) {
 			
 			$('#product-card-catalog-swiper-' + card.swiperId + ' .swiper-lazy-main').each(function(index, img) {
-				console.log($(img).attr('data-src'));
 				$(img).attr('src', $(img).attr('data-src'));
 				$(img).attr('data-src', null);
 			});

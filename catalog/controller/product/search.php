@@ -127,6 +127,8 @@ class ControllerProductSearch extends Controller {
 		$this->document->addStyle('catalog/view/javascript/swiper/dist/css/swiper.min.css');
 
 		// Scripts - footer
+		$this->document->addScript('catalog/view/javascript/category.js', 'footer');
+		$this->document->addScript('catalog/view/javascript/search.js', 'footer');
 		$this->document->addScript('catalog/view/javascript/swiper/dist/js/swiper.min.js', 'footer');
 		$this->document->addScript('catalog/view/javascript/catalog-product-card.js', 'footer');
 

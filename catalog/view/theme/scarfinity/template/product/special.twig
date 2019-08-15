@@ -69,26 +69,4 @@
     {{ column_right }}</div>
 </div>
 
-<script type="text/javascript">
-  function fetch(nextHref) {
-    if(nextHref) {
-      $.ajax({
-        url: nextHref,
-        dataType: 'html',
-        beforeSend: function() {
-          $('#fetch').attr("disabled", "disabled");
-        },
-        success: function(html) {
-          $('#competitor').before(html).remove();
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-      });
-    }
-
-    return false;
-  }
-</script>
-
 {{ footer }} 
