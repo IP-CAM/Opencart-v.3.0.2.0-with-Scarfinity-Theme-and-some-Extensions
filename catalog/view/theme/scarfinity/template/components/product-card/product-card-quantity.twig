@@ -1,20 +1,31 @@
 {% macro quantity(data) %}
     
-    <div 
-        id="product-card-quantity"
-        class="product-card-quantity ctr-utt">
-            <input
-                type="number"
-                name="quantity"
-                value="{{ data.minQuantity|default(1) }}"
-                size="2"
-                id="input-quantity"
-                class="product-card-quantity__value" />
-            <input type="hidden" name="product_id" value="{{ data.productId }}" />
-            <div class="product-card-quantity__control">
-                <button name="inc"><span><i class="fa fa-plus"></i></span></button>
-                <button name="dec"><span><i class="fa fa-minus"></i></span></button>
-            </div>
+    <div class="product-card-quantity ctr-utt">
+        <input
+            type="number"
+            name="quantity"
+            value="{{ data.minQuantity|default(0) }}"
+            size="2"
+            class="product-card-quantity__value" />
+        <input type="hidden" name="product_id" value="{{ data.product_id }}" />
+        <div class="product-card-quantity__control">
+            <button name="inc" class="inc"><span><i class="fa fa-plus"></i></span></button>
+            <button name="dec"><span><i class="fa fa-minus"></i></span></button>
+        </div>
     </div>
 
+{% endmacro %}
+
+{% macro quantitySmall(data) %}
+    <div class="product-card-quantity-small ctr-utt">
+        <button name="dec"><span><i class="fa fa-minus"></i></span></button>
+        <input
+            type="number"
+            name="quantity"
+            value="{{ data.minQuantity|default(0) }}"
+            size="2"
+            class="product-card-quantity__value" />
+        <button name="inc"><span><i class="fa fa-plus"></i></span></button>
+        <input type="hidden" name="product_id" value="{{ data.product_id }}" />
+    </div>
 {% endmacro %}

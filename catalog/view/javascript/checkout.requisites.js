@@ -50,24 +50,12 @@ var ui = {
                     $('#cart-button-next').prop('disabled', true);
                 }),
                 success: function(json) {
-                    console.log(json);
-
                     checkout.confirm({
                         beforeSend: ui.beforeSend('cart-checkout-payments', function() {
                             $('#cart-button-next').prop('disabled', true);
                         }),
-                        success: function() {
-                            checkout.paymentConfirm({
-                                beforeSend: ui.beforeSend('cart-checkout-payments', function() {
-                                    $('#cart-button-next').prop('disabled', true);
-                                }),
-                                success: function() {
-                                    location = json['redirect'];
-                                },
-                                complete: function() {
-                                    $('#cart-button-next').prop('disabled', false);
-                                }
-                            });
+                        success: function(html) {
+                            $('#cart').html(html);
                         },
                         complete: function() {
                             $('#cart-button-next').prop('disabled', false);

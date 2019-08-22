@@ -218,13 +218,9 @@ var checkout = {
         $.ajax({
             url: 'index.php?route=checkout/simple/confirm',
             method: 'post',
-            dataType: 'json',
-            success: function(json) {
-                if(json['redirect']) {
-                    checkout.__redirect(json['redirect']);
-                } else {
-                    if(actions['success']) actions['success'](json);
-                }
+            dataType: 'html',
+            success: function(html) {
+                if(actions['success']) actions['success'](html);
             },
             error: checkout.__error(actions['error'])
         });

@@ -333,6 +333,32 @@ class ControllerProductProduct extends Controller {
 				);
 			}
 
+			$data['product_model'] = array();
+
+			$results = $this->model_catalog_product->getProductSameModel($this->request->get['product_id']);
+
+			foreach ($results as $result) {
+				if ($result['image']) {
+					$image = $this->model_tool_image->resize($result['image'], 256, 256);
+				} else {
+					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_related_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_related_height'));
+				}
+
+				if ($result['image']) {
+					$image_large = $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_height'));
+				} else {
+					$image_large = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_height'));
+				}
+
+				$data['product_model'][] = array(
+					'product_id' 	=> $result['product_id'],
+					'name'		 	=> $result['name'],
+					'image'		 	=> $image,
+					'image_large' 	=> $image_large,
+					'href'       	=> $this->url->link('product/product', 'product_id=' . $result['product_id'])
+				);
+			}
+
 			$data['options'] = array();
 
 			foreach ($this->model_catalog_product->getProductOptions($this->request->get['product_id']) as $option) {
@@ -720,5 +746,42 @@ class ControllerProductProduct extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	public function model() {
+		$this->load->model('catalog/product');
+		$this->load->model('tool/image');
+
+		$data['models'] = array();
+
+		$results = $this->model_catalog_product->getProductSameModel($this->request->get['product_id']);
+
+		foreach ($results as $result) {
+			if ($result['image']) {
+				$image = $this->model_tool_image->resize($result['image'], 256, 256);
+			} else {
+				$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_related_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_related_height'));
+			}
+
+			if ($result['image']) {
+				$image_large = $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_height'));
+			} else {
+				$image_large = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_height'));
+			}
+
+			$data['models'][] = array(
+				'product_id' 	=> $result['product_id'],
+				'name'		 	=> $result['name'],
+				'image'		 	=> $image,
+				'image_large' 	=> $image_large,
+				'href'       	=> $this->url->link('product/product', 'product_id=' . $result['product_id'])
+			);
+		}
+
+		$this->response->setOutput($this->load->view('product/model', $data));
+	}
+
+	public function price() {
+		
 	}
 }

@@ -83,7 +83,7 @@
 								<a
 									href
 									class="product-card-favorite__label"
-									onclick="wishlist.add('{{ props.productId }}'); return false;">
+									onclick="wishlist.add('{{ props.productId }}');">
 										{{props.wishList}}
 										<i class="fa fa-heart"></i>
 								</a>
@@ -146,7 +146,7 @@
 													</div>
 												{% endfor %}
 											</div>
-											<div>
+											{# <div>
 												<div class="product-card-discounts__line title">
 													<span>Сумма в корзине: </span>
 													<span>Цена за шт</span>
@@ -155,19 +155,19 @@
 													<span>от 5000 руб.</span>
 													<span>{{(props.discounts|last).price}}</span>
 												</div>
-											</div>
+											</div> #}
 										</div>
 									</div>
 								</div>
 							</div>
 
-							<div class="col-md-12 product-card-colors">
-								<h3>Выберите цвета</h3>
-								<p>Минимальное количество в корзине: <span class="accent">{{props.productMinQuantity}} шт.</span></p>
-								<p>У вас в корзине: <span class="value" id="cart-quantity">0</span> шт.</p>
+							{# <div class="col-md-12 product-card-colors">
+								<h3>У этой модели есть другие цвета:</h3> #}
+								{# <p>Минимальное количество в корзине: <span class="accent">{{props.productMinQuantity}} шт.</span></p> #}
+								{# <p>У вас в корзине: <span class="value" id="cart-quantity">0</span> шт.</p> #}
 
 								{# Product options segment #}
-								{% for option in props.options %}
+								{# {% for option in props.options %}
 									{% if option.type == 'radio' and option.name|lower|split('*')[1] == 'colors' %}
 										<div class="row product-card-option-row">
 											{% for option_value in option.product_option_value %}
@@ -209,13 +209,35 @@
 											{% endfor %}
 										</div>
 									{% endif %}
-								{% endfor %}
-
+								{% endfor %} #}
+{# 
 								<input type="hidden" name="product_id" value="{{ props.product_id }}" />
+							</div> #}
+
+							<div class="col-md-12">
+								<hr>
+								<div class="product-model product-card-quantity-container">
+									{{ productCardQuantity.quantity({ product_id: props.product_id }) }}
+									{{ button.productCardButton({ label: 'Добавить в корзину', product_id: props.product_id }) }}
+									<input type="hidden" name="product_id" value="{{props.product_id}}" /> 
+								</div>
 							</div>
+
+							<div id="model" class="col-md-12 product-card-models"></div>
+
+							{# <div class="col-md-12">
+								<div class="product-model product-card-quantity-container">
+									{{ productCardQuantity.quantity({ product_id: props.product_id }) }}
+									{{ button.productCardButton({ label: 'Добавить в корзину', product_id: props.product_id }) }}
+									<input type="hidden" name="product_id" value="{{props.product_id}}" /> 
+								</div>
+							</div> #}
+
+
 							<div class="product-card-core__process"></div>
 						</div>
 
+						
 						<hr>
 						{# Tags #}
 						{% if props.tags %}

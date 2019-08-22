@@ -1586,7 +1586,7 @@ class ControllerCheckoutSimple extends Controller {
 			} else {
 				$shipping = explode('.', $this->request->post['shipping_method']);
 
-				if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
+				if (!isset($shipping[0]) || !isset($shipping[1])/* || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])*/) {
 					$json['error']['shipping_methods'] = $this->language->get('error_shipping');
 				}
 
@@ -1636,7 +1636,7 @@ class ControllerCheckoutSimple extends Controller {
 			}
 
 			// Сохранение способа доставки
-			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
+			$this->session->data['shipping_method'] = $this->request->post['shipping_method']; //$this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
 			$json['sm'] = $this->session->data['shipping_method'];
 
 			// Сохранение способа оплаты
@@ -2065,12 +2065,15 @@ class ControllerCheckoutSimple extends Controller {
 				);
 			}
 
-			// $data['payment'] = $this->load->controller('extension/payment/' . $this->session->data['payment_method']['code']);
+			$data['payment'] = $this->load->controller('extension/payment/' . 'yandex_money');
+			//$data['payment'] = $this->load->controller('extension/payment/' . $this->session->data['payment_method']['code']);
 		} else {
-			$json['redirect'] = $redirect;
+			$data['redirect'] = $redirect;
 		}
+
+		$this->response->setOutput($this->load->view('checkout/confirm', $data));
 		
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		// $this->response->addHeader('Content-Type: application/json');
+		// $this->response->setOutput(json_encode($json));
 	}
 }

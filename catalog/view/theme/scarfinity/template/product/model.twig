@@ -1,0 +1,13 @@
+{% import 'scarfinity/template/components/product-card/product-card-quantity.twig' as productCardQuantity %}
+
+{% if models %}
+    <h3>У этой модели есть другие цвета:</h3>
+    {% for model in models %}
+        <div class="product-model product-model-line">
+            <img src="{{model.image}}" />
+            <a href="{{model.href}}">{{ model.name }}</a>
+            <div class="fill"></div>
+            {{ productCardQuantity.quantitySmall({ product_id: model.product_id }) }}
+        </div>
+    {% endfor %}
+{% endif %}

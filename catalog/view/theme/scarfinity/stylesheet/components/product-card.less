@@ -511,16 +511,49 @@
 	}
 }
 
+.product-card-quantity-container {
+	display: flex;
+	padding: 10px 0px 10px 0px;
+}
+
+.product-card-quantity-small {
+	display: flex;
+	border: 1px solid #eee;
+	font-size: 0px;
+
+	& button {
+		background: #f7f7f7;
+		border: none;
+		outline: none;
+		height: 24px;
+		color: #aaa;
+
+		& span {
+			user-select: none;
+			pointer-events: none;
+			line-height: 24px;
+			font-size: 10px;
+		}
+
+		&:hover {
+			color: #808080;
+		}
+	}
+
+	& input {
+		height: 24px;
+	}
+}
+
 .product-card-quantity {
 	border: 1px solid #eee;
 	// border-radius: 2px;
 	overflow: hidden;
 	display: inline-flex;
-	flex-direction: column;
+	flex-direction: row;
 	align-items: center;
 	margin-right: 10px;
 	position: relative;
-	margin-bottom: 10px;
 	transition: filter 0.2s ease;
 	background: #fff;
 
@@ -550,17 +583,24 @@
 	&__control {
 		// background: #ddd;
 		display: inline-flex;
-		flex-direction: row;
+		flex-direction: column;
 		justify-content: space-between;
 		align-self: stretch;
-		border-top: 1px solid #eee;
+		// border-top: 1px solid #eee;
 
 		& button {
 			background: #f7f7f7;
 			border: none;
 			outline: none;
-			height: 26px;
+			height: 24px;
 			color: #aaa;
+
+			&.inc {
+				background-image: linear-gradient(0deg, #ddd 1px, transparent 1px);
+				background-position: left 0px bottom;
+				background-size: 100% 1px;
+				background-repeat: no-repeat;
+			}
 
 			& span {
 				user-select: none;
@@ -614,6 +654,20 @@
 				color: #303030;
 				// background: #ced4d9;
 			}
+		}
+	}
+
+	&--small & {
+		& button {
+			height: 20px;
+		}
+	}
+
+	&--small {
+
+		& button {
+			height: 20px;
+			line-height: 20px;
 		}
 	}
 
@@ -690,6 +744,33 @@
 
 	@media screen and (max-width: 576px) {
 		margin: 4px 4px 10px 4px;
+	}
+}
+
+.product-card-models {
+	padding-bottom: 10px;
+}
+
+.product-model-line {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-top: 1px solid #eee;
+	// padding: 8px 0px;
+
+	& a {
+		flex: 1;
+		font-size: 12px;
+		margin-left: 10px;
+		color: #303030;
+	}
+
+	& img {
+		width: 50px;
+		height: 50px;
+		max-width: 50px;
+		max-height: 50px;
+		margin: 5px 0px;
 	}
 }
 

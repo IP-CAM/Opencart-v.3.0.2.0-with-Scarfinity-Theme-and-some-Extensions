@@ -134,6 +134,18 @@ var sCart = {
 
         return '';
     },
+    getProductPriceByModel: function(model) {
+        var cart = this;
+        var product = _.find(cart.products, function(product) {
+            return product.model === model;
+        });
+
+        if (product) {
+            return product.price;
+        }
+
+        return '';
+    },
     addEventListener: function (event, callback) {
         this.listeners.push({ event, callback });
     }

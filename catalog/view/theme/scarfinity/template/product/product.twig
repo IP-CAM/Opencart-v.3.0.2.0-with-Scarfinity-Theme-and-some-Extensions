@@ -21,7 +21,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12 col-sm-no-padding">
-      <div class="product-card" id="product" data-product-id="{{ product_id }}">
+      <div class="product-card" id="product" data-product-id="{{ product_id }}" data-product-model="{{ model }}">
         {{ 
           productCard.productCard({
             'product_id': product_id,
@@ -32,6 +32,7 @@
             'popup': popup,
             'stock': stock,
             images: images,
+            'product_model': product_model,
             'shortDescription': description|striptags|slice(0, 240),
             'productMinQuantity': minimum,
             'addCartLabel': button_cart,

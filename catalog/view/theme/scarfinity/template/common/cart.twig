@@ -44,7 +44,7 @@
                 <div class="mobile-cart-product-card">
                   <div class="mobile-cart-product-card__image">
                     <a href="{{ props.product.href }}">
-                      {{ _imageContainer.ImageContainer({src: product.thumb, alt: product.name, title: product.name}) }}
+                      {{ _imageContainer.ImageContainer({src: product.image, alt: product.name, title: product.name}) }}
                     </a>
                   </div>
                   <div class="mobile-cart-product-card__middle">
@@ -135,7 +135,13 @@
       <div class="cart-popup__item">
         <div class="cart-popup-product-card">
           <div class="cart-popup-product-card__image">
-            {{ image }}
+            {{
+              _imageContainer.imageContainer({
+                    src: product.image,
+                    alt: product.title,
+                    name: product.name
+                }) 
+            }}
           </div>
           <div class="cart-popup-product-card__content">
               <a href="{{product.href}}" class="cart-popup-product-card__content__title">

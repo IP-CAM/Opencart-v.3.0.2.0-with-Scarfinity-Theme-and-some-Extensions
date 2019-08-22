@@ -711,4 +711,16 @@ class ModelCatalogProduct extends Model {
 
 		return $product_option_data;
 	}
+
+	public function getProductSameModel($product_id) {
+		$product_same_model_data = array();
+
+		$product_same_model_query = $this->db->query("SELECT p.* FROM " . DB_PREFIX . "product p JOIN " . DB_PREFIX . "product p1 on p1.product_id = " . (int)$product_id . " and p1.model = p.model where p.product_id <> " . (int)$product_id);
+
+		foreach ($product_same_model_query->rows as $result) {
+			$product_same_model_data[$result['product_id']] = $this->getProduct($result['product_id']);
+		}
+
+		return $product_same_model_data;
+	}
 }

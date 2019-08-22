@@ -1,7 +1,10 @@
+var pcTimeout = null;
+
 var productCardController = {
     // Common
     productCard: null,
     productId: null,
+    productModel: null,
 
     // Price
     productQuantityContainer: null,
@@ -19,6 +22,7 @@ var productCardController = {
         var controller = this;
         this.productCard = $('#product');
         this.productId = $(this.productCard).attr('data-product-id');
+        this.productModel = $(this.productCard).attr('data-product-model');
 
         // Quantity and price
         this.productQuantityContainer = $('#cart-quantity');
@@ -28,7 +32,7 @@ var productCardController = {
         this.price.special = $(priceContainer).attr('data-price-special');
 
         sCart.addEventListener('afterload', function () {
-            controller.fillProductOptions();
+            controller.fillProductModelQuantity();
             controller.updateCurrentPrice();
             $('#product .product-card-core').removeClass('process');
         });
@@ -102,49 +106,45 @@ var productCardController = {
             }
         });
 
+        $('#button-cart').on('click', function(e) {
+            var input = $(this).parent().find('input[name="quantity"]');
+            $(input).val(parseInt($(input).val()) + 1).trigger('change');
+        });
+
+        $(document).delegate('.ctr-utt button', 'click', function(e) {
+            var name = e.target.name;
+            var parent = $(this).parent().parent();
+            var input = parent.find('input[name="quantity"]');
+            input.val(Math.max(0, parseInt(input.val()) + (name == 'inc' ? 1 : -1))).trigger('change');
+        });
+
+        $(document).delegate('.ctr-utt input[name$=quantity]', 'change', function(e) {
+            var input = $(this);
+            var parent = input.parent();
+            var product_id = parent.find('input[type="hidden"]').val();
+            var newValue = parseInt(input.val());
+            var oldValue = parseInt(input.data('tmp-value'));
+
+            if (oldValue !== newValue) {
+                input.val(newValue);
+                clearTimeout(pcTimeout);
+                pcTimeout = setTimeout(function () {
+                    clearTimeout(pcTimeout);
+                    $('#product .product-card-core').addClass('process');
+                    sCart.set(product_id, newValue);
+                }, 650);
+            }
+        });
+
+        controller.fillProductModelQuantity();
+        controller.updateCurrentPrice();
+
+        $('#product .product-card-core').removeClass('process');
+
         $(document).ready(function () {
 
-            // Colors and price initialize
-            var pcTimeout = null;
-
-            $('.ctr-utt button').on('click', function (e) {
-                var name = e.target.name;
-                var parent = $(this).parent().parent();
-                var input = parent.find('input[name="quantity"]');
-                input.val(Math.max(0, parseInt(input.val()) + (name == 'inc' ? 1 : -1))).trigger('change');
-            });
-
-            $('.ctr-utt input[name$=quantity]').on('change', function (e) {
-                var input = $(this);
-                var parent = input.parent().parent();
-                var option = parent.find('input[type="hidden"]');
-                var newValue = parseInt(input.val());
-                var oldValue = parseInt(input.data('tmp-value'));
-
-                if (newValue > 0) {
-                    parent.addClass('in-cart');
-                } else {
-                    parent.removeClass('in-cart');
-                }
-
-                if (oldValue !== newValue) {
-                    input.val(newValue);
-                    clearTimeout(pcTimeout);
-                    pcTimeout = setTimeout(function () {
-                        clearTimeout(pcTimeout);
-                        $('#product .product-card-core').addClass('process');
-                        controller.setProductQuantity();
-                    }, 650);
-                }
-            });
-
-            controller.fillProductOptions();
-            controller.updateCurrentPrice();
-
-            $('#product .product-card-core').removeClass('process');
-            // End initialize
-
             controller.__initReview();
+            controller.__initModel();
 
             $('#carousel-product-card-main-image').magnificPopup({
                 type: 'image',
@@ -165,11 +165,20 @@ var productCardController = {
                 }
             });
 
-            $('.product-card-quantity').magnificPopup({
-                type: 'image',
-                delegate: 'a',
-                mainClass: 'mfp-with-zoom'
-            });
+            // $('.product-card-models').magnificPopup({
+            //     type: 'image',
+            //     delegate: 'a',
+            //     mainClass: 'mfp-with-zoom'
+            // });
+        });
+    },
+    'fillProductModelQuantity': function() {
+        var controller = this;
+
+        $(this.productCard).find('.product-model').each(function(index, model) {
+            var productId = $(model).find('input[name="product_id"]').val();
+            quantity = sCart.getProductQuantity(productId);
+            $(model).find('input[name="quantity"]').val(quantity);
         });
     },
     'fillProductOptions': function () {
@@ -194,8 +203,10 @@ var productCardController = {
         var controller = this;
 
         var currency = $('#product .utility__currency');
-        var price = sCart.getProductPrice(controller.productId);
+        var price = sCart.getProductPriceByModel(controller.productModel);
         var value = currency.find('.utility__currency__value');
+
+        console.log(controller.productId, price);
 
         if (price != '') {
             value.text(price);
@@ -225,6 +236,11 @@ var productCardController = {
                 }]);
             }
         });
+    },
+    '__initModel': function() {
+        var controller = this;
+
+        this.loadModel();
     },
     '__initReview': function() {
         var controller = this;
@@ -269,6 +285,13 @@ var productCardController = {
                     }
                 }
             });
+        });
+    },
+    'loadModel': function() {
+        var controller = this;
+
+        $('#model').load('index.php?route=product/product/model&product_id=' + this.productId, function() {
+            controller.fillProductModelQuantity();
         });
     },
     'loadReview': function() {

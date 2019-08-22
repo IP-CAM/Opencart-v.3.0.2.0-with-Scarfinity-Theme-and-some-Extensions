@@ -33,7 +33,7 @@ class Cart {
 	public function getProducts() {
 		$product_data = array();
 
-		$cart_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "cart WHERE api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
+		$cart_query = $this->db->query("SELECT c.*, p.model FROM " . DB_PREFIX . "cart c LEFT JOIN " . DB_PREFIX . "product p on p.product_id = c.product_id WHERE api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
 
 		foreach ($cart_query->rows as $cart) {
 			$stock = true;
@@ -171,7 +171,7 @@ class Cart {
 				$discount_quantity = 0;
 
 				foreach ($cart_query->rows as $cart_2) {
-					if ($cart_2['product_id'] == $cart['product_id']) {
+					if ($cart_2['model'] == $cart['model']) {
 						$discount_quantity += $cart_2['quantity'];
 					}
 				}
@@ -270,17 +270,17 @@ class Cart {
 			}
 		}
 
-		$total = 0;
-		foreach ($product_data as $product) {
-			$total += $product['total_origin'];
-		}
+		// $total = 0;
+		// foreach ($product_data as $product) {
+		// 	$total += $product['total_origin'];
+		// }
 
-		if($total >= 5000) {
-			foreach ($product_data as $key => $product) {
-				$product_data[$key]['price'] = $product['price_origin'];
-				$product_data[$key]['total'] = $product['total_origin'];
-			}
-		}
+		// if($total >= 5000) {
+		// 	foreach ($product_data as $key => $product) {
+		// 		$product_data[$key]['price'] = $product['price_origin'];
+		// 		$product_data[$key]['total'] = $product['total_origin'];
+		// 	}
+		// }
 
 		return $product_data;
 	}
