@@ -1,11 +1,23 @@
-$(document).ready(function() {
-    checkout.shippingMethodsGet({
-        success: function(html) {
-            $('#cart-checkout-requisites-shipping-method').html(html);
-            $('#cart-button-next').prop('disabled', false);
-        }
-    });
-});    
+var checkout_requisites_load = false;
+
+function __load() {
+    if(!checkout_requisites_load) {
+        checkout.shippingMethodsGet({
+            success: function(html) {
+                checkout_requisites_load = true;
+                $('#cart-checkout-requisites-shipping-method').html(html);
+                $('#cart-button-next').prop('disabled', false);
+            }
+        });
+    }
+}
+
+if(sCart.loading) {
+    sCart.addEventListener('afterload', __load);    
+} else {
+    __load();
+}
+
 
 $('.sInputTextArea textarea[name$="comment"]').val(comment).trigger('input');
 $('.select-box input[type="checkbox"][data-group$="terms"][name$="agree"]').prop('checked', agree ? true : false).change();
@@ -50,17 +62,18 @@ var ui = {
                     $('#cart-button-next').prop('disabled', true);
                 }),
                 success: function(json) {
-                    checkout.confirm({
-                        beforeSend: ui.beforeSend('cart-checkout-payments', function() {
-                            $('#cart-button-next').prop('disabled', true);
-                        }),
-                        success: function(html) {
-                            $('#cart').html(html);
-                        },
-                        complete: function() {
-                            $('#cart-button-next').prop('disabled', false);
-                        }
-                    });
+                    location = json['continue'];
+                    // checkout.confirm({
+                    //     beforeSend: ui.beforeSend('cart-checkout-payments', function() {
+                    //         $('#cart-button-next').prop('disabled', true);
+                    //     }),
+                    //     success: function(html) {
+                    //         $('#cart').html(html);
+                    //     },
+                    //     complete: function() {
+                    //         $('#cart-button-next').prop('disabled', false);
+                    //     }
+                    // });
                 },
                 error: ui.displayErrors(function(errors) {}),
                 complete: function() {

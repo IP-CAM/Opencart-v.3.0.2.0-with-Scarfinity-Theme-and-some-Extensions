@@ -225,6 +225,19 @@ var checkout = {
             error: checkout.__error(actions['error'])
         });
     },
+    paymentGet: function(actions = {}) {
+        var checkout = this;
+
+        $.ajax({
+            url: 'index.php?route=checkout/confirm/payment',
+            method: 'post',
+            dataType: 'html',
+            success: function(html) {
+                if(actions['success']) actions['success'](html);
+            },
+            error: checkout.__error(actions['error'])
+        });
+    },
     paymentConfirm: function(actions = {}) {
         var checkout = this;
 

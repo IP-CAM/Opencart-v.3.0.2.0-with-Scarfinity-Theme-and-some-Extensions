@@ -23,6 +23,9 @@ class Session {
  	*/
 	public function __construct($adaptor, $registry = '') {
 		$class = 'Session\\' . $adaptor;
+
+		$logger = new \Log('db_log.log');
+		$logger->write($class);
 		
 		if (class_exists($class)) {
 			if ($registry) {
@@ -78,7 +81,10 @@ class Session {
 	 * 
  	*/
 	public function close() {
+		$logger = new \Log('db_log.log');
+		$logger->write('Write');
 		$this->adaptor->write($this->session_id, $this->data);
+		$logger->write('Close');
 	}
 	
 	/**

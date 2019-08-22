@@ -73,6 +73,7 @@ class ControllerCheckoutRequisites extends Controller {
 
 		if (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
+			$this->log->write('Unset error');
 			unset($this->session->data['error']);
 		} else {
 			$data['error_warning'] = '';

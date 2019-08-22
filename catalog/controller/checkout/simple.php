@@ -474,8 +474,7 @@ class ControllerCheckoutSimple extends Controller {
 						'title'      => $quote['title'],
 						'quote'      => $quote['quote'],
 						'sort_order' => $quote['sort_order'],
-						'error'      => $quote['error'],
-						'fields'	 => $this->{'model_extension_shipping_' . $result['code']}->getFields()
+						'error'      => $quote['error']
 					);
 				}
 			}
@@ -489,6 +488,7 @@ class ControllerCheckoutSimple extends Controller {
 
 		array_multisort($sort_order, SORT_ASC, $method_data);
 
+		$this->log->write('Saving shipping methods');
 		$this->session->data['shipping_methods'] = $method_data;
 
 		// Список магазинов
@@ -516,7 +516,13 @@ class ControllerCheckoutSimple extends Controller {
 		}
 
 		if (isset($this->session->data['shipping_methods'])) {
-			$data['shipping_methods'] = $this->session->data['shipping_methods'];
+			$data['shipping_methods'] = array();
+			
+			foreach ($this->session->data['shipping_methods'] as $code => $shipping_method) {
+				$shipping_method['fields'] = $this->{'model_extension_shipping_' . $code}->getFields();
+				$data['shipping_methods'][$code] = $shipping_method;
+			}
+
 		} else {
 			$data['shipping_methods'] = array();
 		}
@@ -1579,23 +1585,27 @@ class ControllerCheckoutSimple extends Controller {
 				}
 			}
 
+			$this->load->model('setting/extension');
+
 			// Валидация способа доставки
 			if (!isset($this->request->post['shipping_method'])) {
 				$json['error']['shipping_methods'] = $this->language->get('error_shipping');
-				$this->log->write('checkout_save.shipping_method: not isset');
 			} else {
 				$shipping = explode('.', $this->request->post['shipping_method']);
 
-				if (!isset($shipping[0]) || !isset($shipping[1])/* || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])*/) {
+				if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
 					$json['error']['shipping_methods'] = $this->language->get('error_shipping');
 				}
 
-				if(isset($shipping[0]) && isset($shipping[1]) && isset($this->session->data['shipping_methods'][$shipping[0]]['fields'])) {
-					foreach($this->session->data['shipping_methods'][$shipping[0]]['fields'] as $field) {
-						if($field['required']) {
-							if((utf8_strlen(trim($this->request->post[$field['name']])) < 1) || (utf8_strlen(trim($this->request->post[$field['name']])) > 128)) {
-								$json['error'][$field['name']] = $field['error'];
-								$this->log->write('checkout_save.shipping_method: custom field');
+				if(isset($shipping[0]) && isset($shipping[1])) {
+					$this->load->model('extension/shipping/' . $shipping[0]);
+					$fields = $this->{'model_extension_shipping_' . $shipping[0]}->getFields();
+					if(!empty($fields)) {
+						foreach($fields as $field) {
+							if($field['required']) {
+								if((utf8_strlen(trim($this->request->post[$field['name']])) < 1) || (utf8_strlen(trim($this->request->post[$field['name']])) > 128)) {
+									$json['error'][$field['name']] = $field['error'];
+								}
 							}
 						}
 					}
@@ -1636,7 +1646,7 @@ class ControllerCheckoutSimple extends Controller {
 			}
 
 			// Сохранение способа доставки
-			$this->session->data['shipping_method'] = $this->request->post['shipping_method']; //$this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
+			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
 			$json['sm'] = $this->session->data['shipping_method'];
 
 			// Сохранение способа оплаты
@@ -1646,6 +1656,8 @@ class ControllerCheckoutSimple extends Controller {
 			// Сохранине комментария к заказу
 			$this->session->data['comment'] = strip_tags($this->request->post['comment']);
 		}
+
+		$json['continue'] = $this->url->link('checkout/confirm');
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

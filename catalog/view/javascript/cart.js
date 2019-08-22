@@ -8,9 +8,13 @@ var sCart = {
     load: function () {
         var cart = this;
         if (!cart.loading) {
+            cart.loading = true;
             $.ajax({
                 url: 'index.php?route=common/cart/get',
                 type: 'post',
+                complete: function () {
+                    cart.loading = false;
+                },
                 success: function (json) {
                     cart.products = json['products'];
                     cart.totals = json['totals'];

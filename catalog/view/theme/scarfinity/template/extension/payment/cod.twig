@@ -1,8 +1,24 @@
-<div class="buttons">
+{% import 'scarfinity/template/components/button.twig' as _button  %}
+
+<div class="cart__bottom-navigation{{props.orderTotal ? ' check' : ''}}">
+		<div class="cart__bottom-navigation__left">
+				{# <a id="cart-button-prev" class="cart__button-prev" href="{{props.prevHref}}"}>{{props.prevTitle}}</a> #}
+		</div>
+		<div class="cart__bottom-navigation__right">
+				{{ _button.BasicButton({ title: button_confirm, chevron: 'right', id: 'button-confirm', disabled: props.disabled }) }}
+		</div>
+		<div class="cart__bottom-navigation__check">
+				{# {% if props.orderTotal %}
+						{{ _.PaymentCheck({total: props.orderTotal}) }}
+				{% endif %} #}
+		</div>
+</div>  
+
+{# <div class="buttons">
   <div class="pull-right">
     <input type="button" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
   </div>
-</div>
+</div> #}
 <script type="text/javascript"><!--
 $('#button-confirm').on('click', function() {
 	$.ajax({
@@ -12,7 +28,7 @@ $('#button-confirm').on('click', function() {
 			$('#button-confirm').button('loading');
 		},
 		complete: function() {
-			$('#button-confirm').button('reset');
+			// $('#button-confirm').button('reset');
 		},
 		success: function(json) {
 			if (json['redirect']) {
@@ -20,6 +36,7 @@ $('#button-confirm').on('click', function() {
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
+			$('#button-confirm').button('reset');
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});

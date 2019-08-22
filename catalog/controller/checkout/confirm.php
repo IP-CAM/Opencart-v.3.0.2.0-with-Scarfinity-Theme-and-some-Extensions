@@ -407,11 +407,63 @@ class ControllerCheckoutConfirm extends Controller {
 				);
 			}
 
-			$data['payment'] = $this->load->controller('extension/payment/' . $this->session->data['payment_method']['code']);
+			// $data['payment'] = $this->load->controller('extension/payment/' . $this->session->data['payment_method']['code']);
 		} else {
 			$data['redirect'] = $redirect;
 		}
 
+		$this->load->language('checkout/confirm');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_basket'),
+			'href' => $this->url->link('checkout/cart')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_checkout'),
+			'href' => $this->url->link('checkout/checkout', '', true)
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_requisites'),
+			'href' => $this->url->link('checkout/requisites', '', true)
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_confirm'),
+			'href' => $this->url->link('checkout/confirm')
+		);
+
+		// Scripts - footer
+		$this->document->addScript('catalog/view/javascript/checkout.js', 'footer');
+		$this->document->addScript('catalog/view/javascript/checkout.core.js', 'footer');
+		$this->document->addScript('catalog/view/javascript/checkout.confirm.js', 'footer');
+
+		$data['continue'] = $this->url->link('common/home');
+
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
+
 		$this->response->setOutput($this->load->view('checkout/confirm', $data));
+	}
+
+	public function payment() {
+		// return  $this->load->controller('extension/payment/' . $this->session->data['payment_method']['code']);
+		// $data['payment'] = $this->load->controller('extension/payment/' . 'yandex_money');
+		$this->response->setOutput($this->load->controller('extension/payment/' . $this->session->data['payment_method']['code']));
+		// $this->response->setOutput($this->load->controller('extension/payment/yandex_money'));
 	}
 }
