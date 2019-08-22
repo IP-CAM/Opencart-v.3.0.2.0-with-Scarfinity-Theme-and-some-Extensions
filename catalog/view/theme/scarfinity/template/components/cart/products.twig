@@ -45,6 +45,7 @@
         {% for product in props.products %}
         	{{ productCard.productCard({ product: product }) }}
         {% endfor %}
+        <div>{{ props.module_coupon }}</div>
         <ul class="cart__bottom-row">
             {% for total in props.totals %}
                 <li>
