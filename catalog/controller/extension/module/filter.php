@@ -14,6 +14,13 @@ class ControllerExtensionModuleFilter extends Controller {
 		$category_info = $this->model_catalog_category->getCategory($category_id);
 		//$data['product_prices'] = $this->model_catalog_product->getProductsPrices($filter_data);
 
+		// Style
+		$this->document->addStyle('catalog/view/javascript/nouislider/nouislider.min.css');
+
+		// Scripts
+		$this->document->addScript('catalog/view/javascript/nouislider/nouislider.min.js', 'footer');
+		$this->document->addScript('catalog/view/javascript/filter.js', 'footer');
+
 		if ($category_info) {
 			$this->load->language('extension/module/filter');
 

@@ -2,27 +2,42 @@
 {% import 'scarfinity/template/components/navigation/pagination.twig' as _pagination %}
 {% import 'scarfinity/template/components/lib/currying.twig' as _currying %}
 
-{% for product in products %}
-    <div class="product-card-catalog-container product-card-catalog-container--catalog">
-        {{ _categoryProductCard.categoryProductCard(product, { buttonLabel: button_cart }) }}
-    </div>    
-{% endfor %}
+<div class="row product-card-catalog-row" id="catalog-product-card-list">
+    {% for product in products %}
+        <div class="product-card-catalog-container product-card-catalog-container--catalog">
+            {{ _categoryProductCard.categoryProductCard(product, { buttonLabel: button_cart }) }}
+        </div>
+    {% endfor %}
+</div>
 
-<div id="competitor" class="col-xs-12" style="text-align: center;">
-    <div class="catalog-footer">
-        <div class="catalog-footer__results">
-            {% if next_href %}
-                <button class="catalog-fetch-button" id="fetch" onclick="fetch('{{next_href}}')">
-                    <i class="fa fa-spinner" aria-hidden="true"></i>
-                    <span>Показать еще {{ pagination_data['limit'] }} из {{ pagination_data['product_total'] }} {{ _currying.__('products', pagination_data['product_total']) }}</span>
-                </button>
-            {% else %}
-                <span>Показаны все товары в данной категории</span> 
-            {% endif %}
-        </div>
-        <div class="catalog-footer__pagination">
-            {{_pagination.Pagination(pagination_data)}}
-        </div>
+<p class="pagination-p" style="display:none">
+    <a class="pagination__next" href="{{next_href}}">Next page</a>
+</p>
+
+<div class="page-load-status catalog-footer" style="display:none">
+    <div class="catalog-footer__results">
+        <span class="infinite-scroll-last">Показаны все товары в данной категории</span>
+        <span class="infinite-scroll-error">Показаны все товары в данной категории</span>
     </div>
 </div>
 
+<div class="catalog-footer">
+    <div class="catalog-footer__results">
+        {% if next_href %}
+            <button class="catalog-fetch-button" id="fetch">
+                <i aria-hidden="true" class="fa fa-spinner"></i>
+                {# <span>Показать еще
+                    {{ pagination_data['limit'] }}
+                    из
+                    {{ pagination_data['product_total'] }}
+                    {{ _currying.__('products', pagination_data['product_total']) }}</span> #}
+                <span>Показать еще</span>
+            </button>
+        {% else %}
+            <span>Показаны все товары в данной категории</span>
+        {% endif %}
+    </div>
+    {# <div class="catalog-footer__pagination">
+        {{_pagination.Pagination(pagination_data)}}
+    </div> #}
+</div>

@@ -1,6 +1,6 @@
 <?php
 class ModelToolImage extends Model {
-	public function resize($filename, $width, $height) {
+	public function resize($filename, $width, $height, $resize = true) {
 		if (!is_file(DIR_IMAGE . $filename) || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $filename)), 0, strlen(DIR_IMAGE)) != str_replace('\\', '/', DIR_IMAGE)) {
 			return;
 		}
@@ -29,7 +29,7 @@ class ModelToolImage extends Model {
 				}
 			}
 
-			if ($width_orig != $width || $height_orig != $height) {
+			if (($width_orig != $width || $height_orig != $height) && $resize) {
 				$image = new Image(DIR_IMAGE . $image_old);
 				$image->resize($width, $height);
 				$image->save(DIR_IMAGE . $image_new);
@@ -45,5 +45,9 @@ class ModelToolImage extends Model {
 		} else {
 			return $this->config->get('config_url') . 'image/' . $image_new;
 		}
+	}
+
+	public function original($filename, $resize = false) {
+		return resize($filename, 0, 0, $resize);
 	}
 }

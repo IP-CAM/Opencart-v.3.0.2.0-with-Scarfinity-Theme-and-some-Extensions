@@ -3,23 +3,27 @@ $('input[type="radio"][name="input-limit"], #input-sort').on('change', function(
     location = e.target.value;
 });
 
-function fetch(nextHref) {
-    if (nextHref) {
-        $.ajax({
-            url: nextHref,
-            dataType: 'html',
-            beforeSend: function () {
-                $('#fetch').attr("disabled", "disabled");
-            },
-            success: function (html) {
-                $('#competitor').before(html).remove();
-                catalogProductCardController.__init();
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
+var catalog = {
+    productList: null,
+    __init: function() {
+        console.log('CATALOG INIT');
+        this.productList = $('#catalog-product-card-list');
+        this.infiniteScrollInit();
+    },
+    infiniteScrollInit: function() {
+        $(this.productList).infiniteScroll({
+            path: '.pagination__next',
+            append: '.product-card-catalog-container',
+            hideNav: '.pagination-p',
+            // prefill: true,
+            button: '#fetch',
+            scrollThreshold: false,
+            status: '.page-load-status'
+        })
+        .on('append.infiniteScroll', function() {
+            catalogProductCardController.__init();
+        })
     }
-
-    return false;
 }
+
+catalog.__init();

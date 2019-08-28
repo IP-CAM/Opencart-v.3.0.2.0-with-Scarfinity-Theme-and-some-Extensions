@@ -119,6 +119,7 @@ class ControllerProductCategory extends Controller {
 			$this->document->addStyle('catalog/view/javascript/swiper/dist/css/swiper.min.css');
 
 			// Scripts - footer
+			$this->document->addScript('https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js', 'footer');
 			$this->document->addScript('catalog/view/javascript/category.js', 'footer');
 			$this->document->addScript('catalog/view/javascript/swiper/dist/js/swiper.min.js', 'footer');
 			$this->document->addScript('catalog/view/javascript/catalog-product-card.js', 'footer');
@@ -444,10 +445,12 @@ class ControllerProductCategory extends Controller {
 				'url' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&page={page}')
 			);
 
+			// $data['next_href'] = $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&page='. ($page + 1), true);
+
 			if ($limit && ceil($product_total / $limit) > $page) {
-				$data['next_href'] = $this->url->link('product/category/products', 'path=' . $this->request->get['path'] . $url . '&page='. ($page + 1));
+				$data['next_href'] = $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&page='. ($page + 1), true);
 			} else {
-				$data['next_href'] = false;
+				$data['next_href'] = null;
 			}
 
 			$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
@@ -787,13 +790,6 @@ class ControllerProductCategory extends Controller {
 				$url .= '&pmax=' . $this->request->get['pmax'];
 			}
 
-			$pagination = new Pagination();
-			$pagination->total = $product_total;
-			$pagination->page = $page;
-			$pagination->limit = $limit;
-			$pagination->url = $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&page={page}');
-
-			$data['pagination'] = $pagination->render();
 			$data['pagination_data'] = array(
 				'product_total' => $product_total,
 				'page' => $page,

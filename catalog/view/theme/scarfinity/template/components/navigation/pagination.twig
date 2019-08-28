@@ -2,7 +2,7 @@
     {% import 'scarfinity/template/components/utility/_icons.twig' as _icons  %}
 
     {% set c = props.page %}
-    {% set max = (props.product_total / props.limit|default(1))|round(1, 'ceil') %}
+    {% set max = (props.product_total / props.limit|default(1))|round(0, 'ceil') %}
     {% if max > 1 %}
         {% set sideCount = 2 %}
         {% set start = max(c - sideCount, 1) %}
@@ -17,29 +17,29 @@
         {% set pages %}
             <div class="s-pagination">
                 {% if start != 1 %}
-                    <a href="{{props.url|replace({'{page}': 1})}}" class="def">1</a>
+                    <a href="{{props.url|replace({'{page}': 1, '%7Bpage%7D': 1})}}" class="def">1</a>
                     <span class="dtt">...</span>
                 {% endif %}
                 {% for index in indices %}
-                    <a href="{{props.url|replace({'{page}': index})}}" class="{{index == c ? 'crr' : 'def'}}">{{index}}</a>
+                    <a href="{{props.url|replace({'{page}': index, '%7Bpage%7D': index})}}" class="{{index == c ? 'crr' : 'def'}}">{{index}}</a>
                 {% endfor %}
                 {% if end < max %}
                     <span class="dtt">...</span>
-                    <a href="{{props.url|replace({'{page}': max})}}" class="def">{{max}}</a>
+                    <a href="{{props.url|replace({'{page}': max, '%7Bpage%7D': max})}}" class="def">{{max}}</a>
                 {% endif %}
             </div>
         {% endset %}
 
         <div class="s-pagination-container">
             <a
-                href="{{props.url|replace({'{page}': c - 1})}}"
+                href="{{props.url|replace({'{page}': c - 1, '%7Bpage%7D': c - 1})}}"
                 class="s-pagination-container__button{{c <= 1 ? ' ds' : ''}}">
                     {{_icons.ChevronLeft({size: 13})}}
                     <span class="s-pagination-container__button__label">Предыдущая</span>
             </a>
             {{pages}}
             <a
-                href="{{props.url|replace({'{page}': c + 1})}}"
+                href="{{props.url|replace({'{page}': c + 1, '%7Bpage%7D': c + 1})}}"
                 class="s-pagination-container__button r{{c >= max ? ' ds' : ''}}">
                     <span class="s-pagination-container__button__label">Следующая</span>
                     {{_icons.ChevronRight({size: 13})}}

@@ -86,9 +86,11 @@
 
       </div>
 
-      <div class="row product-card-catalog-row">
-        {% include 'scarfinity/template/product/products.twig' ignore missing %}
-      </div>
+      {% include 'scarfinity/template/product/products.twig' ignore missing %}
+
+      {#<p class="pagination">
+        <a class="pagination__next" href="{{next_href}}">Next page</a>
+      </p> #}
 
       {% endif %}
 
@@ -101,28 +103,5 @@
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
-
-<script type="text/javascript">
-  function fetch(nextHref) {
-    if(nextHref) {
-      $.ajax({
-        url: nextHref,
-        dataType: 'html',
-        beforeSend: function() {
-          $('#fetch').attr("disabled", "disabled");
-        },
-        success: function(html) {
-          $('#competitor').before(html).remove();
-          catalogProductCardController.__init();
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-      });
-    }
-
-    return false;
-  }
-</script>
 
 {{ footer }} 

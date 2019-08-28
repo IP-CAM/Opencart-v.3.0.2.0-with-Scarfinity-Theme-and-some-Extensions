@@ -1,5 +1,12 @@
 {% macro ColorPickerItem(props) %}
 	{% set status = (props.checked ? ' checked' : '') ~ (props.disabled ? ' disabled' : '') %}
+	{% set id = random() %}
+	{% set colors = props.color|split('#') %}
+	<style>
+		.cp-{{id}} .cp-i { fill: {{"#" ~ colors[1] ~ ";"}} }
+		.cp-{{id}} .cp-o { fill: {{"#" ~ colors[2] ~ ";"}} }
+		.cp-{{id}} .cp-p { fill: {{"#" ~ colors[3] ~ ";"}} }
+	</style>
 	<label 
 		class="color-picker-item" 
 		style="
@@ -12,7 +19,7 @@
 				{% else %}
 					<input type="checkbox" name="{{props.name}}" value="{{props.value}}" {{status}}>
 				{% endif %}
-				<svg class="cp-{{props.color|default(00)}}" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 300 300">
+				<svg class="cp-{{id}}" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 300 300">
 		            <circle class="cp-o" cx="150" cy="150" r="140"/>
 		            <circle class="cp-i" cx="150" cy="150" r="126"/>
 		            <path class="cp-p" d="M206.243,132.531l-57.184,56.931-6.075,6.037a8.618,8.618,0,0,1-12.148,0l-6.075-6.037L94.389,159.209a8.538,8.538,0,0,1,0-12.1l6.075-6.037a8.62,8.62,0,0,1,12.149,0l24.3,24.193,51.111-50.885a8.591,8.591,0,0,1,12.148,0l6.075,6.041A8.549,8.549,0,0,1,206.243,132.531Z"/>
