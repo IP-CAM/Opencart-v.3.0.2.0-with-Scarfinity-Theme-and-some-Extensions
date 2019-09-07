@@ -75,8 +75,12 @@ var ui = {
         if(checkout) {
             checkout.customerLogin({
                 beforeSend: ui.beforeSend('cart-checkout-login-login', function() {}),
-                success: function() {},
-                error: ui.displayErrors(function(errors) {})
+                success: function(json) {
+                    console.log(json);
+                },
+                error: ui.displayErrors(function(errors) {
+                    
+                })
             });
         }
     },

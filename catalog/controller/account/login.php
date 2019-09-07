@@ -49,6 +49,9 @@ class ControllerAccountLogin extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		// Scripts - footer
+		$this->document->addScript('catalog/view/javascript/account.js', 'footer');
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			// Unset guest
 			unset($this->session->data['guest']);
@@ -156,6 +159,12 @@ class ControllerAccountLogin extends Controller {
 	}
 
 	protected function validate() {
+		if(!preg_match('/^((\+7|7|8)+([0-9]){10})/', $this->request->post['email'])) {
+			$this->error['warning'] = $this->language->get('Неправильно введен номер телефона');
+		} else {
+			$this->request->post['email'] = preg_replace('/^((\\+7|7|8)+(\\d+))$/', '7${3}@scarfinity.ru', $this->request->post['telephone'], -1, $count);
+		}
+		
 		// Check how many login attempts have been made.
 		$login_info = $this->model_account_customer->getLoginAttempts($this->request->post['email']);
 
@@ -179,6 +188,7 @@ class ControllerAccountLogin extends Controller {
 				$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 			}
 		}
+
 
 		return !$this->error;
 	}

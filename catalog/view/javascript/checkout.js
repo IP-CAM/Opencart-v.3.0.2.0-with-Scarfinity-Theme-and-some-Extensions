@@ -9,12 +9,13 @@ var checkout = {
                 firstname: this.firstname,
                 lastname: this.lastname,
                 telephone: this.telephone,
-                email: this.email == '' ? this.telephone == '' ? '' : this.telephone + '@scarfinity.ru' : this.email
+                email: this.email == '' ? this.telephone == '' ? '' : this.telephone : this.email
             };
         }
     },
     login: {
         email: '',
+        telephone: '',
         password: '',
     },
     shipping_address: {
@@ -66,10 +67,13 @@ var checkout = {
                 $('#button-login').button('reset');
             },
             success: function(json) {
+                console.log(json);
                 if (json['redirect']) {
                     checkout.__redirect(json['redirect']);
                 } else if (json['error']) {
                     if(actions['error']) actions['error'](json['error']);
+                } else {
+                    if(actions['success']) actions['success'](json);
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

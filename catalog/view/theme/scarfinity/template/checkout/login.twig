@@ -50,14 +50,15 @@
 
 {% set tabRegisteredContent %}
     <p>{{ text_i_am_returning_customer }}</p>
+    <input type="hidden" name="warning" />
     {{ 
         basicInput.basicInput({
-            label: entry_email,
+            label: entry_telephone,
             value: '',
-            name: 'email',
+            name: 'telephone',
             group: 'login',
-            type: 'text',
-            placeholder: entry_email,
+            type: 'phone',
+            placeholder: entry_telephone,
             required: true
         })
     }}

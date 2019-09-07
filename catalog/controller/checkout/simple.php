@@ -178,9 +178,7 @@ class ControllerCheckoutSimple extends Controller {
 				// 	$json['error']['lastname'] = $this->language->get('error_lastname');
 				// }
 
-				$this->request->post['telephone'] = $this->validateTelephone($this->request->post['telephone']);
-
-				if(empty($this->request->post['telephone'])) {
+				if(!preg_match('/^((\+7|7|8)+([0-9]){10})$/', $this->request->post['telephone'])) {
 					$json['error']['telephone'] = $this->language->get('error_telephone');
 				}
 
@@ -265,7 +263,7 @@ class ControllerCheckoutSimple extends Controller {
 				$customer = array(
 					'firstname' 	=> 	$this->request->post['firstname'],
 					'lastname' 		=> 	'',
-					'email' 		=> 	$this->request->post['telephone'] . "@scarfinity.ru",
+					'email' 		=> 	$this->request->post['telephone'] = preg_replace('/^((\\+7|7|8)+(\\d+))$/', '7${3}@scarfinity.ru', $this->request->post['telephone'], -1, $count),
 					'telephone' 	=> 	$this->request->post['telephone'],
 					'password' 		=> 	$password,
 					'company' 		=> 	'',

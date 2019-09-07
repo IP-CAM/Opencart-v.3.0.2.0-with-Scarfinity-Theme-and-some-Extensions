@@ -11,6 +11,9 @@ class ControllerAccountAccount extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		// Scripts - footer
+		$this->document->addScript('catalog/view/javascript/account.js', 'footer');
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(

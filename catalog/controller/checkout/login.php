@@ -43,15 +43,21 @@ class ControllerCheckoutLogin extends Controller {
 			$json['redirect'] = $this->url->link('checkout/cart');
 		}
 
+		if(!preg_match('/^((\+7|7|8)+([0-9]){10})/', $this->request->post['telephone'])) {
+			$json['error']['warning'] = 'Неправильно введен номер телефона';
+		} else {
+			$this->request->post['email'] = preg_replace('/^((\\+7|7|8)+(\\d+))$/', '7${3}@scarfinity.ru', $this->request->post['telephone'], -1, $count);
+		}
+
 		if (!$json) {
 			$this->load->model('account/customer');
 
 			// Check how many login attempts have been made.
 			$login_info = $this->model_account_customer->getLoginAttempts($this->request->post['email']);
 
-			if ($login_info && ($login_info['total'] >= $this->config->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
-				$json['error']['warning'] = $this->language->get('error_attempts');
-			}
+			// if ($login_info && ($login_info['total'] >= $this->config->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
+			// 	$json['error']['warning'] = $this->language->get('error_attempts');
+			// }
 
 			// Check if customer has been approved.
 			$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
@@ -97,7 +103,7 @@ class ControllerCheckoutLogin extends Controller {
 				}
 			}
 
-			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
+			$json['redirect'] = $this->url->link('checkout/requisites', '', true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
