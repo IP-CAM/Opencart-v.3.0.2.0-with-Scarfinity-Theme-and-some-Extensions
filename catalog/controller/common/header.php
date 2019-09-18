@@ -46,6 +46,12 @@ class ControllerCommonHeader extends Controller {
 			$data['logo'] = '';
 		}
 
+		if (is_file(DIR_IMAGE . 'promo_image.jpg')) {
+			$data['promo_image'] = $server . 'image/' . 'promo_image.jpg';
+		} else {
+			$data['promo_image'] = '';
+		}
+
 		$this->load->language('common/header');
 
 		// Css hash

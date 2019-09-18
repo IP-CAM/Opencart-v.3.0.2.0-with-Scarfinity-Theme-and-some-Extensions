@@ -54,6 +54,10 @@
 </head>
 
 <body>
+  {% if promo_image %}
+    <div class="top-promo-banner" style="background-image: url('{{promo_image}}')"></div>
+  {% endif %}
+
   {% if (isMobile or isTablet) %}
     {# Меню для мобильной навигации #}
     <nav id="mobile-left-menu" class="slideout-menu">
