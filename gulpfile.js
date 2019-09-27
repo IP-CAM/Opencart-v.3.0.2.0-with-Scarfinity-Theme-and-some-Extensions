@@ -9,6 +9,84 @@ var
     ftp             = require('vinyl-ftp'),
     path            = require('path');
 
+// 
+
+var common = {
+    core: [
+        'less/base.less'
+    ],
+    navigation: [
+        lessPath + 'components/navigation/*.less'
+    ]
+}
+
+var pages = [
+    {
+        name: 'home',
+        bundleList: [
+            'less/home.less'
+        ]
+    },
+    {
+        name: 'about',
+        bundleList: [
+            'less/about.less'
+        ]
+    }
+];
+
+gulp.task('bundle', function() {
+    pages.forEach(page => {
+        return gulp.src([
+            ...common.core,
+            ...common.navigation,
+            ...page.bundleList
+        ].map(src => 'catalog/view/theme/scarfinity/stylesheet/' + src))
+            .pipe(less({ paths: bourbon.includePaths }))
+            .pipe(autoprefixer(['last 15 versions']))
+            .pipe(concatCss('bundle.css'))
+            .pipe(cleanCss())
+            .pipe(gulp.dest('dir/css/' + page.name))
+            .pipe(browserSync.reload({stream: true}));
+    });
+});
+
+gulp.task('default', ['bundle']);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 gulp.task('browser-sync', function() {
     browserSync({
         proxy: 'scarfinity.loc:170',
@@ -29,13 +107,6 @@ gulp.task('less', function() {
         .pipe(browserSync.reload({stream: true}));
 });
 
-gulp.task('watch', ['less'], function() {
-    gulp.watch('catalog/view/theme/scarfinity/stylesheet/**/*.less', ['less']);
-    gulp.watch('catalog/view/theme/scarfinity/template/**/*.twig', browserSync.reload);
-    gulp.watch('catalog/view/theme/scarfinity/js/**/*.js', browserSync.reload);
-    gulp.watch('catalog/view/theme/scarfinity/libs/**/*', browserSync.reload);
-});
-
 gulp.task('deploy', function() {
     var conn = ftp.create({
         host:       'scarfinity.beget.tech',
@@ -52,5 +123,84 @@ gulp.task('deploy', function() {
     return gulp.src(globs, { buffer: false })
         .pipe(conn.dest('/home/s/scarfinity/scarfinity.beget.tech/public_html/catalog'));
 });
+
+gulp.task('utility', function() {
+    return gulp.src([
+        'catalog/view/theme/scarfinity/stylesheet/components/currency.less',
+        'catalog/view/theme/scarfinity/stylesheet/components/button.less',
+        'catalog/view/theme/scarfinity/stylesheet/components/rating-box.less'
+    ])
+        .pipe(less({ paths: bourbon.includePaths }))
+        .pipe(autoprefixer(['last 15 versions']))
+        .pipe(concatCss('utility.css'))
+        .pipe(cleanCss())
+        .pipe(gulp.dest('catalog/view/theme/scarfinity/stylesheet'))
+        .pipe(browserSync.reload({stream: true}));
+});
+
+gulp.task('less1', function() {
+    return gulp.src([
+            'catalog/view/theme/scarfinity/stylesheet/source/common/product-list.less',
+            'catalog/view/theme/scarfinity/stylesheet/source/common/navigation-mmenu.less',
+            'catalog/view/theme/scarfinity/stylesheet/components/navigation/mobile-main-menu.less'
+        ])
+        .pipe(less({ paths: bourbon.includePaths }))
+        .pipe(autoprefixer(['last 15 versions']))
+        .pipe(concatCss('mobile.css'))
+        .pipe(cleanCss())
+        .pipe(gulp.dest('catalog/view/theme/scarfinity/stylesheet'))
+        .pipe(browserSync.reload({stream: true}));
+});
+
+var t = {
+    navigation: [
+        'catalog/view/theme/scarfinity/stylesheet/components/navigation/breadcrumbs.less',
+        'catalog/view/theme/scarfinity/stylesheet/components/navigation/footer.less',
+    ]
+}
+
+gulp.task('navigation', function() {
+    return gulp.src([
+        'catalog/view/theme/scarfinity/stylesheet/components/navigation/mobile-main-menu.less',
+        'catalog/view/theme/scarfinity/stylesheet/components/navigation/breadcrumbs.less',
+        'catalog/view/theme/scarfinity/stylesheet/components/navigation/footer.less',
+        'catalog/view/theme/scarfinity/stylesheet/components/button.less',
+        'catalog/view/theme/scarfinity/stylesheet/components/rating-box.less'
+    ])
+        .pipe(less({ paths: bourbon.includePaths }))
+        .pipe(autoprefixer(['last 15 versions']))
+        .pipe(concatCss('utility.css'))
+        .pipe(cleanCss())
+        .pipe(gulp.dest('catalog/view/theme/scarfinity/stylesheet'))
+        .pipe(browserSync.reload({stream: true}));
+});
+
+gulp.task('watch', ['less1'], function() {
+    gulp.watch('catalog/view/theme/scarfinity/stylesheet/**/*.less', ['less1']);
+    gulp.watch('catalog/view/theme/scarfinity/template/**/*.twig', browserSync.reload);
+    gulp.watch('catalog/view/theme/scarfinity/js/**/*.js', browserSync.reload);
+    gulp.watch('catalog/view/theme/scarfinity/libs/**/*', browserSync.reload);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 gulp.task('default', ['watch']);

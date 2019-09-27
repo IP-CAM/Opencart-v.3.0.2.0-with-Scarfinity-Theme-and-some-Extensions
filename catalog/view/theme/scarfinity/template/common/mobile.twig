@@ -1,0 +1,208 @@
+{% import 'scarfinity/template/components/currency.twig' as currency %}
+{% import 'scarfinity/template/components/rating-box.twig' as ratingBox %}
+
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<!--[if IE 8 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie8"><![endif]-->
+<!--[if IE 9 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html dir="{{ direction }}" lang="{{ lang }}"> <!--<![endif]-->
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{ title }}</title>
+    <base href="{{ base }}"/>
+    {% if description %}
+        <meta name="description" content="{{ description }}"/>
+    {% endif %}
+    {% if keywords %}
+        <meta name="keywords" content="{{ keywords }}"/>
+    {% endif %}
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&display=swap" rel="stylesheet">
+    <link
+    href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    {# <script src="https://kit.fontawesome.com/3aaea77e5b.js" crossorigin="anonymous"></script> #}
+
+    <link href="catalog/view/theme/scarfinity/stylesheet/mobile.css" rel="stylesheet">
+
+
+</head>
+
+    {% macro menu(categories, root) %}
+        {% import _self as _ %}
+        <ul>
+            {% if root %}
+                <li class="Divider">{{root}}</li>
+            {% endif %}
+            
+            {% for category in categories %}
+                {% if category.children %}
+                    <li>
+                        <span>{{category.name}}</span>
+                        {{ _.menu(category.children) }}
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{{category.href}}">{{category.name}}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endmacro %}
+
+    {% import _self as _ %}
+
+
+<body>
+    <div id="ss-page">
+        <header id="ss-header">
+
+            {# Mobile menu #}
+            <nav id="ss-mm-menu">
+                <div id="ss-mm-panel-menu" class="ss-mm-h">
+                    <ul>
+                        <li class="link"><span><a href="{{ about_us }}">О нас</a></span></li>
+                        <li class="link"><span><a href="{{ about_us }}">Доставка и оплата</a></span></li>
+                        <li class="link"><span><a href="{{ about_us }}">Как сделать заказ?</a></span></li>
+                        <li class="link"><span><a href="{{ contact }}">Контакты</a></span></li>
+                        <li class="link"><span><a href="tel:{{telephone}}">{{ telephone }}</a></span></li>
+                    </ul>
+                </div>
+                <div id="ss-mm-panel-catalog" class="ss-mm-h">
+                    {{ _.menu(categories, "Каталог") }}
+                </div>
+            </nav>
+            {# Mobile menu end #}
+
+            {# Mobile header #}
+            <nav id="my-header" class="container-fluid ss-nav">
+                <div class="mobile-nav-header" id="mobile-nav-header">
+                <div class="mobile-nav-header__hamburger">
+                    <a href="#ss-mm-menu" class="mobile__hamburger-button" >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    </div>
+                </a>
+                <div class="mobile-nav-header__middle" id="mobile-nav-middle">
+                
+                </div>
+                <a href="{{shopping_cart}}" class="mobile-nav-header__cart" id="mobile-nav-header__cart">
+                    <div class="mobile-nav-cart-button">
+                    <div class="mobile-nav-cart-button__icon"></div>
+                    <span class="mobile-nav-cart-button__bage">0</span>
+                    </div>
+                </a>
+                </div>
+            </nav>
+            {# Mobile header end #}
+
+        </header>
+
+        {# Main content start #}
+        <div id="ss-content">
+            <div class="container">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col px-2">
+                        <h1>Cards</h1>
+                    </div>
+                    <div class="col-auto px-2">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-secondary ss-product-card-count" data-value="ss-col-one">1</button>
+                            <button type="button" class="btn btn-secondary ss-product-card-count" data-value="ss-col-two ss-col-g">2</button>
+                            <button type="button" class="btn btn-secondary ss-product-card-count" data-value="ss-col-three ss-col-g">3</button>
+                            <button type="button" class="btn btn-secondary ss-product-card-count" data-value="ss-col-four ss-col-g">4</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ss-product-card-list ss-col-one">
+                    {% for product in products %}
+                        <div class="col-6 col-md-4 px-2 ss-col-item">
+                            <div class="card ss-product-card-list-card align-items-start">
+                                <img src="{{product.images[0].thumb}}" class="card-img-top" alt="...">
+                                <div class="card-body py-0">
+                                    <ul class="card-add-info">
+                                        <li>MIYOUXIONG</li>
+                                    </ul>
+                                    {{ ratingBox.ratingBox(product.rating) }} 
+                                    <h5 class="card-title">{{product.name}}</h5>    
+                                    <p class="card-text description">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                </div>
+                                <div class="card-actions">
+                                    <div class="ss-price">
+                                        {{ currency.currency(
+                                            { 'price': product.price, 'special': product.special, 'prefix': '', 'unit': '/ шт.' }, 
+                                            { 'fontSize': 22, 'fontWeight': 600, 'style': 'accent' }) 
+                                        }}
+                                    </div>
+                                    <div class="ss-action">
+                                        <button type="button" class="btn ss-product-button">Добвать в корзину</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div></div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {# Main content end #}
+
+        {# Footer start #}
+        <footer></footer>
+        {# Footer end #}
+    </div>
+
+
+    <script src="https://mmenujs.com/mmenu/mmenu.js?v=8.4.0" type="text/javascript"></script>
+    <script src="https://mmenujs.com/mmenu/mmenu.polyfills.js?v=8.4.0" type="text/javascript"></script>
+    <script src="catalog/view/javascript/mobile.js" type="text/javascript"></script>
+
+    <script>
+        Mmenu.configs.offCanvas.page.selector = "#ss-page";
+
+        document.addEventListener("DOMContentLoaded", () => {
+            new Mmenu("#ss-mm-menu", {
+                navbar: {
+                    title: 'scarfinity.ru'
+                },
+                navbars: [
+                    {
+                        type: 'tabs',
+                        content: [
+                            '<a href="#ss-mm-panel-menu"><i class="fa fa-bars"></i> <span>Меню</span></a>',
+                            '<a href="#ss-mm-panel-catalog"><i class="fa fa-th"></i> <span>Каталог</span></a>'
+                        ]
+                    },
+                    {
+                        position	: 'bottom',
+                        content		: [ '<a href="tel:{{telephone}}" target="_blank">{{telephone}}</a>' ]
+                    }
+                ],
+                "iconbar": {
+                    "use": true,
+                    "top": [
+                        "<a href='{{home}}'><i class='fa fa-home'></i></a>", 
+                        "<a href='{{account}}'><i class='fa fa-user'></i></a>"
+                    ],
+                    "bottom": [
+                        "<a href='#/'><i class='fa fa-instagram'></i></a>", 
+                        "<a href='#/'><i class='fa fa-vk'></i></a>", 
+                        "<a href='#/'><i class='fa fa-facebook'></i></a>",
+                    ]
+                }
+            });
+        });
+    </script>
+
+    </body>
+</html>
