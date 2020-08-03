@@ -8,14 +8,17 @@
 			<ul id="{{navTabId}}" class="nav nav-tabs">
 				{% for tab in props.tabs %}
 					{% set id = navTabId ~ '-' ~ tab.id %}
-					<li {{loop.index == selectedIndex ? 'class="active"' : ''}}>
-						<a
-							href="#{{id}}"
-							id="a-{{id}}"
-							data-toggle="tab">
-								{{ tab.title }}
-						</a>
-					</li>
+
+						<li class="nav-item">
+							<a
+								class="nav-link{{loop.index == selectedIndex ? ' active' : ''}}"
+								href="#{{id}}"
+								id="a-{{id}}"
+								data-toggle="tab">
+									{{ tab.title }}
+							</a>
+						</li>
+
 				{% endfor %}
 			</ul>
 			<div class="tab-content">

@@ -151,11 +151,17 @@ class ControllerCommonCart extends Controller {
 		$data['cart'] = $this->url->link('checkout/cart');
 		$data['checkout'] = $this->url->link('checkout/checkout', '', true);
 
-		return $this->load->view('common/cart', $data);
+		return array(
+			'mobile' 	=> $this->load->view('common/mobile_cart', $data),
+			'desktop'	=> $this->load->view('common/desktop_cart', $data)
+		);
 	}
 
 	public function info() {
-		$this->response->setOutput($this->index());
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($this->index()));
+
+		// $this->response->setOutput($this->index());
 	}
 
 	public function get() {

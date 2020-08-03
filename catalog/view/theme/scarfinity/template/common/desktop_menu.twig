@@ -1,0 +1,82 @@
+{# Desktop Menu #}
+
+{% macro MainMenuButton(props) %}
+    <a href="{{props.href}}"><span>{{props.title}}</span></a>
+{% endmacro %}
+
+{% import _self as _ %}
+
+    <div class="main-menu" id="main-menu">
+        <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            <div class="main-menu__container">
+
+                {# Все меню лежит внутри кнопки #}
+                {% if isHome %}
+                <div class="main-menu-catalog-button main-menu-catalog-button--desktop-open">
+                {% else %}
+                <div class="main-menu-catalog-button">
+                {% endif %}
+                <a href="{{ catalog }}" class="main-menu-catalog-button-a"><i class="fa fa-th"></i><span>Каталог товаров</span></a>
+                <div class="main-menu-catalog-ul__container">
+                    <div class="main-menu-catalog-ul">
+                    <ul class="main-menu-catalog-ul__special">
+                        {% for category in [
+                            { title: 'Распродажа', href: special },
+                            { title: 'Осенняя коллекция', href: '' },
+                        ] %}
+                        <li><a href="{{category.href}}"><i></i><span>{{category.title}}</span></a></li>
+                        {% endfor %}
+                    </ul>
+                    <ul class="main-menu-catalog-ul__common">
+                        {% for category in categories %}
+                        <li>
+                            <a href="{{category.href}}">
+                            <i></i>
+                            <span>{{category.name}}</span>
+                            <i class="fa fa-angle-right side"></i>
+                            </a>
+                            <div class="main-menu-catalog-ul__sub-container">
+                            <ul class="main-menu-catalog-ul-sub__grid">
+                                {% for category_2 in category.children %}
+                                    <li class="main-menu-catalog-ul-sub">
+                                    <a href="{{ category_2.href }}" class="main-menu-catalog-ul-sub__title">{{category_2.name}}</a>
+                                    {% if category_2.children %}
+                                        <ul class="main-menu-catalog-ul-sub__links">
+                                        {% for category_3 in category_2.children %}
+                                            <li><a href="{{ category_3.href }}">{{ category_3.name }}</a></li>
+                                        {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <ul class="main-menu-catalog-ul__footer">
+                        {% for item in 1..5 %}
+                        <li></li>
+                        {% endfor %}
+                    </ul>
+                    </div>
+                </div>
+                </div>
+                {# Descto menu end #}
+
+                <div class="main-menu__container__buttons">
+                    <div>{{ _.MainMenuButton({ title: 'Как купить', href: about_us }) }}</div>
+                    <div>{{ _.MainMenuButton({ title: text_contact, href: contact }) }}</div>
+                    <div></div>
+                    <div></div>
+                    <div>{{ _.MainMenuButton({ title: 'Распродажа!', href: special }) }}</div>
+                </div>
+
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+{# Desktop Menu end #}

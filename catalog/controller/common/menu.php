@@ -66,11 +66,15 @@ class ControllerCommonMenu extends Controller {
 			}
 		}
 
+		$data['telephone'] = $this->config->get('config_telephone');
 		$data['catalog'] = $this->url->link('product/catalog');
 		$data['special'] = $this->url->link('product/special');
 		$data['contact'] = $this->url->link('information/contact');
 		$data['about_us'] = $this->url->link('information/information', 'information_id=4');
 
-		return $this->load->view('common/menu', $data);
+		return array(
+			'mobile' 	=> $this->load->view('common/mobile_menu', $data),
+			'desktop' 	=> $this->load->view('common/desktop_menu', $data),
+		);
 	}
 }

@@ -20,17 +20,12 @@
         <meta name="keywords" content="{{ keywords }}"/>
     {% endif %}
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <link href="catalog/view/theme/scarfinity/stylesheet/mobile.css?v={{ cssHash }}" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&display=swap" rel="stylesheet">
-    <link
-    href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-    {# <script src="https://kit.fontawesome.com/3aaea77e5b.js" crossorigin="anonymous"></script> #}
+    <link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 
-    <link href="catalog/view/theme/scarfinity/stylesheet/mobile.css" rel="stylesheet">
+    {# <link href="catalog/view/theme/scarfinity/stylesheet/mobile.css" rel="stylesheet"> #}
 
 
 </head>
@@ -59,55 +54,25 @@
 
     {% import _self as _ %}
 
+    {# Macros #}
+    {% macro MainMenuButton(props) %}
+        <a href="{{props.href}}"><span>{{props.title}}</span></a>
+    {% endmacro %}
+    {# End macros #}
+
 
 <body>
     <div id="ss-page">
         <header id="ss-header">
 
-            {# Mobile menu #}
-            <nav id="ss-mm-menu">
-                <div id="ss-mm-panel-menu" class="ss-mm-h">
-                    <ul>
-                        <li class="link"><span><a href="{{ about_us }}">О нас</a></span></li>
-                        <li class="link"><span><a href="{{ about_us }}">Доставка и оплата</a></span></li>
-                        <li class="link"><span><a href="{{ about_us }}">Как сделать заказ?</a></span></li>
-                        <li class="link"><span><a href="{{ contact }}">Контакты</a></span></li>
-                        <li class="link"><span><a href="tel:{{telephone}}">{{ telephone }}</a></span></li>
-                    </ul>
-                </div>
-                <div id="ss-mm-panel-catalog" class="ss-mm-h">
-                    {{ _.menu(categories, "Каталог") }}
-                </div>
-            </nav>
-            {# Mobile menu end #}
-
-            {# Mobile header #}
-            <nav id="my-header" class="container-fluid ss-nav">
-                <div class="mobile-nav-header" id="mobile-nav-header">
-                <div class="mobile-nav-header__hamburger">
-                    <a href="#ss-mm-menu" class="mobile__hamburger-button" >
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    </div>
-                </a>
-                <div class="mobile-nav-header__middle" id="mobile-nav-middle">
-                
-                </div>
-                <a href="{{shopping_cart}}" class="mobile-nav-header__cart" id="mobile-nav-header__cart">
-                    <div class="mobile-nav-cart-button">
-                    <div class="mobile-nav-cart-button__icon"></div>
-                    <span class="mobile-nav-cart-button__bage">0</span>
-                    </div>
-                </a>
-                </div>
-            </nav>
-            {# Mobile header end #}
+            {{ menu }}
 
         </header>
 
+        <div id="ss-content"></div>
+
         {# Main content start #}
-        <div id="ss-content">
+        {# <div id="ss-content">
             <div class="container">
                 <div class="row justify-content-between align-items-center">
                     <div class="col px-2">
@@ -154,7 +119,7 @@
                     {% endfor %}
                 </div>
             </div>
-        </div>
+        </div> #}
         {# Main content end #}
 
         {# Footer start #}

@@ -7,20 +7,21 @@ var catalog = {
     productList: null,
     __init: function() {
         console.log('CATALOG INIT');
+
         this.productList = $('#catalog-product-card-list');
         this.infiniteScrollInit();
     },
     infiniteScrollInit: function() {
         $(this.productList).infiniteScroll({
             path: '.pagination__next',
-            append: '.product-card-catalog-container',
+            append: '.ss-col-item',
             hideNav: '.pagination-p',
-            // prefill: true,
+            prefill: false,
             button: '#fetch',
-            scrollThreshold: false,
+            scrollThreshold: true,
             status: '.page-load-status'
         })
-        .on('append.infiniteScroll', function() {
+        .on('append.infiniteScroll', function(a, b, c) {
             catalogProductCardController.__init();
         })
     }

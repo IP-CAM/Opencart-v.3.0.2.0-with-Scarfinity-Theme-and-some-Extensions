@@ -1,0 +1,36 @@
+{% macro productCardListCard(product) %}
+
+    {% import 'scarfinity/template/components/currency.twig' as currency %}
+    {% import 'scarfinity/template/components/rating-box.twig' as ratingBox %}
+
+    <div class="col-6 col-md-4 px-2 ss-col-item">
+        <div class="card ss-product-card-list-card align-items-start">
+            <a class="img" href="{{product.href}}">
+                <picture>
+                    <img src="{{product.images[0].lazy}}" class="img-fluid" alt="{{product.title}}">
+                </picture>
+            </a>
+            <div class="card-body py-0">
+                {# <ul class="card-add-info">
+                    <li>MIYOUXIONG</li>
+                </ul> #}
+                {{ ratingBox.ratingBox(product.rating) }} 
+                <h5 class="card-title"><a href="{{product.href}}" class="product-card-catalog__title">{{ product.name }}</a></h5>    
+                <p class="card-text description">{{ product.description }}</p>
+                {# <p class="card-text"><small class="text-muted">Last updated 3 mins ago {{ product.model }} </small></p> #}
+            </div>
+            <div class="card-actions">
+                <div class="ss-price">
+                    {{ currency.currency(
+                        { 'price': product.price, 'special': product.special, 'prefix': '', 'unit': '/ шт.' }, 
+                        { 'fontSize': 22, 'fontWeight': 600, 'style': 'accent' }) 
+                    }}
+                </div>
+                <div class="ss-action">
+                    <button type="button" class="btn ss-product-button" onclick="sCart.add({{product.product_id}})">Купить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endmacro %}

@@ -1,12 +1,10 @@
-{% import 'scarfinity/template/components/category-product-card.twig' as _categoryProductCard %}
+{% import 'scarfinity/template/components/product-card/product-card-list-card.twig' as _productCardListCard %}
 {% import 'scarfinity/template/components/navigation/pagination.twig' as _pagination %}
 {% import 'scarfinity/template/components/lib/currying.twig' as _currying %}
 
-<div class="row product-card-catalog-row" id="catalog-product-card-list">
+<div class="row ss-product-card-list ss-col-three" id="catalog-product-card-list">
     {% for product in products %}
-        <div class="product-card-catalog-container product-card-catalog-container--catalog">
-            {{ _categoryProductCard.categoryProductCard(product, { buttonLabel: button_cart }) }}
-        </div>
+        {{ _productCardListCard.productCardListCard(product) }}
     {% endfor %}
 </div>
 
@@ -37,7 +35,7 @@
             <span>Показаны все товары в данной категории</span>
         {% endif %}
     </div>
-    {# <div class="catalog-footer__pagination">
+    <div class="catalog-footer__pagination">
         {{_pagination.Pagination(pagination_data)}}
-    </div> #}
+    </div>
 </div>

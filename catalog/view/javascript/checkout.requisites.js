@@ -37,21 +37,21 @@ var ui = {
         }
 
         $('form[name^=shipping_method_fields]')
-            .addClass('hidden');
+            .addClass('d-none');
 
         $('form[name=shipping_method_fields_' + form + ']')
-            .removeClass('hidden');
+            .removeClass('d-none');
 
         $('select[data-code^="shipping"], input[data-code^="shipping"]')
             .parents('.sInput-container')
-            .addClass('hidden');
+            .addClass('d-none');
         
         $('select[data-code$="' + form + '"], input[data-code$="' + form + '"]')
             .removeClass('sInput--error')
             .trigger('input')
             .change()
             .parents('.sInput-container')
-            .removeClass('hidden')
+            .removeClass('d-none')
             .find('.sInput-error')
             .remove();
     },

@@ -24,7 +24,9 @@
             <button onclick="cart.remove('{{ props.product.cart_id }}');">D</button>  
         </div>
         <div class="cart__product-card__image-block">
-            <div class="cart__product-card__image-block__image">{{ image }}</div>
+            <div class="cart__product-card__image-block__image">
+                <img class="img-fluid" src="{{props.product.thumb}}" />
+            </div>
         </div>
         <div class="cart__product-card__content-block">
             <a

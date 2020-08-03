@@ -1,0 +1,44 @@
+{# Macros #}
+    {% macro menu(categories, root) %}
+        {% import _self as _ %}
+        <ul>
+            {% if root %}
+                <li class="Divider">{{root}}</li>
+            {% endif %}
+            
+            {% for category in categories %}
+                {% if category.children %}
+                    <li>
+                        <span>{{category.name}}</span>
+                        {{ _.menu(category.children) }}
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{{category.href}}">{{category.name}}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endmacro %}
+
+{# End macros #}
+
+{% import _self as _ %}
+
+{# Mobile menu #}
+    <nav id="ss-mm-menu">
+        <div id="ss-mm-panel-menu" class="ss-mm-h">
+            <ul>
+                <li class="link"><span><a href="{{ about_us }}">О нас</a></span></li>
+                <li class="link"><span><a href="{{ about_us }}">Доставка и оплата</a></span></li>
+                <li class="link"><span><a href="{{ about_us }}">Как сделать заказ?</a></span></li>
+                <li class="link"><span><a href="{{ contact }}">Контакты</a></span></li>
+                <li class="link"><span><a href="special">Распродажа!</a></span></li>
+                <li class="link"><span><a href="tel:{{telephone}}">{{ telephone }}</a></span></li>
+            </ul>
+        </div>
+        <div id="ss-mm-panel-catalog" class="ss-mm-h">
+            {{ _.menu(categories, "Каталог") }}
+        </div>
+    </nav>
+{# Mobile menu end #}

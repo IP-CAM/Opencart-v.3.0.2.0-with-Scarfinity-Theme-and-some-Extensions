@@ -1,6 +1,7 @@
 var     
     gulp            = require('gulp'),
     less            = require('gulp-less'),
+    tap             = require('gulp-tap'),
     concatCss       = require('gulp-concat-css'),
     cleanCss        = require('gulp-clean-css'),
     autoprefixer    = require('gulp-autoprefixer'),
@@ -11,31 +12,31 @@ var
 
 // 
 
-var common = {
-    core: [
-        'less/base.less'
-    ],
-    navigation: [
-        lessPath + 'components/navigation/*.less'
-    ]
-}
+// var common = {
+//     core: [
+//         'less/base.less'
+//     ],
+//     navigation: [
+//         lessPath + 'components/navigation/*.less'
+//     ]
+// }
 
-var pages = [
-    {
-        name: 'home',
-        bundleList: [
-            'less/home.less'
-        ]
-    },
-    {
-        name: 'about',
-        bundleList: [
-            'less/about.less'
-        ]
-    }
-];
+// var pages = [
+//     {
+//         name: 'home',
+//         bundleList: [
+//             'less/home.less'
+//         ]
+//     },
+//     {
+//         name: 'about',
+//         bundleList: [
+//             'less/about.less'
+//         ]
+//     }
+// ];
 
-gulp.task('bundle', function() {
+gulp.task('bundle1', function() {
     pages.forEach(page => {
         return gulp.src([
             ...common.core,
@@ -51,10 +52,22 @@ gulp.task('bundle', function() {
     });
 });
 
-gulp.task('default', ['bundle']);
+// gulp.task('default', ['bundle']);
 
 
+gulp.task('bundle', function() {
+    return gulp.src('catalog/view/theme/scarfinity/stylesheet/pages/*.less')
+        .pipe(tap(function(file, t) {
+            var filename = path.basename(file.path, ".less");
 
+            gulp.src(file.path)
+                .pipe(less({ paths: bourbon.includePaths }))
+                .pipe(autoprefixer(['last 15 versions']))
+                .pipe(concatCss(filename + '.css'))
+                .pipe(cleanCss())
+                .pipe(gulp.dest('catalog/view/theme/scarfinity/stylesheet/'));
+        }));
+});
 
 
 
@@ -98,7 +111,12 @@ gulp.task('less', function() {
     console.log(bourbon.includePaths);
     //.pipe(concatCss('stylesheet.css?v=' + Math.round(Date.now() / 1000 / 60)))
 
-    return gulp.src('catalog/view/theme/scarfinity/stylesheet/**/*.less')
+    return gulp.src([
+            'catalog/view/theme/scarfinity/stylesheet/**/*.less', 
+            'catalog/view/theme/scarfinity/stylesheet/lib/*.less',
+            '!catalog/view/theme/scarfinity/stylesheet/pages/**/*.less',
+            '!catalog/view/theme/scarfinity/stylesheet/__/*.less'
+        ])
         .pipe(less({ paths: bourbon.includePaths }))
         .pipe(autoprefixer(['last 15 versions']))
         .pipe(concatCss('stylesheet.css'))
@@ -175,8 +193,8 @@ gulp.task('navigation', function() {
         .pipe(browserSync.reload({stream: true}));
 });
 
-gulp.task('watch', ['less1'], function() {
-    gulp.watch('catalog/view/theme/scarfinity/stylesheet/**/*.less', ['less1']);
+gulp.task('watch', ['less'], function() {
+    gulp.watch('catalog/view/theme/scarfinity/stylesheet/**/*.less', ['less']);
     gulp.watch('catalog/view/theme/scarfinity/template/**/*.twig', browserSync.reload);
     gulp.watch('catalog/view/theme/scarfinity/js/**/*.js', browserSync.reload);
     gulp.watch('catalog/view/theme/scarfinity/libs/**/*', browserSync.reload);

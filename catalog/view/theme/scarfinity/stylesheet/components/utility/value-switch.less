@@ -11,8 +11,10 @@
     }
 
     &__items {
-        filter: drop-shadow(rgba(0, 0, 0, 0.1) 0px 1px 1px);
+        border: 1px solid #d7d7d7;
+        border-radius: 2px;
         display: flex;
+        overflow: hidden;
 
         & input[type="radio"] {
             display: none;
@@ -24,6 +26,10 @@
                     background-color: #efefef;
                 }
             }
+        }
+
+        & label {
+            margin: 0 !important;
         }
     }
 

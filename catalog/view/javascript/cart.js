@@ -150,6 +150,13 @@ var sCart = {
 
         return '';
     },
+    getProductsCount: function() {
+        if(this.products) {
+            return this.products.length;
+        }
+
+        return 0;
+    },
     addEventListener: function (event, callback) {
         this.listeners.push({ event, callback });
     }
@@ -157,7 +164,16 @@ var sCart = {
 
 function updateCart() {
     // $('html, body').animate({ scrollTop: 0 }, 'slow');
-    $('#descktop-cart, #mobile-cart').load('index.php?route=common/cart/info');
+    
+    $.ajax({
+        url: 'index.php?route=common/cart/info',
+        dataType: 'json',
+        success: function(html) {
+            $('#mobile-cart').html(html['mobile']);
+            $('#descktop-cart').html(html['desktop']);
+            $('#mobile-nav-header__cart span').html(sCart.getProductsCount());
+        }
+    });
 }
 
 sCart.addEventListener('afterload', updateCart);

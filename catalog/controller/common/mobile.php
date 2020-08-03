@@ -162,6 +162,16 @@ class ControllerCommonMobile extends Controller {
 			}
 		}
 
+		// Css hash
+		$data['cssHash'] = round(filemtime('catalog/view/theme/scarfinity/stylesheet/stylesheet.css') / 60);
+
+		$data['language'] = $this->load->controller('common/language');
+		$data['currency'] = $this->load->controller('common/currency');
+		$data['search'] = $this->load->controller('common/search');
+		$data['cart'] = $this->load->controller('common/cart');
+		$data['menu'] = $this->load->controller('common/menu');
+		$data['compare'] = $this->url->link('product/compare');
+
 		$data['home'] = $this->url->link('common/home');
 		$data['shopping_cart'] = $this->url->link('checkout/cart');
 		$data['account'] = $this->url->link('account/account', '', true);

@@ -1,0 +1,98 @@
+<div class="top-menu">
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <div id="logo">
+                    {% if logo %}
+                    <a href="{{ home }}">
+                        <img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-fluid" />
+                    </a>
+                    {% else %}
+                    {% set name = 'scarfinity' %}
+                    <a href="{{ home }}">{{ name }}</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="">
+                <div class="contact-us">
+                    <div class="contact-us__line">
+                        <span class="contact-us__line__title">Новосибирск: </span>
+                        <span class="contact-us__line__value">{{ telephone }}</span>
+                    </div>
+                    <div class="contact-us__line">
+                        <span class="contact-us__line__title">Регионы: </span> 
+                        <span class="contact-us__line__value">{{ telephone }}</span>
+                    </div>
+                    <div class="contact-us__phone">Часы работы: с 08:00 до 18:00</div>
+                </div>
+            </div>
+            <div class="flex-grow-1 px-3">{{ search }}</div>
+            <div class="">
+                <div class="top-menu__wish-and-compare">
+                    {% set icon %}{{_icons.Heart({size: 32})}}{% endset %}
+                    {{_iconButton.iconButton({href: wishlist, icon: icon, bage: {value: wishlist_count}})}}
+                    {% set icon %}{{_icons.BarChart({size: 32})}}{% endset %}
+                    {{_iconButton.iconButton({href: compare, icon: icon, bage: {value: compare_count}})}}
+                </div>
+            </div>
+            <div id="descktop-cart" class="navigation-cart-block pr-3">{{ cart.desktop }}</div>
+        </div>
+    </div>
+</div>
+
+{# 
+<div class="top-menu">
+                <div class="container">
+
+                    <div class="top-menu__container">
+                        <div class="top-menu__container__logo">
+                            <div id="logo">
+                                {% if logo %}
+                                <a href="{{ home }}">
+                                    <img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" />
+                                </a>
+                                {% else %}
+                                {% set name = 'scarfinity' %}
+                                <a href="{{ home }}">{{ name }}</a>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="top-menu__container__contacts">
+                            <div class="contact-us">
+                                <div class="contact-us__line">
+                                    <span class="contact-us__line__title">Новосибирск: </span>
+                                    <span class="contact-us__line__value">{{ telephone }}</span>
+                                </div>
+                                <div class="contact-us__line">
+                                    <span class="contact-us__line__title">Регионы: </span> 
+                                    <span class="contact-us__line__value">{{ telephone }}</span>
+                                </div>
+                                <div class="contact-us__phone">Часы работы: с 08:00 до 18:00</div>
+                            </div>
+                        </div>
+
+                        <div class="top-menu__container__search">
+                            {{ search }}
+                        </div>
+
+                        <div class="top-menu__container__cart">
+                            <div class="top-menu__wish-and-compare">
+                                {% set icon %}{{_icons.Heart({size: 32})}}{% endset %}
+                                {{_iconButton.iconButton({href: wishlist, icon: icon, bage: {value: wishlist_count}})}}
+                                {% set icon %}{{_icons.BarChart({size: 32})}}{% endset %}
+                                {{_iconButton.iconButton({href: compare, icon: icon, bage: {value: compare_count}})}}
+                            </div>
+                            <div id="descktop-cart" class="navigation-cart-block">
+                                {{ cart.desktop }}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+ #}

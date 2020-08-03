@@ -1,0 +1,198 @@
+{% import 'scarfinity/template/components/utility/icon-button.twig' as _iconButton %}
+{% import 'scarfinity/template/components/utility/_icons.twig' as _icons %}
+
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<!--[if IE 8 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie8"><![endif]-->
+<!--[if IE 9 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html dir="{{ direction }}" lang="{{ lang }}">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{{ title }}</title>
+<base href="{{ base }}" />
+{% if description %}
+<meta name="description" content="{{ description }}" />
+{% endif %}
+{% if keywords %}
+<meta name="keywords" content="{{ keywords }}" />
+{% endif %}
+<!-- Yandex.Metrika counter --> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(54779674, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/54779674" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+{# <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script> #}
+{# <script src="catalog/view/javascript/jquery/jquery-2.1.1.min.js" type="text/javascript"></script> #}
+<link href="catalog/view/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+{# <script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="catalog/view/javascript/lodash/lodash.js" type="text/javascript"></script> #}
+<link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet" type="text/css" />
+<link rel='stylesheet' href='//fonts.googleapis.com/css?family=Roboto:400,300,500,700' type='text/css'>
+{% for style in styles %}
+<link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}" />
+{% endfor %}
+{% for script in scripts %}
+<script src="{{ script }}" type="text/javascript"></script>
+{% endfor %}
+
+{# <script src="catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js" type="text/javascript"></script> #}
+<link href="catalog/view/javascript/jquery/magnific/magnific-popup.css" type="text/css" rel="stylesheet" media="screen" />
+
+<link href="catalog/view/theme/scarfinity/stylesheet/stylesheet.css?v={{ cssHash }}" rel="stylesheet">
+{# <script src="catalog/view/javascript/common.js" type="text/javascript"></script>
+<script src="catalog/view/javascript/cart.js" type="text/javascript"></script>
+<script src="catalog/view/theme/scarfinity/js/components/cart.js" type="text/javascript"></script>
+<script src="catalog/view/theme/scarfinity/js/lib/currying.js" type="text/javascript"></script> #}
+
+{% for link in links %}
+<link href="{{ link.href }}" rel="{{ link.rel }}" />
+{% endfor %}
+{% for analytic in analytics %}
+{{ analytic }}
+{% endfor %}
+</head>
+
+<body>
+  {% if promo_image %}
+    <div class="top-promo-banner" style="background-image: url('{{promo_image}}')"></div>
+  {% endif %}
+
+  {% if (isMobile or isTablet) %}
+    {# Меню для мобильной навигации #}
+    <nav id="mobile-left-menu" class="slideout-menu">
+      {# Left menu #}
+      <div class="mobile-nav-left-menu">
+        <div class="mobile-nav-left-menu__title">
+          <a href="" class="mobile-nav-left-menu__title__container"><span>SCARFINITY.RU</span></a>
+        </div>
+        <ul class="mobile-nav-ul">
+          <li class="link"><span><a href="{{ about_us }}">О нас</a></span></li>
+          <li class="link"><span><a href="{{ about_us }}">Доставка и оплата</a></span></li>
+          <li class="link"><span><a href="{{ about_us }}">Как сделать заказ?</a></span></li>
+          <li class="link"><span><a href="{{ contact }}">Контакты</a></span></li>
+          <li class="link"><span><a href="{{ account }}">{{ text_account }}</a></span></li>
+          <li class="link"><span><a href="">{{ telephone }}</a></span></li>
+        </ul>
+        <div class="mobile-nav-left-menu__footer">{{ powered }}</div>
+      </div>
+      {# Left menu end #}
+    </nav>
+    {# End mobile navigation menu content #}
+
+    {# Мобильный хедер, остается приклеенным в верху страницы #}
+    <div class="mobile-nav-header" id="mobile-nav-header">
+      <div class="mobile-nav-header__hamburger">
+        <div class="mobile__hamburger-button" >
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div class="mobile-nav-header__middle" id="mobile-nav-middle">
+        <span>Каталог</span>
+        <span class="sIcon"><i class="fa fa-angle-down"></i></span>
+      </div>
+      <div class="mobile-nav-header__cart" id="mobile-nav-header__cart">
+        <div class="mobile-nav-cart-button">
+          <div class="mobile-nav-cart-button__icon"></div>
+          <span class="mobile-nav-cart-button__bage">0</span>
+        </div>
+      </div>
+    </div>
+
+    <nav id="mobile-cart" class="slideout-menu slideout-menu-right">{{ cart }}</nav>
+
+    {{ menu }}
+
+    {# Основная панель приложения #}
+    {# В мобильной версии сдвигается вправо #}
+    <div id="mobile-filters-container" class="mobile-filters-container">
+    </div>
+    <main id="panel" style="margin-top: 50px" data-slideout-ignore>
+  {% else %}
+    <header>
+      <nav class="info-menu">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12 info-menu__container">
+                <ul class="info-menu-navigation">
+                <li><a href="{{ contact }}"><i class="fa fa-phone"></i></a> <span class="hidden-xs hidden-sm">{{ telephone }}</span></li>
+                <li><a href="{{ wishlist }}" id="wishlist-total" title="{{ text_wishlist }}"><i class="fa fa-heart"></i> <span class="hidden-xs hidden-sm">{{ text_wishlist }}</span></a></li>
+                <li><a href="{{ shopping_cart }}" title="{{ text_shopping_cart }}"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm">{{ text_shopping_cart }}</span></a></li>
+                <li><a href="{{ checkout }}" title="{{ text_checkout }}"><i class="fa fa-share"></i> <span class="hidden-xs hidden-sm">{{ text_checkout }}</span></a></li>
+                </ul>
+                <div class="dropdown info-menu-navigation__li" style="margin: 0;">
+                  <a href="{{ account }}" title="{{ text_account }}" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-user"></i>
+                    <span class="hidden-xs hidden-sm">{{ text_account }}</span>
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    {% if logged %}
+                      <li><a href="{{ account }}">{{ text_account }}</a></li>
+                      <li><a href="{{ order }}">{{ text_order }}</a></li>
+                      <li><a href="{{ transaction }}">{{ text_transaction }}</a></li>
+                      <li><a href="{{ download }}">{{ text_download }}</a></li>
+                      <li><a href="{{ logout }}">{{ text_logout }}</a></li>
+                    {% else %}
+                      <li><a href="{{ register }}">{{ text_register }}</a></li>
+                      <li><a href="{{ login }}">{{ text_login }}</a></li>
+                    {% endif %}
+                  </ul>
+                </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="top-menu">
+        <div class="container">
+          <div class="top-menu__container">
+            <div class="top-menu__container__logo">
+              <div id="logo">
+                {% if logo %}
+                  <a href="{{ home }}">
+                    <img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" />
+                  </a>
+                {% else %}
+                  {% set name = 'scarfinity' %}
+                  <a href="{{ home }}">{{ name }}</a>
+                {% endif %}
+              </div>
+            </div>
+            <div class="top-menu__container__contacts">
+              <div class="contact-us">
+                <div class="contact-us__line">
+                  <span class="contact-us__line__title">Новосибирск: </span>
+                  <span class="contact-us__line__value">{{ telephone }}</span></div>
+                <div class="contact-us__line">
+                  <span class="contact-us__line__title">Регионы: </span> 
+                  <span class="contact-us__line__value">{{ telephone }}</span></div>
+                <div class="contact-us__phone">Часы работы: с 08:00 до 18:00</div>
+              </div>
+            </div>
+            <div class="top-menu__container__search">
+              {{ search }}
+            </div>
+            <div class="top-menu__container__cart">
+              <div class="top-menu__wish-and-compare">
+                {% set icon %}{{_icons.Heart({size: 32})}}{% endset %}
+                {{_iconButton.iconButton({href: wishlist, icon: icon, bage: {value: wishlist_count}})}}
+                {% set icon %}{{_icons.BarChart({size: 32})}}{% endset %}
+                {{_iconButton.iconButton({href: compare, icon: icon, bage: {value: compare_count}})}}
+              </div>
+              <div id="descktop-cart" class="navigation-cart-block">
+                {{ cart }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    {{ menu }}
+    <main>
+  {% endif %}
+
+
+
+

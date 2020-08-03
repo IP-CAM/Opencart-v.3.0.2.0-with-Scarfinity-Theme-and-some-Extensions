@@ -1,0 +1,291 @@
+.ss-col-item(@state: 1) {
+
+    .ss-col-item {
+
+        flex: 0 0 100%;
+        max-width: 100%;
+
+        .ss-product-card-list-card {
+            border: 1px solid #e7e7e7;
+            border-radius: 2px;
+            padding-bottom: 10px;
+
+
+            & > .img {
+                width: 100%;
+            }
+
+            .card-add-info {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                font-size: 14px;
+
+                color: #999999;
+            }
+
+            .card-title {
+                margin-top: 8px;
+            }
+            
+            h5, p {
+                font-size: 14px;
+            }
+        
+            .description { 
+                color: #808080;
+            }
+
+            .ss-action {
+                margin-top: 12px;
+            }
+        }
+
+        & when (@state = 1) {
+            margin: 20px 0px 20px 0px;
+        
+            &:before {
+                content: "";
+                position: absolute;
+                top: -20px;
+                border-top: 1px solid #e9e7e7;
+                width: calc(100% - 20px);
+            }
+
+            .ss-product-card-list-card {
+                flex-direction: row;
+                flex-wrap: wrap;
+                padding: 10px;
+
+                & > .img {
+                    width: 40%;
+                }
+
+                .card-body {
+                    width: 60%;
+                }
+
+                .card-actions {
+                    width: 100%;
+                    text-align: left;
+                    padding-left: calc(~'40% + 1.25rem');
+                    padding-right: 1.25rem;
+                }
+            }
+
+            @media (min-width: 768px) {
+                .ss-product-card-list-card {
+                    .img {
+                        width: 20%;
+                    }
+
+                    .card-body {
+                        width: 60%;
+                    }
+
+                    .card-actions {
+                        width: 20%;
+                        text-align: right;
+                        padding: 0;
+                    }
+                }
+            }
+        }
+
+        & when (@state = 2) {
+            margin-top: 1.5rem;
+
+            .ss-product-card-list-card {
+                text-align: center;
+                align-items: stretch !important;
+                overflow-y: hidden;
+
+                .card-body, .card-actions {
+                    background-color: white;
+                    top: 0;
+                    position: relative;
+                    transition: all 0.3s ease;
+                }
+
+                .card-add-info {
+                    padding-top: 12px;
+                }
+
+                .description { 
+                    display: none;
+                }
+
+                .card-body {
+                    padding: 0;
+                }
+
+                .ss-action {
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    margin-bottom: 12px;
+                }
+            }
+        }
+
+        & when (@state = 3) {
+            margin-top: 1.5rem;
+
+            .ss-product-card-list-card {
+                text-align: center;
+                align-items: stretch !important;
+                overflow-y: hidden;
+
+                .card-body, .card-actions {
+                    background-color: white;
+                    top: 0;
+                    position: relative;
+                    transition: all 0.3s ease;
+                }
+
+                .card-add-info {
+                    padding-top: 12px;
+                }
+
+                .description { 
+                    display: none;
+                }
+
+                .card-body {
+                    padding: 0;
+                }
+
+                .ss-action {
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    margin-bottom: 12px;
+                }
+            }
+        }
+
+        & when (@state = 4) {
+            margin-top: 1.5rem;
+
+            .ss-product-card-list-card {
+                text-align: center;
+                align-items: stretch !important;
+                overflow-y: hidden;
+
+                .card-body, .card-actions {
+                    background-color: white;
+                    top: 0;
+                    position: relative;
+                    transition: all 0.3s ease;
+                }
+
+                .card-add-info {
+                    padding-top: 12px;
+                }
+
+                .description { 
+                    display: none;
+                }
+
+                .card-body {
+                    padding: 0;
+                }
+
+                .ss-action {
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    margin-bottom: 12px;
+                }
+            }
+        }
+
+        & when not (@state = 1) {
+            .ss-product-card-list-card.lift-up {
+                .card-body, .card-actions {
+                    transform: translateY(-60px);
+                }
+            }
+        }
+    }
+}
+
+.ss-product {
+    &-card-list {
+        &-card {
+            border: none;
+            border-radius: 0px;
+
+            &--state-one {
+                background-color: red;
+            }
+        }
+    }
+}
+
+.ss-product-button {
+    padding: 8px 12px;
+    background-color: #2799C9; // #2799C9;
+    color: white;
+    border: none;
+
+    &:hover {
+        background-color: lighten(#2799C9, 5%);
+        color: white;
+        outline: none;
+    }
+
+    &:active {
+        background-color: darken(#2799C9, 5%);
+        color: white;
+        outline: none;
+    }
+}
+
+.ss-col {
+    // Нстройка вариантов отображения колонок
+    &-one {
+        .ss-col-item(1);
+    }
+
+    &-two {
+        .ss-col-item(2);
+
+        & .ss-col-item {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+    }
+
+    &-three {
+        .ss-col-item(3);
+
+        & .ss-col-item {
+            flex: 0 0 33.3333%;
+            max-width: 33.3333%;
+        }
+
+        @media (max-width: 767.98px) {
+            & .ss-col-item {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+        }
+    }
+
+    &-four {
+        .ss-col-item(4);
+
+        & .ss-col-item {
+            flex: 0 0 25%;
+            max-width: 25%;
+        }
+
+        @media (max-width: 767.98px) {
+            & .ss-col-item {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+        }
+    }
+}

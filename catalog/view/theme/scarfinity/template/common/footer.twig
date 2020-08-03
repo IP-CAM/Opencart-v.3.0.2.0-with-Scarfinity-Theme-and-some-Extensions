@@ -2,7 +2,6 @@
 {% import 'scarfinity/template/components/image-container.twig' as _imageContainer %}
 {% import 'scarfinity/template/components/utility/mail-line.twig' as _mainLine  %}
 
-<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
 <div style="margin-top: 26px;"><div>
 {{ _mainLine.MainLine() }}
@@ -65,16 +64,65 @@
   <div class="bottom-copyright">{{ powered }}</div>
 </footer>
 
-</main>
+{# content end #}</div>
+{# container end #}</div>
 
 {# <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script> #}
 {# <script src="catalog/view/javascript/jquery/jquery-2.1.1.min.js" type="text/javascript"></script> #}
 
-<script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+{# <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script> #}
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+{# <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> #}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="catalog/view/javascript/lodash/lodash.js" type="text/javascript"></script>
 
+<script src="https://mmenujs.com/mmenu/mmenu.js?v=8.4.0" type="text/javascript"></script>
+<script src="https://mmenujs.com/mmenu/mmenu.polyfills.js?v=8.4.0" type="text/javascript"></script>
+
+<script src="catalog/view/javascript/mobile.js" type="text/javascript"></script>
+
+<script>
+    Mmenu.configs.offCanvas.page.selector = "#ss-page";
+
+    document.addEventListener("DOMContentLoaded", () => {
+        new Mmenu("#ss-mm-menu", {
+            navbar: {
+                title: 'scarfinity.ru'
+            },
+            navbars: [
+                {
+                    type: 'tabs',
+                    content: [
+                        '<a href="#ss-mm-panel-menu"><i class="fa fa-bars"></i> <span>Меню</span></a>',
+                        '<a href="#ss-mm-panel-catalog"><i class="fa fa-th"></i> <span>Каталог</span></a>'
+                    ]
+                },
+                {
+                    position	: 'bottom',
+                    content		: [ '<a href="tel:{{telephone}}" target="_blank">{{telephone}}</a>' ]
+                }
+            ],
+            "iconbar": {
+                "use": true,
+                "top": [
+                    "<a href='{{home}}'><i class='fa fa-home'></i></a>", 
+                    "<a href='{{account}}'><i class='fa fa-user'></i></a>"
+                ],
+                "bottom": [
+                    "<a href='#/'><i class='fa fa-instagram'></i></a>", 
+                    "<a href='#/'><i class='fa fa-vk'></i></a>", 
+                    "<a href='#/'><i class='fa fa-facebook'></i></a>",
+                ]
+            }
+        });
+    });
+</script>
+
+{# <script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script> #}
+
+{# 
 {% if isMobile or isTablet %}
-  {# Scripts #}
+
   <script src="catalog/view/javascript/slideout.js/dist/slideout.min.js" type="text/javascript"></script>
   <script type="text/javascript">
       var tolerance = 70;
@@ -219,10 +267,9 @@
       }
     });
   </script>
-  {# Srcripts end #}
-{% endif %}
+{% endif %} #}
 
-{% if isMobile %}
+{# {% if isMobile %}
   <script type="text/javascript">
     var mobileMenu = {
       isOpen: false,
@@ -258,12 +305,26 @@
       $(this).removeClass('enter').removeClass('active');
     });
   </script>
-{% endif %}
+{% endif %} #}
 
 <script src="catalog/view/javascript/common.js" type="text/javascript"></script>
 <script src="catalog/view/javascript/cart.js" type="text/javascript"></script>
 <script src="catalog/view/theme/scarfinity/js/lib/currying.js" type="text/javascript"></script>
 <script src="catalog/view/theme/scarfinity/js/components/cart.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+  $('.main-menu-ul').mouseenter(function() {
+    $(this).addClass('enter');
+    $(this).delay(200).queue(function(next) {
+      if($(this).hasClass('enter')) {
+        $(this).addClass('active');
+      }
+      next();
+    })
+  }).mouseleave(function() {
+    $(this).removeClass('enter').removeClass('active');
+  });
+</script>
 
 {% for script in scripts %}
 <script src="{{ script }}" type="text/javascript"></script>

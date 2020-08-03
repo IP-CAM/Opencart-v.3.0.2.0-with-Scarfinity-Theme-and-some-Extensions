@@ -1,13 +1,13 @@
-{% import 'scarfinity/template/components/category-product-card.twig' as categoryProductCard %}
+{% import 'scarfinity/template/components/product-card/product-card-list-card.twig' as _productCardListCard %}
 
 <h1>Featured</h1>
 <h3>{{ heading_title }} - {{ name|split('-')[0] }}</h3>
-<div class="row">
- {% for product in products %}
-  <div class="product-card-catalog-container product-card-catalog-container--catalog">
-    {{ categoryProductCard.categoryProductCard(product, { 'buttonLabel': button_cart }) }}
-  </div>
-  {% endfor %}
+
+<div class="row ss-product-card-list ss-col-three" id="catalog-product-card-list">
+    {% for product in products %}
+        {{ _productCardListCard.productCardListCard(product) }}
+    {% endfor %}
 </div>
+
 
 

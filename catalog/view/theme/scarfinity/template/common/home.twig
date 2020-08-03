@@ -31,14 +31,20 @@
     </div>
   </div>
 </div>
-<div class="home__about-us">
+
+<div class="ss-page-description">
   <div class="container">
     <div class="row">
-      <div class="col-xs-12">
-        <h2>{{ heading_title }}</h2>
-        <p>Оптовый интернет магазин аксессуаров. В нашем каталоге представлены товары таких категорий: шарфы, косынки, палантины, платки, снуды, трубы, летние туники и парео и многое другое.</p>
+      <div class="col-12 px-2"><h2>{{ heading_title }}</h2></div>
+      <div class="col-12 px-2">
+        {% if description %}
+          {{ description }}
+        {% else %}
+          <p>Оптовый интернет магазин аксессуаров. В нашем каталоге представлены товары таких категорий: шарфы, косынки, палантины, платки, снуды, трубы, летние туники и парео и многое другое.</p>
+        {% endif %}
       </div>
     </div>
   </div>
 </div>
+
 {{ footer }}

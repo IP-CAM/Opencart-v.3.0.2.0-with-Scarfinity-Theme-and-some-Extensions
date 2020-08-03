@@ -1,4 +1,4 @@
-{% import 'scarfinity/template/components/category-product-card.twig' as _categoryProductCard %}
+{% import 'scarfinity/template/components/product-card/product-card-list-card.twig' as _productCardListCard %}
 {% import 'scarfinity/template/components/utility/special-offer.twig' as _specialOffer %}
 
 {% if layout == 'block' %}
@@ -6,11 +6,9 @@
 {% else %}
 
   <h3>{{ heading_title }}</h3>
-  <div class="row display-flex col-sm-no-padding">
+  <div class="row ss-product-card-list ss-col-four" id="catalog-product-card-list">
     {% for product in products %}
-        <div class="product-card-catalog-container product-card-catalog-container--bestseller">
-            {{ _categoryProductCard.categoryProductCard(product, { buttonLabel: props.button_cart }) }}
-        </div>
+        {{ _productCardListCard.productCardListCard(product) }}
     {% endfor %}
-  </div>
+</div>
 {% endif %}

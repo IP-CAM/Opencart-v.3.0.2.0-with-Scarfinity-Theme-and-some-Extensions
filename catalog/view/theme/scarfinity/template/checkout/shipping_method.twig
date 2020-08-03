@@ -40,7 +40,7 @@
     <br />
     <div>
         {% for key, shipping_method in shipping_methods %}
-            <form name="shipping_method_fields_{{key}}" class="hidden">
+            <form name="shipping_method_fields_{{key}}" class="d-none">
                 {% for field in shipping_method.fields %}
                     {% if field.type == 'text' or field.type == 'hidden' %}
                         {{

@@ -1,37 +1,30 @@
 console.log('Mobile.js');
 
-$('.ss-product-card-count').on('click', function() {
+// $('.ss-product-card-count').on('click', function() {
+//     $('.ss-product-card-list')
+//         .removeClass('ss-col-one ss-col-two ss-col-three ss-col-four')
+//         .addClass($(this).data('value'));
+// });
+
+$('input[type=radio][name=ss-col-sort]').on('change', function() {
     $('.ss-product-card-list')
         .removeClass('ss-col-one ss-col-two ss-col-three ss-col-four')
-        .addClass($(this).data('value'));
+        .addClass(this.value);
 });
 
-$('.ss-product-card-list-card')
-    .on('mouseenter', function() {
-        var height = $(this).outerHeight();
-        var actionHeight = $(this).find('.ss-action').outerHeight(true);
+$(document).delegate('.ss-product-card-list-card', 'mouseenter', function(e) {
+    var height = $(this)[0].getBoundingClientRect().height;
+    var actionHeight = $(this).find('.ss-action').outerHeight(true);
 
-        $(this).css("height", height);
+    $(this).css("height", height);
+    $(this).addClass("lift-up");
+});
 
-        $(this)
-            .find('.card-body, .card-actions')
-            .css("position", "relative")
-            .css("top", -actionHeight + "px");
-        
-        $(this)
-            .find('.ss-action')
-            .css("position", "relative");
-    })
-    .on('mouseleave', function() {
-        $(this)
-            .css("height", "")
-            .find('.card-body, .card-actions')
-            .removeAttr("style");
-
-        $(this)
-            .find('.ss-action')
-            .removeAttr("style");
-    });
+$(document).delegate('.ss-product-card-list-card', 'mouseleave', function(e) {
+    $(this)
+        .css("height", "")
+        .removeClass("lift-up");
+});
 
 $(document).ready(function() {
     'use strict';
